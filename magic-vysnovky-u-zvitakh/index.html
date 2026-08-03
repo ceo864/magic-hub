@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOP — Висновки у звітах | magic</title>
+<style>
+@font-face { font-family: 'Onest'; font-weight: 900; src: url('file:///usr/local/share/fonts/onest/OnestBlack.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 700; src: url('file:///usr/local/share/fonts/onest/OnestBold.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 500; src: url('file:///usr/local/share/fonts/onest/OnestMedium.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 400; src: url('file:///usr/local/share/fonts/onest/OnestRegular.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 300; src: url('file:///usr/local/share/fonts/onest/OnestLight.ttf') format('truetype'); }
+:root{--blue:#38A0FF;--purple:#AA7AFF;--gradient:linear-gradient(135deg,#38A0FF,#AA7AFF);--ink-900:#0f1729;--ink-700:#2a3558;--ink-500:#556085;--ink-400:#7580a0;--ink-200:#c4c9d8;--ink-100:#e4e7ef;--ink-50:#f4f5f9;--success:#2EC28A;--warning:#FFB020;--danger:#F5525C;--bg:#f7f8fb;--card:#fff;--border:#e4e7ef;--r-md:14px;--r-lg:20px;--r-xl:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Onest',sans-serif;font-weight:300;background:var(--bg);color:var(--ink-900);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+
+.hero{background:var(--ink-900);color:#fff;padding:56px 48px 48px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-40px;width:360px;height:360px;background:var(--gradient);border-radius:50%;opacity:.1;filter:blur(80px)}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.hero-logo{font-weight:900;font-size:16px;opacity:.35;margin-bottom:24px}
+.hero h1{font-weight:900;font-size:36px;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px}
+.hero h1 .gt{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-weight:300;font-size:15px;opacity:.5;max-width:600px}
+.container{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+
+.intro{font-size:17px;font-weight:300;color:var(--ink-500);margin-bottom:40px;line-height:1.8}
+.intro strong{color:var(--ink-900);font-weight:700}
+
+.section{margin-bottom:48px}
+.section-label{font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;padding:4px 14px;border-radius:999px;display:inline-block;color:#fff}
+.sl-blue{background:var(--blue)}.sl-purple{background:var(--purple)}.sl-ink{background:var(--ink-900)}.sl-green{background:var(--success)}.sl-orange{background:var(--warning)}.sl-red{background:var(--danger)}
+.section h2{font-weight:900;font-size:22px;letter-spacing:-.02em;margin-bottom:6px;margin-top:8px}
+.section-desc{font-weight:300;color:var(--ink-500);font-size:14px;margin-bottom:20px}
+
+.formula{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px}
+.formula-row{display:flex;align-items:baseline;gap:16px;padding:16px 24px;border-bottom:1px solid var(--border)}
+.formula-row:last-child{border-bottom:none}
+.formula-num{font-weight:900;font-size:14px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;min-width:24px}
+.formula-label{font-weight:700;font-size:15px;min-width:120px}
+.formula-sep{color:var(--ink-200);margin:0 4px}
+.formula-desc{font-weight:300;color:var(--ink-500);font-size:14px}
+
+.tip{background:var(--ink-50);border-left:3px solid var(--blue);border-radius:0 var(--r-md) var(--r-md) 0;padding:14px 18px;font-size:13px;color:var(--ink-700);margin:16px 0;line-height:1.6}
+.tip strong{color:var(--ink-900);font-weight:700}
+
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.rule-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.rule-head{padding:12px 20px;font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.rh-do{background:var(--success)}.rh-dont{background:var(--danger)}
+.rule-item{padding:12px 20px;font-size:13px;font-weight:300;line-height:1.5;border-bottom:1px solid var(--border);color:var(--ink-700)}
+.rule-item:last-child{border-bottom:none}
+
+.example-block{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px}
+.ex-head{padding:12px 20px;font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.eh-bad{background:var(--danger)}.eh-good{background:var(--success)}.eh-example{background:var(--blue)}
+.ex-body{padding:20px 24px}
+
+.ex-quote{font-style:italic;font-size:14px;font-weight:300;color:var(--ink-500);line-height:1.7;padding:16px 20px;border-left:3px solid var(--danger);background:rgba(245,82,92,.03);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:20px}
+.ex-quote p{margin-bottom:10px}
+.ex-quote p:last-child{margin-bottom:0}
+
+.error-list{margin-top:16px}
+.error-item{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:13px;font-weight:300;color:var(--ink-700)}
+.error-icon{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+.conclusion{padding:16px 0;border-bottom:1px solid var(--border)}
+.conclusion:last-child{border-bottom:none}
+.c-num{font-weight:900;font-size:13px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.c-text{font-weight:300;font-size:14px;line-height:1.65;color:var(--ink-700)}
+
+.context-pill{display:inline-block;background:var(--ink-50);border:1px solid var(--border);border-radius:999px;padding:6px 18px;font-size:12px;font-weight:500;color:var(--ink-500);margin-bottom:16px}
+
+.sub-label{display:inline-block;font-size:11px;font-weight:700;color:var(--ink-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:8px}
+
+table.water{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);margin-bottom:24px;font-size:13px;background:var(--card)}
+table.water th{background:var(--ink-900);color:#fff;padding:12px 18px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+table.water td{padding:14px 18px;border-bottom:1px solid var(--border);font-weight:300;line-height:1.5;vertical-align:top}
+table.water tr:last-child td{border-bottom:none}
+table.water tr:nth-child(even) td{background:var(--ink-50)}
+table.water td:first-child{color:var(--danger);font-weight:400;border-right:1px solid var(--border);width:45%}
+table.water td:last-child{color:var(--success);font-weight:400}
+
+.checklist{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px}
+.checklist-head{padding:14px 20px;font-weight:700;font-size:14px;color:#fff;background:var(--ink-900)}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:12px 20px;font-size:14px;font-weight:300;color:var(--ink-700);border-bottom:1px solid var(--border)}
+.check-item:last-child{border-bottom:none}
+.check-box{flex-shrink:0;width:20px;height:20px;border-radius:6px;border:2px solid var(--ink-200);margin-top:1px}
+
+.principle{background:var(--ink-900);color:#fff;border-radius:var(--r-xl);padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.principle::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:var(--gradient);border-radius:50%;opacity:.08;filter:blur(40px)}
+.principle h3{font-weight:900;font-size:17px;margin-bottom:14px;position:relative;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.principle p{font-weight:300;opacity:.7;font-size:14px;position:relative;line-height:1.7;margin-bottom:8px}
+.principle p strong{font-weight:700;opacity:1}
+.principle p:last-child{margin-bottom:0}
+
+.footer{text-align:center;padding:40px 0 0;font-size:12px;color:var(--ink-400);font-weight:300}
+.footer-g{font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+@media(max-width:768px){.hero{padding:36px 20px 32px}.hero h1{font-size:26px}.rules{grid-template-columns:1fr}.container{padding:28px 16px 60px}}
+@media print{body{background:#fff}.hero,.principle{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero"><div class="hero-inner">
+<div class="hero-logo">magic</div>
+<h1>Як писати <span class="gt">висновки</span><br>у звітах</h1>
+<div class="hero-sub">Формула, правила, антиприклади та готові шаблони. Висновок має за 30 секунд дати відповідь на три питання: що сталося, чому, що робимо далі.</div>
+</div></div>
+
+<div class="container">
+
+<div class="intro">Висновок — найцінніша частина звіту. Клієнт читає <strong>саме його</strong>. Без води, без виправдань, без переказу "як я провів літо". Кожне речення повинно містити <strong>цифру, причину або дію</strong> — інакше воно зайве.</div>
+
+<!-- ===== 01 ФОРМУЛА ===== -->
+<div class="section">
+<span class="section-label sl-blue">Формула</span>
+<h2>Структура одного висновку</h2>
+<div class="section-desc">Кожен висновок — рівно 3 компоненти в 1-3 реченнях. У звіті — 3 висновки (01, 02, 03). Слайд не перевищує 9-12 речень.</div>
+
+<div class="formula">
+<div class="formula-row">
+<span class="formula-num">01</span>
+<span class="formula-label">Факт + цифра</span>
+<span class="formula-sep">—</span>
+<span class="formula-desc">Що сталося — конкретна метрика з порівнянням</span>
+</div>
+<div class="formula-row">
+<span class="formula-num">02</span>
+<span class="formula-label">Причина</span>
+<span class="formula-sep">—</span>
+<span class="formula-desc">Чому це сталося — кореневий фактор</span>
+</div>
+<div class="formula-row">
+<span class="formula-num">03</span>
+<span class="formula-label">Дія</span>
+<span class="formula-sep">—</span>
+<span class="formula-desc">Що конкретно робимо і коли</span>
+</div>
+</div>
+
+<div class="tip"><strong>Правило:</strong> Якщо не вміщується в 3 речення — ти пишеш воду. Скороти.</div>
+</div>
+
+<!-- ===== 02 ПРАВИЛА ===== -->
+<div class="section">
+<span class="section-label sl-ink">Правила</span>
+<h2>Завжди та ніколи</h2>
+<div class="section-desc">Чіткі межі для кожного висновку</div>
+
+<div class="rules">
+<div class="rule-card">
+<div class="rule-head rh-do">Завжди</div>
+<div class="rule-item">Починати з цифри або факту, а не з оцінки</div>
+<div class="rule-item">Порівнювати з попереднім місяцем або планом</div>
+<div class="rule-item">Називати конкретну дію з дедлайном</div>
+<div class="rule-item">Писати "ROAS впав з 3.2 до 2.2", а не "ми не отримали бажаного результату"</div>
+</div>
+<div class="rule-card">
+<div class="rule-head rh-dont">Ніколи</div>
+<div class="rule-item">Абзаци тексту — це не есе</div>
+<div class="rule-item">Слова "впроваджуємо", "фокусуємося" без конкретики</div>
+<div class="rule-item">Загальні маркетингові істини (UGC — добре, тестувати — треба)</div>
+<div class="rule-item">Змішувати висновки з планом дій — для плану є окремий слайд</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 03 АНТИПРИКЛАД ===== -->
+<div class="section">
+<span class="section-label sl-red">Антиприклад</span>
+<h2>Як не треба</h2>
+<div class="section-desc">Реальний висновок зі звіту. Розберемо, що в ньому не так.</div>
+
+<div class="example-block">
+<div class="ex-head eh-bad">Так не треба</div>
+<div class="ex-body">
+<div class="ex-quote">
+<p>Цього місяця ми не отримали бажаного результату, проте зібрали достатньо даних для подальшого розвитку прибутковості.</p>
+<p>Акцент на форматі: На базі найуспішнішого креативу ми дійшли висновку, що варто фокусуватися на UGC-контенті, який глибше розкриває вирішення болю користувача.</p>
+<p>Захист від вигорання: При різкому зростанні конкуренції або втомі аудиторії важливо мати "запасні" креативи для швидкої ротації.</p>
+<p>Масштабування UGC-підходу: Створимо серію нових відео та статичних макетів у стилі "відгук/демонстрація продукту", оскільки цей формат показав найвищу зацікавленість...</p>
+</div>
+
+<div class="error-list">
+<div class="error-item"><span class="error-icon">&times;</span><span>"Не отримали бажаного результату" — яку цифру мали досягти і яку отримали?</span></div>
+<div class="error-item"><span class="error-icon">&times;</span><span>"Зібрали достатньо даних" — які дані, яка вибірка, який висновок з них?</span></div>
+<div class="error-item"><span class="error-icon">&times;</span><span>"Варто фокусуватися на UGC" — загальна порада, не висновок з конкретного місяця</span></div>
+<div class="error-item"><span class="error-icon">&times;</span><span>"Впроваджуємо моніторинг трендів" — коли? Хто відповідальний?</span></div>
+<div class="error-item"><span class="error-icon">&times;</span><span>Висновки змішані з планом дій — все в одній купі</span></div>
+<div class="error-item"><span class="error-icon">&times;</span><span>Багато тексту, мало суті — клієнт загубиться на третьому абзаці</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 04 ЯК ЦЕ ПЕРЕПИСАТИ ===== -->
+<div class="section">
+<span class="section-label sl-green">Приклад</span>
+<h2>Як це переписати</h2>
+<div class="section-desc">Той самий звіт, переписаний за формулою</div>
+
+<div class="context-pill">Інвестиції 121 644 грн · Оборот 268 590 грн · 57 замовлень · ROAS 2.21</div>
+
+<div class="example-block">
+<div class="ex-head eh-good">Так треба</div>
+<div class="ex-body">
+<div class="conclusion">
+<div class="c-num">01</div>
+<div class="c-text">ROAS знизився з 3.1 до 2.21 (−29%) через вигорання основного креативу: CTR впав з 1.8% до 0.9% в другій половині місяця. Єдиний креатив з CTR вище бенчмарку — UGC-відео з розпаковкою (CTR 2.1%, 23 покупки з 57).</div>
+</div>
+<div class="conclusion">
+<div class="c-num">02</div>
+<div class="c-text">CPA зріс на 34% (з 1 580 до 2 134 грн) через концентрацію бюджету на одному адсеті. При розширенні аудиторії після вигорання частота показів досягла 4.7 — це вдвічі вище норми.</div>
+</div>
+<div class="conclusion">
+<div class="c-num">03</div>
+<div class="c-text">Середній чек 4 712 грн (+8% до плану) завдяки бандлу "2+1", який згенерував 31% обороту. Офер працює — варто масштабувати його в нових креативах.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 05 ДОДАТКОВІ ПРИКЛАДИ ===== -->
+<div class="section">
+<span class="section-label sl-blue">Шаблони</span>
+<h2>Додаткові приклади</h2>
+<div class="section-desc">Готові зразки для різних сценаріїв</div>
+
+<div class="sub-label">Успішний місяць</div>
+<div class="example-block">
+<div class="ex-head eh-example">Приклад</div>
+<div class="ex-body">
+<div class="conclusion">
+<div class="c-num">01</div>
+<div class="c-text">ROAS 4.8 (план 4.0, +20%). Основний драйвер — Google Shopping, який дав 62% покупок при найнижчому CPA 380 грн. Meta забезпечила охоплення, Google — конверсії.</div>
+</div>
+<div class="conclusion">
+<div class="c-num">02</div>
+<div class="c-text">Топ-3 товари згенерували 71% обороту. Лідер — модель X (890K грн, 194 продажі). Рекомендуємо збільшити бюджет на цю товарну групу на 30% і вивести два нових SKU в рекламу.</div>
+</div>
+<div class="conclusion">
+<div class="c-num">03</div>
+<div class="c-text">Email-канал повернув 89 клієнтів (12% від загальних покупок) при нульових додаткових витратах. Серія "покинутий кошик" конвертує 8.3% — це вдвічі вище за бенчмарк.</div>
+</div>
+</div>
+</div>
+
+<div class="sub-label">Провальний місяць</div>
+<div class="example-block">
+<div class="ex-head eh-example">Приклад</div>
+<div class="ex-body">
+<div class="conclusion">
+<div class="c-num">01</div>
+<div class="c-text">Оборот 180K грн (план 320K, виконання 56%). Головна причина — зупинка реклами на 6 днів через блокування рекламного кабінету. Фактичний ROAS за робочі дні — 2.9 (близько до плану 3.2).</div>
+</div>
+<div class="conclusion">
+<div class="c-num">02</div>
+<div class="c-text">Нові креативи (5 з 8 запущених) не пройшли етап навчання — CPA 2 400 грн при ліміті 1 200 грн. Спільна проблема: слабкий хук (Hook Rate 11% при нормі 20%+). Наступну партію готуємо за затвердженими скриптами.</div>
+</div>
+<div class="conclusion">
+<div class="c-num">03</div>
+<div class="c-text">Позитив — зростання конверсії сайту з 1.2% до 1.8% після A/B тесту нової сторінки товару. При поверненні трафіку на попередній рівень це дасть додатково ~40 замовлень на місяць.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== 06 ТЕСТ НА ВОДУ ===== -->
+<div class="section">
+<span class="section-label sl-orange">Фільтр</span>
+<h2>Тест на воду</h2>
+<div class="section-desc">Якщо речення можна вставити в звіт будь-якого клієнта за будь-який місяць — це вода. Видали.</div>
+
+<table class="water">
+<thead><tr><th>Вода</th><th>Суть</th></tr></thead>
+<tbody>
+<tr>
+<td>"Ми зібрали достатньо даних для подальшого розвитку"</td>
+<td>"CTR нового креативу 2.1% — це найкращий результат за 3 місяці"</td>
+</tr>
+<tr>
+<td>"Варто фокусуватися на UGC-контенті"</td>
+<td>"UGC-відео з розпаковкою дало 23 з 57 покупок при CPA на 40% нижче за статику"</td>
+</tr>
+<tr>
+<td>"Впроваджуємо регулярний моніторинг трендів"</td>
+<td>"Щоп'ятниці аналізуємо Meta Ad Library по 5 конкурентах, результати — в понеділковому брифі"</td>
+</tr>
+<tr>
+<td>"Будемо працювати над покращенням показників"</td>
+<td>"Запускаємо 6 нових креативів до 15 числа: 3 UGC, 3 статики з новим офером"</td>
+</tr>
+<tr>
+<td>"Сфокусуємося на більш сильних хуках"</td>
+<td>"Хук перших 3 секунд тестуємо в 3 варіантах: біль, результат, провокація"</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle">
+<h3>Золоте правило</h3>
+<p><strong>Якщо речення можна вставити в будь-який звіт будь-якого клієнта за будь-який місяць — це вода.</strong></p>
+<p>Хороший висновок неможливо скопіювати в інший звіт — він прив'язаний до конкретних цифр, причин і дій цього місяця.</p>
+</div>
+</div>
+
+<!-- ===== 07 ЧЕК-ЛИСТ ===== -->
+<div class="section">
+<span class="section-label sl-purple">Перевірка</span>
+<h2>Чек-лист перед відправкою</h2>
+<div class="section-desc">Перевір кожен висновок перед тим, як додати до звіту</div>
+
+<div class="checklist">
+<div class="checklist-head">Перевір кожен висновок</div>
+<div class="check-item"><div class="check-box"></div><span>Є конкретна цифра або метрика?</span></div>
+<div class="check-item"><div class="check-box"></div><span>Є порівняння (з планом, минулим місяцем, бенчмарком)?</span></div>
+<div class="check-item"><div class="check-box"></div><span>Зрозуміла причина — "чому", а не просто "що"?</span></div>
+<div class="check-item"><div class="check-box"></div><span>Висновок вміщується в 1-3 речення?</span></div>
+<div class="check-item"><div class="check-box"></div><span>Немає загальних фраз, які можна вставити в будь-який звіт?</span></div>
+<div class="check-item"><div class="check-box"></div><span>План дій винесений на окремий слайд?</span></div>
+<div class="check-item"><div class="check-box"></div><span>Клієнт зрозуміє це без додаткових пояснень?</span></div>
+</div>
+</div>
+
+<div class="footer"><span class="footer-g">magic</span> · advertise for e-commerce</div>
+
+</div>
+</body>
+</html>

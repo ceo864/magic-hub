@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Адженда зустрічей UA-відділу</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magic-blue: #38A0FF;
+    --magic-purple: #AA7AFF;
+    --magic-gradient: linear-gradient(135deg, #38A0FF, #AA7AFF);
+    --ink-800: #0D0D1A;
+    --ink-700: #1A1A2E;
+    --ink-600: #2A2A40;
+    --ink-500: #3D3D55;
+    --ink-400: #5A5A75;
+    --ink-300: #8080A0;
+    --ink-200: #B0B0C8;
+    --ink-100: #D8D8E8;
+    --ink-50: #F0F0F8;
+    --success: #2EC28A;
+    --warning: #FFB020;
+    --danger: #F5525C;
+    --white: #FFFFFF;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-pill: 9999px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Onest', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-700);
+    background: var(--ink-50);
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--ink-700);
+    padding: 64px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(56,160,255,0.12) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: -5%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(170,122,255,0.10) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(56,160,255,0.15);
+    color: var(--magic-blue);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    background: var(--magic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-200);
+    max-width: 600px;
+    position: relative;
+  }
+
+  /* Nav */
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--ink-100);
+    padding: 20px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav a {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-500);
+    text-decoration: none;
+    background: var(--ink-50);
+    transition: all 0.2s;
+  }
+  .nav a:hover {
+    background: var(--magic-gradient);
+    color: var(--white);
+  }
+
+  /* Content */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Meeting block */
+  .meeting {
+    margin-bottom: 64px;
+  }
+  .meeting-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .meeting-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: var(--magic-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--white);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .meeting-icon.purple { background: var(--magic-purple); }
+  .meeting-icon.green { background: var(--success); }
+  .meeting-icon.blue { background: var(--magic-blue); }
+  .meeting-meta {
+    flex: 1;
+  }
+  .meeting-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--magic-blue);
+    margin-bottom: 4px;
+  }
+  .meeting-label.purple { color: var(--magic-purple); }
+  .meeting-label.green { color: var(--success); }
+  .meeting-meta h2 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink-700);
+    margin-bottom: 8px;
+  }
+  .meeting-details {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .meeting-detail {
+    font-size: 13px;
+    color: var(--ink-400);
+    font-weight: 500;
+  }
+  .meeting-detail span {
+    color: var(--ink-700);
+    font-weight: 700;
+  }
+
+  /* Agenda block */
+  .agenda-item {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    display: flex;
+  }
+  .agenda-time {
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--ink-700);
+  }
+  .agenda-time.accent { background: var(--magic-gradient); }
+  .agenda-time.green { background: var(--success); }
+  .agenda-time.purple { background: var(--magic-purple); }
+  .agenda-body {
+    flex: 1;
+    padding: 16px 24px;
+  }
+  .agenda-body h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-700);
+    margin-bottom: 4px;
+  }
+  .agenda-body p {
+    font-size: 14px;
+    color: var(--ink-400);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .agenda-body .who {
+    display: inline-block;
+    background: rgba(56,160,255,0.10);
+    color: var(--magic-blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    margin-top: 6px;
+  }
+  .agenda-body .who.purple {
+    background: rgba(170,122,255,0.10);
+    color: var(--magic-purple);
+  }
+
+  /* Prep / rules cards */
+  .prep-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .prep-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border-left: 4px solid var(--ink-100);
+  }
+  .prep-card.blue { border-left-color: var(--magic-blue); }
+  .prep-card.purple { border-left-color: var(--magic-purple); }
+  .prep-card.green { border-left-color: var(--success); }
+  .prep-card.red { border-left-color: var(--danger); }
+  .prep-card h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-600);
+    margin-bottom: 6px;
+  }
+  .prep-card p {
+    font-size: 13px;
+    color: var(--ink-400);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .prep-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .prep-card li {
+    font-size: 13px;
+    color: var(--ink-400);
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .prep-card li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--ink-200);
+  }
+
+  /* Callout */
+  .callout {
+    background: linear-gradient(135deg, rgba(56,160,255,0.06), rgba(170,122,255,0.06));
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin: 20px 0;
+    border: 1px solid rgba(56,160,255,0.12);
+  }
+  .callout-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--magic-blue);
+    margin-bottom: 6px;
+  }
+  .callout p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--ink-100);
+    margin: 48px 0;
+  }
+
+  /* Table */
+  .table-wrap {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    background: var(--ink-700);
+    color: var(--white);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    padding: 12px 16px;
+    text-align: left;
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--ink-50);
+    font-size: 13px;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--ink-300);
+    font-size: 13px;
+  }
+  .footer .logo {
+    font-weight: 900;
+    font-size: 18px;
+    background: var(--magic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  @media print {
+    .nav { display: none; }
+    .hero { padding: 32px; }
+    .meeting { break-inside: avoid; }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 40px 24px; }
+    .hero h1 { font-size: 32px; }
+    .nav { padding: 12px 24px; }
+    .prep-grid { grid-template-columns: 1fr; }
+    .meeting-header { flex-direction: column; gap: 12px; }
+    .agenda-time { width: 60px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">INTERNAL PLAYBOOK</div>
+  <h1>Адженда зустрічей<br>UA-відділу</h1>
+  <div class="subtitle">Формат, структура та правила для кожної зустрічі. Дейліки, планерки, Weekly UAM Sync з креативним стратегом.</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#daily">Дейлік</a>
+  <a href="#monday">Планерка понеділок</a>
+  <a href="#creative">Weekly UAM Sync</a>
+  <a href="#friday">Планерка п'ятниця</a>
+  <a href="#rules">Загальні правила</a>
+</nav>
+
+<div class="content">
+
+<!-- ============================================================ -->
+<!-- DAILY STANDUP -->
+<!-- ============================================================ -->
+<div class="meeting" id="daily">
+  <div class="meeting-header">
+    <div class="meeting-icon">D</div>
+    <div class="meeting-meta">
+      <div class="meeting-label">ЩОДЕННА ЗУСТРІЧ</div>
+      <h2>Дейлік</h2>
+      <div class="meeting-details">
+        <div class="meeting-detail">Коли: <span>Щодня, 10:00</span></div>
+        <div class="meeting-detail">Тривалість: <span>10-15 хвилин</span></div>
+        <div class="meeting-detail">Учасники: <span>UAM + Тімлід</span></div>
+        <div class="meeting-detail">Формат: <span>Дзвінок або стендап</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Мета</div>
+    <p>Швидкий скан по всіх проєктах. Не детальний розбір — тільки статус, проблеми, швидкі рішення. Деталі виносяться на окрему зустріч.</p>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--ink-700);">Порядок денний</h3>
+
+  <div class="agenda-item">
+    <div class="agenda-time accent">1 хв</div>
+    <div class="agenda-body">
+      <h4>Відкриття дашборду</h4>
+      <p>UAM розшарює екран з дашбордом, де видно всі проєкти. Ніяких слайдів чи документів — дивимось на живі дані.</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time">7-10 хв</div>
+    <div class="agenda-body">
+      <h4>Прохід по проєктах</h4>
+      <p>UAM коротко проходиться по кожному проєкту. По кожному — відповідь на одне з трьох:</p>
+      <div class="table-wrap" style="margin-top: 10px;">
+        <table>
+          <thead><tr><th>Статус</th><th>Що говоримо</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="color: var(--danger); font-weight: 700;">Нижче KPI</td>
+              <td>Чому? Яка root cause? Які рішення вже прийняті або плануються? Які блокери? Чи потрібна допомога тімліда?</td>
+            </tr>
+            <tr>
+              <td style="color: var(--success); font-weight: 700;">KPI в нормі</td>
+              <td>Чи можемо масштабувати? На скільки? Що для цього потрібно? Рахуємось з тімлідом.</td>
+            </tr>
+            <tr>
+              <td style="color: var(--warning); font-weight: 700;">Є питання / блокер</td>
+              <td>Коротко суть. Якщо потрібно глибше — фіксуємо для окремої зустрічі.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time green">2-3 хв</div>
+    <div class="agenda-body">
+      <h4>Пріоритети на день</h4>
+      <p>UAM називає 1-3 головні задачі на день. Тімлід підтверджує або коригує пріоритети. Якщо є теми для окремої зустрічі — фіксуємо час.</p>
+      <div class="who">UAM + Тімлід</div>
+    </div>
+  </div>
+
+  <div class="prep-grid">
+    <div class="prep-card blue">
+      <h5>Підготовка UAM (до дейліку)</h5>
+      <ul>
+        <li>Щоденні звіти 3F5T відправлені в чат</li>
+        <li>Дашборд актуальний, дані за вчора</li>
+        <li>Список питань / блокерів (якщо є)</li>
+      </ul>
+    </div>
+    <div class="prep-card red">
+      <h5>Чого не робимо на дейліку</h5>
+      <ul>
+        <li>Не заглиблюємось у деталі кампаній</li>
+        <li>Не обговорюємо креативну стратегію</li>
+        <li>Не вирішуємо складні питання (окрема зустріч)</li>
+        <li>Не звітуємо "все нормально" без цифр</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- MONDAY PLANNERKA -->
+<!-- ============================================================ -->
+<div class="meeting" id="monday">
+  <div class="meeting-header">
+    <div class="meeting-icon blue">Пн</div>
+    <div class="meeting-meta">
+      <div class="meeting-label">ТИЖНЕВА ПЛАНЕРКА</div>
+      <h2>Планерка понеділок</h2>
+      <div class="meeting-details">
+        <div class="meeting-detail">Коли: <span>Понеділок</span></div>
+        <div class="meeting-detail">Тривалість: <span>45-60 хвилин</span></div>
+        <div class="meeting-detail">Учасники: <span>UAM + Тімлід</span></div>
+        <div class="meeting-detail">Формат: <span>Дзвінок / офлайн</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Мета</div>
+    <p>Підбити підсумки минулого тижня, зрозуміти що спрацювало і що ні, сформувати план дій на поточний тиждень. Це головна стратегічна зустріч UA-відділу.</p>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--ink-700);">Порядок денний</h3>
+
+  <div class="agenda-item">
+    <div class="agenda-time accent">5 хв</div>
+    <div class="agenda-body">
+      <h4>Огляд тижневих результатів</h4>
+      <p>UAM показує скріншот дашборду за минулий тиждень. Зведені метрики по всіх проєктах: Revenue, витрати, ROAS, CPA, прибуток. Порівняння з планом.</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time">15-20 хв</div>
+    <div class="agenda-body">
+      <h4>Детальний розбір по проєктах</h4>
+      <p>По кожному проєкту UAM презентує тижневий звіт:</p>
+      <ul style="margin: 8px 0 0; padding-left: 16px; font-size: 13px; color: var(--ink-400);">
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">3 головні дії</strong> — що конкретно зробили за тиждень, що привело до результату</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Висновки / спостереження</strong> — які патерни побачили, що працює, що ні</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Результати тестів</strong> — які тести завершились, що з ними (скейл / стоп)</li>
+        <li><strong style="color: var(--ink-700);">Проблеми та блокери</strong> — що не вдалось вирішити самостійно</li>
+      </ul>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time purple">10 хв</div>
+    <div class="agenda-body">
+      <h4>Обговорення рішень</h4>
+      <p>Тімлід дає зворотний зв'язок. Разом приймаємо рішення: що масштабувати, що зупинити, де змінити підхід. Фіксуємо конкретні action items з дедлайнами.</p>
+      <div class="who purple">UAM + Тімлід</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time green">10 хв</div>
+    <div class="agenda-body">
+      <h4>План на тиждень</h4>
+      <p>UAM презентує план: які оптимізації, які тести запустити, які креативи потрібні. Тімлід підтверджує або коригує. Фіксуємо пріоритети: що робимо першим.</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time">5 хв</div>
+    <div class="agenda-body">
+      <h4>Запити та потреби</h4>
+      <p>Що потрібно від креативного стратега (нові креативи, рефреш)? Що потрібно від GM (комунікація з клієнтом, питання по сайту)? Що потрібно від тімліда?</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="prep-grid">
+    <div class="prep-card blue">
+      <h5>Підготовка UAM (до планерки)</h5>
+      <ul>
+        <li>Тижневий звіт по кожному проєкту готовий</li>
+        <li>Скріншот дашборду за тиждень</li>
+        <li>3 головні дії + висновки сформульовані</li>
+        <li>План на поточний тиждень (чернетка)</li>
+        <li>Список запитів для інших ролей</li>
+      </ul>
+    </div>
+    <div class="prep-card green">
+      <h5>Результат після планерки</h5>
+      <ul>
+        <li>Затверджений план дій на тиждень</li>
+        <li>Список action items з дедлайнами</li>
+        <li>Рішення по масштабуванню / зупинці</li>
+        <li>Запити для креативного стратега</li>
+        <li>Питання для GM (якщо є)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- WEEKLY UAM SYNC -->
+<!-- ============================================================ -->
+<div class="meeting" id="creative">
+  <div class="meeting-header">
+    <div class="meeting-icon purple">КС</div>
+    <div class="meeting-meta">
+      <div class="meeting-label purple">WEEKLY UAM SYNC</div>
+      <h2>Тижнева зустріч з креативним стратегом</h2>
+      <div class="meeting-details">
+        <div class="meeting-detail">Коли: <span>Вівторок, 10:00</span></div>
+        <div class="meeting-detail">Тривалість: <span>~45 хвилин</span></div>
+        <div class="meeting-detail">Учасники: <span>UAM + Креативний стратег</span></div>
+        <div class="meeting-detail">Формат: <span>Дзвінок / офлайн</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Мета</div>
+    <p>Спільна діагностика просадок + узгодження пріоритетів. Не звітна зустріч. Не "звинувачуємо креатив" чи "звинувачуємо бюджет". Дивимось на цифри разом, шукаємо причину, приймаємо рішення.</p>
+  </div>
+
+  <div class="prep-grid" style="margin-bottom: 24px;">
+    <div class="prep-card red">
+      <h5>Правила Weekly UAM Sync</h5>
+      <ul>
+        <li>Проблема = гіпотеза + дані. Не "креативи не працюють", а "CTR впав з 2.1 до 0.8, Frequency 4.2, гіпотеза — fatigue"</li>
+        <li>Не починаємо без даних. Звіт і бюджетна картина оновлені ДО зустрічі</li>
+        <li>Не звинувачуємо за замовчуванням. UAM не каже "креатив поганий" без цифр. Стратег не каже "бюджет малий" без цифр</li>
+        <li>Конфлікти ескалюємо ліду на основі даних, не сваримось</li>
+      </ul>
+    </div>
+    <div class="prep-card blue">
+      <h5>Підготовка UAM</h5>
+      <ul>
+        <li>Ключові цифри по кожному проєкту: ROAS, CPA, витрати, дохід, CR</li>
+        <li>Де просадка цього тижня — з конкретними цифрами</li>
+        <li>Бюджетна картина: куди дамо більше на тестування, де зменшимо</li>
+        <li>Зміни в бюджетах / структурі за останній тиждень</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--ink-700);">Таблиця діагностики: це креатив чи ні?</h3>
+  <p style="font-size: 14px; color: var(--ink-400); margin-bottom: 16px;">Перед обговоренням кожного проєкту — дивимось на сигнали разом і визначаємо причину просадки.</p>
+
+  <div class="table-wrap" style="margin-bottom: 28px;">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Сигнал</th>
+          <th style="width: 40%;">Що це значить</th>
+          <th style="width: 35%;">Висновок</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: var(--danger);">CTR впав</strong>, ATC та CR стабільні</td>
+          <td>Люди перестали клікати. Або creative fatigue (Freq > 3), або кут не резонує.</td>
+          <td><strong style="color: var(--danger);">Креатив →</strong> рефреш або новий кут. Стратег готує заміну.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">CTR ок, ATC впав</strong>, CR стабільна</td>
+          <td>Клікають, але не додають в кошик. Посадка не відповідає оголошенню.</td>
+          <td><strong style="color: var(--magic-blue);">Не креатив →</strong> перевіряти відповідність landing до оферу в рекламі.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">CTR ок, ATC ок, CR впав</strong></td>
+          <td>Додають в кошик, але не купують. Проблема в checkout.</td>
+          <td><strong style="color: var(--magic-blue);">Не креатив →</strong> перевіряти checkout, доставку, оплату, ремаркетинг.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">CPM різко виріс</strong>, все інше стабільне</td>
+          <td>Аукціон став дорожчим. Конкуренція, сезон, свята.</td>
+          <td><strong style="color: var(--magic-blue);">Не креатив →</strong> ринкова ситуація, обговорити очікування з клієнтом.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">ROAS впав</strong>, Spend ок, покупки ок</td>
+          <td>Метрики ок, але виручка просіла. Можливо повернення або зміна асортименту.</td>
+          <td><strong style="color: var(--magic-blue);">Не креатив →</strong> запитати клієнта про повернення, складові чека.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">Технічні аномалії</strong> (NaN, нулі, розрив з CRM)</td>
+          <td>Атрибуція ламається. Дані не сходяться.</td>
+          <td><strong style="color: var(--magic-blue);">Не креатив →</strong> піксель, події, CAPI, налаштування.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--ink-700);">Порядок денний</h3>
+
+  <div class="agenda-item">
+    <div class="agenda-time accent">~30 хв</div>
+    <div class="agenda-body">
+      <h4>Per-client діагностика <span style="font-weight: 300; color: var(--ink-300); font-size: 13px;">— ~8 хв на проєкт</span></h4>
+      <p>По кожному проєкту:</p>
+      <ul style="margin: 8px 0 0; padding-left: 16px; font-size: 13px; color: var(--ink-400);">
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">UAM:</strong> де просадка цього тижня (з конкретними цифрами)</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Разом:</strong> дивимось на сигнали з діагностичної таблиці — це креатив чи зовнішнє?</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Якщо креатив →</strong> стратег: що рефрешимо, в які строки, що в продакшені</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Якщо не креатив →</strong> UAM передає клієнту або UA-команді на діагностику</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Стратег:</strong> які проєкти в пріоритеті по креативу цього тижня</li>
+        <li><strong style="color: var(--ink-700);">UAM:</strong> куди дамо більше бюджету на тестування, де зменшимо</li>
+      </ul>
+      <div class="who">UAM + КС</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time purple">10 хв</div>
+    <div class="agenda-body">
+      <h4>Узгодження пріоритетів</h4>
+      <ul style="margin: 8px 0 0; padding-left: 16px; font-size: 13px; color: var(--ink-400);">
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Пріоритет №1 тижня:</strong> який клієнт у фокусі — туди йдуть і креативи, і бюджет</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Де знижуємо темп:</strong> немає креативів в продакшені — тримаємо рівень</li>
+        <li style="margin-bottom: 4px;"><strong style="color: var(--ink-700);">Де ризик:</strong> випадання з аукціону — потрібно прискорити продакшн</li>
+        <li><strong style="color: var(--ink-700);">Бюджетні переміщення</strong> між проєктами якщо потрібно</li>
+      </ul>
+      <div class="who purple">UAM + КС</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time green">5 хв</div>
+    <div class="agenda-body">
+      <h4>Wrap-up</h4>
+      <ul style="margin: 8px 0 0; padding-left: 16px; font-size: 13px; color: var(--ink-400);">
+        <li style="margin-bottom: 4px;">Записуємо рішення в Google Doc клієнта (розділ "Тижневі рішення")</li>
+        <li style="margin-bottom: 4px;">Точки контролю — коли перевіряємо чи план працює</li>
+        <li>Що перевіряємо на наступному Weekly UAM Sync</li>
+      </ul>
+      <div class="who">UAM + КС</div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin: 28px 0 16px; color: var(--ink-700);">Як правильно комунікувати на зустрічі</h3>
+
+  <div class="prep-grid">
+    <div class="prep-card red">
+      <h5>❌ Як НЕ треба</h5>
+      <ul>
+        <li>"Креативи не працюють, потрібні нові" — без цифр</li>
+        <li>"Я не буду зупиняти, він ще може спрацювати" — без аргументу</li>
+        <li>"Терміново робіть нові креативи!" — без контексту</li>
+      </ul>
+    </div>
+    <div class="prep-card green">
+      <h5>✓ Як треба</h5>
+      <ul>
+        <li>"ROAS впав з 2.5 до 1.8. CR стабільна. CPM не виріс. Думаю проблема в креативах. Що бачиш у Hook/Hold?"</li>
+        <li>"Креатив у learning phase (4 день), даних мало. Давай зачекаємо ще 3 дні?"</li>
+        <li>"2 з 3 креативів у Freq 4+. Потрібен прискорений рефреш — згоден на пріоритет?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin: 28px 0 16px; color: var(--ink-700);">Вихідні продукти зустрічі</h3>
+
+  <div class="prep-grid">
+    <div class="prep-card green">
+      <h5>Що маємо після зустрічі</h5>
+      <ul>
+        <li>Кожна просадка має діагноз: креативна, посадка, бюджет, ринкове, технічне</li>
+        <li>Список замін креативів з відповідальними і датами</li>
+        <li>Пріоритет тижня встановлено: який проєкт у фокусі</li>
+        <li>Бюджетні переміщення зафіксовано</li>
+        <li>Що передаємо назад клієнту або UA-команді (не креативна зона)</li>
+        <li>Рішення записані в Google Doc клієнта</li>
+      </ul>
+    </div>
+    <div class="prep-card purple">
+      <h5>Підготовка КС</h5>
+      <ul>
+        <li>Скоркард креативів за тиждень (заповнений)</li>
+        <li>Аналіз: що спрацювало / не спрацювало + чому</li>
+        <li>Статус виробництва (pipeline) — що в роботі, на якому етапі</li>
+        <li>Класифікація креативів у Бібліотеці оновлена</li>
+        <li>Досягнення виставлені (Winner / Loser)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- FRIDAY PLANNERKA -->
+<!-- ============================================================ -->
+<div class="meeting" id="friday">
+  <div class="meeting-header">
+    <div class="meeting-icon green">Пт</div>
+    <div class="meeting-meta">
+      <div class="meeting-label green">ТИЖНЕВА ПЛАНЕРКА</div>
+      <h2>Планерка п'ятниця</h2>
+      <div class="meeting-details">
+        <div class="meeting-detail">Коли: <span>П'ятниця</span></div>
+        <div class="meeting-detail">Тривалість: <span>30-40 хвилин</span></div>
+        <div class="meeting-detail">Учасники: <span>UAM + Тімлід</span></div>
+        <div class="meeting-detail">Формат: <span>Дзвінок / офлайн</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Мета</div>
+    <p>Закрити тиждень. Перевірити виконання action items з понеділкової планерки. Зафіксувати пріоритети на наступний тиждень. Підготувати запити.</p>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--ink-700);">Порядок денний</h3>
+
+  <div class="agenda-item">
+    <div class="agenda-time accent">10 хв</div>
+    <div class="agenda-body">
+      <h4>Статус action items</h4>
+      <p>Проходимось по списку action items з понеділкової планерки. Що зроблено, що ні, чому. Якщо щось не виконано — чи актуально, чи переносимо на наступний тиждень.</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time">10 хв</div>
+    <div class="agenda-body">
+      <h4>Проміжні результати тижня</h4>
+      <p>Швидкий огляд метрик за тиждень (не детальний — повний розбір у понеділок). Фокус на тому, чи йдемо по плану. Є чи відхилення від KPI.</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time purple">10 хв</div>
+    <div class="agenda-body">
+      <h4>Пріоритети на наступний тиждень</h4>
+      <p>UAM пропонує фокус на наступний тиждень. Тімлід коригує. Фіксуємо: що робимо в понеділок першим, які тести запускаємо, які креативи потрібні.</p>
+      <div class="who purple">UAM + Тімлід</div>
+    </div>
+  </div>
+
+  <div class="agenda-item">
+    <div class="agenda-time green">5 хв</div>
+    <div class="agenda-body">
+      <h4>Підготовка креативних запитів</h4>
+      <p>Якщо потрібні нові креативи на наступний тиждень — фіксуємо запити зараз, щоб креативний стратег міг почати роботу. Формат: продукт + канал + angle + дедлайн.</p>
+      <div class="who">UAM</div>
+    </div>
+  </div>
+
+  <div class="prep-grid">
+    <div class="prep-card blue">
+      <h5>Підготовка UAM</h5>
+      <ul>
+        <li>Список action items з понеділка зі статусами</li>
+        <li>Проміжні метрики за тиждень</li>
+        <li>Чернетка пріоритетів на наступний тиждень</li>
+        <li>Список креативних запитів (якщо є)</li>
+      </ul>
+    </div>
+    <div class="prep-card green">
+      <h5>Результат після планерки</h5>
+      <ul>
+        <li>Всі action items закриті або перенесені</li>
+        <li>Пріоритети на наступний тиждень зафіксовані</li>
+        <li>Креативні запити передані КС</li>
+        <li>UAM знає з чого починати понеділок</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- GENERAL RULES -->
+<!-- ============================================================ -->
+<div class="meeting" id="rules">
+  <div class="meeting-header">
+    <div class="meeting-icon" style="background: var(--ink-600);">R</div>
+    <div class="meeting-meta">
+      <div class="meeting-label" style="color: var(--ink-400);">ЗАГАЛЬНЕ</div>
+      <h2>Правила зустрічей</h2>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width: 40%;">Правило</th><th>Деталі</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Починаємо вчасно</strong></td>
+          <td>Запізнення — не чекаємо. Якщо хтось не може бути — попереджає заздалегідь.</td>
+        </tr>
+        <tr>
+          <td><strong>Говоримо цифрами</strong></td>
+          <td>"Добре" і "нормально" — не відповідь. Конкретні метрики: ROAS 4.2, CPA $12, Revenue $3,200.</td>
+        </tr>
+        <tr>
+          <td><strong>Не обговорюємо деталі на дейліку</strong></td>
+          <td>Дейлік — швидкий скан. Якщо питання потребує більше 2 хвилин — виносимо на окрему зустріч або планерку.</td>
+        </tr>
+        <tr>
+          <td><strong>Фіксуємо action items</strong></td>
+          <td>Кожна зустріч закінчується конкретними задачами: що, хто, до коли. Відповідальний за фіксацію — UAM.</td>
+        </tr>
+        <tr>
+          <td><strong>Підготовка обов'язкова</strong></td>
+          <td>На зустріч приходимо з даними, а не з питанням "а що там у нас". Звіти готові до початку.</td>
+        </tr>
+        <tr>
+          <td><strong>Камери увімкнені (якщо онлайн)</strong></td>
+          <td>Без телефонів і паралельних задач.</td>
+        </tr>
+        <tr>
+          <td><strong>Парковка</strong></td>
+          <td>Теми поза рамками зустрічі — записуємо і вирішуємо окремо. Не відхиляємось від адженди.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--ink-700);">Розклад зустрічей на тиждень</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Зустріч</th><th>День</th><th>Тривалість</th><th>Учасники</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Дейлік</strong></td>
+          <td>Пн — Пт, 10:00</td>
+          <td>10-15 хв</td>
+          <td>UAM + Тімлід</td>
+        </tr>
+        <tr>
+          <td><strong>Планерка (результати + план)</strong></td>
+          <td>Понеділок</td>
+          <td>45-60 хв</td>
+          <td>UAM + Тімлід</td>
+        </tr>
+        <tr>
+          <td><strong>Weekly UAM Sync</strong></td>
+          <td>Вівторок, 10:00</td>
+          <td>~45 хв</td>
+          <td>UAM + КС</td>
+        </tr>
+        <tr>
+          <td><strong>Планерка (підсумки + пріоритети)</strong></td>
+          <td>П'ятниця</td>
+          <td>30-40 хв</td>
+          <td>UAM + Тімлід</td>
+        </tr>
+        <tr>
+          <td><strong>Екстра-зустріч (за потреби)</strong></td>
+          <td>Будь-який день</td>
+          <td>20-40 хв</td>
+          <td>UAM + Тімлід (+ інші за потреби)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prep-grid">
+    <div class="prep-card red">
+      <h5>Екстра-зустрічі</h5>
+      <p>Навіть на загальній планерці часу може не вистачити, якщо в одному або декількох проєктах щось пішло не так і потрібно детально розібратись. У таких випадках призначається додаткова зустріч — щоб чітко розібратись в проблемі без поспіху.</p>
+      <ul>
+        <li>Призначається коли нагальні задачі потребують глибокого розбору</li>
+        <li>Може бути одразу після загальної планерки</li>
+        <li>Може назначатись на будь-який день, як тільки закриються поточні нагальні справи</li>
+        <li>Фокус: один конкретний проєкт або одна конкретна проблема</li>
+        <li>Формат: дані → root cause → рішення → action items</li>
+      </ul>
+    </div>
+    <div class="prep-card blue">
+      <h5>Коли назначати екстра-зустріч</h5>
+      <ul>
+        <li>Проєкт нижче KPI 3+ дні і стандартні рішення не працюють</li>
+        <li>На дейліку або планерці не вистачило часу для розбору</li>
+        <li>Потрібно прийняти рішення, яке виходить за рамки повноважень UAM</li>
+        <li>Декілька проєктів одночасно просіли — треба пріоритизувати</li>
+        <li>Зміна стратегії по проєкту (новий продукт, бюджет, канал)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Загальний час на зустрічі</div>
+    <p>Дейліки: 5 x 15 хв = 75 хв. Планерки: 60 + 40 = 100 хв. Weekly UAM Sync: 45 хв. Разом: ~3.5 години на тиждень + екстра-зустрічі за потреби. Решту часу — робота, не зустрічі.</p>
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="logo">magic</div>
+  <div>advertise for e-commerce</div>
+  <div style="margin-top: 6px; font-size: 11px;">Внутрішній документ. Не для розповсюдження.</div>
+</div>
+
+</body>
+</html>

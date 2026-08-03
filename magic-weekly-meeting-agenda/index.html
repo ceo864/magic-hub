@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Регламент зустрічей — Креативна команда</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
+    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
+    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+  
+  .header{background:var(--dark);color:white;padding:36px 40px 28px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .header-content{flex:1}
+  .header h1{font-size:26px;margin-bottom:4px;font-weight:700}
+  .header p{opacity:.6;font-size:14px}
+  .header button{padding:8px 20px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
+  
+  .container{max-width:920px;margin:0 auto;padding:36px 24px 80px}
+  
+  .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+  .intro h2{font-size:18px;font-weight:700;margin-bottom:14px;color:var(--dark)}
+  .intro p{color:var(--text);font-size:14px;margin-bottom:10px}
+  .intro p:last-child{margin-bottom:0}
+  
+  .meeting-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
+  .meeting-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+  .meeting-card .duration{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:10px}
+  .dur-1{background:#EBF4FF;color:var(--blue)}
+  .dur-2{background:#EBFFF6;color:var(--green)}
+  .dur-3{background:#FFF6EB;color:var(--orange)}
+  .meeting-card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+  .meeting-card p{font-size:12px;color:var(--muted)}
+  
+  .section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden}
+  .section-head{padding:24px 28px 18px;border-bottom:1px solid var(--border)}
+  .section-head .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:24px;font-size:12px;font-weight:700;margin-bottom:12px}
+  .badge-daily{background:#EBF4FF;color:var(--blue)}
+  .badge-weekly{background:#EBFFF6;color:var(--green)}
+  .badge-uam{background:#FFF6EB;color:var(--orange)}
+  .section-head h2{font-size:22px;font-weight:700;color:var(--dark);margin-bottom:6px}
+  .section-head .meta{font-size:13px;color:var(--muted)}
+  .section-body{padding:24px 28px}
+  
+  .info-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px}
+  .info-cell{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:14px}
+  .info-cell label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+  .info-cell .value{font-size:14px;font-weight:600;color:var(--text)}
+  
+  .block{padding:14px 16px;background:#fafbfd;border:1px solid var(--border);border-radius:12px;margin-bottom:10px}
+  .block-num{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;background:var(--dark);color:white;font-size:11px;font-weight:700;border-radius:6px;margin-right:10px;vertical-align:middle}
+  .block-title{font-size:14px;font-weight:700;display:inline-block;vertical-align:middle}
+  .block-time{display:inline-block;float:right;font-size:11px;color:var(--muted);font-weight:600;background:#fff;padding:3px 10px;border-radius:6px;border:1px solid var(--border);vertical-align:middle}
+  .block-body{margin-top:10px;padding-left:34px;font-size:13px;color:var(--text)}
+  .block-body ul{list-style:none;padding-left:0}
+  .block-body li{padding:6px 0;display:flex;align-items:flex-start;gap:8px}
+  .block-body li::before{content:"›";color:var(--accent);font-weight:700;flex-shrink:0}
+  
+  .h3{font-size:14px;font-weight:700;color:var(--dark);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.6px}
+  
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+  .rule{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:14px}
+  .rule strong{display:block;font-size:13px;font-weight:700;margin-bottom:4px;color:var(--dark)}
+  .rule small{font-size:12px;color:var(--muted);line-height:1.45}
+  
+  .output{background:linear-gradient(135deg,var(--dark),#1a2340);color:white;border-radius:14px;padding:20px;margin-top:18px}
+  .output h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);margin-bottom:12px}
+  .output ul{list-style:none;padding:0}
+  .output li{padding:5px 0;font-size:13px;opacity:.9;display:flex;align-items:flex-start;gap:8px}
+  .output li::before{content:"☐";opacity:.6;flex-shrink:0}
+  
+  .roles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+  .role-card{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:16px}
+  .role-card h4{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .role-card .role-tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+  .tag-strat{background:#EBF4FF;color:var(--blue)}
+  .tag-uam{background:#FFF6EB;color:var(--orange)}
+  .role-card ul{list-style:none;padding:0}
+  .role-card li{font-size:12px;color:var(--text);padding:5px 0;display:flex;gap:8px;line-height:1.4}
+  .role-card li::before{content:"•";color:var(--accent);flex-shrink:0}
+  
+  .diag-table{margin-top:18px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .diag-row{display:grid;grid-template-columns:160px 1fr 1fr;border-bottom:1px solid var(--border)}
+  .diag-row:last-child{border-bottom:none}
+  .diag-row.head{background:var(--dark);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .diag-row.head > div{padding:12px 14px}
+  .diag-row > div{padding:14px;font-size:12px;line-height:1.45}
+  .diag-row .signal{background:#fafbfd;font-weight:600;font-size:11px}
+  .diag-row .conclusion-c{background:#FFEFF0;color:var(--danger);font-weight:600}
+  .diag-row .conclusion-na{background:#EBF4FF;color:var(--blue);font-weight:600}
+  
+  .calendar{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px}
+  .calendar h2{font-size:18px;font-weight:700;margin-bottom:18px;color:var(--dark)}
+  .week-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .day{padding:14px 12px;border-radius:10px;background:#fafbfd;border:1px solid var(--border);min-height:140px}
+  .day-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px}
+  .day-meeting{padding:8px 10px;border-radius:6px;font-size:11px;font-weight:600;margin-bottom:6px;line-height:1.3}
+  .meet-daily{background:#EBF4FF;color:var(--blue)}
+  .meet-creative{background:#EBFFF6;color:var(--green)}
+  .meet-uam{background:#FFF6EB;color:var(--orange)}
+  .meet-time{font-weight:400;opacity:.7;display:block}
+  
+  .principle{background:linear-gradient(135deg,#FFF6EB,#FFEFF0);border-radius:14px;padding:20px;margin:18px 0}
+  .principle h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:8px}
+  .principle p{font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.5}
+  .principle p:last-child{margin-bottom:0}
+  
+  @media(max-width:768px){
+    .container{padding:24px 16px 60px}
+    .meeting-grid,.info-row,.rules,.roles-grid{grid-template-columns:1fr}
+    .week-grid{grid-template-columns:1fr;gap:8px}
+    .day{min-height:auto}
+    .header{padding:24px 16px}
+    .diag-row{grid-template-columns:1fr}
+  }
+  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.section,.calendar,.intro,.meeting-card{break-inside:avoid;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div class="header-content">
+    <div style="font-weight:900;font-size:14px;opacity:.4;margin-bottom:14px;letter-spacing:.5px">magic</div>
+    <h1>РЕГЛАМЕНТ ЗУСТРІЧЕЙ — КРЕАТИВНА КОМАНДА</h1>
+    <p>Daily 15хв · Weekly Creative Review · Weekly UAM Sync · Mid-week UAM Sync</p>
+  </div>
+  <button onclick="window.print()">Друк / PDF</button>
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Логіка чотирьох зустрічей</h2>
+    <p><strong>Daily — швидкий sync.</strong> Хто що робить сьогодні, де блокери. Не про обговорення — про координацію.</p>
+    <p><strong>Weekly Creative Review — глибокий розбір.</strong> Раз на тиждень в понеділок. Дашборд тиждень → action lists → виконуємо. Ділимось патернами, інспірацією.</p>
+    <p><strong>Weekly UAM Sync — звітна зустріч понеділка з UAM.</strong> Аналіз минулого тижня + узгодження пріоритетів і бюджетів на новий тиждень. Спільна діагностика просадок на основі даних.</p>
+    <p><strong>Mid-week UAM Sync — короткий sync середини тижня.</strong> Формат як дейлік: чи виконується що домовились у понеділок, де відхилення, що поправити до кінця тижня.</p>
+  </div>
+
+  <div class="meeting-grid">
+    <div class="meeting-card">
+      <div class="duration dur-1">Щодня</div>
+      <h3>Daily Stand-up</h3>
+      <p>15 хв · Креативи · 09:30</p>
+    </div>
+    <div class="meeting-card">
+      <div class="duration dur-2">Понеділок</div>
+      <h3>Weekly Creative Review</h3>
+      <p>60-90 хв · Креативи · 11:00</p>
+    </div>
+    <div class="meeting-card">
+      <div class="duration dur-3">Понеділок</div>
+      <h3>Weekly UAM Sync</h3>
+      <p>60 хв · Креативи + UAM · 12:00</p>
+    </div>
+    <div class="meeting-card">
+      <div class="duration dur-3">Середа</div>
+      <h3>Mid-week UAM Sync</h3>
+      <p>20-30 хв · Креативи + UAM · 11:00</p>
+    </div>
+  </div>
+
+  <!-- DAILY -->
+  <div class="section">
+    <div class="section-head">
+      <span class="badge badge-daily">Щодня · 15 хвилин · 09:30-09:45</span>
+      <h2>Daily Stand-up</h2>
+      <p class="meta">Учасники: всі креативні стратеги · Формат: стоячи або в Zoom · Без презентацій</p>
+    </div>
+    <div class="section-body">
+      
+      <div class="block">
+        <span class="block-num">1</span>
+        <span class="block-title">Раунд по черзі — кожен по 2 хвилини</span>
+        <span class="block-time">10 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Над чим працюю сьогодні (1-2 пункти, не список з 10)</li>
+            <li>Що вчора зрушилось — короткий апдейт</li>
+            <li>Де блокую або де потрібна допомога</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">2</span>
+        <span class="block-title">Парковка проблем</span>
+        <span class="block-time">3 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Хто кому потрібен на короткий sync після стендапу</li>
+            <li>Що ескалюємо до ліда (рішення яке не на стендапі)</li>
+            <li>Що беремо в порядок денний на тиждень якщо повторюється</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">3</span>
+        <span class="block-title">Закриваємо</span>
+        <span class="block-time">2 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Хто з ким сидить далі (1:1 sync)</li>
+            <li>Дата наступної важливої події (запуск, дедлайн брифа)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h3">Правила Daily</div>
+      <div class="rules">
+        <div class="rule">
+          <strong>15 хвилин — жорсткий ліміт</strong>
+          <small>Якщо тема довша — sync після стендапу або переноси на Weekly Review</small>
+        </div>
+        <div class="rule">
+          <strong>Не звітуй про все</strong>
+          <small>1-2 ключові пункти достатньо. Деталі — в файлі клієнта</small>
+        </div>
+        <div class="rule">
+          <strong>Без презентацій і документів</strong>
+          <small>Daily — це швидкий координатор, не звітна сесія</small>
+        </div>
+        <div class="rule">
+          <strong>Запізнення = пропустив</strong>
+          <small>Не зупиняємо потік щоб переказати тому хто запізнився</small>
+        </div>
+      </div>
+
+      <div class="output">
+        <h4>Вихід з Daily</h4>
+        <ul>
+          <li>Кожен знає що робить сьогодні і де команда його допомагає</li>
+          <li>Блокери ескальовано ліду або сплановано sync</li>
+          <li>Список 1:1 sync-ів після стендапу</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEKLY CREATIVE -->
+  <div class="section">
+    <div class="section-head">
+      <span class="badge badge-weekly">Понеділок · 60-90 хвилин · 11:00</span>
+      <h2>Weekly Creative Review</h2>
+      <p class="meta">Учасники: всі креативні стратеги · Формат: робоча сесія з відкритими файлами клієнтів</p>
+    </div>
+    <div class="section-body">
+      
+      <div class="info-row">
+        <div class="info-cell">
+          <label>Підготовка ДО</label>
+          <div class="value">Кожен стратег ОНОВЛЮЄ Звіт + Бібліотеку своїх клієнтів</div>
+        </div>
+        <div class="info-cell">
+          <label>Що відкрите</label>
+          <div class="value">Дашборд тиждень + Дашборд бібліотека</div>
+        </div>
+        <div class="info-cell">
+          <label>Ціль</label>
+          <div class="value">Конкретні дії на наступні 5 днів роботи</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">1</span>
+        <span class="block-title">Для кожного клієнта (10 хв на клієнта)</span>
+        <span class="block-time">~50 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Дашборд тиждень — пройти кожен список дій (Референс / Рефреш терм / Рефреш план / Зупинити)</li>
+            <li>Що зробили минулого тижня — порівняти з планом</li>
+            <li>Що передали на запуск (готові креативи що пішли в Ads Manager)</li>
+            <li>Що зараз в продакшені (брифи в роботі) — дедлайни і коли запускається</li>
+            <li>Які тести закрили + висновки (одне речення)</li>
+            <li>Питання до команди — порада, аудит хука, мозкоштурм</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">2</span>
+        <span class="block-title">Cross-client patterns</span>
+        <span class="block-time">15 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Що цього тижня спрацювало в кількох клієнтів — спільні патерни</li>
+            <li>Що НЕ спрацювало — спільні провали</li>
+            <li>Записуємо в Google Doc "Patterns log" — це база для майбутнього</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">3</span>
+        <span class="block-title">Inspiration share</span>
+        <span class="block-time">10 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Кожен показує 1-2 креативи що бачив на тижні (не з нашої роботи)</li>
+            <li>Що цікавого в Ad Library, на YouTube, в TikTok For You</li>
+            <li>Кросс-нішевий перенос — як я можу адаптувати це для свого клієнта</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">4</span>
+        <span class="block-title">Підсумок</span>
+        <span class="block-time">5 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Кожен формулює 3 найважливіші дії на тиждень</li>
+            <li>Лід фіксує в командному документі</li>
+            <li>Що перевіряємо на наступному Weekly Review</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h3">Правила Weekly Creative</div>
+      <div class="rules">
+        <div class="rule">
+          <strong>Без актуалізації даних = пропускаєш</strong>
+          <small>Якщо Звіт не оновлений — клієнта не розглядаємо. Не марнуємо чужий час</small>
+        </div>
+        <div class="rule">
+          <strong>10 хвилин на клієнта — жорстко</strong>
+          <small>Глибокий аналіз — окрема 1:1 сесія. На Weekly — рішення, не дослідження</small>
+        </div>
+        <div class="rule">
+          <strong>Кожне рішення = автор</strong>
+          <small>"Запустити рефреш" не достатньо. "Аня запускає рефреш до п'ятниці"</small>
+        </div>
+        <div class="rule">
+          <strong>Patterns log оновлюємо щотижня</strong>
+          <small>Без накопичення — нема корпоративної пам'яті. За рік це найцінніший актив</small>
+        </div>
+      </div>
+
+      <div class="output">
+        <h4>Вихід з Weekly Creative</h4>
+        <ul>
+          <li>Кожен клієнт має чіткий план на тиждень: що скейлити, що рефрешити, що тестувати</li>
+          <li>Patterns log оновлений новими інсайтами</li>
+          <li>Список питань до UAM на завтрашній sync</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEKLY UAM -->
+  <div class="section">
+    <div class="section-head">
+      <span class="badge badge-uam">Понеділок · 60 хвилин · 12:00</span>
+      <h2>Weekly UAM Sync</h2>
+      <p class="meta">Учасники: креативні стратеги + UAM · Формат: звітна зустріч понеділка — аналіз минулого тижня + узгодження пріоритетів</p>
+    </div>
+    <div class="section-body">
+      
+      <div class="principle">
+        <h4>Контекст: ми працюємо з широкими аудиторіями</h4>
+        <p>На відміну від моделі з вузькими / LAL / Custom аудиторіями, у нас аудиторія залежить від креативу в першу чергу. Алгоритм Meta/TikTok знаходить релевантного користувача через сам креатив — кому креатив "продає", тому його і дають.</p>
+        <p><strong>Це означає: "вигорання аудиторії" як окрема причина просадки — рідкість.</strong> Якщо ROAS падає при широких аудиторіях, на 90% це або креативна втома (Frequency 3.5+ на тих самих креативах), або проблема ззовні креативу (посадка, оффер, технічне, ринок).</p>
+      </div>
+
+      <div class="h3">Що приносить кожен на зустріч</div>
+      <div class="roles-grid">
+        <div class="role-card">
+          <h4><span class="role-tag tag-strat">Стратег</span> Креативна картина</h4>
+          <ul>
+            <li>Список креативів на терміновий рефреш (Frequency >3.5 або CTR впав від піку)</li>
+            <li>Список креативів на плановий рефреш (CTR нижче таргету)</li>
+            <li>Список креативів-домінантів (Референс для нових)</li>
+            <li>Hook Rate / Hold Rate по поточних креативах</li>
+            <li>Брифи в продакшені + дати запуску</li>
+            <li>Гіпотези на новий тест</li>
+            <li>Які проєкти в пріоритеті по продакшену цього тижня</li>
+          </ul>
+        </div>
+        <div class="role-card">
+          <h4><span class="role-tag tag-uam">UAM</span> Бюджетна картина</h4>
+          <ul>
+            <li>По кожному клієнту: ROAS / CPA / Spend на рівні кампанії</li>
+            <li>Де є просадки — з конкретними цифрами (не "погано йде")</li>
+            <li>Структура: що змінювали в кампаніях за тиждень</li>
+            <li>CR на посадці — стабільна чи впала</li>
+            <li>CPM динаміка — чи піднявся аукціон</li>
+            <li>Технічні питання (модерація, обмеження, піксель)</li>
+            <li>Бюджетні плани на наступний тиждень</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h3">Як діагностуємо просадки разом</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Якщо ROAS / CPA впали — дивимось які додаткові метрики поводяться як, і визначаємо причину. Не звинувачуємо креатив за замовчуванням.</p>
+
+      <div class="diag-table">
+        <div class="diag-row head">
+          <div>Сигнал</div>
+          <div>Що бачимо в даних</div>
+          <div>Висновок</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">CTR впав<br/>Hook впав<br/>Frequency 3.5+</div>
+          <div>Креатив втратив здатність чіпляти. Алгоритм показує тим самим людям повторно бо новій аудиторії креатив не продає.</div>
+          <div class="conclusion-c">Креативна втома → терміновий рефреш</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">CTR стабільний<br/>Hold впав</div>
+          <div>Хук ще працює, чіпляє. Але люди не досидіти ролик. Тіло ролика обіцянку хука не виконує.</div>
+          <div class="conclusion-c">Креативна проблема → переробити середину/кінцівку, хук залишити</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">CTR ок<br/>Hook ок<br/>CR на посадці впала</div>
+          <div>Креатив працює — приводить трафік. Конверсія падає на сайті. Користувачі не довіряють або щось ламається.</div>
+          <div class="conclusion-na">Не креатив → перевіряти посадку, оффер, ціни, швидкість, технічне</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">Все стабільне<br/>CPM зростає<br/>CPA росте</div>
+          <div>Аукціон подорожчав (сезон, конкуренти, чорна п'ятниця). Той самий креатив — дорожче за показ.</div>
+          <div class="conclusion-na">Не креатив → ринкова ситуація, обговорити з клієнтом очікування</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">CTR ок<br/>ATC ок<br/>Покупки впали</div>
+          <div>Користувачі додають у кошик але не оплачують. Конверсія "тіло-checkout" впала.</div>
+          <div class="conclusion-na">Не креатив → перевіряти checkout, доставку, оплату, ремаркетинг</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">ROAS впав<br/>Spend ок<br/>Покупки ок</div>
+          <div>Усі метрики ок, тільки виручка просіла. Можливо вища повернення замовлень або зміна асортименту.</div>
+          <div class="conclusion-na">Не креатив → запитати клієнта про повернення, складові чека, асортимент</div>
+        </div>
+
+        <div class="diag-row">
+          <div class="signal">Технічні аномалії<br/>(NaN, нулі, розрив з CRM)</div>
+          <div>Атрибуція ламається. Дані не сходяться між Meta/TikTok і CRM клієнта.</div>
+          <div class="conclusion-na">Не креатив → піксель, події, конверсійний API, налаштування</div>
+        </div>
+      </div>
+
+      <div class="h3">Структура зустрічі</div>
+
+      <div class="block">
+        <span class="block-num">1</span>
+        <span class="block-title">Per-client діагностика (8 хв на клієнта)</span>
+        <span class="block-time">~30 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>UAM: де просадка цього тижня (з конкретними цифрами)</li>
+            <li>Дивимось разом на сигнали з таблиці вище — це креатив чи зовнішнє</li>
+            <li>Якщо креатив — стратег: що рефрешимо, в які строки, що в продакшені</li>
+            <li>Якщо не креатив — UAM сам йде робити діагностику (посадка, технічне, оффер, аукціон). За потреби передає на Growth Marketer для глибшого аналізу</li>
+            <li>Стратег: які проєкти в пріоритеті по креативу цього тижня</li>
+            <li>UAM: куди дамо більше бюджету на тестування, де зменшимо</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">2</span>
+        <span class="block-title">Узгодження пріоритетів</span>
+        <span class="block-time">10 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Який клієнт цього тижня пріоритет №1 — туди йдуть і креативи, і бюджет, і фокус</li>
+            <li>Де можна знизити темп — нема креативів в продакшені, держимо рівень</li>
+            <li>Де ризик випадання з аукціону — потрібно прискорити продакшн</li>
+            <li>Бюджетні переміщення між клієнтами якщо потрібно</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">3</span>
+        <span class="block-title">Wrap-up</span>
+        <span class="block-time">5 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Записуємо рішення в Google Doc клієнта (розділ "Тижневі рішення")</li>
+            <li>Точки контролю — коли перевіряємо чи план працює</li>
+            <li>Що перевіряємо наступного UAM Sync</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h3">Правила Weekly UAM</div>
+      <div class="rules">
+        <div class="rule">
+          <strong>Проблема = гіпотеза + дані</strong>
+          <small>Не "креативи не працюють". А "креатив А: CTR з 2.1 впав до 0.8, Frequency 4.2. Гіпотеза — fatigue, рефреш"</small>
+        </div>
+        <div class="rule">
+          <strong>Не починаємо без даних</strong>
+          <small>Стратеги мали оновити Звіт, UAM — звести бюджетну картину. Дискусія "що зробити" замість "де ми зараз" не валідна</small>
+        </div>
+        <div class="rule">
+          <strong>Не звинувачуємо за замовчуванням</strong>
+          <small>UAM не каже "креатив поганий" без цифр. Стратег не каже "бюджет малий" без цифр. Завжди дивимось разом по таблиці</small>
+        </div>
+        <div class="rule">
+          <strong>Конфлікти ескалюємо</strong>
+          <small>Якщо UAM хоче лити в креатив що стратег вважає вигорілим — лід вирішує на основі даних</small>
+        </div>
+      </div>
+
+      <div class="output">
+        <h4>Вихід з Weekly UAM</h4>
+        <ul>
+          <li>Кожна просадка має діагноз: креативна, посадка, бюджет, ринкове, технічне</li>
+          <li>Список замін креативів з відповідальними і датами</li>
+          <li>Пріоритет тижня встановлено: який клієнт у фокусі</li>
+          <li>Бюджетні переміщення зафіксовано</li>
+          <li>UAM зафіксував список своїх діагностичних задач (посадка / технічне / ринок). Що передає Growth Marketer — окремий список</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MID-WEEK UAM -->
+  <div class="section">
+    <div class="section-head">
+      <span class="badge badge-uam">Середа · 20-30 хвилин · 11:00</span>
+      <h2>Mid-week UAM Sync</h2>
+      <p class="meta">Учасники: креативні стратеги + UAM · Формат: короткий sync як дейлік — звіряємо чи виконується план понеділка</p>
+    </div>
+    <div class="section-body">
+
+      <div class="principle">
+        <h4>Навіщо ще одна зустріч</h4>
+        <p>У понеділок на Weekly UAM Sync ми домовляємось про план на тиждень — які креативи рефрешимо, куди йде бюджет, які діагностичні задачі у UAM. До п'ятниці без контролю буває так: щось зрушилось, щось не виконано, щось пішло не так. Замість того щоб дізнатись про це в понеділок наступного тижня — звіряємо у середу.</p>
+        <p><strong>Це не нова дискусія.</strong> Це сінк-чек, як дейлік: статус по картках понеділка, що поправити до кінця тижня.</p>
+      </div>
+
+      <div class="h3">Структура зустрічі</div>
+
+      <div class="block">
+        <span class="block-num">1</span>
+        <span class="block-title">Швидкий обхід пріоритетів понеділка</span>
+        <span class="block-time">10-15 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Кожен топ-пріоритет тижня — статус: на треку / відхилення / заблоковано</li>
+            <li>Креативи на терміновий рефреш — встигаємо до п'ятниці? Що в продакшені?</li>
+            <li>Бюджетні переміщення — виконано чи ще ні?</li>
+            <li>Діагностичні задачі UAM — що вже з'ясувалось, що ще в роботі</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">2</span>
+        <span class="block-title">Нові сигнали з даних</span>
+        <span class="block-time">10 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>UAM: що нового видно за пн-вт-ср (нові просадки, нові прориви)</li>
+            <li>Стратег: чи з'явились нові креативи з рекомендацією "Рефреш терміновий" / "Зупинити"</li>
+            <li>Чи потрібні термінові рішення до п'ятниці — або тримаємось до понеділка</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-num">3</span>
+        <span class="block-title">Коригування плану</span>
+        <span class="block-time">5 хв</span>
+        <div class="block-body">
+          <ul>
+            <li>Що поправити до кінця тижня — конкретні дії з дедлайном "до п'ятниці"</li>
+            <li>Що залишаємо на наступний понеділок для глибшого аналізу</li>
+            <li>Записуємо коротко в Google Doc клієнта (доповнення до тижневих рішень)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="h3">Правила Mid-week Sync</div>
+      <div class="rules">
+        <div class="rule">
+          <strong>Не починаємо нові дискусії</strong>
+          <small>Це не друге Weekly UAM. Якщо тема довша — переноси на понеділок наступного тижня</small>
+        </div>
+        <div class="rule">
+          <strong>Тільки те що змінилось</strong>
+          <small>Якщо все на треку — зустріч може закінчитись за 10 хв. Це нормально, не штучно тягнемо</small>
+        </div>
+        <div class="rule">
+          <strong>Реакція на форс-мажор</strong>
+          <small>Якщо сталась велика просадка — приймаємо рішення тут, не чекаємо понеділка</small>
+        </div>
+        <div class="rule">
+          <strong>Без підготовки — пропускаємо</strong>
+          <small>UAM має звести цифри за пн-вт-ср. Стратеги — оновити Звіт. Без цього зустріч не валідна</small>
+        </div>
+      </div>
+
+      <div class="output">
+        <h4>Вихід з Mid-week UAM</h4>
+        <ul>
+          <li>Статус по кожному пріоритету тижня зафіксовано</li>
+          <li>Список коригувань до п'ятниці з відповідальними</li>
+          <li>Список того що залишаємо на понеділковий Weekly UAM</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK CALENDAR -->
+  <div class="calendar">
+    <h2>Тижневий розклад</h2>
+    <div class="week-grid">
+      <div class="day">
+        <div class="day-name">Понеділок</div>
+        <div class="day-meeting meet-daily">Daily Stand-up<span class="meet-time">09:30 · 15 хв</span></div>
+        <div class="day-meeting meet-creative">Weekly Creative Review<span class="meet-time">11:00 · 60-90 хв</span></div>
+        <div class="day-meeting meet-uam">Weekly UAM Sync<span class="meet-time">12:00 · 60 хв</span></div>
+      </div>
+      <div class="day">
+        <div class="day-name">Вівторок</div>
+        <div class="day-meeting meet-daily">Daily Stand-up<span class="meet-time">09:30 · 15 хв</span></div>
+      </div>
+      <div class="day">
+        <div class="day-name">Середа</div>
+        <div class="day-meeting meet-daily">Daily Stand-up<span class="meet-time">09:30 · 15 хв</span></div>
+        <div class="day-meeting meet-uam">Mid-week UAM Sync<span class="meet-time">11:00 · 20-30 хв</span></div>
+      </div>
+      <div class="day">
+        <div class="day-name">Четвер</div>
+        <div class="day-meeting meet-daily">Daily Stand-up<span class="meet-time">09:30 · 15 хв</span></div>
+      </div>
+      <div class="day">
+        <div class="day-name">П'ятниця</div>
+        <div class="day-meeting meet-daily">Daily Stand-up<span class="meet-time">09:30 · 15 хв</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro" style="background:linear-gradient(135deg,#EBF4FF,#F3EEFF)">
+    <h2>Антипатерни — чого не робимо</h2>
+    <p><strong>Не плодимо зустрічі.</strong> Якщо тема стабільно потребує більше — це або 1:1, або переглядаємо регламент Weekly</p>
+    <p><strong>Не починаємо без підготовки.</strong> Зустріч без оновлених даних = марна година. Підготовка = частина роботи, не додатковий труд</p>
+    <p><strong>Не закінчуємо без зафіксованих рішень.</strong> Що не записано — не існує. Кожна зустріч → пункти в командному документі</p>
+    <p><strong>Не звинувачуємо без цифр.</strong> "Креативи не працюють" або "бюджет малий" без даних — не валідні аргументи. Завжди починай з конкретних метрик</p>
+  </div>
+
+</div>
+
+</body>
+</html>

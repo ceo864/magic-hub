@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Sync — адженда зустрічі</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
+    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
+    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
+    --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+  .header{background:var(--dark);color:white;padding:48px 40px 36px;position:relative;overflow:hidden}
+  .header::after{content:"";position:absolute;top:0;right:0;width:400px;height:100%;background:var(--gradient);opacity:.15;border-radius:50%;filter:blur(80px)}
+  .header-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .header-left{flex:1}
+  .header-left .brand{font-weight:900;font-size:14px;opacity:.4;margin-bottom:18px;letter-spacing:.5px}
+  .header h1{font-size:30px;margin-bottom:8px;font-weight:700;line-height:1.15}
+  .header p{opacity:.6;font-size:15px;max-width:600px}
+  .header button{padding:10px 22px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
+
+  .container{max-width:980px;margin:0 auto;padding:40px 24px 80px}
+
+  .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+  .intro h2{font-size:18px;font-weight:700;margin-bottom:14px;color:var(--dark)}
+  .intro p{color:var(--text);font-size:14px;margin-bottom:10px;line-height:1.65}
+  .intro p:last-child{margin-bottom:0}
+
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:32px}
+  .meta-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;text-align:center}
+  .meta-card .meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px}
+  .meta-card .meta-value{font-size:16px;font-weight:700;color:var(--dark)}
+
+  .section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden}
+  .section-head{padding:24px 28px 18px;border-bottom:1px solid var(--border)}
+  .section-head h2{font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
+  .section-head p{font-size:13px;color:var(--muted)}
+  .section-body{padding:24px 28px}
+
+  .agenda-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+  .ag-row{display:grid;grid-template-columns:70px 200px 140px 1fr;border-bottom:1px solid var(--border);font-size:12px}
+  .ag-row:last-child{border-bottom:none}
+  .ag-row.head{background:var(--dark);color:white;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px}
+  .ag-row.head > div{padding:12px 16px}
+  .ag-row > div{padding:14px 16px;line-height:1.5}
+  .ag-row .time{background:#fafbfd;font-weight:700;color:var(--dark);font-size:15px}
+  .ag-row .block{font-weight:600;color:var(--dark);font-size:13px}
+  .ag-row .who{color:var(--muted);font-size:12px}
+  .ag-row .desc{color:var(--text);font-size:12px}
+
+  .flow-step{background:#fafbfd;border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:10px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+  .flow-num{width:36px;height:36px;background:var(--gradient);color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+  .flow-body h4{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--dark)}
+  .flow-body p{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:6px}
+
+  .hint{background:linear-gradient(135deg,#EBF4FF,#F3EEFF);border-radius:12px;padding:16px 18px;margin:14px 0;display:flex;gap:12px;align-items:flex-start}
+  .hint-icon{font-size:18px;flex-shrink:0}
+  .hint-text{font-size:13px;color:var(--text);line-height:1.55}
+  .hint-text strong{font-weight:700}
+
+  .tl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+  .tl-card{border-radius:12px;padding:18px;text-align:center}
+  .tl-card.green{background:#EBFFF6;border:1px solid #c8f0dd}
+  .tl-card.yellow{background:#FFF8E1;border:1px solid #ffe5a0}
+  .tl-card.red{background:#FFEFF0;border:1px solid #ffc8cb}
+  .tl-card h4{font-size:14px;font-weight:700;margin-bottom:6px}
+  .tl-card.green h4{color:#1a8a5e}
+  .tl-card.yellow h4{color:#946200}
+  .tl-card.red h4{color:#c0333c}
+  .tl-card p{font-size:12px;line-height:1.5;color:var(--text)}
+
+  .rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .rule-card{border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+  .rule-card.do{background:#EBFFF6;color:#1a6b4a}
+  .rule-card.dont{background:#FFEFF0;color:#a0333c}
+  .rule-card .r-icon{font-size:16px;flex-shrink:0;margin-top:1px;font-weight:700}
+
+  .daily-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+  .dl-row{display:grid;grid-template-columns:180px 1fr 100px;border-bottom:1px solid var(--border);font-size:12px}
+  .dl-row:last-child{border-bottom:none}
+  .dl-row.head{background:var(--dark);color:white;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px}
+  .dl-row.head > div{padding:12px 16px}
+  .dl-row > div{padding:14px 16px;line-height:1.5}
+  .dl-row .sit{font-weight:600;color:var(--dark);font-size:13px}
+  .sit-pill{display:inline-block;padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.4px;border-radius:10px;margin-bottom:4px}
+  .sit-blue{background:#EBF4FF;color:var(--blue)}
+  .sit-red{background:#FFEFF0;color:var(--danger)}
+  .sit-yellow{background:#FFF8E1;color:#946200}
+  .sit-green{background:#EBFFF6;color:#1a8a5e}
+
+  .principles{background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%);color:white;border-radius:16px;padding:28px;margin-top:36px}
+  .principles h2{font-size:18px;font-weight:700;margin-bottom:18px;color:white}
+  .principles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .principle{padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px}
+  .principle h4{font-size:13px;font-weight:700;margin-bottom:6px;color:white}
+  .principle p{font-size:12px;opacity:.75;line-height:1.5}
+
+  @media(max-width:768px){
+    .container{padding:24px 16px 60px}
+    .meta-grid,.tl-grid,.rules-grid,.principles-grid{grid-template-columns:1fr}
+    .header{padding:32px 20px}
+    .header h1{font-size:22px}
+    .ag-row,.dl-row{grid-template-columns:1fr}
+    .flow-step{grid-template-columns:1fr}
+  }
+  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.section,.meta-card,.principles,.flow-step,.rule-card,.tl-card{break-inside:avoid;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <div class="brand">magic</div>
+      <h1>GROWTH SYNC — АДЖЕНДА ЗУСТРІЧІ</h1>
+      <p>Щотижневий синк Growth Marketer з тімлідами Creative Strategy та User Acquisition. Фокус на цілях, факті та прогнозі — не на задачах.</p>
+    </div>
+    <button onclick="window.print()">Друк / PDF</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- META -->
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-label">Каденція</div>
+      <div class="meta-value">Понеділок / Вівторок</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Тривалість</div>
+      <div class="meta-value">30 хвилин</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Учасники</div>
+      <div class="meta-value">Growth + 2 тімліди</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <h2>Мета зустрічі</h2>
+    <p>Growth Marketer щотижня комунікує з клієнтом. Щоб ця комунікація була якісною, Growth Marketer повинен мати повну картину по цілях проєктів <strong>до розмови з клієнтом, а не після</strong>.</p>
+    <p>Growth Sync — це "рентген" по цілях на початку тижня. Результат зустрічі: Growth Marketer знає по кожному клієнту — де ми on track, де є ризик, де потрібно вплинути на клієнта, де є можливість масштабуватись.</p>
+    <p>На цій зустрічі <strong>не обговорюються</strong> конкретні задачі відділів і не обговорюються особисті цілі. Тільки цілі проєктів, факт vs план, прогноз, блокери.</p>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Джерело даних — дашборд</h2>
+      <p>Зустріч проводиться на основі дашборду, а не усних звітів.</p>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;margin-bottom:14px;line-height:1.65">Growth Marketer відкриває дашборд на екрані і веде зустріч по ньому. Всі дані по цілях, факту і прогнозу повинні бути в дашборді <strong>до початку зустрічі</strong>.</p>
+
+      <div class="hint">
+        <div class="hint-icon">&#128203;</div>
+        <div class="hint-text"><strong>Відповідальність тімліда UA:</strong> контролювати, щоб дашборд оновлювався вчасно і всі дані були коректними. Якщо на зустрічі дані в дашборді застарілі або неповні — це проблема процесу, яку фіксуємо в Issues List.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENDA -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Адженда — 30 хвилин</h2>
+      <p>Чотири блоки. Червоні і жовті обговорюються детально. Зелені — з фокусом на можливість масштабування.</p>
+    </div>
+    <div class="section-body">
+      <div class="agenda-table">
+        <div class="ag-row head">
+          <div>Час</div>
+          <div>Блок</div>
+          <div>Хто</div>
+          <div>Що відбувається</div>
+        </div>
+        <div class="ag-row">
+          <div class="time">3 хв</div>
+          <div class="block">Швидкий статус</div>
+          <div class="who">Growth Marketer</div>
+          <div class="desc">Відкриває дашборд. Називає traffic light статус кожного клієнта. Без пояснень — тільки колір. Червоні обговорюються першими.</div>
+        </div>
+        <div class="ag-row">
+          <div class="time">17 хв</div>
+          <div class="block">Розбір жовтих і червоних</div>
+          <div class="who">Тімліди CS + UA</div>
+          <div class="desc">По кожній цілі зі статусом "ризик" або "не досягнемо" — три питання: факт vs план, прогноз, root cause + дія. Максимум 2 хвилини на ціль.</div>
+        </div>
+        <div class="ag-row">
+          <div class="time">5 хв</div>
+          <div class="block">Зелені цілі</div>
+          <div class="who">Тімліди</div>
+          <div class="desc">Два питання: чи є win для клієнта? Чи можемо масштабувати — збільшити бюджет, розширити аудиторію, додати канал?</div>
+        </div>
+        <div class="ag-row">
+          <div class="time">3 хв</div>
+          <div class="block">Вплив на клієнта</div>
+          <div class="who">Всі</div>
+          <div class="desc">Де потрібно вплинути на клієнта: контент, бюджет, оффер, доступи? Growth Marketer фіксує і бере в роботу.</div>
+        </div>
+        <div class="ag-row">
+          <div class="time">2 хв</div>
+          <div class="block">Issues List</div>
+          <div class="who">Growth Marketer</div>
+          <div class="desc">Все, що запаркували під час зустрічі — фіксується в Issues List з відповідальним і дедлайном.</div>
+        </div>
+      </div>
+
+      <h4 style="font-size:15px;font-weight:700;color:var(--dark);margin:20px 0 12px">Три питання для жовтих і червоних цілей</h4>
+
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-body">
+          <h4>Факт vs план</h4>
+          <p>Де ми зараз відносно місячної цілі? Конкретне число та відсоток виконання. Не "нормально" — а "витратили 42K з плану 80K, це 52% при 60% місяця".</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-body">
+          <h4>Прогноз</h4>
+          <p>Чи досягнемо цілі до кінця місяця? Якщо ні — на скільки відсотків виконаємо? Прогноз базується на поточному темпі і запланованих діях.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-body">
+          <h4>Root cause + дія</h4>
+          <p>Чому відхилення? Що вже зроблено? Що потрібно від Growth Marketer (комунікація з клієнтом) або CEO (ескалація, рішення)?</p>
+        </div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">&#9200;</div>
+        <div class="hint-text"><strong>Правило 2 хвилин.</strong> Якщо обговорення однієї цілі виходить за 2 хвилини — паркуємо в Issues List. Growth Marketer призначає окрему зустріч або вирішує в чаті. Деталі задач CS або UA тут не обговорюються.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAFFIC LIGHT -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Traffic light система</h2>
+      <p>Як визначати статус кожної цілі клієнта на основі Fact Quota Attainment.</p>
+    </div>
+    <div class="section-body">
+      <div class="tl-grid">
+        <div class="tl-card green">
+          <h4>On track</h4>
+          <p>Факт на рівні або вище плану. Питання: чи є win для клієнта? Чи можемо масштабувати?</p>
+        </div>
+        <div class="tl-card yellow">
+          <h4>Ризик</h4>
+          <p>Факт відстає від плану на 10-25%. Є план як дотягнути. Обговорюємо три питання.</p>
+        </div>
+        <div class="tl-card red">
+          <h4>Не досягнемо</h4>
+          <p>Факт відстає на 25%+, або є блокер. Потрібне втручання Growth Marketer або CEO.</p>
+        </div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">&#128295;</div>
+        <div class="hint-text"><strong>Адаптація порогів.</strong> 10% і 25% — стартова точка. Для клієнтів з великою сезонністю або нерівномірним бюджетуванням команда адаптує пороги на початку місяця.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RULES -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Правила зустрічі</h2>
+      <p>Що робимо і чого не робимо на Growth Sync.</p>
+    </div>
+    <div class="section-body">
+      <div class="rules-grid">
+        <div class="rule-card do"><span class="r-icon">+</span> Говоримо числами: факт, план, відсоток, прогноз</div>
+        <div class="rule-card dont"><span class="r-icon">-</span> Не обговорюємо конкретні задачі CS або UA</div>
+        <div class="rule-card do"><span class="r-icon">+</span> Паркуємо все, що не стосується цілей — в Issues List</div>
+        <div class="rule-card dont"><span class="r-icon">-</span> Не обговорюємо особисті цілі</div>
+        <div class="rule-card do"><span class="r-icon">+</span> Фіксуємо блокери, які потребують ескалації CEO</div>
+        <div class="rule-card dont"><span class="r-icon">-</span> "Нормально" і "працюємо" — не відповідь</div>
+        <div class="rule-card do"><span class="r-icon">+</span> На зелених питаємо: чи можемо масштабувати?</div>
+        <div class="rule-card dont"><span class="r-icon">-</span> Не розглядаємо деталі довше 2 хвилин — паркуємо</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILIES -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Ситуативні дейліки</h2>
+      <p>Регулярні дейліки — зайвий overhead. Дейліки вмикаються ситуативно.</p>
+    </div>
+    <div class="section-body">
+      <div class="daily-table">
+        <div class="dl-row head">
+          <div>Ситуація</div>
+          <div>Формат</div>
+          <div>Тривалість</div>
+        </div>
+        <div class="dl-row">
+          <div class="sit"><span class="sit-pill sit-blue">Новий клієнт</span><br>Setup Month / перший місяць</div>
+          <div>Дейлі-синк перші 2-4 тижні. Багато координації між CS, UA і Growth Marketer.</div>
+          <div>10 хвилин</div>
+        </div>
+        <div class="dl-row">
+          <div class="sit"><span class="sit-pill sit-red">Кризова ситуація</span><br>Падіння ROAS, блокування</div>
+          <div>Дейлі поки ситуація не стабілізується. Щоденний апдейт по статусу і діях.</div>
+          <div>10 хвилин</div>
+        </div>
+        <div class="dl-row">
+          <div class="sit"><span class="sit-pill sit-yellow">Кінець місяця</span><br>Жовті або червоні цілі</div>
+          <div>Дейлі останній тиждень для проєктів з ризиковими цілями.</div>
+          <div>10 хвилин</div>
+        </div>
+        <div class="dl-row">
+          <div class="sit"><span class="sit-pill sit-green">Стандартний режим</span><br>Все on track</div>
+          <div>Тижневий Growth Sync + async в чаті при критичних змінах.</div>
+          <div>—</div>
+        </div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">&#128172;</div>
+        <div class="hint-text"><strong>Async first.</strong> Якщо щось критичне змінилось між зустрічами — тімлід пише в чат одразу. Формат: клієнт, що трапилось, що зробив, чи потрібна допомога.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEST PRACTICES -->
+  <div class="principles">
+    <h2>На чому побудований Growth Sync</h2>
+    <div class="principles-grid">
+      <div class="principle">
+        <h4>EOS / L10 Meeting</h4>
+        <p>Правило IDS (Identify, Discuss, Solve) з жорстким таймбоксом. Теми поза рамками потрапляють в Issues List. Growth Sync адаптує це через правило 2 хвилин і парковку.</p>
+      </div>
+      <div class="principle">
+        <h4>CTC / North Star Check-in</h4>
+        <p>Common Thread Collective: тімліди приходять з відповіддю на одне питання — "чи ми on track до North Star метрики клієнта". Задачі обговорюються тільки якщо блокують ціль.</p>
+      </div>
+      <div class="principle">
+        <h4>Traffic light reporting (RAG)</h4>
+        <p>Стандарт агенцій Tinuiti, Wpromote, Jellyfish. Фокус зміщується на проблемні зони. Скорочує зустрічі на 30-40%.</p>
+      </div>
+      <div class="principle">
+        <h4>Async-first culture</h4>
+        <p>Basecamp, GitLab: якщо інформація може бути передана текстом — вона не потребує зустрічі. Дейліки — тільки при критичній координації.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

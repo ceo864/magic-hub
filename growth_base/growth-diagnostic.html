@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Marketer — діагностика знань · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px; --radius-pill:999px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
+.hidden{display:none!important}
+button{font-family:var(--font);cursor:pointer}
+
+/* top brand bar */
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-tile{width:34px;height:34px;border-radius:10px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand);padding:7px}
+.brand-tile svg{width:100%;height:100%}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar small{color:rgba(255,255,255,.6);font-size:13px;font-weight:400}
+
+/* INTRO */
+.intro{padding:54px 0 80px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#5E30C4;background:var(--purple-50);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px;stroke:#7A45EB}
+h1{font-weight:900;font-size:clamp(34px,6vw,54px);line-height:1.04;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.intro-lede{font-size:18px;color:var(--ink-600);max-width:600px;margin-top:18px}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
+.info-card{background:#fff;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm)}
+.info-card i{width:22px;height:22px;stroke:var(--magic-blue);margin-bottom:8px}
+.info-card .v{font-weight:800;font-size:22px;letter-spacing:-.02em}
+.info-card .l{font-size:13px;color:var(--ink-500);margin-top:2px}
+.namebox{background:#fff;border-radius:var(--radius-xl);padding:28px;box-shadow:var(--shadow-md);margin-top:8px}
+.namebox label{font-weight:700;font-size:14px;display:block;margin-bottom:10px}
+.namebox input{width:100%;font:inherit;font-weight:300;font-size:16px;padding:14px 18px;border:1.5px solid var(--ink-200);border-radius:999px;outline:none;transition:.15s}
+.namebox input:focus{border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.18)}
+.scale-note{font-size:13px;color:var(--ink-500);margin-top:14px;line-height:1.5}
+.btn{font-weight:700;border:0;padding:16px 30px;border-radius:999px;display:inline-flex;align-items:center;gap:9px;font-size:15px;transition:.2s;white-space:nowrap}
+.btn i{width:18px;height:18px}
+.btn-primary{background:var(--magic-gradient);color:#fff;box-shadow:var(--shadow-glow-brand)}
+.btn-primary:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.4;box-shadow:none;cursor:not-allowed;transform:none}
+.btn-outline{background:#fff;color:var(--ink-900);box-shadow:inset 0 0 0 1.5px var(--ink-200)}
+.btn-outline:hover{box-shadow:inset 0 0 0 1.5px var(--ink-400)}
+.btn-dark{background:var(--ink-900);color:#fff}
+.btn-dark:hover{background:#000}
+.intro-actions{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+
+/* QUIZ */
+.quiz{padding:26px 0 90px}
+.progress-head{position:sticky;top:0;z-index:20;background:var(--ink-50);padding:14px 0 16px;margin-bottom:20px}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-500);margin-bottom:10px}
+.progress-meta .blk{font-weight:700;color:#5E30C4}
+.bar{height:8px;background:var(--ink-200);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;background:var(--magic-gradient-h);border-radius:999px;width:0;transition:width .3s cubic-bezier(.22,1,.36,1)}
+.qcard{background:#fff;border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-md)}
+.q-block{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-400);margin-bottom:14px}
+.q-block i{width:15px;height:15px}
+.q-text{font-weight:700;font-size:21px;line-height:1.35;letter-spacing:-.01em;margin-bottom:22px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{display:flex;gap:14px;align-items:flex-start;background:var(--ink-50);border:1.5px solid var(--ink-100);border-radius:var(--radius-md);padding:16px 18px;transition:.15s;text-align:left;width:100%;font:inherit;font-weight:300;color:var(--ink-800);font-size:16px;line-height:1.4}
+.opt:hover{border-color:var(--blue-100);background:var(--blue-50)}
+.opt .dot{flex:none;width:22px;height:22px;border-radius:999px;border:2px solid var(--ink-300);margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.opt .dot i{width:12px;height:12px;stroke:#fff;opacity:0}
+.opt.sel{border-color:var(--magic-blue);background:var(--blue-50)}
+.opt.sel .dot{border-color:transparent;background:var(--magic-gradient)}
+.opt.sel .dot i{opacity:1}
+.opt .lbl{flex:none;font-weight:800;color:var(--ink-400);width:18px}
+.opt.sel .lbl{color:#1E82E0}
+.nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+
+/* RESULTS */
+.results{padding:30px 0 90px}
+.res-hero{background:var(--ink-900);color:#fff;border-radius:var(--radius-2xl);padding:36px;position:relative;overflow:hidden}
+.res-hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.45;pointer-events:none}
+.res-hero .b1{width:320px;height:320px;background:#AA7AFF;top:-120px;right:-60px}
+.res-hero .b2{width:240px;height:240px;background:#38A0FF;bottom:-130px;left:-40px}
+.res-hero-inner{position:relative;z-index:1;display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+.ring{flex:none;width:150px;height:150px;border-radius:999px;display:grid;place-items:center;position:relative}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring .pct{font-weight:900;font-size:40px;letter-spacing:-.03em;background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.res-headline .who{font-size:14px;color:rgba(255,255,255,.6)}
+.res-headline h2{font-weight:900;font-size:30px;letter-spacing:-.02em;margin:4px 0 8px}
+.res-headline .verdict{font-size:16px;color:rgba(255,255,255,.85);max-width:430px}
+.res-headline .score-line{font-size:14px;color:rgba(255,255,255,.6);margin-top:10px}
+
+.sec-label{display:flex;align-items:center;gap:10px;margin:38px 0 16px}
+.sec-label .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
+.sec-label h3{font-weight:900;font-size:24px;letter-spacing:-.02em}
+
+.breakdown{display:flex;flex-direction:column;gap:10px}
+.brow{background:#fff;border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:16px}
+.brow .bic{flex:none;width:42px;height:42px;border-radius:12px;background:var(--magic-gradient-soft);display:flex;align-items:center;justify-content:center}
+.brow .bic i{width:20px;height:20px;stroke:#7A45EB}
+.brow .bmain{flex:1;min-width:0}
+.brow .bname{font-weight:700;font-size:16px}
+.brow .btrack{height:7px;background:var(--ink-100);border-radius:999px;overflow:hidden;margin-top:8px}
+.brow .btrack .bf{height:100%;border-radius:999px}
+.brow .bscore{flex:none;text-align:right;min-width:96px}
+.brow .bscore .num{font-weight:800;font-size:18px}
+.lvl-badge{display:inline-block;font-weight:800;font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:999px;margin-top:3px}
+.lv-strong{background:var(--success-bg);color:#178a5f}
+.lv-ok{background:var(--info-bg);color:#1566B8}
+.lv-gap{background:var(--warning-bg);color:#9a6a00}
+.lv-crit{background:var(--danger-bg);color:#c2333c}
+.bf.lv-strong{background:var(--success)}
+.bf.lv-ok{background:var(--magic-blue)}
+.bf.lv-gap{background:var(--warning)}
+.bf.lv-crit{background:var(--danger)}
+
+/* priorities */
+.prio{display:flex;flex-direction:column;gap:12px}
+.pcard{background:#fff;border-radius:var(--radius-lg);padding:20px 22px;box-shadow:var(--shadow-sm);border-left:4px solid var(--ink-200);display:flex;gap:16px;align-items:flex-start}
+.pcard.lv-crit{border-left-color:var(--danger)}
+.pcard.lv-gap{border-left-color:var(--warning)}
+.pcard.lv-ok{border-left-color:var(--magic-blue)}
+.pcard .rank{flex:none;width:30px;height:30px;border-radius:999px;background:var(--ink-900);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.pcard .pbody h4{font-weight:800;font-size:17px;margin-bottom:5px}
+.pcard .pbody h4 span{font-weight:700;font-size:12px;color:var(--ink-400);margin-left:6px}
+.pcard .pbody p{font-size:15px;color:var(--ink-600);line-height:1.5}
+.strengths{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--success-bg);color:#178a5f;font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px}
+.chip i{width:14px;height:14px}
+.muted{color:var(--ink-500);font-size:15px}
+
+/* review */
+.review{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.rev-q{background:#fff;border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-sm)}
+.rev-top{display:flex;gap:10px;align-items:flex-start}
+.rev-ic{flex:none;width:24px;height:24px;border-radius:999px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rev-ic.ok{background:var(--success-bg)} .rev-ic.ok i{stroke:#178a5f}
+.rev-ic.no{background:var(--danger-bg)} .rev-ic.no i{stroke:#c2333c}
+.rev-ic i{width:15px;height:15px}
+.rev-q .rq{font-weight:700;font-size:16px;line-height:1.4}
+.rev-ans{font-size:14px;margin-top:9px;line-height:1.5}
+.rev-ans .tag{font-weight:700}
+.rev-ans .your-no{color:#c2333c}
+.rev-ans .corr{color:#178a5f}
+.rev-exp{font-size:14px;color:var(--ink-600);margin-top:7px;padding-top:9px;border-top:1px solid var(--ink-100);line-height:1.5}
+details.foldwrap{margin-top:4px}
+details.foldwrap>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--magic-blue);padding:6px 0}
+details.foldwrap>summary::-webkit-details-marker{display:none}
+details.foldwrap>summary i{width:16px;height:16px;transition:.2s}
+details.foldwrap[open]>summary i{transform:rotate(180deg)}
+
+/* practical */
+.practical{padding:30px 0 90px}
+.callout{background:var(--magic-gradient-soft);border-radius:var(--radius-xl);padding:24px 26px;display:flex;gap:16px;align-items:flex-start;margin-bottom:24px}
+.callout i{flex:none;width:24px;height:24px;stroke:#5E30C4;margin-top:2px}
+.callout p{font-size:15px;color:#3a2a66;line-height:1.55}
+.callout b{font-weight:700}
+.task{background:#fff;border-radius:var(--radius-xl);padding:26px 28px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.task-head{display:flex;gap:13px;align-items:center;margin-bottom:12px}
+.task-num{flex:none;width:34px;height:34px;border-radius:11px;background:var(--magic-gradient);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.task-head .tt{font-weight:800;font-size:18px}
+.task-head .tb{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-400)}
+.task p.scn{font-size:15px;color:var(--ink-700);line-height:1.55;margin-bottom:14px}
+.rubricfold{margin-top:14px;border:1.5px dashed var(--ink-200);border-radius:var(--radius-md);overflow:hidden;background:#fff}
+.rubricfold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--ink-500);padding:13px 16px;background:var(--ink-50);transition:.15s}
+.rubricfold>summary::-webkit-details-marker{display:none}
+.rubricfold>summary:hover{color:var(--ink-700);background:var(--ink-100)}
+.rubricfold>summary .lk{width:15px;height:15px;stroke:var(--ink-400);flex:none}
+.rubricfold>summary .cv{width:16px;height:16px;stroke:var(--ink-400);margin-left:auto;transition:.2s}
+.rubricfold[open]>summary{color:var(--ink-700);border-bottom:1.5px dashed var(--ink-200)}
+.rubricfold[open]>summary .cv{transform:rotate(180deg)}
+.rubricfold .rubric{border-radius:0;background:#fff}
+.rubric{background:var(--ink-50);border-radius:var(--radius-md);padding:16px 18px}
+.rubric .rh{font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-500);margin-bottom:8px}
+.rubric ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.rubric li{display:flex;gap:10px;font-size:14px;color:var(--ink-700);line-height:1.45}
+.rubric li i{flex:none;width:16px;height:16px;stroke:var(--magic-blue);margin-top:3px}
+.scorerow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.scorerow .sc{flex:1;min-width:64px;text-align:center;font-size:12px;color:var(--ink-500);background:var(--ink-50);border-radius:10px;padding:9px 6px;border:1px solid var(--ink-100)}
+.scorerow .sc b{display:block;font-weight:800;font-size:15px;color:var(--ink-800)}
+
+.footer-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:26px 0;margin-top:50px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:680px){
+  .info-grid{grid-template-columns:1fr}
+  .res-hero-inner{flex-direction:column;text-align:center}
+  .qcard,.task{padding:22px}
+  .brow{flex-wrap:wrap}
+  .brow .bscore{text-align:left;min-width:0}
+}
+@media print{
+  .topbar,.footer-actions,footer,.intro-actions,details.foldwrap>summary{display:none!important}
+  body{background:#fff}
+  details.foldwrap[open] .review{display:flex}
+  .res-hero{background:#fff;color:#000;border:1px solid #ddd}
+  .res-hero .blob{display:none}
+  .ring .pct,.res-headline h2{color:#000!important;-webkit-text-fill-color:#000!important}
+  .rubricfold .rubric{display:block!important}
+  .rubricfold>summary .cv{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="brand-word">magic</span></div>
+    <small>Діагностика Growth Marketer</small>
+  </div>
+</div>
+
+<!-- ===================== INTRO ===================== -->
+<main id="intro" class="intro">
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="clipboard-check"></i>Внутрішня оцінка знань</div>
+    <h1>Growth Marketer<br><span class="g">діагностика знань</span></h1>
+    <p class="intro-lede">Тест показує, де у Growth сильні сторони, а що треба підтягнути — по восьми напрямках ролі: від доказового маркетингу до retention.</p>
+
+    <div class="info-grid">
+      <div class="info-card"><i data-lucide="list-checks"></i><div class="v">36 питань</div><div class="l">сценарні, не «зубрильні»</div></div>
+      <div class="info-card"><i data-lucide="layout-grid"></i><div class="v">9 блоків</div><div class="l">по 4 питання на блок</div></div>
+      <div class="info-card"><i data-lucide="timer"></i><div class="v">15–20 хв</div><div class="l">без обмеження часу</div></div>
+    </div>
+
+    <div class="namebox">
+      <label for="who">Хто проходить (ім'я / роль)</label>
+      <input id="who" type="text" placeholder="Напр.: Олег, Growth Marketer" autocomplete="off">
+      <p class="scale-note">Частина 1 (36 питань) рахується автоматично й дає карту прогалин. Частина 2 — практичні завдання для усної оцінки керівником (бал виставляєте вручну). Результат можна роздрукувати або зберегти в PDF.</p>
+    </div>
+
+    <div class="intro-actions">
+      <button class="btn btn-primary" id="startBtn"><i data-lucide="play"></i>Почати тест</button>
+      <button class="btn btn-outline" id="toPracticalBtn"><i data-lucide="file-text"></i>Лише практична частина</button>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== QUIZ ===================== -->
+<main id="quiz" class="quiz hidden">
+  <div class="wrap">
+    <div class="progress-head">
+      <div class="progress-meta">
+        <span>Питання <b id="qNum">1</b> з 36</span>
+        <span class="blk" id="qBlockName">Блок 1</span>
+      </div>
+      <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+    </div>
+
+    <div class="qcard">
+      <div class="q-block"><i data-lucide="hash" id="qBlockIc"></i><span id="qBlockTag">Доказовий маркетинг</span></div>
+      <div class="q-text" id="qText">—</div>
+      <div class="opts" id="opts"></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-outline" id="prevBtn"><i data-lucide="arrow-left"></i>Назад</button>
+      <button class="btn btn-primary" id="nextBtn" disabled>Далі<i data-lucide="arrow-right"></i></button>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== RESULTS ===================== -->
+<main id="results" class="results hidden">
+  <div class="wrap">
+    <div class="res-hero">
+      <div class="blob b1"></div><div class="blob b2"></div>
+      <div class="res-hero-inner">
+        <div class="ring">
+          <svg width="150" height="150" viewBox="0 0 150 150">
+            <circle cx="75" cy="75" r="66" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/>
+            <circle id="ringArc" cx="75" cy="75" r="66" fill="none" stroke="url(#rg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="414.7"/>
+            <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38A0FF"/><stop offset="1" stop-color="#AA7AFF"/></linearGradient></defs>
+          </svg>
+          <div class="pct" id="ringPct">0%</div>
+        </div>
+        <div class="res-headline">
+          <div class="who" id="resWho"></div>
+          <h2 id="resVerdictTitle">Результат</h2>
+          <div class="verdict" id="resVerdict"></div>
+          <div class="score-line" id="resScoreLine"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label"><span class="n">01</span><h3>Рівень по блоках</h3></div>
+    <div class="breakdown" id="breakdown"></div>
+
+    <div class="sec-label"><span class="n">02</span><h3>Що підтягнути — пріоритети</h3></div>
+    <div id="prioWrap"></div>
+
+    <div class="sec-label"><span class="n">03</span><h3>Розбір відповідей</h3></div>
+    <details class="foldwrap">
+      <summary><i data-lucide="chevron-down"></i>Показати всі питання з правильними відповідями</summary>
+      <div class="review" id="review"></div>
+    </details>
+
+    <div class="footer-actions">
+      <button class="btn btn-primary" id="toPracticalBtn2"><i data-lucide="arrow-right"></i>Перейти до практичної частини</button>
+      <button class="btn btn-dark" id="printBtn"><i data-lucide="printer"></i>Зберегти / роздрукувати</button>
+      <button class="btn btn-outline" id="restartBtn"><i data-lucide="rotate-ccw"></i>Пройти заново</button>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== PRACTICAL ===================== -->
+<main id="practical" class="practical hidden">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">Частина 2</span><h3>Практична оцінка</h3></div>
+    <div class="callout">
+      <i data-lucide="info"></i>
+      <p>Ці завдання <b>не рахуються автоматично</b> — вони для усної або письмової оцінки керівником. Вони перевіряють те, що тест із варіантами не бачить: чи людина <b>робить</b>, а не лише впізнає. Кандидат бачить лише завдання й відповідає; критерії оцінки сховані під спойлером «для керівника» — розгортай їх, коли виставляєш бал 1–5.</p>
+    </div>
+    <div id="tasks"></div>
+
+    <div class="footer-actions">
+      <button class="btn btn-dark" id="printBtn2"><i data-lucide="printer"></i>Зберегти / роздрукувати</button>
+      <button class="btn btn-outline" id="backTopBtn"><i data-lucide="arrow-up"></i>На початок</button>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>ceo@magicecom.agency</span></div></footer>
+
+<script>
+/* ---------- DATA ---------- */
+const BLOCKS = [
+  {id:1, name:"Доказовий маркетинг", icon:"book-open",
+   rec:"Перечитати «Як зростають бренди» (Byron Sharp): penetration vs loyalty, distinctive assets, закон подвійної загрози. Відпрацювати unit-економіку: CAC, AOV, LTV, contribution margin."},
+  {id:2, name:"Performance / медіабаїнг", icon:"target",
+   rec:"Поглибити структуру кампаній Meta / Google / TikTok і атрибуцію. Рішення на основі contribution margin, а не лише ROAS. Розібрати логіку масштабування на кейсах."},
+  {id:3, name:"Воронки", icon:"filter",
+   rec:"Відпрацювати мапу TOFU / MOFU / BOFU і відповідність меседжу етапу. Зв'язок реклама → лендинг → checkout як єдина система, message match."},
+  {id:4, name:"Сайт / e-commerce tech", icon:"code-2",
+   rec:"Тренінг зі складання ТЗ на e-commerce сайт: структура PDP/checkout, інтеграції, трекінг (Pixel/GA4/CAPI), Core Web Vitals і мобільний UX."},
+  {id:5, name:"CRO", icon:"git-compare",
+   rec:"Методика аналізу воронки, пріоритезація гіпотез (ICE/PIE), коректні A/B-тести (одна змінна, вибірка, значущість), типові точки відвалу checkout."},
+  {id:6, name:"Дослідження / аналітика", icon:"search",
+   rec:"ABC-аналіз і пошук winner-товарів, дослідження ринку/конкурентів, базова статграмотність: розподіл проти середнього, кореляція ≠ причинність."},
+  {id:7, name:"Retention / LTV", icon:"repeat",
+   rec:"Карта ключових флоу (welcome, abandoned cart, browse abandonment, post-purchase, winback), RFM-сегментація, важелі LTV (AOV / частота / retention)."},
+  {id:8, name:"Дизайн", icon:"palette",
+   rec:"Шаблон брифу дизайнеру, оцінка лендингів і креативів, принципи above-the-fold та social proof, межа «роблю сам / ескалую»."},
+  {id:9, name:"Самоменеджмент і комунікація", icon:"scale",
+   rec:"Постановка цілей за SMART і різниця ціль/задача, пріоритезація (важливе vs термінове), структурування думки й висновків, аргументація позиції фактами та конструктивний пушбек на клієнтські правки."}
+];
+
+const Q = [
+  // BLOCK 1
+  {b:1, q:"Бренд два роки вкладає бюджет переважно в програму лояльності й утримання, але частка ринку стоїть. З погляду Ehrenberg-Bass найточніше пояснення:",
+   o:["Програму лояльності недопрацьовано: бракує рівнів винагород і глибокої персоналізації, через що ядро не активується як слід","Ефект лояльності накопичується 3–5 років, тож треба просто більше часу й та сама стратегія дасть результат","Зростання дають насамперед нові й легкі покупці (penetration), а лояльні купують і так — бюджет лише на утримання не розширює базу","Лояльні отримують замало нагадувань про бренд, тому частота їхніх покупок не зростає до потрібного рівня"], a:2,
+   e:"За Sharp зростання забезпечують нові й легкі покупці (penetration), а не поглиблення лояльності. Вкладення лише в утримання не створює нових покупців."},
+  {b:1, q:"На планерці: «У нас 30% лояльних — зробімо новий продукт саме під них». Що тут методологічно хибно?",
+   o:["Нічого: продукт під наявне ядро завжди безпечніший за вихід на нову широку аудиторію й, як правило, окупається помітно швидше","Хибно обрано лише ціновий сегмент продукту, а от сама орієнтація на ядро лояльних — це правильна й логічна відправна точка","Більшість обороту дають численні легкі покупці, а не вузьке ядро; продукт «лише для лояльних» обмежує охоплення категорії","Бракує попереднього кількісного опитування ядра, без нього запуск передчасний, хоча сам сегмент обрано доречно"], a:2,
+   e:"Закон подвійної загрози й структура бази: легкі покупці чисельніші й сукупно приносять більше. Ставка лише на ядро занижує стелю росту."},
+  {b:1, q:"Магазин: AOV 1200₴, маржа 35%, CAC 480₴; повторна покупка в середньому раз на рік ще на 1200₴. Яке твердження про економіку коректне?",
+   o:["ROAS виходить 2.5, а отже клієнт прибутковий одразу — рахувати маржу й собівартість у цьому випадку не обов'язково","Клієнт окупається з першого замовлення: 1200₴ доходу помітно більші за 480₴ CAC, тож модель прибуткова навіть без повторів","Перша покупка дає ~420₴ маржі проти 480₴ CAC: на старті мінус, окупність настає вже з повторної покупки протягом року","Порахувати економіку клієнта неможливо, поки немає даних про відтік і поведінку щонайменше за три роки історії"], a:2,
+   e:"Маржа з першої покупки = 1200×35% = 420₴ < 480₴ CAC → мінус на першій, плюс на повторній. ROAS і валовий дохід тут оманливі; рахуємо contribution margin."},
+  {b:1, q:"Власник плутає «дистинктивні ассети» й «диференціацію». У чому практична різниця для медіапланування?",
+   o:["Це по суті синоніми: і ассети, і диференціація описують унікальні раціональні переваги продукту перед конкурентами на ринку на практиці","Диференціація важлива для реклами й охоплення, а дистинктивні ассети потрібні переважно на упаковці та в офлайн-точках продажу","Ассети роблять бренд упізнаваним і легким для згадування в момент покупки; диференціація — про сприйняті відмінності, часто слабкі","Ассети потрібні великим брендам із бюджетом, а малому бізнесу достатньо сильної диференціації за ціною чи сервісом у цьому проєкті"], a:2,
+   e:"Sharp: distinctiveness (упізнаваність) практичніша за differentiation. У категоріях з низькою залученістю виграє той, кого легко згадати й помітити, а не «найунікальніший»."},
+  // BLOCK 2
+  {b:2, q:"За підходом Magic до омніканальності, як розподілені ролі Meta/TikTok і Google?",
+   o:["Google формує попит на холодному трафіку й знайомить із брендом, а Meta з TikTok дотискають уже теплу аудиторію в поточній ситуації","Усі три канали виконують однакову функцію, відрізняються лише демографією аудиторії, тож бюджет ділиться порівну між ними","Meta й TikTok формують попит і будують пам'ять про бренд, а Google закриває вже сформований попит; канали діють як єдина система","Канали ведуться ізольовано й конкурують за бюджет щотижня — виграє той, у кого зараз кращий ROAS, інші тимчасово вимикаються"], a:2,
+   e:"Magic Framework: Meta+TikTok будують попит і пам'ять (холодний контакт), Google ловить теплий, готовий купити. Це одна система, а не канали в конкуренції."},
+  {b:2, q:"Кампанію зібрано так, щоб «довірити оптимізацію алгоритму на ~90%». Що це означає на практиці й де головний ризик?",
+   o:["Щодня вручну перекладати бюджет між адсетами, вимикати слабкі плейсменти й коригувати ставки — повністю довіряти системі ризиковано","Поставити ручні ставки на рівні ключових слів і кожні кілька годин підправляти їх відповідно до поточної ціни конверсії","Дати системі широкі сигнали й достатньо конверсій для навчання, не смикати налаштування щодня; ризик — рання зупинка ламає навчання","Звузити аудиторію до 1–2 тисяч людей і чітко зафіксувати креатив, щоб алгоритму було простіше знайти покупців серед малої групи"], a:2,
+   e:"Підхід Magic: правильно завести й довірити оптимізацію системі, а фокус тримати на креативах і даних. Часті ручні втручання та рання зупинка зривають навчання."},
+  {b:2, q:"Креатив на Meta: Hook Rate 12%, CTR 1.7%, ROAS 3.1. За бенчмарками Magic найрозумніша дія:",
+   o:["Зупинити креатив: ROAS 3.1 нижче за прийнятний рівень, а отже він спалює бюджет і його варто замінити повністю відповідно до плану","Скейлити як є: CTR відмінний, а решта показників другорядна, тож можна сміливо піднімати бюджет на цей креатив у нашому випадку","Залишити без змін: усі три показники в межах норми для Meta, втручання тут лише зашкодить навчанню алгоритму за наявних даних","CTR вище за «добре» (>1.5%) і ROAS у нормі, але Hook Rate <15% — слабкі перші 3 секунди; перемонтувати початок, не чіпаючи оффер"], a:3,
+   e:"За бенчмарками Magic: CTR >1.5% = добре, ROAS 2–4 = норма, Hook Rate <15% = погано. Сильний CTR при слабкому гуку → не досиджують вступ; лікуємо хук."},
+  {b:2, q:"Тімлід: «ROAS впав з 4.2 до 3.0 — ріжемо бюджет». Що Growth має зробити, перш ніж погодитись?",
+   o:["Перевірити, чи падіння не від масштабування й сезону, що з CPA й contribution margin — рішення за маржею, а не за самим ROAS","Одразу зрізати бюджет приблизно навпіл: ROAS головна метрика, і його падіння саме по собі вже достатня підстава діяти негайно","Навпаки, різко підняти бюджет ще вище, щоб «розігнати» алгоритм і повернути ROAS до попереднього рівня за рахунок обсягу","Повністю вимкнути всі кампанії й зібрати структуру з нуля, бо просідання ROAS означає, що поточне налаштування вичерпало себе"], a:0,
+   e:"ROAS 3.0 усе ще в нормі (2–4), а падіння часто супроводжує ріст обсягу. Рішення ухвалюють за contribution margin і CPA в контексті, а не за одним ROAS."},
+  // BLOCK 3
+  {b:3, q:"Холодна аудиторія, перший контакт із брендом. Який креатив системно дасть гірший результат і чому?",
+   o:["Демонстрація продукту в дії — бо в ній немає прямого заклику «купи зараз», а отже холодний користувач не зрозуміє, що від нього хочуть","«−40%, лишилось 3 шт, тільки сьогодні» — агресивний BOFU-оффер на людей, які ще не знають бренд і не мають сформованого попиту","Сторітелінг про проблему й рішення — бо холодна аудиторія не готова витрачати час на довге відео й одразу гортає далі","UGC-відгук реального покупця — бо незнайомому бренду на холодному трафіку люди апріорі не довіряють і пропускають відгуки"], a:1,
+   e:"BOFU-меседж на TOFU-аудиторії конвертує погано: попит ще не сформований. Спершу знайомство й попит, дотиск — пізніше."},
+  {b:3, q:"Реклама обіцяє «мінімалістичні базові футболки», лендинг відкривається розпродажем строкатих суконь. CTR високий, продажів мало. Головна причина:",
+   o:["Аудиторію налаштовано надто вузько, тож попри високий CTR обсягу не вистачає для статистично помітних продажів в поточній ситуації","Оффер на самих футболках слабкий: ціна чи умови непривабливі, через що навіть зацікавлені відвідувачі не купують у цьому проєкті","Сайт повільно вантажиться на мобільному, і частина трафіку відвалюється ще до того, як побачить асортимент футболок на практиці","Розрив між обіцянкою креативу й тим, що людина бачить на сторінці (немає message match): очікування не справджується — і вона йде"], a:3,
+   e:"Класичний збій конгруентності: клік за однією обіцянкою, сторінка про інше. Високий CTR + низька конверсія — типовий маркер розриву message match."},
+  {b:3, q:"Користувач подивився товар, додав у кошик, не оплатив; через 2 дні зайшов знову з реклами. Що йому НЕ варто показувати?",
+   o:["Нагадування про залишений кошик зі зняттям типових заперечень — умови доставки, повернення, гарантія","Контент рівня знайомства з брендом, ніби він уперше його бачить і ще нічого про нього не знає","Соціальний доказ і відгуки саме на той товар, який він розглядав і додав у кошик дві доби тому","Невеликий стимул завершити покупку або нагадування, що товар із кошика ще доступний у наявності"], a:1,
+   e:"Це вже гаряча BOFU-аудиторія. Повертати її в TOFU-знайомство — марна витрата контакту; доречні нагадування, докази й дотиск."},
+  {b:3, q:"Воронка: багато кліків і ATC, але мало покупок. Маркетолог хоче залити більше холодного трафіку. Що не так із цим рішенням?",
+   o:["Вузьке місце нижче — на переході «кошик → оплата»; більший трафік зверху лише множить ту саму втрату, спершу лагодять оплату","Нічого: більший обсяг трафіку на вході майже завжди пропорційно збільшує й кількість покупок унизу воронки","Помилка лише в типі трафіку: треба було залити теплий ретаргет замість холодного, і тоді конверсія в покупку вирівняється сама","Проблема виключно в креативах на вході — щойно зміняться вони, конверсія в покупку зросте без втручання у воронку й сайт"], a:0,
+   e:"Якщо тече на етапі оплати, доливання трафіку зверху множить ту саму втрату. Спершу усувають вузьке місце, потім масштабують вхід."},
+  // BLOCK 4
+  {b:4, q:"Готуєш ТЗ на сайт. Розробник: «Навіщо server-side трекінг, якщо вже є піксель у браузері?». Найточніша відповідь:",
+   o:["Server-side передача помітно швидше вантажить сторінку й тому опосередковано покращує конверсію — саме в цьому її головний сенс","По суті це те саме, що й піксель, лише з іншою назвою; для economy-проєктів server-side можна спокійно не впроваджувати","Server-side потрібен лише для Google Ads, а для Meta цілком достатньо стандартного браузерного пікселя на сторінках","Після обмежень ITP та iOS браузерний піксель втрачає частину подій; CAPI/server-side відновлює точність атрибуції та сигнали"], a:3,
+   e:"Браузерні події ріжуться блокувальниками й політиками приватності. CAPI/server-side повертає втрачені конверсії — це й точність звітів, і якість навчання алгоритму."},
+  {b:4, q:"Аналітик каже, сайт «швидкий»: LCP 1,8 с на десктопі. Чому Growth має копнути глибше?",
+   o:["Основний e-commerce трафік мобільний, а на мобільних LCP та INP зазвичай помітно гірші — дивитися Core Web Vitals треба саме там","Показник 1,8 с насправді поганий навіть для десктопа, тож сайт варто визнати повільним і терміново оптимізувати рендеринг за наявних даних","Швидкість завантаження впливає лише на пошукове SEO й позиції в видачі, а на конверсію платного трафіку вона фактично не діє","LCP узагалі не пов'язаний із поведінкою користувача, тому орієнтуватися на нього під час підготовки до реклами не має сенсу"], a:0,
+   e:"Десктопна метрика маскує мобільний досвід, де CWV майже завжди гірші, а саме туди йде більшість платного трафіку. Дивимося мобільні показники."},
+  {b:4, q:"Що з переліченого у ТЗ на checkout найімовірніше підніме конверсію, а не знизить її?",
+   o:["Обов'язкова реєстрація акаунта перед оплатою — так збираються повні дані клієнта для подальшої аналітики й сегментації","Гостьове оформлення та скорочення кількості обов'язкових полів і кроків до мінімально необхідного для оформлення замовлення","Додатковий апсел-екран на кожному кроці оформлення, щоб максимізувати середній чек кожного замовлення на етапі оплати","Збір додаткових даних про клієнта прямо на етапі оплати — місто, джерело переходу, згода на розсилку та інші поля на цьому етапі"], a:1,
+   e:"Примусова реєстрація й зайві поля — типові причини відвалу. Менше тертя й гостьовий checkout прибирають бар'єри до оплати."},
+  {b:4, q:"Перед запуском з'ясувалось: піксель спрацьовує на Purchase двічі (дубль події). Чим це небезпечно?",
+   o:["Фактично нічим: рекламні системи автоматично розпізнають і відсіюють повторні події за ідентифікатором замовлення","Завищує кількість конверсій і ROAS у звітах і годує алгоритм брудним сигналом — рішення ухвалюватимуться на хибних даних","Дублі лише трохи сповільнюють завантаження сторінки подяки, але на самі дані й атрибуцію це жодним чином не впливає","Це впливає виключно на Google Analytics і внутрішні звіти, а рекламних кабінетів і оптимізації кампаній взагалі не стосується"], a:1,
+   e:"Подвійний Purchase роздуває конверсії та ROAS і годує алгоритм брудним сигналом. Рішення на таких даних будуть хибні — дедуплікація обов'язкова."},
+  // BLOCK 5
+  {b:5, q:"8 ідей покращень лендингу й тиждень часу. Як діятиме досвідчений CRO-спеціаліст?",
+   o:["Запустить усі 8 змін одночасно, щоб максимально швидко побачити сукупний приріст конверсії й не витрачати тижні на черги тестів","Обере зміну, яку команда вважає найкращою на смак, і викотить її на весь трафік, бо досвід команди — теж валідне джерело рішень","Повністю скопіює лендинг найсильнішого конкурента, оскільки його рішення вже перевірені ринком і дадуть гарантований результат у нашому випадку","Оцінити вузьке місце воронки за даними, пріоритезувати гіпотези за ICE і тестувати так, щоб зміни не змішувались і результат читався"], a:3,
+   e:"Спершу дані (де найбільша втрата), потім пріоритезація й чисті тести. Залити все одразу — і неможливо зрозуміти, що саме спрацювало."},
+  {b:5, q:"A/B-тест: варіант B попереду на 3-й день, маркетолог хоче зупинити й розкотити B. Чому це ризиковано?",
+   o:["Тому що переможця в A/B завжди слід тримати рівно місяць незалежно від обсягу трафіку й уже досягнутої різниці між варіантами","Тому що варіант A за замовчуванням надійніший, а A/B-тести в e-commerce взагалі рідко дають достовірний результат і їх можна пропускати","Тому що коректні висновки з A/B можливі лише на сайтах із трафіком понад мільйон візитів на місяць, а до того тести не мають сенсу","Вибірка ще мала й немає статистичної значущості; рання перевага часто згасає — зупиняти варто за достатнього розміру вибірки"], a:3,
+   e:"Рання зупинка на шумі — типова помилка. Рішення приймають за достатньою вибіркою й значущістю, інакше «переможець» зникає на проді."},
+  {b:5, q:"Дані воронки: ATC Rate в нормі, але перехід «кошик → оплата» провалений. Які гіпотези перевіряти першими?",
+   o:["Поміняти колір кнопки в шапці, шрифт головного заголовка й фонове зображення першого екрана головної сторінки відповідно до плану","Несподівана вартість або строки доставки на кроці оплати, примусова реєстрація, мало способів оплати, прихований підсумок суми","Розширити каталог новими товарами й категоріями, щоб користувачеві було з чого вибрати перед переходом до оформлення","Запустити нові креативи в рекламі й оновити аудиторії, бо якість трафіку на вході впливає на завершення оплати внизу"], a:1,
+   e:"Між кошиком і оплатою найчастіше вбивають шок від доставки, тертя реєстрації та брак платіжних методів. Туди й б'ємо, а не в косметику головної."},
+  {b:5, q:"Конверсія сторінки товару низька. Що з цього НЕ є валідним CRO-висновком?",
+   o:["На мобільному ключова інформація й кнопка дії ховаються нижче згину — варто перевірити порядок блоків на маленькому екрані","Бракує відповіді на типові заперечення покупця: таблиця розмірів, умови повернення, строки й вартість доставки на самій сторінці","У конкурента сторінка влаштована так само, тож наша має конвертити не гірше — отже, справа виключно в обсязі трафіку","Слабкі або відсутні докази на етапі рішення: немає реальних фото, відгуків і рейтингів, які знижують сприйманий ризик покупки"], a:2,
+   e:"«У конкурента так само» — не діагностика: ви не бачите його трафік, ціни, бренд і дані. Це підміна аналізу припущенням."},
+  // BLOCK 6
+  {b:6, q:"Новий проєкт, 400 SKU. Власник: «Рекламуймо все потроху». Чому Growth радить інакше?",
+   o:["Зробити ABC-аналіз: невелика частка SKU дає основну частку обороту й маржі — сфокусувати бюджет на товарах-локомотивах, а не розмазувати","Погодитись із власником: рівномірний розподіл бюджету на весь асортимент найсправедливіший і дає найширше тестове покриття у цьому проєкті","Зосередитись на найдешевших товарах каталогу, бо їх психологічно найлегше продати холодній аудиторії з першого дотику в межах ніші","Рекламувати найдорожчі позиції асортименту, оскільки саме вони дають найбільший середній чек і тому найшвидше окуплять рекламу"], a:0,
+   e:"Підхід Magic і кейси: через ABC знаходять bestseller/локомотиви. Концентрація бюджету на них дає більший ефект, ніж розмазування на 400 SKU."},
+  {b:6, q:"Після запуску e-mail тижневий дохід зріс на 18%. Маркетолог пише у звіт: «E-mail дав +18%». Що не так?",
+   o:["Того тижня могли діяти й інші чинники — сезон, акції, паралельні кампанії; кореляція не доводить причинність без ізоляції ефекту","Усе коректно: збіг подій у часі — цілком достатня підстава, щоб приписати весь приріст саме запуску email-розсилки того тижня","Помилка лише в точності цифри: насправді приріст ближчий до +20%, а методологічно приписати його e-mail цілком правильно на практиці","E-mail у принципі не здатний впливати на тижневий дохід магазину, тому будь-який зв'язок тут є випадковим і нічого не означає"], a:0,
+   e:"Зростання збіглося в часі, але причин могло бути кілька. Без ізоляції ефекту (holdout / контроль змінних) приписувати весь приріст одному каналу некоректно."},
+  {b:6, q:"Середній чек 1500₴. Команда хоче будувати рекламу й апсели «під чек 1500₴». Чому спершу варто подивитися розподіл?",
+   o:["Розподіл дивитися не обов'язково: середнього чека цілком достатньо, щоб спланувати і таргет, і логіку апселів під нього в поточній ситуації","Найпростіше рішення — підняти всі ціни до рівня 1500₴, тоді середній чек стане репрезентативним і апселі будуватимуться легше за наявних даних","Розподіл замовлень важливий лише для фінансового відділу при плануванні cash flow, а для маркетингу достатньо середнього значення","Середнє може ховати два різні сегменти (багато замовлень по 600₴ і трохи по 4000₴); медіана й сегменти дають точніші рішення, ніж одне число"], a:3,
+   e:"Середнє чутливе до викидів і змішаних сегментів. Медіана й розбивка покажуть реальну структуру замовлень, на якій будують апсел і таргет."},
+  {b:6, q:"Шукаєш товар для масштабування. Який набір сигналів найнадійніший для рішення?",
+   o:["Те, що найкраще виглядає на продуктовому фото й найбільше подобається команді на внутрішньому голосуванні перед запуском на цьому етапі","Найнижча закупівельна ціна в каталозі, бо дешевший товар простіше продати й він дає максимальний відсоток націнки зверху","Найдорожча позиція асортименту, оскільки вона дає найбільший абсолютний чек і тому найшвидше окуповує рекламні витрати на неї","Маржинальність, стабільний попит, оборотність, частка повторних покупок і рівень конкуренції в ніші — у комплексі, а не поодинці"], a:3,
+   e:"Winner визначають дані: маржа, попит, оборотність, повторюваність і конкуренція. Естетика й ціна окремо нічого не гарантують."},
+  // BLOCK 7
+  {b:7, q:"Бренд: ~80% доходу — перші покупки, повтор низький. Маркетолог пропонує підняти бюджет на холодний трафік. Сильніше рішення для LTV:",
+   o:["Залити більше холодного трафіку: чим більший потік нових клієнтів, тим вищим стане і сукупний дохід, і довічна цінність бази","Знизити ціни приблизно вдвічі, щоб покупці поверталися частіше — нижча ціна підштовхне до повторних замовлень і підніме LTV у нашому випадку","Поставити post-purchase і winback флоу й працювати над повторними покупками та AOV — проблема не у вході, а в утриманні клієнтів","Вимкнути ретаргетинг, щоб не «перегрівати» наявну базу зайвими показами, і дати клієнтам самостійно повернутися за покупкою"], a:2,
+   e:"Якщо вхід працює, а повтор ні — важіль LTV у retention, а не в новому трафіку. Post-purchase, winback і робота з AOV піднімають довічну цінність."},
+  {b:7, q:"Який сценарій правильно описує тригер browse abandonment (а не abandoned cart)?",
+   o:["Людина переглядала товари чи категорії, але нічого не додала в кошик — флоу нагадує їй про переглянуте та підказує далі","Людина оформила й оплатила замовлення та отримала лист із підтвердженням і номером для відстеження доставки відповідно до плану","Людина давно не робила покупок і вважається сплячою — повертаємо її окремою пропозицією зі знижкою чи бонусом","Новому підписнику бази надсилається вітальна серія з представленням бренду, бестселерів і умов першого замовлення"], a:0,
+   e:"Browse abandonment реагує на перегляд без додавання в кошик. Кошик без покупки — це вже abandoned cart, інший тригер."},
+  {b:7, q:"LTV ≈ AOV × частота покупок × тривалість утримання. Магазин хоче підняти LTV, не чіпаючи ціни. Що працює на формулу?",
+   o:["Збільшити кількість показів холодної реклами, щоб охопити більше нових людей і так підняти сукупну цінність клієнтської бази","Підняти частоту повторних покупок і середній чек (бандли, релевантні допродажі) та утримання через сервіс і ретеншн-флоу","Сфокусуватись на зростанні CTR креативів, адже кращий клік на вході веде й до вищої довічної цінності кожного залученого клієнта","Розширити географію холодного таргетингу на нові регіони, бо більше ринків автоматично означає вищий LTV наявних покупців"], a:1,
+   e:"Прямо на множники LTV впливають частота, AOV і утримання. Показники входу (CTR, охоплення) діють на довічну цінність лише опосередковано."},
+  {b:7, q:"RFM: клієнт із високим R, низьким F і середнім M. Як це читати й що доречно зробити?",
+   o:["Купив нещодавно, але рідко, чек середній — це новачок чи рідкісний покупець; доречні онбординг і стимул до другої покупки, а не winback","Це втрачений клієнт у зоні відтоку — терміново запускати winback із максимально агресивною знижкою, поки він остаточно не пішов на практиці","Це VIP-сегмент із найвищою цінністю — давати персональні привілеї, ранній доступ до новинок і підвищений рівень сервісу у цьому проєкті","RFM-логіка тут не застосовна через брак даних — спочатку треба накопичити щонайменше рік історії покупок цього клієнта в межах ніші"], a:0,
+   e:"Високий Recency = купив недавно, низька Frequency = рідко. Це не відтік (winback зайвий) і не VIP — людина на шляху до повторної покупки; працюють онбординг і друга конверсія."},
+  // BLOCK 8
+  {b:8, q:"Дизайнер приніс красивий креатив, але він «не чіпляє» і метрики слабкі. Що найімовірніше було не так у брифі?",
+   o:["У брифі не вказали точний розмір макета й технічний формат файлу під конкретний рекламний плейсмент і співвідношення сторін","Не задали ціль, аудиторію, ключове повідомлення/angle й сильний hook — естетика є, а комунікаційного завдання за нею немає","У брифі забули проставити дедлайн здачі, через що дизайнер поспішав і не встиг доопрацювати візуал до потрібної якості","Не вказали фірмові кольори й логотип бренду, тому креатив вийшов гарним, але візуально не пов'язаним із самим брендом"], a:1,
+   e:"Гарний, але неефективний креатив — частий симптом брифу без комунікаційної суті: немає чіткого angle, меседжу й гука. Краса без завдання не конвертує."},
+  {b:8, q:"Лендинг e-commerce, мобільний екран. Що має бути «вище згину», щоб не втратити людину одразу?",
+   o:["Розгорнута історія бренду, місія компанії та шлях засновника — щоб одразу побудувати емоційний зв'язок із відвідувачем","Зрозуміла цінність (що це й кому), головне фото товару та видимий заклик до дії, доступний без прокручування сторінки","Великий блок із логотипами платіжних систем і сертифікатів — щоб із перших секунд зняти питання довіри й безпеки оплати","Форма підписки на розсилку з обіцянкою знижки, показана перед усім іншим контентом, щоб одразу зібрати контакт відвідувача"], a:1,
+   e:"Вище згину людина має миттєво зрозуміти, що це й навіщо, побачити продукт і дію. Історія бренду й інше — нижче, після головного."},
+  {b:8, q:"Коли Growth доречно зробити креатив самому, а коли віддати дизайнеру?",
+   o:["Швидкі ітерації й прості тести гіпотез — самому; складний продакшн і бренд-візуал — дизайнеру за чітким брифом, за складністю задачі","Завжди робити самому: так швидше й дешевше, а зовнішній дизайнер лише сповільнює цикл тестування гіпотез і з'їдає бюджет в поточній ситуації","Завжди віддавати дизайнеру: Growth не повинен чіпати візуал узагалі, його зона — стратегія, медіабаїнг і робота з даними","Орієнтуватись лише на наявність вільного часу: є вікно — робити самому, немає — віддати, незалежно від складності самого креативу"], a:0,
+   e:"Розподіл за складністю й метою: дешеве швидке тестування — самостійно, якісний продакшн — дизайнер. Це баланс швидкості й якості."},
+  {b:8, q:"Власник просить прибрати з лендингу блок відгуків «бо він захаращує мінімалізм». Найсильніша реакція Growth:",
+   o:["Погодитись одразу й видалити: власник відчуває свій бренд краще, а естетика для нього очевидно важливіша за інші міркування","Мовчки залишити відгуки на місці й нічого не міняти, бо Growth краще за власника розуміє, що працює на конверсію сторінки за наявних даних","Видалити блок відгуків і більше не повертатися до цієї теми, щоб не вступати з власником у зайву суперечку через одну деталь","Пояснити роль social proof у зниженні ризику на етапі рішення, запропонувати компактніший формат і за можливості перевірити це A/B-тестом"], a:3,
+   e:"Не сліпе «добре» й не саботаж: аргумент про функцію social proof + компроміс по формі + перевірка тестом. Естетика не має коштувати конверсії без даних."},
+  // BLOCK 9
+  {b:9, q:"Яке формулювання є ціллю за SMART, а не просто наміром?",
+   o:["Зробити рекламу ефективнішою найближчим часом і загалом покращити показники проєкту, щоб клієнт був задоволений результатом","Вивести проєкт на ROAS 4.0 і оборот 2 млн ₴ до 30 вересня за рахунок Meta+Google і нової креативної лінійки","Більше тестувати креативи, активніше працювати з воронкою й приділяти більше уваги аналітиці протягом наступного періоду","Підняти продажі магазину та залучити якомога більше нових клієнтів, наростивши присутність бренду в основних рекламних каналах"], a:1,
+   e:"SMART = конкретна, вимірювана, досяжна, релевантна, в часі. Лише варіант із числом, дедлайном і способом досягнення відповідає всім критеріям; решта — наміри."},
+  {b:9, q:"Що з переліченого — ціль, а решта три — задачі під неї?",
+   o:["Зняти 6 нових креативів різних форматів і кутів для тестування на холодній аудиторії протягом найближчого спринту","Налаштувати CAPI й перевірити коректну дедуплікацію подій Purchase між браузерним пікселем і серверною передачею","Досягти CPA нижче 300₴ і ROAS вище 4 на Meta до кінця кварталу по основному напрямку проєкту","Запустити welcome-флоу в email-розсилці для нових підписників із представленням бренду й бестселерів асортименту"], a:2,
+   e:"Ціль — це бажаний вимірюваний результат; креативи, CAPI й флоу — кроки (задачі), що ведуть до нього. Плутати їх — типова помилка планування."},
+  {b:9, q:"Понеділок, 9 справ, обмаль часу. Що відрізняє сильну пріоритезацію від слабкої?",
+   o:["Спочатку важливе для результату (навіть несрочне й складне), а термінове-але-неважливе — делегувати чи відсунути, не плутаючи важливе з терміновим","Виконувати справи в порядку їхнього надходження до списку — це найсправедливіший підхід і він не дає жодній задачі загубитися у нашому випадку","Спершу закрити найшвидші дрібні задачі, щоб список візуально коротшав і з'являлося відчуття прогресу на початку робочого дня на цьому етапі","Почати з тих задач, які особисто найбільше подобаються й даються легко, щоб зайти в робочий день із комфортного й приємного старту відповідно до плану"], a:0,
+   e:"Сильна пріоритезація розводить важливе й термінове: рухає до результату важливе, а не просто «гасить» термінове чи робить легке заради відчуття прогресу."},
+  {b:9, q:"Клієнт наполягає на правці, яка за твоїми даними зашкодить результату, і не приймає аргументів. Найзріліша лінія поведінки:",
+   o:["Сказати «добре» й мовчки виконати правку: у стосунках із клієнтом останнє слово завжди лишається за ним, тож сперечатися тут немає сенсу","Відмовитися виконувати правку й твердо наполягати на власному рішенні до самого кінця, навіть якщо це помітно загострить конфлікт","Зробити по-своєму нишком і не повідомляти клієнта: ти як спеціаліст відповідаєш за результат і об'єктивно знаєш цю ситуацію краще","Аргументувати ризик фактами й запропонувати альтернативу; якщо клієнт наполягає — зафіксувати ризик письмово та домовитись про метрику й термін перегляду"], a:3,
+   e:"Зрілість = аргумент на даних + альтернатива, але рішення за клієнтом. Незгоду фіксуємо письмово з метрикою перевірки: це повага до клієнта, захист себе й шанс довести правоту цифрами."},
+];
+
+const TASKS = [
+  {block:"Сайт / e-commerce tech · L2", title:"ТЗ на сайт за 10 хвилин",
+   scn:"Уяви zoom-зустріч із розробником. Усно (або тезово) склади ТЗ на e-commerce сайт для умовного бренду одягу: що має бути, які інтеграції, який трекінг, які вимоги до швидкості й мобільної версії.",
+   look:["Покриває структуру: каталог, PDP, кошик, checkout","Згадує інтеграції оплати й доставки","Закладає трекінг: Pixel, GA4, server-side / CAPI","Ставить нефункціональні вимоги: швидкість, мобільний UX","Думає про гостьовий checkout і мінімум кроків"]},
+  {block:"CRO / Воронки · L3", title:"Знайти діру у воронці",
+   scn:"Дано: 10 000 візитів/міс, Add-to-Cart 5%, перехід у checkout 60% від ATC, оплата 40% від checkout. Де головна проблема і які 3 гіпотези ти би перевірив у пріоритеті?",
+   look:["Рахує й називає найслабшу ланку (оплата = 40%)","Гіпотези прив'язані до даних, а не випадкові","Пропонує пріоритезацію (ICE/PIE або логіку impact×ease)","Згадує типові причини відвалу на оплаті","Пропонує коректний спосіб перевірки (A/B / аналітика)"]},
+  {block:"Дослідження / аналітика · L3", title:"Пошук winner-товару",
+   scn:"Новий проєкт, широкий асортимент. Як ти знайдеш товар(и) для масштабування? Які дані візьмеш і як ухвалиш рішення?",
+   look:["Згадує ABC-аналіз або ранжування за внеском","Враховує маржу, попит, повторюваність, оборотність","Дивиться на конкуренцію й сезонність","Спирається на дані, а не на інтуїцію","Формулює критерій рішення, а не просто «подивлюсь»"]},
+  {block:"Retention / LTV · L3", title:"Підняти LTV на 25%",
+   scn:"Бренд: ~80% доходу з перших покупок, повтор низький. Завдання — план підняти LTV на 25% за квартал. Що робиш?",
+   look:["Б'є саме в повторюваність / retention","Ставить флоу: post-purchase, winback, abandoned cart","Працює з AOV (бандли, апсел) і частотою","Пропонує сегментацію (RFM) під дії","Конкретні кроки, а не загальні слова"]},
+  {block:"Доказовий маркетинг · L3", title:"Аргумент проти «давай лояльність»",
+   scn:"Клієнт каже: «Щоб зростати, давай зробимо програму лояльності для постійних». Що ти відповіси з позиції доказового маркетингу?",
+   look:["Спирається на penetration > loyalty (Sharp)","Пояснює, що зростання — від нових/легких покупців","Не відкидає retention повністю, ставить на місце","Аргументує даними, а не думкою","Пропонує правильний баланс acquisition + retention"]},
+  {block:"Самоменеджмент і комунікація · L3", title:"Захистити позицію проти «дурної правки»",
+   scn:"Клієнт наполягає на правці, яка, на твою думку, зашкодить результату (напр. «прибери всі відгуки з лендингу, вони захаращують» або «став знижку −50% на холодну аудиторію»). Розіграй діалог: як відповідаєш?",
+   look:["Не каже одразу «добре» — ставить рішення під сумнів","Аргументує ризик на даних / логіці воронки, а не на емоціях","Пропонує альтернативу або компроміс (напр. A/B-тест)","Лишається конструктивним і поважним, не саботує","Якщо клієнт усе одно наполягає — фіксує ризик і домовляється про метрику перевірки"]}
+];
+
+/* ---------- STATE ---------- */
+let answers = new Array(Q.length).fill(null);
+let cur = 0;
+let userName = "";
+
+/* ---------- HELPERS ---------- */
+const $ = s => document.querySelector(s);
+const show = id => { ["intro","quiz","results","practical"].forEach(s=>$("#"+s).classList.add("hidden")); $("#"+id).classList.remove("hidden"); window.scrollTo(0,0); };
+const blockOf = b => BLOCKS.find(x=>x.id===b);
+const lvlClass = sc => sc>=4?"lv-strong": sc>=3?"lv-ok": sc>=2?"lv-gap":"lv-crit";
+const lvlText = sc => sc>=4?"Сильний": sc>=3?"Достатній": sc>=2?"Прогалини":"Критично";
+
+/* ---------- QUIZ RENDER ---------- */
+function renderQ(){
+  const item = Q[cur], blk = blockOf(item.b);
+  $("#qNum").textContent = cur+1;
+  $("#qBlockName").textContent = "Блок "+item.b+" · "+blk.name;
+  $("#qBlockTag").textContent = blk.name;
+  $("#qBlockIc").setAttribute("data-lucide", blk.icon);
+  $("#qText").textContent = item.q;
+  $("#barFill").style.width = ((cur)/Q.length*100)+"%";
+  const opts = $("#opts"); opts.innerHTML = "";
+  const letters = ["А","Б","В","Г"];
+  item.o.forEach((txt,i)=>{
+    const b = document.createElement("button");
+    b.className = "opt"+(answers[cur]===i?" sel":"");
+    b.innerHTML = `<span class="dot"><i data-lucide="check"></i></span><span class="lbl">${letters[i]}</span><span>${txt}</span>`;
+    b.onclick = ()=>{ answers[cur]=i; renderQ(); $("#nextBtn").disabled=false; };
+    opts.appendChild(b);
+  });
+  $("#prevBtn").style.visibility = cur===0?"hidden":"visible";
+  $("#nextBtn").disabled = answers[cur]===null;
+  $("#nextBtn").innerHTML = cur===Q.length-1 ? 'Завершити<i data-lucide="flag"></i>' : 'Далі<i data-lucide="arrow-right"></i>';
+  lucide.createIcons();
+}
+
+/* ---------- RESULTS ---------- */
+function computeAndShow(){
+  // per-block scores
+  const scores = {}; BLOCKS.forEach(b=>scores[b.id]=0);
+  Q.forEach((item,i)=>{ if(answers[i]===item.a) scores[item.b]++; });
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const pct = Math.round(total/Q.length*100);
+
+  // ring
+  const circ = 414.7;
+  $("#ringPct").textContent = pct+"%";
+  setTimeout(()=>{ $("#ringArc").style.transition="stroke-dashoffset 1s cubic-bezier(.22,1,.36,1)"; $("#ringArc").style.strokeDashoffset = circ*(1-pct/100); }, 80);
+
+  // verdict
+  $("#resWho").textContent = userName ? userName : "Результат діагностики";
+  let vt, vd;
+  if(pct>=85){vt="Сильний Growth"; vd="Впевнена база по всіх напрямках. Залишилось точково посилити окремі блоки.";}
+  else if(pct>=70){vt="Достатній рівень"; vd="Робоча база є, але кілька напрямків треба підтягнути до рівня самостійного виконання.";}
+  else if(pct>=50){vt="Помітні прогалини"; vd="Частину напрямків людина знає, але є системні прогалини, які варто закрити планово.";}
+  else {vt="Потрібна підготовка"; vd="База нерівна. Радимо системне підтягування за пріоритетами нижче, перш ніж вести проєкт самостійно.";}
+  $("#resVerdictTitle").textContent = vt;
+  $("#resVerdict").textContent = vd;
+  $("#resScoreLine").textContent = `Загалом ${total} з ${Q.length} правильних · ${pct}%`;
+
+  // breakdown
+  const bd = $("#breakdown"); bd.innerHTML="";
+  BLOCKS.forEach(b=>{
+    const sc = scores[b.id], lc = lvlClass(sc);
+    const row = document.createElement("div");
+    row.className="brow";
+    row.innerHTML = `
+      <div class="bic"><i data-lucide="${b.icon}"></i></div>
+      <div class="bmain">
+        <div class="bname">${b.name}</div>
+        <div class="btrack"><div class="bf ${lc}" style="width:${sc/4*100}%"></div></div>
+      </div>
+      <div class="bscore"><div class="num">${sc}/4</div><span class="lvl-badge ${lc}">${lvlText(sc)}</span></div>`;
+    bd.appendChild(row);
+  });
+
+  // priorities (score < 4), weakest first
+  const prio = BLOCKS.map(b=>({b, sc:scores[b.id]})).filter(x=>x.sc<4).sort((a,b)=>a.sc-b.sc);
+  const strong = BLOCKS.filter(b=>scores[b.id]===4);
+  const pw = $("#prioWrap"); pw.innerHTML="";
+  if(prio.length===0){
+    pw.innerHTML = `<p class="muted">Усі блоки на максимумі — підтягувати нічого. Тримати рівень і поглиблювати на практиці.</p>`;
+  } else {
+    const list = document.createElement("div"); list.className="prio";
+    prio.forEach((x,idx)=>{
+      const lc = lvlClass(x.sc);
+      const c = document.createElement("div"); c.className="pcard "+lc;
+      c.innerHTML = `<div class="rank">${idx+1}</div>
+        <div class="pbody"><h4>${x.b.name}<span>${x.sc}/4 · ${lvlText(x.sc)}</span></h4><p>${x.b.rec}</p></div>`;
+      list.appendChild(c);
+    });
+    pw.appendChild(list);
+  }
+  if(strong.length){
+    const sl = document.createElement("div"); sl.style.marginTop="16px";
+    sl.innerHTML = `<p class="muted" style="margin-bottom:10px">Сильні сторони (4/4):</p>`;
+    const row = document.createElement("div"); row.className="strengths";
+    strong.forEach(b=>{ const ch=document.createElement("span"); ch.className="chip"; ch.innerHTML=`<i data-lucide="check"></i>${b.name}`; row.appendChild(ch); });
+    sl.appendChild(row); pw.appendChild(sl);
+  }
+
+  // review
+  const rv = $("#review"); rv.innerHTML="";
+  const letters=["А","Б","В","Г"];
+  Q.forEach((item,i)=>{
+    const correct = answers[i]===item.a;
+    const card = document.createElement("div"); card.className="rev-q";
+    let ansHtml = "";
+    if(!correct){
+      ansHtml = `<div class="rev-ans"><span class="tag your-no">Ваша відповідь:</span> ${letters[answers[i]]}. ${item.o[answers[i]]}<br><span class="tag corr">Правильно:</span> ${letters[item.a]}. ${item.o[item.a]}</div>`;
+    } else {
+      ansHtml = `<div class="rev-ans"><span class="tag corr">Правильно:</span> ${letters[item.a]}. ${item.o[item.a]}</div>`;
+    }
+    card.innerHTML = `
+      <div class="rev-top">
+        <span class="rev-ic ${correct?'ok':'no'}"><i data-lucide="${correct?'check':'x'}"></i></span>
+        <span class="rq">${i+1}. ${item.q}</span>
+      </div>
+      ${ansHtml}
+      <div class="rev-exp">${item.e}</div>`;
+    rv.appendChild(card);
+  });
+
+  show("results");
+  lucide.createIcons();
+}
+
+/* ---------- PRACTICAL ---------- */
+function renderTasks(){
+  const t = $("#tasks"); t.innerHTML="";
+  TASKS.forEach((task,i)=>{
+    const el = document.createElement("div"); el.className="task";
+    el.innerHTML = `
+      <div class="task-head"><div class="task-num">${i+1}</div><div><div class="tb">${task.block}</div><div class="tt">${task.title}</div></div></div>
+      <p class="scn">${task.scn}</p>
+      <details class="rubricfold">
+        <summary><i data-lucide="lock" class="lk"></i>Критерії оцінки — для керівника<i data-lucide="chevron-down" class="cv"></i></summary>
+        <div class="rubric">
+          <div class="rh">На що дивитися</div>
+          <ul>${task.look.map(l=>`<li><i data-lucide="check"></i><span>${l}</span></li>`).join("")}</ul>
+          <div class="scorerow">
+            <div class="sc"><b>1</b>не орієнтується</div>
+            <div class="sc"><b>2</b>фрагментарно</div>
+            <div class="sc"><b>3</b>з підказками</div>
+            <div class="sc"><b>4</b>впевнено</div>
+            <div class="sc"><b>5</b>системно сам</div>
+          </div>
+        </div>
+      </details>`;
+    t.appendChild(el);
+  });
+  lucide.createIcons();
+}
+
+/* ---------- EVENTS ---------- */
+$("#who").addEventListener("input", e=>{ userName = e.target.value.trim(); });
+$("#startBtn").onclick = ()=>{ cur=0; show("quiz"); renderQ(); };
+$("#toPracticalBtn").onclick = ()=>{ renderTasks(); show("practical"); };
+$("#toPracticalBtn2").onclick = ()=>{ renderTasks(); show("practical"); };
+$("#prevBtn").onclick = ()=>{ if(cur>0){cur--; renderQ();} };
+$("#nextBtn").onclick = ()=>{ if(answers[cur]===null) return; if(cur<Q.length-1){cur++; renderQ();} else {computeAndShow();} };
+$("#restartBtn").onclick = ()=>{ answers=new Array(Q.length).fill(null); cur=0; $("#ringArc").style.strokeDashoffset=414.7; show("intro"); };
+$("#backTopBtn").onclick = ()=> show("intro");
+$("#printBtn").onclick = ()=> window.print();
+$("#printBtn2").onclick = ()=> window.print();
+
+lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Найкращі практики DTC-брендів · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar nav{display:flex;gap:6px;flex-wrap:wrap}
+.topbar nav a{color:rgba(255,255,255,.7);font-size:13px;font-weight:600;text-decoration:none;padding:6px 11px;border-radius:999px;transition:.15s}
+.topbar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.hero{background:var(--ink-900);color:#fff;padding:50px 0 58px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
+.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
+.hero .b2{width:240px;height:240px;background:#38A0FF;bottom:-120px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(32px,5.5vw,52px);line-height:1.03;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:640px;margin-top:14px}
+
+/* nav chips under hero */
+.zonenav{margin-top:-30px;position:relative;z-index:10}
+.zonenav .row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.zonecard{background:#fff;border-radius:var(--radius-xl);padding:20px;box-shadow:var(--shadow-lg);text-decoration:none;color:inherit;transition:.2s;border-top:4px solid var(--magic-blue)}
+.zonecard:nth-child(2){border-top-color:#6E8BFF}
+.zonecard:nth-child(3){border-top-color:var(--magic-purple)}
+.zonecard:hover{transform:translateY(-3px);box-shadow:0 22px 48px rgba(20,30,60,.14)}
+.zonecard .zi{width:42px;height:42px;border-radius:12px;background:var(--magic-gradient-soft);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.zonecard .zi i{width:21px;height:21px;stroke:#5E30C4}
+.zonecard .zn{font-weight:800;font-size:12px;color:var(--magic-purple);letter-spacing:.04em;text-transform:uppercase}
+.zonecard h3{font-weight:800;font-size:18px;letter-spacing:-.01em;margin-top:3px}
+
+section{padding:54px 0 0}
+.sec-label{display:flex;align-items:center;gap:11px;margin-bottom:10px;scroll-margin-top:80px}
+.sec-label .ci{width:44px;height:44px;border-radius:12px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:var(--shadow-glow-brand)}
+.sec-label .ci i{width:22px;height:22px;stroke:#fff}
+.sec-label .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
+.sec-label h2{font-weight:900;font-size:30px;letter-spacing:-.02em}
+.lead{font-size:17px;color:var(--ink-600);max-width:760px;margin-bottom:24px}
+p{font-size:16px;color:var(--ink-700);margin-bottom:14px}
+p b,li b{font-weight:700;color:var(--ink-900)}
+
+/* practice block */
+.practice{background:#fff;border-radius:var(--radius-xl);padding:26px 28px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.practice .ph{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+.practice .pn{flex:none;width:34px;height:34px;border-radius:10px;background:var(--magic-gradient-soft);color:#5E30C4;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center}
+.practice .pt{flex:1;min-width:0}
+.practice .pt h3{font-weight:800;font-size:19px;letter-spacing:-.01em;line-height:1.25}
+.practice .body{font-size:15.5px;color:var(--ink-700);line-height:1.6}
+.practice .body b{font-weight:700;color:var(--ink-900)}
+.example{margin-top:14px;background:var(--ink-50);border-radius:var(--radius-md);padding:14px 16px;border-left:4px solid var(--magic-blue)}
+.example .eh{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-500);margin-bottom:6px}
+.example .eh i{width:15px;height:15px;stroke:var(--magic-blue)}
+.example .eb{font-size:14.5px;color:var(--ink-700);line-height:1.55}
+.example .eb b{font-weight:700;color:var(--ink-900)}
+.example.rhode{border-left-color:var(--magic-purple)}
+.example.rhode .eh i{stroke:var(--magic-purple)}
+
+.checklist{margin-top:16px;background:var(--magic-gradient-soft);border-radius:var(--radius-lg);padding:18px 20px}
+.checklist h4{font-weight:800;font-size:14px;color:#3a2a66;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.checklist h4 i{width:16px;height:16px;stroke:#5E30C4}
+.checklist ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.checklist li{display:flex;gap:9px;font-size:14px;color:#3a2a66;line-height:1.45}
+.checklist li i{flex:none;width:15px;height:15px;stroke:#7A45EB;margin-top:3px}
+
+.callout{border-radius:var(--radius-xl);padding:22px 26px;display:flex;gap:16px;align-items:flex-start;margin:18px 0}
+.callout i{flex:none;width:24px;height:24px;margin-top:2px}
+.callout .ctext{font-size:15.5px;line-height:1.55}
+.callout.warn{background:var(--warning-bg)} .callout.warn i{stroke:#9a6a00} .callout.warn .ctext{color:#6b4e12}
+.callout.tip{background:var(--success-bg)} .callout.tip i{stroke:#178a5f} .callout.tip .ctext{color:#155e44}
+.callout .ctext b{font-weight:700}
+
+/* brand chips */
+.brandchips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.bchip{display:inline-flex;align-items:center;gap:7px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--ink-200);color:var(--ink-700);font-weight:700;font-size:13px;padding:7px 13px;border-radius:999px}
+.bchip .dot{width:8px;height:8px;border-radius:999px;background:var(--magic-gradient)}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:54px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:720px){
+  .zonenav .row{grid-template-columns:1fr}
+  .topbar nav{display:none}
+}
+@media print{
+  .topbar,.zonenav,footer{display:none!important}
+  body{background:#fff}
+  .hero{background:#fff;color:#000;padding-bottom:18px;border-bottom:1px solid #ddd}
+  .hero .blob{display:none}
+  h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .practice,.callout{break-inside:avoid;box-shadow:none;border:1px solid #e8e8e8}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <nav>
+      <a href="#home">Головна</a>
+      <a href="#pdp">Картка товару</a>
+      <a href="#cart">Кошик</a>
+      <a href="#principles">Принципи</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="store"></i>Бенчмарки · DTC e-commerce</div>
+    <h1>Найкращі практики <span class="g">DTC-брендів</span></h1>
+    <p class="sub">Як сильні direct-to-consumer бренди будують головну, картку товару й кошик — на прикладах Rhode та інших. Кожна практика з поясненням, прикладом і чек-листом для впровадження.</p>
+  </div>
+</header>
+
+<div class="wrap zonenav">
+  <div class="row">
+    <a class="zonecard" href="#home"><div class="zi"><i data-lucide="home"></i></div><div class="zn">Зона 1</div><h3>Головна сторінка</h3></a>
+    <a class="zonecard" href="#pdp"><div class="zi"><i data-lucide="package"></i></div><div class="zn">Зона 2</div><h3>Картка товару</h3></a>
+    <a class="zonecard" href="#cart"><div class="zi"><i data-lucide="shopping-cart"></i></div><div class="zn">Зона 3</div><h3>Кошик і чек</h3></a>
+  </div>
+</div>
+
+<!-- ABOUT RHODE -->
+<section>
+  <div class="wrap">
+    <div class="callout tip">
+      <i data-lucide="info"></i>
+      <div class="ctext"><b>Чому Rhode — еталон.</b> Бренд скінкеру Hailey Bieber (заснований 2022), що працює майже виключно <b>direct-to-consumer через власний сайт</b> і за фіскальний рік досяг ~$212M обороту, а 2025-го проданий e.l.f. Beauty. Сильні сторони: чітке позиціонування «affordable luxury» ($16–30), мінімалізм, UGC у центрі, обмежені дропи й сильна email-стратегія. Це робить його зручним зразком майже для кожної практики нижче.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZONE 1: HOMEPAGE ============ -->
+<section id="home"><span style="position:relative;top:-70px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="home"></i></div><div><span class="n">Зона 1</span><h2>Головна сторінка</h2></div></div>
+    <p class="lead">Задача головної — за 5 секунд відповісти на три питання: <b>що це за бренд, що він продає й кому</b>. Не «вау-дизайн заради дизайну», а зрозумілість і дорога до товару.</p>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">1</div><div class="pt"><h3>Одразу зрозуміло, що це і для кого</h3></div></div>
+      <div class="body">Вище згину (above the fold) — чіткий меседж про суть бренду й головне візуальне. Відвідувач не має гадати, що ви продаєте. У скінкеру це «прості ефективні засоби для щоденного догляду», а не абстрактне гасло.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode формулює позиціонування прямо: <b>«curated skincare essentials»</b> — куровані базові засоби для різних типів шкіри, що доглядають бар'єр шкіри. Цінності винесені відкрито: простота, доступність, автентичність, якість, прозорість. Жодної загадки — одразу ясно, що це й навіщо.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">2</div><div class="pt"><h3>Сильне головне фото / відео продукту</h3></div></div>
+      <div class="body">DTC-бренди ведуть головною не стоковими картинками, а власним продакшном: продукт у руках, у застосуванні, в реальному контексті. Візуал має передавати відчуття бренду (premium, грайливий, мінімалістичний) ще до тексту.</div>
+      <div class="example">
+        <div class="eh"><i data-lucide="image"></i>Приклади · індустрія</div>
+        <div class="eb">Glossier будує головну навколо рожевого мінімалізму й крупних фото продукту; Liquid Death — навколо зухвалого «metal»-візуалу, який ні з чим не сплутаєш. Спільне: фірмовий візуальний стиль (дистинктивний ассет), що працює як впізнаваність.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">3</div><div class="pt"><h3>Чіткий головний CTA вище згину</h3></div></div>
+      <div class="body">Одна головна дія — «Shop» / «Купити» — помітна одразу. Не п'ять рівнозначних кнопок, а ясний наступний крок. Решта (категорії, історія) — нижче.</div>
+      <div class="checklist">
+        <h4><i data-lucide="check-square"></i>Чек-лист головної</h4>
+        <ul>
+          <li><i data-lucide="check"></i>За 5 секунд зрозуміло: що за бренд, що продає, кому</li>
+          <li><i data-lucide="check"></i>Головне фото/відео — власний продакшн, не сток</li>
+          <li><i data-lucide="check"></i>Один помітний CTA вище згину</li>
+          <li><i data-lucide="check"></i>Шлях до бестселерів за 1 клік</li>
+          <li><i data-lucide="check"></i>Social proof уже на головній (відгуки, преса, «продано N»)</li>
+          <li><i data-lucide="check"></i>Бренд-сторі та цінності — нижче, не замість продукту</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">4</div><div class="pt"><h3>Соціальний доказ і «впізнаваність» на головній</h3></div></div>
+      <div class="body">Сильні DTC одразу показують, що бренду довіряють: лого преси, кількість відгуків, рейтинг, UGC-стрічка. Це знижує ризик для нового відвідувача з реклами.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode зробив <b>UGC ядром росту</b>: бренд активно репостить відгуки, скінкер-селфі й розпакування покупців. Це і соціальний доказ, і відчуття причетності — покупець бачить себе у стрічці бренду.</div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Типова помилка головної:</b> почати з довгої історії бренду, відео-маніфесту чи popup на весь екран — і сховати продукт під скрол. Емоція й сторітелінг важливі, але <b>не замість</b> зрозумілості «що це й де купити».</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZONE 2: PDP ============ -->
+<section id="pdp"><span style="position:relative;top:-70px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="package"></i></div><div><span class="n">Зона 2</span><h2>Картка товару (PDP)</h2></div></div>
+    <p class="lead">PDP — місце, де ухвалюється рішення про покупку. Тут працює ланцюг: <b>зрозумілий опис → зняті заперечення → докази (відгуки) → показаний результат</b>. Окремо — відгуки як джерело інсайтів для текстів і креативів. Якщо чогось бракує, людина йде «подумати» й не повертається.</p>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">1</div><div class="pt"><h3>Опис: вигода, а не лише характеристики</h3></div></div>
+      <div class="body">Сильний опис каже не «містить гіалуронову кислоту», а <b>що це дає клієнту</b> й <b>як використовувати</b>. Спочатку результат і відчуття, потім склад і деталі для тих, хто хоче копнути.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode описує інгредієнти через <b>користь</b>: амінокислоти, що «візуально розгладжують і зменшують вигляд зморшок», 5 жирних кислот, що «зволожують і живлять». Кожен компонент пояснено мовою результату, а не хімії. Плюс — повний склад на кожній сторінці (прозорість як цінність).</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">2</div><div class="pt"><h3>Якісні фото з кількох ракурсів + контекст</h3></div></div>
+      <div class="body">Кілька фото: продукт крупно, деталі, текстура, у застосуванні / на людині. Для одягу — на моделі з указанням розміру й зросту. Що дорожчий товар, то важливіше «показати», бо немає можливості потримати в руках.</div>
+      <div class="example">
+        <div class="eh"><i data-lucide="image"></i>Приклади · індустрія</div>
+        <div class="eb">У меблевому DTC (Article, Interior Define) використовують 360°-огляди й «shop the look», бо там AOV прямо залежить від впевненості: що краще показано — то менше страху купувати дороге наосліп.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">3</div><div class="pt"><h3>Закриття заперечень прямо на сторінці</h3></div></div>
+      <div class="body">Найчастіші страхи покупця мають бути зняті без пошуку у футері: <b>розміри, доставка й строки, повернення, безпека/склад, кому підходить</b>. FAQ або акордеон на PDP економить конверсію.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode заздалегідь знімає заперечення: продукти позначені як підходящі для всіх типів шкіри, веган і cruelty-free (сертифікати Leaping Bunny, PETA), список алергенів (горіхи/насіння) винесено окремо, повний склад доступний. Прозорі умови оплати (картки, PayPal, Apple Pay) і доставки по країнах — у FAQ.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">4</div><div class="pt"><h3>Відгуки й рейтинг — обов'язково</h3></div></div>
+      <div class="body">Соціальний доказ на PDP — один із найсильніших важелів конверсії. Рейтинг із зірками вгорі, детальні відгуки нижче, ідеально — з фото покупців і можливістю фільтрувати (за типом шкіри, розміром тощо).</div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">5</div><div class="pt"><h3>Читати відгуки й діставати з них інсайт</h3></div></div>
+      <div class="body">Відгуки — це не лише соціальний доказ на сторінці, а <b>джерело інсайтів</b>. Сильний бренд регулярно читає, що пишуть клієнти: якими словами описують результат, що хвалять, чого бояться, які заперечення повторюються. Ці формулювання потім ідуть у тексти на сайті, у креативи й у відповіді на заперечення — мовою самих клієнтів, а не маркетолога.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode описує Peptide Lip Tint через <b>сенсорний досвід, який ідеально лягає на мову відгуків</b>: «<b>Feels like</b> — насичений оксамитовий блиск, що тане на губах», «<b>Looks like</b> — глянцевий відтінок теплого рожевого з золотим перламутром», «<b>Smells like</b> — свіжі ягоди й жасмин». Це не сухий склад, а те, як продукт реально <b>відчувається</b> — саме так його й описують покупці.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">6</div><div class="pt"><h3>Показувати, який результат дає продукт</h3></div></div>
+      <div class="body">Найсильніший хід — не просто описати продукт, а <b>показати результат у часі</b>. Люди хочуть бачити, що зміниться: одразу, через тиждень, через місяць. Демонстрація «до / після» чи прогрес за <b>1–3–7 днів використання</b> прямо відповідає на головне питання покупця «а мені це дасть результат?». Це знімає найбільший ризик і часто закриває продаж.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode показує результат у дії: відео «See Peptide Lip Tint in action», демонстрацію на реальних людях із різними відтінками шкіри й губ, нанесення в моменті, контекст «Get ready with rhode» — як засіб працює в реальній рутині. Бренд також <b>досліджує, що клієнту важливо побачити саме результат за певну кількість застосувань</b> (1–3–7 днів), і будує контент навколо цього очікування.</div>
+      </div>
+      <div class="example">
+        <div class="eh"><i data-lucide="image"></i>Як це застосувати в інших нішах</div>
+        <div class="eb">Скінкер — «до/після» за 7 і 28 днів. Одяг — фото на різних типах фігури з розмірами. Меблі — кімната «до» й «після». Добавки — таймлайн ефекту по тижнях. Головне: показати <b>зміну</b>, яку отримає клієнт, а не лише сам продукт на білому фоні.</div>
+      </div>
+    </div>
+
+    <div class="practice" style="border-top:4px solid var(--magic-purple)">
+      <div class="checklist" style="margin-top:0">
+        <h4><i data-lucide="check-square"></i>Чек-лист картки товару</h4>
+        <ul>
+          <li><i data-lucide="check"></i>Опис через вигоду й застосування (а краще — через відчуття: feels/looks/smells like)</li>
+          <li><i data-lucide="check"></i>Кілька якісних фото + товар у контексті/на людині</li>
+          <li><i data-lucide="check"></i>Ціна й наявність видимі одразу</li>
+          <li><i data-lucide="check"></i>Кнопка «в кошик» вище згину на мобільному</li>
+          <li><i data-lucide="check"></i>Зняті заперечення: розміри, доставка, повернення, склад</li>
+          <li><i data-lucide="check"></i>Рейтинг + детальні відгуки, бажано з фото</li>
+          <li><i data-lucide="check"></i><b>Регулярно читати відгуки й діставати інсайти</b> (слова клієнтів, страхи, що хвалять)</li>
+          <li><i data-lucide="check"></i><b>Показано результат у часі</b> — до/після або прогрес за 1–3–7 днів</li>
+          <li><i data-lucide="check"></i>Відео / демонстрація продукту в реальному застосуванні</li>
+          <li><i data-lucide="check"></i>Орієнтир вартості/строків доставки до кроку оплати</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <i data-lucide="lightbulb"></i>
+      <div class="ctext"><b>Зв'язок із Magic.</b> Відгуки — це безкоштовне дослідження ринку: те, як клієнти описують результат, прямо підказує angles для креативів і тексти на сайт. А демонстрація результату в часі — найсильніша відповідь на заперечення «чи мені це допоможе». Якщо воронка тече на картці товару, перевіряй: чи показано результат, чи знято заперечення, чи є докази — перш ніж чіпати косметику.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZONE 3: CART ============ -->
+<section id="cart"><span style="position:relative;top:-70px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="shopping-cart"></i></div><div><span class="n">Зона 3</span><h2>Кошик і середній чек</h2></div></div>
+    <p class="lead">Кошик — місце, де піднімають AOV (середній чек), не залучаючи нового трафіку. Головне правило: допродажі мають <b>допомагати, а не тиснути</b> — рекомендувати, як це зробив би друг, а не нав'язувати.</p>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">1</div><div class="pt"><h3>Поріг безкоштовної доставки</h3></div></div>
+      <div class="body">Найшвидший важіль AOV. Прогрес-бар «додай ще на 200₴ до безкоштовної доставки» прямо в кошику штовхає докласти товар. Поведінкова психологія: люди радше доберуть кошик, ніж заплатять за доставку.</div>
+      <div class="example">
+        <div class="eh"><i data-lucide="trending-up"></i>Як рахувати поріг</div>
+        <div class="eb">Поширене правило: ставити поріг на <b>15–30% вище за поточний AOV</b>. Якщо середній чек 1500₴ — поріг безкоштовної доставки ~1800–1950₴. Завищиш — отримаєш зростання покинутих кошиків. Дослідження: ~80% покупців готові добрати до порога, хоча реально добирають близько 58% — тож тестуй конкретну цифру 14+ днів.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">2</div><div class="pt"><h3>Релевантні допродажі (cross-sell / upsell)</h3></div></div>
+      <div class="body"><b>Cross-sell</b> — доповнювальні товари («з цим купують»), <b>upsell</b> — кращий/більший варіант. Ключ — релевантність і доречний момент: рекомендація має бути логічною, а не «ще щось купіть».</div>
+      <div class="example">
+        <div class="eh"><i data-lucide="image"></i>Приклад · індустрія</div>
+        <div class="eb">Interior Define показує доповнення (декоративні подушки) <b>через popup одразу після додавання дивана в кошик</b> — у момент, коли це максимально доречно. У скінкеру це логіка рутини: до зволожувача — очисник і SPF, бо вони використовуються разом.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">3</div><div class="pt"><h3>Бандли й набори</h3></div></div>
+      <div class="body">Набір зі знижкою піднімає чек і одночасно знайомить із асортиментом. Для брендів із <b>низькою маржею бандли краще за прямі знижки</b>: дають відчуття вигоди, менше б'ючи по прибутку.</div>
+      <div class="example rhode">
+        <div class="eh"><i data-lucide="sparkles"></i>Приклад · Rhode</div>
+        <div class="eb">Rhode продає курований набір як «daily routine» — це природний бандл: людина бере не один засіб, а готову рутину. Так середній чек зростає логічно, бо набір вирішує задачу цілком, а не нав'язує зайве.</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="ph"><div class="pn">4</div><div class="pt"><h3>Post-purchase upsell (після оплати)</h3></div></div>
+      <div class="body">Допродаж <b>після</b> оформлення замовлення (на сторінці подяки) піднімає AOV, не сповільнюючи checkout і не створюючи тертя до оплати. Людина вже купила — додати щось у той самий заказ легко.</div>
+      <div class="checklist">
+        <h4><i data-lucide="check-square"></i>Чек-лист кошика й чека</h4>
+        <ul>
+          <li><i data-lucide="check"></i>Прогрес-бар до безкоштовної доставки (поріг +15–30% до AOV)</li>
+          <li><i data-lucide="check"></i>Релевантні cross-sell / upsell у доречний момент</li>
+          <li><i data-lucide="check"></i>Бандли/набори, особливо при низькій маржі</li>
+          <li><i data-lucide="check"></i>Post-purchase upsell на сторінці подяки</li>
+          <li><i data-lucide="check"></i>Видимий підсумок суми без прихованих доплат</li>
+          <li><i data-lucide="check"></i>Кошик не «втрачається», легко змінити кількість</li>
+          <li><i data-lucide="check"></i>Гостьове оформлення, мінімум кроків (не ламати чек)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Головна засторо́га по AOV:</b> вищий середній чек ≠ вищий прибуток. Агресивні допродажі дратують і б'ють по лояльності; завищений поріг доставки росте покинуті кошики; знижки заради чека з'їдають маржу. <b>Завжди мір AOV разом із прибутком і конверсією</b>, а зміни (поріг, бандли, апсели) запускай як тести, а не «бо так у всіх».</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section id="principles"><span style="position:relative;top:-70px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="compass"></i></div><div><span class="n">Підсумок</span><h2>Наскрізні принципи сильних DTC</h2></div></div>
+    <p class="lead">Що об'єднує Rhode та інші сильні бренди поверх окремих фішок:</p>
+    <div class="practice">
+      <div class="body">
+        <p><b>1. Зрозумілість важливіша за «вау».</b> На кожному екрані ясно: що це, кому, який наступний крок. Дизайн служить зрозумілості, а не навпаки.</p>
+        <p><b>2. Послідовний дистинктивний стиль.</b> Один впізнаваний візуальний почерк скрізь — від реклами до сторінки подяки. Це будує впізнаваність (mental availability).</p>
+        <p><b>3. Прозорість знімає ризик.</b> Чесні склад, ціни, доставка, повернення — менше страху, вища конверсія. Rhode зробив прозорість прямою цінністю бренду.</p>
+        <p><b>4. UGC і соціальний доказ скрізь.</b> Реальні покупці на головній, на PDP, у соцмережах. Дешевший і переконливіший за «вилизану» рекламу.</p>
+        <p><b>5. Зростання чека — через користь, не тиск.</b> Бандли-рутини, доречні допродажі, пороги доставки. Допомога, а не нав'язування.</p>
+        <p style="margin-bottom:0"><b>6. Усе перевіряється тестами.</b> Поріг доставки, апсели, формат відгуків — гіпотези під A/B, а не сліпе копіювання конкурента. Дані → пріоритезація → тест.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Бенчмарки DTC · ceo@magicecom.agency</span></div></footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

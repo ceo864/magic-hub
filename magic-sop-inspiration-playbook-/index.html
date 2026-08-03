@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook: пошук натхнення — magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#38A0FF;--purple:#AA7AFF;--gradient:linear-gradient(135deg,#38A0FF,#AA7AFF);--ink-900:#0f1729;--ink-700:#2a3558;--ink-500:#556085;--ink-400:#7580a0;--ink-200:#c4c9d8;--ink-100:#e4e7ef;--ink-50:#f4f5f9;--success:#2EC28A;--warning:#FFB020;--danger:#F5525C;--bg:#f7f8fb;--card:#fff;--border:#e4e7ef;--r-md:14px;--r-lg:20px;--r-xl:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Onest',sans-serif;font-weight:300;background:var(--bg);color:var(--ink-900);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+
+.hero{background:var(--ink-900);color:#fff;padding:60px 48px 52px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-40px;width:380px;height:380px;background:var(--gradient);border-radius:50%;opacity:.1;filter:blur(80px)}
+.hero::after{content:'';position:absolute;bottom:-60px;left:15%;width:260px;height:260px;background:var(--purple);border-radius:50%;opacity:.06;filter:blur(60px)}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.hero-logo{font-weight:900;font-size:16px;opacity:.35;margin-bottom:28px}
+.hero h1{font-weight:900;font-size:38px;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px}
+.hero h1 .gt{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-weight:300;font-size:16px;opacity:.5;max-width:540px}
+
+.container{max-width:900px;margin:0 auto;padding:44px 24px 80px}
+
+.intro{font-size:17px;font-weight:300;color:var(--ink-500);margin-bottom:44px;line-height:1.8}
+.intro strong{color:var(--ink-900);font-weight:700}
+
+.section{margin-bottom:52px}
+.section-label{font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;padding:4px 14px;border-radius:999px;display:inline-block;color:#fff}
+.sl-blue{background:var(--blue)}.sl-purple{background:var(--purple)}.sl-ink{background:var(--ink-900)}.sl-green{background:var(--success)}.sl-orange{background:var(--warning)}.sl-red{background:var(--danger)}
+.section h2{font-weight:900;font-size:24px;letter-spacing:-.02em;margin-bottom:8px;margin-top:8px}
+.section-desc{font-weight:300;color:var(--ink-500);font-size:14px;margin-bottom:24px}
+
+/* Tool cards */
+.tool{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;position:relative}
+.tool::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.t-foreplay::before{background:var(--gradient)}.t-pinterest::before{background:var(--danger)}.t-reels::before{background:var(--purple)}.t-tiktok::before{background:var(--ink-900)}.t-topads::before{background:var(--success)}
+.tool-head{padding:20px 24px;display:flex;align-items:center;gap:14px;cursor:pointer}
+.tool-icon{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;flex-shrink:0}
+.ti-foreplay{background:var(--gradient)}.ti-pinterest{background:var(--danger)}.ti-reels{background:var(--purple)}.ti-tiktok{background:var(--ink-900)}.ti-topads{background:var(--success)}
+.tool-info{flex:1}
+.tool-info h3{font-weight:900;font-size:17px;letter-spacing:-.01em}
+.tool-info .tool-sub{font-weight:300;font-size:13px;color:var(--ink-400);margin-top:2px}
+.tool-toggle{font-size:14px;color:var(--ink-400);transition:transform .2s}
+.tool.collapsed .tool-body{display:none}.tool.collapsed .tool-toggle{transform:rotate(-90deg)}
+.tool-body{padding:0 24px 24px}
+
+.tb-section{margin-bottom:20px}
+.tb-section h4{font-weight:700;font-size:14px;color:var(--ink-900);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--ink-100)}
+
+.tb-row{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;align-items:flex-start}
+.tb-row:last-child{border-bottom:none}
+.tb-label{font-weight:500;min-width:140px;flex-shrink:0;color:var(--ink-900);font-size:13px}
+.tb-val{font-weight:300;color:var(--ink-700);flex:1;line-height:1.6}
+
+.tip{background:var(--ink-50);border-left:3px solid var(--blue);border-radius:0 var(--r-md) var(--r-md) 0;padding:14px 18px;font-size:13px;color:var(--ink-700);margin:12px 0;line-height:1.6}
+.tip strong{color:var(--ink-900);font-weight:700}
+.tip-warn{border-left-color:var(--warning);background:#FFF6EB}
+.tip-green{border-left-color:var(--success);background:#E8F8F0}
+
+/* Cross-niche section */
+.cross-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px}
+.cross-head{padding:16px 20px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.cross-from{padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;flex-shrink:0}
+.cf-fashion{background:rgba(170,122,255,.1);color:var(--purple)}
+.cf-beauty{background:rgba(245,82,92,.1);color:var(--danger)}
+.cf-food{background:rgba(255,176,32,.1);color:#c88800}
+.cf-tech{background:rgba(56,160,255,.1);color:var(--blue)}
+.cf-fitness{background:rgba(46,194,138,.1);color:var(--success)}
+.cross-arrow{color:var(--ink-200);font-size:16px;flex-shrink:0}
+.cross-to{padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;flex-shrink:0}
+.cross-title{flex:1;font-weight:700;font-size:14px}
+.cross-toggle{font-size:14px;color:var(--ink-400);transition:transform .2s}
+.cross-card.collapsed .cross-body{display:none}.cross-card.collapsed .cross-toggle{transform:rotate(-90deg)}
+.cross-body{padding:0 20px 20px}
+
+.cross-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+.cross-col{padding:16px;border-radius:var(--r-md);font-size:13px;line-height:1.6}
+.cc-orig{background:var(--ink-50);border:1px solid var(--border)}
+.cc-adapt{background:rgba(56,160,255,.04);border:1px solid rgba(56,160,255,.15)}
+.cross-col h5{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;color:var(--ink-400)}
+.cross-col p{font-weight:300;color:var(--ink-700)}
+.cross-col .hook{font-weight:400;font-style:italic;color:var(--ink-900);margin-top:8px;padding:10px 12px;background:var(--card);border-radius:8px;border-left:2px solid var(--blue)}
+
+/* Process */
+.process{background:var(--ink-900);color:#fff;border-radius:var(--r-xl);padding:32px;margin-bottom:28px;position:relative;overflow:hidden}
+.process::before{content:'';position:absolute;top:-30px;right:-30px;width:180px;height:180px;background:var(--gradient);border-radius:50%;opacity:.08;filter:blur(40px)}
+.process h3{font-weight:900;font-size:18px;margin-bottom:20px;position:relative;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.process-step{display:flex;gap:14px;padding:10px 0;position:relative}
+.process-num{font-weight:900;font-size:14px;width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
+.process-text{flex:1;font-weight:300;font-size:14px;opacity:.8;line-height:1.6}
+.process-text strong{font-weight:700;opacity:1}
+
+/* Routine */
+.routine{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px}
+.routine-head{padding:14px 20px;font-weight:700;font-size:14px;color:#fff}
+.rh-daily{background:var(--blue)}.rh-weekly{background:var(--purple)}.rh-project{background:var(--ink-900)}
+.routine-body{padding:0}
+.routine-item{display:flex;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border);font-size:14px;align-items:flex-start}
+.routine-item:last-child{border-bottom:none}
+.ri-time{font-weight:500;min-width:80px;flex-shrink:0;color:var(--ink-900);font-size:13px}
+.ri-action{font-weight:300;color:var(--ink-700);flex:1;line-height:1.5}
+.ri-tool{font-weight:500;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--ink-50);color:var(--ink-500);flex-shrink:0;white-space:nowrap}
+
+table.matrix{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px;font-size:13px;border:1px solid var(--border)}
+table.matrix th{background:var(--ink-900);color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+table.matrix td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-weight:300;line-height:1.5}
+table.matrix tr:nth-child(even) td{background:var(--ink-50)}
+table.matrix td:first-child{font-weight:500}
+
+.footer{text-align:center;padding:44px 0 0;font-size:12px;color:var(--ink-400);font-weight:300}
+.footer-g{font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+@media(max-width:768px){.hero{padding:40px 20px 36px}.hero h1{font-size:28px}.cross-grid{grid-template-columns:1fr}.container{padding:32px 16px 60px}.tb-row{flex-direction:column;gap:4px}.tb-label{min-width:auto}}
+@media print{body{background:#fff}.hero,.process{-webkit-print-color-adjust:exact;print-color-adjust:exact}.tool.collapsed .tool-body{display:block !important}.cross-card.collapsed .cross-body{display:block !important}.section{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero"><div class="hero-inner">
+<div class="hero-logo">magic</div>
+<h1>Де шукати натхнення<br><span class="gt">Playbook пошуку референсів</span></h1>
+<div class="hero-sub">Як систематично знаходити ідеї для креативів, зберігати їх і адаптувати між нішами.</div>
+</div></div>
+
+<div class="container">
+
+<div class="intro">Натхнення — це не "зараз придумаю щось". Це <strong>система</strong>: знаєш де шукати, знаєш що шукати, знаєш як зберегти і адаптувати. Найсильніші ідеї часто приходять з інших ніш — побачив крутий хук в fashion, адаптував для beauty, і він працює краще ніж все що було до цього.</div>
+
+<!-- ============================================ -->
+<!-- ІНСТРУМЕНТИ                                   -->
+<!-- ============================================ -->
+<div class="section">
+<span class="section-label sl-blue">Інструменти</span>
+<h2>5 джерел для пошуку ідей</h2>
+<div class="section-desc">Кожен інструмент має свою силу. Foreplay — для конкурентного аналізу. Pinterest — для візуальних концептів. Reels і TikTok — для хуків і трендів. TikTok Top Ads — для перевірених performers.</div>
+
+<!-- FOREPLAY -->
+<div class="tool t-foreplay" id="t1">
+<div class="tool-head" onclick="toggle('t1')">
+<div class="tool-icon ti-foreplay">F</div>
+<div class="tool-info"><h3>Foreplay</h3><div class="tool-sub">Бібліотека реклами конкурентів і топ-перформерів. Платна підписка.</div></div>
+<span class="tool-toggle">&#9660;</span>
+</div>
+<div class="tool-body">
+
+<div class="tb-section">
+<h4>Для чого використовувати</h4>
+<div class="tb-row"><div class="tb-label">Конкурентний аналіз</div><div class="tb-val">Побачити ВСЮ рекламу конкурентів клієнта: які кути, які формати, які хуки, як часто оновлюють креативи. Це не копіювання — це розуміння ландшафту.</div></div>
+<div class="tb-row"><div class="tb-label">Свайп-файл</div><div class="tb-val">Зберігати найкращі креативи з будь-якої ніші в організовані борди. Через місяць у вас бібліотека з 500+ референсів, відсортованих по кутах і нішах.</div></div>
+<div class="tb-row"><div class="tb-label">Тренди по нішах</div><div class="tb-val">Бачити які формати і кути домінують у конкретній ніші прямо зараз. Що працює у beauty цього місяця? А у fashion?</div></div>
+</div>
+
+<div class="tb-section">
+<h4>Як працювати</h4>
+<div class="tb-row"><div class="tb-label">Крок 1: Discovery</div><div class="tb-val">Відкрити Discovery Feed. Фільтрувати по ніші, платформі (Meta / TikTok), країні, формату. Почати з широкого пошуку, потім звужувати.</div></div>
+<div class="tb-row"><div class="tb-label">Крок 2: Аналіз</div><div class="tb-val">Для кожного креативу що зачепив — запитати себе: який тут кут? який хук? чому я зупинився? що можна взяти? Не "гарна картинка", а конкретний прийом.</div></div>
+<div class="tb-row"><div class="tb-label">Крок 3: Зберегти</div><div class="tb-val">Зберегти в борд з назвою ніші або кута. Додати нотатку: що саме зачепило, для якого клієнта може підійти, який кут/хук використаний.</div></div>
+<div class="tb-row"><div class="tb-label">Крок 4: Організація</div><div class="tb-val">Створити борди по категоріях: "Хуки що чіпляють", "UGC приклади", "Статика з текстом", "Каруселі", а також по нішах: "Beauty refs", "Fashion refs" тощо.</div></div>
+</div>
+
+<div class="tb-section">
+<h4>Що шукати конкретно</h4>
+<div class="tb-row"><div class="tb-label">Winning ads</div><div class="tb-val">Реклама що крутиться довго (30+ днів) = ймовірно працює. Якщо оголошення активне 2 місяці — це winner. Вивчіть його структуру.</div></div>
+<div class="tb-row"><div class="tb-label">Перші 3 секунди</div><div class="tb-val">Дивіться тільки перші 3 секунди кожного відео. Який хук? Текст? Обличчя? Рух? Звук? Записуйте формулу хуку, не контент.</div></div>
+<div class="tb-row"><div class="tb-label">Патерни</div><div class="tb-val">Якщо 5 різних брендів використовують один і той самий тип хуку — це працюючий патерн. Не тренд, а перевірений прийом.</div></div>
+</div>
+
+<div class="tip"><strong>Pro tip:</strong> Шукайте не тільки у своїй ніші. Фільтруйте по "Health & Beauty", потім по "Home & Garden", потім по "Fashion". Найсильніші ідеї — cross-niche. Детальніше — в розділі "Кросс-ніш адаптація" нижче.</div>
+</div></div>
+
+<!-- PINTEREST -->
+<div class="tool t-pinterest" id="t2">
+<div class="tool-head" onclick="toggle('t2')">
+<div class="tool-icon ti-pinterest">P</div>
+<div class="tool-info"><h3>Pinterest</h3><div class="tool-sub">Візуальне натхнення: композиції, кольори, стилі, лейаути. Безкоштовний.</div></div>
+<span class="tool-toggle">&#9660;</span>
+</div>
+<div class="tool-body">
+
+<div class="tb-section">
+<h4>Для чого використовувати</h4>
+<div class="tb-row"><div class="tb-label">Візуальний стиль</div><div class="tb-val">Не для тексту і хуків — а для ВИГЛЯДУ креативу. Кольорові палітри, типографіка, композиція, mood. Коли потрібно зрозуміти "як це має виглядати".</div></div>
+<div class="tb-row"><div class="tb-label">Статика і каруселі</div><div class="tb-val">Pinterest — найкращий для статичних креативів. Лейаути карток, інфографіки, before/after візуали, product shots.</div></div>
+<div class="tb-row"><div class="tb-label">Moodboard для брифу</div><div class="tb-val">Зібрати 5-10 пінів і вставити посилання в бриф як візуальні референси для креативника.</div></div>
+</div>
+
+<div class="tb-section">
+<h4>Як працювати</h4>
+<div class="tb-row"><div class="tb-label">Пошук</div><div class="tb-val">Шукати англійською — більше результатів. "skincare ad design", "fashion carousel ad", "product photography flat lay", "before after template", "social media ad layout".</div></div>
+<div class="tb-row"><div class="tb-label">Алгоритм</div><div class="tb-val">Pinterest вчиться на ваших зберіганнях. Перші 2 тижні зберігайте все що подобається — через місяць feed стане ідеальним для вашої роботи.</div></div>
+<div class="tb-row"><div class="tb-label">Борди</div><div class="tb-val">Створити борди: "Ad layouts", "Color palettes", "Typography inspo", "Product shots", "UGC style", "Carousel refs". По клієнтах: "[Client] moodboard".</div></div>
+</div>
+
+<div class="tip"><strong>Pro tip:</strong> Шукайте "ad creative" + назва ніші. Але також шукайте поза рекламою: editorial design, magazine layouts, poster design. Часто найкращі рекламні лейаути — це адаптація журнальної верстки.</div>
+</div></div>
+
+<!-- REELS -->
+<div class="tool t-reels" id="t3">
+<div class="tool-head" onclick="toggle('t3')">
+<div class="tool-icon ti-reels">R</div>
+<div class="tool-info"><h3>Instagram Reels</h3><div class="tool-sub">Органічні тренди, UGC стилістика, хуки що працюють. Безкоштовний.</div></div>
+<span class="tool-toggle">&#9660;</span>
+</div>
+<div class="tool-body">
+
+<div class="tb-section">
+<h4>Для чого використовувати</h4>
+<div class="tb-row"><div class="tb-label">Органічні тренди</div><div class="tb-val">Що зараз працює органічно — те можна адаптувати в рекламу. Органічний контент з 500K+ переглядів = перевірений хук.</div></div>
+<div class="tb-row"><div class="tb-label">UGC стиль</div><div class="tb-val">Як виглядає натуральний UGC зараз? Яка подача, яка енергія, який тон? Це змінюється кожні 2-3 місяці.</div></div>
+<div class="tb-row"><div class="tb-label">Конкуренти клієнта</div><div class="tb-val">Підписатись на 10-15 конкурентів і брендів-лідерів у ніші клієнта. Дивитись що постять, що збирає engagement.</div></div>
+</div>
+
+<div class="tb-section">
+<h4>Як працювати</h4>
+<div class="tb-row"><div class="tb-label">Скролінг з ціллю</div><div class="tb-val">Не "гортати стрічку". Задати собі ціль: "знайти 3 хуки для beauty-клієнта". Коли знайшов 3 — зупинитись. Зберегти в колекцію.</div></div>
+<div class="tb-row"><div class="tb-label">Що фіксувати</div><div class="tb-val">Коли зупинились на рілсі — запитати: ЧОМУ я зупинився? Це хук? Візуал? Звук? Рух? Текст? Записати конкретний прийом, не "прикольне відео".</div></div>
+<div class="tb-row"><div class="tb-label">Колекції</div><div class="tb-val">Зберігати в іменовані колекції: "Хуки", "UGC стиль", "Transitions", "[Клієнт] refs". Використовувати при заповненні брифу.</div></div>
+</div>
+
+<div class="tip tip-warn"><strong>Увага:</strong> Reels — це не робочий інструмент номер 1, а доповнення. Якщо ви проводите 40 хвилин в Reels "для натхнення" — це прокрастинація. 10-15 хвилин з конкретною ціллю — достатньо.</div>
+</div></div>
+
+<!-- TIKTOK -->
+<div class="tool t-tiktok" id="t4">
+<div class="tool-head" onclick="toggle('t4')">
+<div class="tool-icon ti-tiktok">T</div>
+<div class="tool-info"><h3>TikTok (органіка)</h3><div class="tool-sub">Найшвидша платформа для нових форматів і хуків. Безкоштовний.</div></div>
+<span class="tool-toggle">&#9660;</span>
+</div>
+<div class="tool-body">
+
+<div class="tb-section">
+<h4>Для чого використовувати</h4>
+<div class="tb-row"><div class="tb-label">Нові формати</div><div class="tb-val">TikTok випереджає Meta на 3-6 місяців по трендах. Що працює в TikTok зараз — буде працювати в Reels через квартал. Бути першим = конкурентна перевага.</div></div>
+<div class="tb-row"><div class="tb-label">Автентичність</div><div class="tb-val">TikTok задає стандарт "як має виглядати UGC". Занадто відполіроване — не працює. Тут ви бачите що реально чіпляє людей.</div></div>
+<div class="tb-row"><div class="tb-label">Звуки і тренди</div><div class="tb-val">Трендовий звук або формат ("POV:", "things that just make sense", split-screen) — це готовий каркас для реклами.</div></div>
+</div>
+
+<div class="tb-section">
+<h4>Як працювати</h4>
+<div class="tb-row"><div class="tb-label">Окремий акаунт</div><div class="tb-val">Створити робочий акаунт. Лайкати тільки контент, релевантний роботі. Через тиждень For You Page стане вашим персональним trend-радаром.</div></div>
+<div class="tb-row"><div class="tb-label">Пошук по ніші</div><div class="tb-val">Хештеги: #beautytok, #fashiontok, #skincareRoutine, #unboxing, #productreview. Також шукати назви конкурентів клієнта.</div></div>
+<div class="tb-row"><div class="tb-label">Формат фіксації</div><div class="tb-val">Зберегти відео в закладки. У нотатках записати: який хук, який формат, чому працює, для якого клієнта адаптувати.</div></div>
+</div>
+
+<div class="tip"><strong>Pro tip:</strong> Дивіться не тільки свою нішу. Часто найкращі рекламні ідеї приходять з foodtok, booktok або навіть cleantok. Формат "ASMR розпакування" з'явився у food-ніші і потім вибухнув у beauty.</div>
+</div></div>
+
+<!-- TIKTOK TOP ADS -->
+<div class="tool t-topads" id="t5">
+<div class="tool-head" onclick="toggle('t5')">
+<div class="tool-icon ti-topads">TA</div>
+<div class="tool-info"><h3>TikTok Top Ads</h3><div class="tool-sub">Офіційна бібліотека найефективнішої реклами TikTok. Безкоштовний.</div></div>
+<span class="tool-toggle">&#9660;</span>
+</div>
+<div class="tool-body">
+
+<div class="tb-section">
+<h4>Для чого використовувати</h4>
+<div class="tb-row"><div class="tb-label">Перевірені winners</div><div class="tb-val">Це не просто реклама — це реклама, яку TikTok сам визначив як найефективнішу. Кожен приклад = перевірений performer з реальними метриками.</div></div>
+<div class="tb-row"><div class="tb-label">Інсайти по структурі</div><div class="tb-val">TikTok розбирає кожну рекламу: тривалість, тип хуку, темп, використання тексту, музика. Ви бачите не тільки ЩО працює, а ЧОМУ.</div></div>
+<div class="tb-row"><div class="tb-label">Фільтри по регіону</div><div class="tb-val">Можна дивитись що працює в конкретній країні або регіоні. Для українського ринку — фільтрувати по Eastern Europe.</div></div>
+</div>
+
+<div class="tb-section">
+<h4>Як працювати</h4>
+<div class="tb-row"><div class="tb-label">URL</div><div class="tb-val">ads.tiktok.com/business/creativecenter/inspiration/topads — відкрити, обрати регіон, нішу, період.</div></div>
+<div class="tb-row"><div class="tb-label">Фільтри</div><div class="tb-val">Country: ваш ринок або схожі. Industry: ніша клієнта. Objective: Conversions (для e-commerce). Period: Last 30 days (свіжі дані).</div></div>
+<div class="tb-row"><div class="tb-label">Аналіз</div><div class="tb-val">Для кожного топ-ада записати: 1) перші 3 секунди (хук), 2) структура (hook → problem → solution → CTA), 3) тривалість, 4) використання тексту/субтитрів.</div></div>
+<div class="tb-row"><div class="tb-label">Адаптація</div><div class="tb-val">Не копіювати — а взяти СТРУКТУРУ. Якщо топ-ад починається з "POV: ти...", а потім показує продукт через 5 секунд — це структура, яку можна адаптувати для будь-якої ніші.</div></div>
+</div>
+
+<div class="tip tip-green"><strong>Найцінніше:</strong> TikTok Top Ads показує Spark Ads які набрали найбільший engagement. Це поєднання органічного контенту і реклами — саме те що працює найкраще на TikTok.</div>
+</div></div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- КРОСС-НІШ АДАПТАЦІЯ                          -->
+<!-- ============================================ -->
+<div class="section">
+<span class="section-label sl-purple">Головне</span>
+<h2>Кросс-ніш адаптація</h2>
+<div class="section-desc">Найсильніші ідеї часто приходять з інших ніш. Побачив хук у fashion — адаптував для home decor — і він дає CTR вдвічі вищий за все що тестували до цього. Ось як це робити системно.</div>
+
+<div class="process">
+<h3>Процес адаптації: 5 кроків</h3>
+<div class="process-step"><div class="process-num">1</div><div class="process-text"><strong>Побачити прийом, не контент.</strong> Коли дивитесь креатив з іншої ніші — не дивіться на продукт. Дивіться на СТРУКТУРУ: який хук, яка послідовність, яке відчуття. "Unboxing з ASMR" — це прийом, не ніша.</div></div>
+<div class="process-step"><div class="process-num">2</div><div class="process-text"><strong>Визначити що саме працює.</strong> Чому цей креатив зачепив? Хук-питання? Контраст до/після? Темп? Музика? Ефект несподіванки? Виділити конкретний елемент.</div></div>
+<div class="process-step"><div class="process-num">3</div><div class="process-text"><strong>Перевірити Job.</strong> Яку Job виконує цей прийом в оригінальній ніші? Чи є аналогічна Job у вашій ніші? Якщо так — прийом адаптується.</div></div>
+<div class="process-step"><div class="process-num">4</div><div class="process-text"><strong>Замінити контекст, залишити структуру.</strong> Хук "5 речей які ви не знали про [продукт]" працює в БУДЬ-ЯКІЙ ніші. Змінюється продукт і специфіка — структура та ж сама.</div></div>
+<div class="process-step"><div class="process-num">5</div><div class="process-text"><strong>Записати в бриф з посиланням на оригінал.</strong> У референсах брифу вставити посилання на оригінальний креатив з іншої ніші + нотатку що саме адаптуємо.</div></div>
+</div>
+
+<!-- EXAMPLES -->
+<div class="cross-card" id="c1">
+<div class="cross-head" onclick="toggle('c1')">
+<span class="cross-from cf-fashion">Fashion</span><span class="cross-arrow">→</span><span class="cross-to cf-beauty">Beauty</span>
+<span class="cross-title">Капсульний гардероб → Набір догляду</span>
+<span class="cross-toggle">&#9660;</span>
+</div>
+<div class="cross-body">
+<div class="cross-grid">
+<div class="cross-col cc-orig"><h5>Оригінал (fashion)</h5><p>Концепт: "10 речей = 30 outfit на місяць". Формат: карусель, де кожен слайд — новий комплект з тих самих речей. Кут: Benefit-First.</p><div class="hook">"Стоїш перед шафою 20 хв? Ось 10 речей які вирішать це назавжди"</div></div>
+<div class="cross-col cc-adapt"><h5>Адаптація (beauty)</h5><p>Концепт: "3 засоби = повний догляд ранок + вечір". Формат: карусель, де кожен слайд — нова рутина з тих самих продуктів. Кут: Benefit-First.</p><div class="hook">"Стоїш в ванній 20 хв перед 12 баночками? Ось 3 засоби які замінять все"</div></div>
+</div>
+<div class="tip">Що адаптовано: структура "мало речей = багато варіантів", хук-формула "стоїш [де] N хвилин? Ось рішення", карусельний формат. Job та сама: "хочу простоту замість хаосу".</div>
+</div></div>
+
+<div class="cross-card" id="c2">
+<div class="cross-head" onclick="toggle('c2')">
+<span class="cross-from cf-beauty">Beauty</span><span class="cross-arrow">→</span><span class="cross-to cf-tech">Вироби з дерева</span>
+<span class="cross-title">UGC "чесний відгук" → Unboxing handmade</span>
+<span class="cross-toggle">&#9660;</span>
+</div>
+<div class="cross-body">
+<div class="cross-grid">
+<div class="cross-col cc-orig"><h5>Оригінал (beauty)</h5><p>Концепт: UGC Talking Head. Дівчина перед камерою: "Чесно? Я не вірила. Але через 2 тижні чоловік сам помітив різницю". Показує результат.</p><div class="hook">"Чесно? Я не вірила що крем за 450 грн може щось змінити"</div></div>
+<div class="cross-col cc-adapt"><h5>Адаптація (вироби з дерева)</h5><p>Концепт: UGC Talking Head + Unboxing. Чоловік розпаковує дерев'яну дошку для кухні: "Чесно? Я думав це буде просто дошка. Але коли дружина побачила..."</p><div class="hook">"Чесно? Я думав дерев'яна дошка за 900 грн — це переплата. Поки не потримав в руках"</div></div>
+</div>
+<div class="tip">Що адаптовано: хук-формула "Чесно? Я не вірив/ла, що [продукт] за [ціна] може [результат]". Структура: скепсис → досвід → приємний сюрприз. Job: "хочу переконатись що не витрачу гроші дарма".</div>
+</div></div>
+
+<div class="cross-card" id="c3">
+<div class="cross-head" onclick="toggle('c3')">
+<span class="cross-from cf-food">Food</span><span class="cross-arrow">→</span><span class="cross-to cf-beauty">Beauty</span>
+<span class="cross-title">ASMR приготування → ASMR текстура крему</span>
+<span class="cross-toggle">&#9660;</span>
+</div>
+<div class="cross-body">
+<div class="cross-grid">
+<div class="cross-col cc-orig"><h5>Оригінал (food)</h5><p>Концепт: ASMR відео без слів. Крупний план: руки ріжуть овочі, масло шкварчить, соус ллється. Звуки + текстури. Мільйони переглядів.</p><div class="hook">[Візуальний хук: крупний план текстури + ASMR звук з першої секунди]</div></div>
+<div class="cross-col cc-adapt"><h5>Адаптація (beauty)</h5><p>Концепт: ASMR крупний план. Крем видавлюється з тюбика, текстура розтирається на шкірі, крапля сироватки падає. Ті самі ASMR звуки, ті самі крупні плани.</p><div class="hook">[Візуальний хук: крем видавлюється в уповільненій зйомці + ASMR тап-тап по флакону]</div></div>
+</div>
+<div class="tip">Що адаптовано: формат ASMR без слів, який народився у food-контенті. Прийом: текстура + звук + крупний план = сенсорне залучення. Job немає — це чистий Hook Rate booster для сходинки 0.</div>
+</div></div>
+
+<div class="cross-card" id="c4">
+<div class="cross-head" onclick="toggle('c4')">
+<span class="cross-from cf-fitness">Fitness</span><span class="cross-arrow">→</span><span class="cross-to cf-fashion">Fashion</span>
+<span class="cross-title">"30-денний challenge" → "30 днів капсули"</span>
+<span class="cross-toggle">&#9660;</span>
+</div>
+<div class="cross-body">
+<div class="cross-grid">
+<div class="cross-col cc-orig"><h5>Оригінал (fitness)</h5><p>Концепт: серія коротких відео "День 1... День 7... День 30". Прогрес тіла. Кожен день — 3-5 секунд. До/Після вбудований у формат.</p><div class="hook">"День 1 vs День 30. Один і той самий челенж. Дивись що змінилось"</div></div>
+<div class="cross-col cc-adapt"><h5>Адаптація (fashion)</h5><p>Концепт: "30 днів в одній капсулі". Кожен день — новий outfit з тих самих 10 речей. Формат той самий: "День 1... День 15... День 30". Proof що капсула працює.</p><div class="hook">"30 днів. 10 речей. Жоден outfit не повторився. Дивись"</div></div>
+</div>
+<div class="tip">Що адаптовано: формат "challenge з прогресом", серійність (люди повертаються дивитись наступний день), вбудований До/Після. Job: "хочу побачити proof що це працює реально, не тільки на словах".</div>
+</div></div>
+
+<div class="cross-card" id="c5">
+<div class="cross-head" onclick="toggle('c5')">
+<span class="cross-from cf-tech">Вироби з дерева</span><span class="cross-arrow">→</span><span class="cross-to cf-beauty">Beauty</span>
+<span class="cross-title">Процес виробництва → "Як створюється ваш крем"</span>
+<span class="cross-toggle">&#9660;</span>
+</div>
+<div class="cross-body">
+<div class="cross-grid">
+<div class="cross-col cc-orig"><h5>Оригінал (handmade)</h5><p>Концепт: B-Roll процесу виробництва. Руки майстра, дерево, інструменти, лакування. Voiceover від засновника: "Кожну дошку я роблю вручну". Founder Story + B-Roll.</p><div class="hook">"Дивись як народжується річ, яка прослужить 20 років"</div></div>
+<div class="cross-col cc-adapt"><h5>Адаптація (beauty)</h5><p>Концепт: B-Roll лабораторії / виробництва. Інгредієнти, змішування, пакування. Voiceover: "Кожну партію ми тестуємо 47 разів". Founder Story + Інгредієнт.</p><div class="hook">"Дивись що відбувається до того як крем потрапляє у ваші руки"</div></div>
+</div>
+<div class="tip">Що адаптовано: формат "behind the scenes виробництва", Founder Story через процес а не через обличчя. Job: "хочу знати що за моїми грошима стоїть реальна якість і реальна людина".</div>
+</div></div>
+
+<!-- Cross-niche matrix -->
+<div class="tb-section" style="margin-top:28px">
+<h4>Матриця кросс-ніш адаптації: що звідки брати</h4>
+</div>
+<table class="matrix">
+<thead><tr><th>Ніша-донор</th><th>Що брати</th><th>Куди адаптувати</th><th>Приклад прийому</th></tr></thead>
+<tbody>
+<tr><td>Food / Cooking</td><td>ASMR текстури, recipe-формат, "задоволення процесом"</td><td>Beauty, Home, Kids</td><td>ASMR нанесення крему, "рецепт" рутини догляду</td></tr>
+<tr><td>Fitness</td><td>Challenge-формат, прогрес по днях, До/Після тіла</td><td>Beauty, Fashion, Health</td><td>"30 днів з сироваткою", трансформація стилю</td></tr>
+<tr><td>Fashion</td><td>Outfit-of-the-day, капсульність, "N речей = M варіантів"</td><td>Beauty, Home, Kids</td><td>"3 засоби = 5 рутин", "5 іграшок = 20 ігор"</td></tr>
+<tr><td>Tech / Gadgets</td><td>Unboxing, порівняння характеристик, "нарешті приїхало"</td><td>Beauty, Home, Fashion</td><td>Розпакування лімітованої колекції, порівняння складів</td></tr>
+<tr><td>Home / DIY</td><td>Трансформація простору, timelapse, "було/стало"</td><td>Beauty, Fashion</td><td>Трансформація шкіри timelapse, переодягання</td></tr>
+<tr><td>Education</td><td>Listicle "5 помилок", "ви не знали що...", myth-busting</td><td>Будь-яка ніша</td><td>"5 помилок у нанесенні крему", "3 міфи про дерево"</td></tr>
+<tr><td>Comedy / Entertainment</td><td>POV формат, relatable situations, unexpected twist</td><td>Будь-яка ніша</td><td>"POV: ти знову купила крем і він не працює"</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ============================================ -->
+<!-- РУТИНА                                        -->
+<!-- ============================================ -->
+<div class="section">
+<span class="section-label sl-ink">Процес</span>
+<h2>Рутина пошуку натхнення</h2>
+<div class="section-desc">Коли і як шукати, щоб це було системою, а не прокрастинацією</div>
+
+<div class="routine">
+<div class="routine-head rh-daily">Щоденно (10 хвилин, пасивно)</div>
+<div class="routine-body">
+<div class="routine-item"><div class="ri-time">Ранок</div><div class="ri-action">Пролистати TikTok For You Page на робочому акаунті. 5 хвилин. Зберегти що зачепило. Не аналізувати глибоко.</div><div class="ri-tool">TikTok</div></div>
+<div class="routine-item"><div class="ri-time">Обід</div><div class="ri-action">Пролистати Reels. 5 хвилин. Зберегти в колекцію що зачепило. Зафіксувати чому зупинились.</div><div class="ri-tool">Reels</div></div>
+</div></div>
+
+<div class="routine">
+<div class="routine-head rh-weekly">Щотижня (30 хвилин, активно)</div>
+<div class="routine-body">
+<div class="routine-item"><div class="ri-time">Понеділок</div><div class="ri-action">Foreplay: переглянути Discovery по нішах клієнтів. Зберегти 5-10 кращих у борди. Записати що саме зачепило.</div><div class="ri-tool">Foreplay</div></div>
+<div class="routine-item"><div class="ri-time">Понеділок</div><div class="ri-action">TikTok Top Ads: перевірити нові топ-ади по нішах. Записати структури і хуки що працюють.</div><div class="ri-tool">Top Ads</div></div>
+<div class="routine-item"><div class="ri-time">Перед брифом</div><div class="ri-action">Pinterest: зібрати візуальні референси для конкретного брифу. 5-10 пінів в борд клієнта.</div><div class="ri-tool">Pinterest</div></div>
+</div></div>
+
+<div class="routine">
+<div class="routine-head rh-project">При онбордингу нового клієнта (2-3 години, разово)</div>
+<div class="routine-body">
+<div class="routine-item"><div class="ri-time">1 година</div><div class="ri-action">Foreplay: повний аналіз реклами конкурентів. Які кути використовують? Які формати? Що крутиться довше за все (winners)?</div><div class="ri-tool">Foreplay</div></div>
+<div class="routine-item"><div class="ri-time">30 хв</div><div class="ri-action">TikTok Top Ads: топ-реклама у ніші клієнта. Записати 5-10 структур що працюють.</div><div class="ri-tool">Top Ads</div></div>
+<div class="routine-item"><div class="ri-time">30 хв</div><div class="ri-action">TikTok + Reels: органічний контент у ніші. Підписатись на конкурентів і лідерів. Які тренди, який стиль UGC?</div><div class="ri-tool">TikTok + Reels</div></div>
+<div class="routine-item"><div class="ri-time">30 хв</div><div class="ri-action">Foreplay + TikTok: кросс-ніш пошук. Переглянути 2-3 суміжні ніші. Які прийоми можна адаптувати? Записати в окремий борд.</div><div class="ri-tool">Foreplay</div></div>
+<div class="routine-item"><div class="ri-time">30 хв</div><div class="ri-action">Pinterest: візуальний moodboard клієнта. Стиль, кольори, настрій, лейаути. Буде основою для всіх брифів.</div><div class="ri-tool">Pinterest</div></div>
+</div></div>
+</div>
+
+<!-- ============================================ -->
+<!-- ПРАВИЛА                                       -->
+<!-- ============================================ -->
+<div class="section">
+<span class="section-label sl-red">Правила</span>
+<h2>Що робити і чого не робити</h2>
+
+<div class="process">
+<h3>Не копіювати, а адаптувати</h3>
+<div class="process-step"><div class="process-num">1</div><div class="process-text"><strong>Копіювати = повторити чужий контент.</strong> Це не працює (інша аудиторія, інший бренд, інший контекст) і це неетично.</div></div>
+<div class="process-step"><div class="process-num">2</div><div class="process-text"><strong>Адаптувати = взяти СТРУКТУРУ і ПРИЙОМ</strong> і наповнити своїм контентом, своїм продуктом, своєю Job. Хук-формулу можна використовувати. Сценарій — ні.</div></div>
+<div class="process-step"><div class="process-num">3</div><div class="process-text"><strong>Що можна брати:</strong> тип хуку, структуру відео, формат подачі, ритм монтажу, спосіб використання тексту, кольорову палітру, загальний mood.</div></div>
+<div class="process-step"><div class="process-num">4</div><div class="process-text"><strong>Що не можна брати:</strong> конкретний сценарій, конкретний текст, відео/фото контент, музику (якщо не royalty-free), claims і цифри.</div></div>
+</div>
+
+<div class="tip tip-green"><strong>Головне правило:</strong> Якщо хтось може подивитись на ваш креатив і сказати "це ж копія [бренду X]" — ви перейшли межу. Якщо ніхто не впізнає джерело натхнення — ви адаптували правильно.</div>
+</div>
+
+<div class="footer"><div class="footer-g">magic</div><div style="margin-top:4px">advertise for e-commerce</div></div>
+
+</div>
+
+<script>
+function toggle(id){document.getElementById(id).classList.toggle('collapsed')}
+</script>
+</body>
+</html>

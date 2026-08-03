@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Онбординг UA Manager — 30 днів</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magic-blue: #38A0FF;
+    --magic-purple: #AA7AFF;
+    --magic-gradient: linear-gradient(135deg, #38A0FF, #AA7AFF);
+    --ink-800: #0D0D1A;
+    --ink-700: #1A1A2E;
+    --ink-600: #2A2A40;
+    --ink-500: #3D3D55;
+    --ink-400: #5A5A75;
+    --ink-300: #8080A0;
+    --ink-200: #B0B0C8;
+    --ink-100: #D8D8E8;
+    --ink-50: #F0F0F8;
+    --success: #2EC28A;
+    --warning: #FFB020;
+    --danger: #F5525C;
+    --white: #FFFFFF;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-pill: 9999px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Onest', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-700);
+    background: var(--ink-50);
+  }
+
+  .hero {
+    background: var(--ink-700);
+    padding: 64px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(56,160,255,0.12) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: -5%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(170,122,255,0.10) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(56,160,255,0.15);
+    color: var(--magic-blue);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    background: var(--magic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-200);
+    max-width: 640px;
+    position: relative;
+  }
+
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--ink-100);
+    padding: 20px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav a {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-500);
+    text-decoration: none;
+    background: var(--ink-50);
+    transition: all 0.2s;
+  }
+  .nav a:hover { background: var(--magic-gradient); color: var(--white); }
+
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Period header */
+  .period {
+    margin-bottom: 56px;
+  }
+  .period-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .period-icon {
+    width: 56px; height: 56px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .period-icon.d1 { background: var(--magic-blue); }
+  .period-icon.d23 { background: var(--magic-purple); }
+  .period-icon.w1 { background: var(--success); }
+  .period-icon.w2 { background: var(--warning); }
+  .period-icon.w34 { background: var(--magic-blue); }
+  .period-icon.check { background: var(--magic-gradient); }
+  .period-meta h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink-700);
+    margin-bottom: 2px;
+  }
+  .period-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-300);
+  }
+
+  /* Day card */
+  .day-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .day-header {
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ink-50);
+  }
+  .day-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-700);
+  }
+  .day-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+  }
+  .day-badge.read { background: rgba(56,160,255,0.10); color: var(--magic-blue); }
+  .day-badge.practice { background: rgba(46,194,138,0.10); color: var(--success); }
+  .day-badge.shadow { background: rgba(170,122,255,0.10); color: var(--magic-purple); }
+  .day-badge.solo { background: rgba(255,176,32,0.10); color: var(--warning); }
+
+  .day-body {
+    padding: 20px 28px;
+  }
+  .task-list {
+    list-style: none;
+    padding: 0;
+  }
+  .task-list li {
+    padding: 10px 0 10px 36px;
+    position: relative;
+    font-size: 14px;
+    color: var(--ink-500);
+    border-bottom: 1px solid var(--ink-50);
+    line-height: 1.5;
+  }
+  .task-list li:last-child { border-bottom: none; }
+  .task-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 14px;
+    width: 20px; height: 20px;
+    border: 2px solid var(--ink-200);
+    border-radius: 5px;
+  }
+  .task-list li strong {
+    color: var(--ink-700);
+  }
+  .task-doc {
+    display: inline-block;
+    background: var(--ink-700);
+    color: var(--magic-blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  /* Result card */
+  .result-card {
+    background: linear-gradient(135deg, rgba(56,160,255,0.06), rgba(170,122,255,0.06));
+    border: 1px solid rgba(56,160,255,0.12);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin-top: 12px;
+  }
+  .result-card h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--magic-blue);
+    margin-bottom: 6px;
+  }
+  .result-card p {
+    font-size: 13px;
+    color: var(--ink-400);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Callout */
+  .callout {
+    background: linear-gradient(135deg, rgba(56,160,255,0.06), rgba(170,122,255,0.06));
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin: 20px 0;
+    border: 1px solid rgba(56,160,255,0.12);
+  }
+  .callout-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--magic-blue);
+    margin-bottom: 6px;
+  }
+  .callout p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  /* Warning */
+  .warning-block {
+    background: rgba(245,82,92,0.06);
+    border: 1px solid rgba(245,82,92,0.15);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .warning-block .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 6px;
+  }
+  .warning-block p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  /* Checklist final */
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .check-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border-left: 4px solid var(--ink-100);
+  }
+  .check-card.green { border-left-color: var(--success); }
+  .check-card.blue { border-left-color: var(--magic-blue); }
+  .check-card.purple { border-left-color: var(--magic-purple); }
+  .check-card.yellow { border-left-color: var(--warning); }
+  .check-card h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-600);
+    margin-bottom: 8px;
+  }
+  .check-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .check-card li {
+    font-size: 13px;
+    color: var(--ink-400);
+    padding: 4px 0 4px 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .check-card li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 12px; height: 12px;
+    border: 2px solid var(--ink-200);
+    border-radius: 3px;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--ink-100);
+    margin: 48px 0;
+  }
+
+  /* Table */
+  .table-wrap {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--ink-700);
+    color: var(--white);
+    font-weight: 500;
+    font-size: 12px;
+    padding: 12px 16px;
+    text-align: left;
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--ink-50);
+    font-size: 13px;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--ink-300);
+    font-size: 13px;
+  }
+  .footer .logo {
+    font-weight: 900;
+    font-size: 18px;
+    background: var(--magic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  @media print {
+    .nav { display: none; }
+    .day-card { break-inside: avoid; }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 40px 24px; }
+    .hero h1 { font-size: 32px; }
+    .nav { padding: 12px 24px; }
+    .check-grid { grid-template-columns: 1fr; }
+    .period-header { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero">
+  <div class="hero-badge">ONBOARDING PROGRAM</div>
+  <h1>Онбординг<br>UA Manager</h1>
+  <div class="subtitle">30-денна програма входження нового UA Manager в команду Magic. Від знайомства з методологією до самостійного ведення проєктів.</div>
+</div>
+
+<nav class="nav">
+  <a href="#day1">День 1</a>
+  <a href="#day23">Дні 2-3</a>
+  <a href="#week1">Тиждень 1</a>
+  <a href="#week2">Тиждень 2</a>
+  <a href="#week34">Тижні 3-4</a>
+  <a href="#check30">Перевірка 30 днів</a>
+</nav>
+
+<div class="content">
+
+<!-- ===== OVERVIEW ===== -->
+<div class="callout" style="margin-bottom: 40px;">
+  <div class="callout-title">Структура онбордингу</div>
+  <p>День 1 — знайомство з Magic. Дні 2-3 — методологія. Тиждень 1 — процеси та інструменти. Тиждень 2 — спостереження за досвідченим UAM. Тижні 3-4 — самостійна робота під наглядом тімліда. День 30 — адаптаційна перевірка.</p>
+</div>
+
+<div class="table-wrap" style="margin-bottom: 48px;">
+  <table>
+    <thead>
+      <tr>
+        <th>Період</th>
+        <th>Фокус</th>
+        <th>Формат</th>
+        <th>Результат</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>День 1</strong></td>
+        <td>Знайомство з Magic</td>
+        <td>Читання, зустрічі</td>
+        <td>Розуміє хто ми та чим відрізняємось</td>
+      </tr>
+      <tr>
+        <td><strong>Дні 2-3</strong></td>
+        <td>Методологія та терміни</td>
+        <td>Вивчення документів</td>
+        <td>Знає Magic Framework, метрики, структуру</td>
+      </tr>
+      <tr>
+        <td><strong>Тиждень 1</strong></td>
+        <td>Процеси та інструменти</td>
+        <td>Вивчення + перші задачі</td>
+        <td>Знає SOP, чек-листи, адженди, інструменти</td>
+      </tr>
+      <tr>
+        <td><strong>Тиждень 2</strong></td>
+        <td>Shadow: спостереження</td>
+        <td>Робота поруч з ментором</td>
+        <td>Бачить як працює досвідчений UAM</td>
+      </tr>
+      <tr>
+        <td><strong>Тижні 3-4</strong></td>
+        <td>Самостійна робота</td>
+        <td>Ведення проєктів під наглядом</td>
+        <td>Самостійно веде 1-2 проєкти</td>
+      </tr>
+      <tr>
+        <td><strong>День 30</strong></td>
+        <td>Адаптаційна перевірка</td>
+        <td>Зустріч з тімлідом</td>
+        <td>Go / No-go рішення</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== DAY 1 ===== -->
+<div class="period" id="day1">
+  <div class="period-header">
+    <div class="period-icon d1">D1</div>
+    <div class="period-meta">
+      <div class="period-label">ДЕНЬ 1</div>
+      <h2>Знайомство з Magic</h2>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Ранок: хто ми і чим відрізняємось</div>
+      <div class="day-badge read">ВИВЧЕННЯ</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Місія Magic:</strong> масштабуємо інтернет-магазини українських брендів. Ми не "тестуємо" — ми масштабуємо.</li>
+        <li><strong>Проблема ринку:</strong> замкнене коло розчарування. Чому клієнти змінюють агенції. Як Magic це вирішує через Pre-Launch System.</li>
+        <li><strong>Знайомство з командою:</strong> CEO, Growth Marketer, Тімлід, Креативний стратег. Хто за що відповідає. Ланцюг комунікації.</li>
+        <li><strong>Прочитати:</strong> секцію "Філософія" та "Структура відділу" в SOP <span class="task-doc">SOP: Magic Framework UA</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Після обіду: доступи та інструменти</div>
+      <div class="day-badge practice">НАЛАШТУВАННЯ</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Отримати доступи:</strong> робочий email, Telegram-чати, таск-менеджер</li>
+        <li><strong>Рекламні кабінети:</strong> Meta Business Manager, Google Ads, TikTok Ads — отримати доступи (поки read-only)</li>
+        <li><strong>Аналітика:</strong> Google Analytics 4, Google Tag Manager, Microsoft Clarity — отримати доступи</li>
+        <li><strong>Дашборд Magic:</strong> отримати доступ, розібратись в навігації</li>
+        <li><strong>Зустріч з тімлідом:</strong> 30 хв — відповіді на питання, план на перші 3 дні</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <h5>Результат дня 1</h5>
+    <p>Розуміє місію Magic та чим ми відрізняємось від ринку. Знає команду та ролі. Має всі доступи. Знає план на наступні дні.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== DAYS 2-3 ===== -->
+<div class="period" id="day23">
+  <div class="period-header">
+    <div class="period-icon d23">2-3</div>
+    <div class="period-meta">
+      <div class="period-label">ДНІ 2-3</div>
+      <h2>Методологія та терміни</h2>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">День 2: Magic Framework та метрики</div>
+      <div class="day-badge read">ВИВЧЕННЯ</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Прочитати повністю:</strong> база знань UA-відділу — глосарій метрик, воронка, креативні терміни <span class="task-doc">База знань UA</span></li>
+        <li><strong>Вивчити 4 стовпи Magic Framework:</strong> омніканальність, креативна стратегія, AI/ML, data-driven <span class="task-doc">SOP: секція 03</span></li>
+        <li><strong>Зрозуміти омніканальну систему:</strong> Meta + TikTok + Google як одна система. Єдині метрики: ROAS, Revenue, CPA, CR</li>
+        <li><strong>Вивчити принцип 90/10:</strong> що контролює спеціаліст vs що контролює система</li>
+        <li><strong>Pre-Launch System:</strong> Discovery → Blueprint → Setup Month. Навіщо це потрібно і як впливає на роботу UAM <span class="task-doc">База знань: секція 07</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">День 3: структура кампаній та Decision Tree</div>
+      <div class="day-badge read">ВИВЧЕННЯ</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Прочитати повністю:</strong> Decision Tree — три етапи еволюції структури <span class="task-doc">Decision Tree</span></li>
+        <li><strong>Зрозуміти логіку:</strong> пошук товарів-переможців → товари визначені → креативна стратегія. На який рівень ставити продукти та чому.</li>
+        <li><strong>Критичні правила:</strong> однакова цінова категорія, однаковий кут та концепт при тестуванні товарів</li>
+        <li><strong>Нейминг-конвенція:</strong> Дата | Magic | Ціль | Продукт | Гео (два варіанти залежно від структури) <span class="task-doc">SOP: секція 05</span></li>
+        <li><strong>Бенчмарки:</strong> вивчити орієнтири по Meta, TikTok, Google Ads. Зрозуміти чому CPA/ROAS індивідуальні <span class="task-doc">База знань: секція 05</span></li>
+        <li><strong>Зустріч з тімлідом:</strong> 30 хв — перевірка розуміння, відповіді на питання</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <h5>Результат днів 2-3</h5>
+    <p>Знає всі ключові метрики та формули. Розуміє Magic Framework та омніканальний підхід. Може пояснити Decision Tree та критичні правила структури. Знає бенчмарки.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== WEEK 1 ===== -->
+<div class="period" id="week1">
+  <div class="period-header">
+    <div class="period-icon w1">W1</div>
+    <div class="period-meta">
+      <div class="period-label">ТИЖДЕНЬ 1 (ДНІ 4-5)</div>
+      <h2>Процеси та регламенти</h2>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">День 4: SOP та робочий цикл</div>
+      <div class="day-badge read">ВИВЧЕННЯ</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Прочитати повністю:</strong> SOP Magic Framework UA — всі 10 секцій <span class="task-doc">SOP: Magic Framework UA</span></li>
+        <li><strong>Щоденний цикл:</strong> зрозуміти розклад дня UAM (моніторинг → звіт → дейлік → оптимізація → аналітика → закриття)</li>
+        <li><strong>Щотижневий цикл:</strong> понеділок-п'ятниця, які зустрічі коли</li>
+        <li><strong>Вихідні:</strong> два чеки на день, швидкі дії</li>
+        <li><strong>Матриця рішень:</strong> коли скейлити, коли зупиняти, коли чекати. Вивчити напам'ять.</li>
+        <li><strong>4 способи масштабування:</strong> бюджет, нові продукти, нові ринки, нові канали. Чому ніколи не дублюємо кампанії.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">День 5: чек-листи, адженди, звітність</div>
+      <div class="day-badge read">ВИВЧЕННЯ</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Вивчити чек-листи:</strong> щоденний, вихідні, щотижневий, щомісячний, launch, оптимізація <span class="task-doc">Чек-листи UA</span></li>
+        <li><strong>Вивчити адженди:</strong> дейлік, планерка понеділок, Weekly UAM Sync, планерка п'ятниця <span class="task-doc">Адженда зустрічей</span></li>
+        <li><strong>Звітність:</strong> формат 3F5T, що дописує UAM, як звітувати на дейліку</li>
+        <li><strong>Ескалація:</strong> коли і як ескалювати. Формат: проблема + що зроблено + що пропонуєш</li>
+        <li><strong>Зустріч з тімлідом:</strong> 45 хв — детальне обговорення процесів, показ реальних проєктів у кабінетах</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <h5>Результат тижня 1</h5>
+    <p>Знає всі регламенти та процеси. Може пройтись по чек-листу. Знає формат зустрічей та звітів. Розуміє ескалацію. Бачив реальні проєкти в кабінетах.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== WEEK 2 ===== -->
+<div class="period" id="week2">
+  <div class="period-header">
+    <div class="period-icon w2">W2</div>
+    <div class="period-meta">
+      <div class="period-label">ТИЖДЕНЬ 2</div>
+      <h2>Shadow: спостереження</h2>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Формат Shadow</div>
+    <p>Новий UAM спостерігає за роботою тімліда або досвідченого UAM. Присутній на всіх зустрічах. Бачить як приймаються рішення в реальному часі. Задає питання після, не під час роботи.</p>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Щодня: спостереження за робочим циклом</div>
+      <div class="day-badge shadow">SHADOW</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Ранковий моніторинг:</strong> спостерігати як ментор перевіряє кабінети, на що звертає увагу, як фіксує аномалії</li>
+        <li><strong>Дейлік:</strong> присутній на дейліку як спостерігач. Дивиться як ментор проходиться по проєктах на дашборді</li>
+        <li><strong>Оптимізація:</strong> спостерігати як ментор вносить зміни в кампанії. Питати "чому саме це рішення?"</li>
+        <li><strong>Звітність:</strong> бачити як формується 3F5T звіт, що дописується, як виглядає тижневий звіт</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Зустрічі: присутній на всіх</div>
+      <div class="day-badge shadow">SHADOW</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Планерка понеділок:</strong> бачить як презентуються результати, як приймаються рішення</li>
+        <li><strong>Weekly UAM Sync:</strong> бачить спільну діагностику UAM + креативний стратег, як визначають причину просадок</li>
+        <li><strong>Планерка п'ятниця:</strong> бачить як закривається тиждень і ставляться пріоритети</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Перші задачі під наглядом</div>
+      <div class="day-badge practice">ПРАКТИКА</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Заповнити щоденний звіт:</strong> спробувати самостійно сформувати 3F5T по одному проєкту. Ментор перевіряє.</li>
+        <li><strong>Пройти щоденний чек-лист:</strong> виконати всі пункти під наглядом ментора</li>
+        <li><strong>Підготувати дані для Weekly UAM Sync:</strong> зібрати метрики по проєкту, визначити де просадка і чому</li>
+        <li><strong>Зробити аналіз через Clarity:</strong> переглянути 10 session recordings, зафіксувати спостереження</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <h5>Результат тижня 2</h5>
+    <p>Бачив повний робочий цикл у реальності. Був на всіх типах зустрічей. Спробував заповнити звіт та пройти чек-лист. Розуміє як теорія з документів працює на практиці.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== WEEKS 3-4 ===== -->
+<div class="period" id="week34">
+  <div class="period-header">
+    <div class="period-icon w34">3-4</div>
+    <div class="period-meta">
+      <div class="period-label">ТИЖНІ 3-4</div>
+      <h2>Самостійна робота під наглядом</h2>
+    </div>
+  </div>
+
+  <div class="warning-block">
+    <div class="title">Тімлід контролює, але не робить за UAM</div>
+    <p>UAM самостійно приймає рішення, веде кампанії, готує звіти. Тімлід перевіряє результати та дає зворотний зв'язок. Якщо UAM не знає що робити — питає, не мовчить.</p>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Тиждень 3: перший самостійний проєкт</div>
+      <div class="day-badge solo">САМОСТІЙНО</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Отримати 1-2 проєкти:</strong> тімлід передає проєкти з повним брифінгом: клієнт, KPI, поточний стан, історія</li>
+        <li><strong>Повний щоденний цикл:</strong> моніторинг → звіт 3F5T → дейлік → оптимізація → закриття. Самостійно по чек-листу.</li>
+        <li><strong>Перший самостійний звіт:</strong> тижневий звіт по проєкту (скріншот, 3 дії, висновки, плани). Тімлід перевіряє та дає зворотний зв'язок.</li>
+        <li><strong>Перші самостійні рішення:</strong> скейл, зупинка адсету, запит на креативи. Затверджувати з тімлідом перед виконанням.</li>
+        <li><strong>Участь у зустрічах:</strong> активний учасник, не спостерігач. Звітує по своїх проєктах на планерках.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-title">Тиждень 4: повна автономія</div>
+      <div class="day-badge solo">САМОСТІЙНО</div>
+    </div>
+    <div class="day-body">
+      <ul class="task-list">
+        <li><strong>Повний цикл без нагадувань:</strong> щоденний, щотижневий цикл виконується самостійно. Чек-листи — як робочий інструмент.</li>
+        <li><strong>Самостійні рішення:</strong> скейл, стоп, оптимізація — без попереднього затвердження тімлідом (крім великих змін). Інформувати тімліда про рішення.</li>
+        <li><strong>Підготовка до 30-денної перевірки:</strong> зібрати результати за 2 тижні самостійної роботи. Підготувати висновки та самооцінку.</li>
+        <li><strong>Зворотний зв'язок:</strong> зустріч з тімлідом — що вийшло добре, де труднощі, що потрібно підтягнути</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <h5>Результат тижнів 3-4</h5>
+    <p>Самостійно веде 1-2 проєкти. Виконує повний робочий цикл. Готує звіти та приймає рішення. Знає коли питати і коли ескалювати. Активний учасник зустрічей.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== 30 DAY CHECK ===== -->
+<div class="period" id="check30">
+  <div class="period-header">
+    <div class="period-icon check">30</div>
+    <div class="period-meta">
+      <div class="period-label">ДЕНЬ 30</div>
+      <h2>Адаптаційна перевірка</h2>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Формат</div>
+    <p>Зустріч UAM + Тімлід, 60 хвилин. UAM показує свої проєкти, розповідає про рішення, відповідає на питання. Тімлід оцінює готовність по чек-листу нижче. Результат: Go (працює самостійно) або додатковий час під наглядом.</p>
+  </div>
+
+  <h3 style="font-size: 20px; font-weight: 700; margin: 28px 0 16px; color: var(--ink-700);">Чек-лист перевірки</h3>
+
+  <div class="check-grid">
+    <div class="check-card green">
+      <h5>Методологія</h5>
+      <ul>
+        <li>Може пояснити Magic Framework та 4 стовпи</li>
+        <li>Розуміє омніканальний підхід</li>
+        <li>Знає принцип 90/10</li>
+        <li>Може пояснити Pre-Launch System</li>
+      </ul>
+    </div>
+    <div class="check-card blue">
+      <h5>Метрики та бенчмарки</h5>
+      <ul>
+        <li>Знає всі ключові метрики та формули</li>
+        <li>Може оцінити креатив за скоркардом</li>
+        <li>Знає бенчмарки Meta, TikTok, Google</li>
+        <li>Розуміє різницю Thumb Stop vs Hook Rate</li>
+      </ul>
+    </div>
+    <div class="check-card purple">
+      <h5>Структура кампаній</h5>
+      <ul>
+        <li>Може пройти Decision Tree для нового клієнта</li>
+        <li>Знає критичні правила (ціна, концепт)</li>
+        <li>Правильно застосовує нейминг-конвенцію</li>
+        <li>Розуміє коли який рівень для продуктів</li>
+      </ul>
+    </div>
+    <div class="check-card yellow">
+      <h5>Процеси</h5>
+      <ul>
+        <li>Самостійно проходить щоденний чек-лист</li>
+        <li>Заповнює 3F5T звіт без помилок</li>
+        <li>Коректно звітує на дейліку (дашборд, цифри)</li>
+        <li>Готує тижневий звіт у правильному форматі</li>
+      </ul>
+    </div>
+    <div class="check-card green">
+      <h5>Прийняття рішень</h5>
+      <ul>
+        <li>Знає матрицю рішень і застосовує її</li>
+        <li>Правильно визначає коли скейлити / зупиняти</li>
+        <li>Знає 4 способи масштабування</li>
+        <li>Розуміє коли і як ескалювати</li>
+      </ul>
+    </div>
+    <div class="check-card blue">
+      <h5>Інструменти</h5>
+      <ul>
+        <li>Впевнено працює в Meta / Google / TikTok Ads</li>
+        <li>Може витягнути потрібні дані з GA4</li>
+        <li>Може провести аналіз через Clarity</li>
+        <li>Працює з дашбордом Magic</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warning-block" style="margin-top: 24px;">
+    <div class="title">Якщо не пройшов перевірку</div>
+    <p>Це не провал — це сигнал що потрібно більше часу. Тімлід визначає конкретні зони для покращення та додає ще 1-2 тижні під наглядом з фокусом на слабких місцях. Повторна перевірка через 2 тижні.</p>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="logo">magic</div>
+  <div>advertise for e-commerce</div>
+  <div style="margin-top: 6px; font-size: 11px;">Внутрішній документ. Не для розповсюдження.</div>
+</div>
+
+</body>
+</html>

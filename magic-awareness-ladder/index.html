@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сходи обізнаності Бена Ханта — magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#38A0FF;--purple:#AA7AFF;--gradient:linear-gradient(135deg,#38A0FF,#AA7AFF);--ink-900:#0f1729;--ink-700:#2a3558;--ink-500:#556085;--ink-400:#7580a0;--ink-200:#c4c9d8;--ink-100:#e4e7ef;--ink-50:#f4f5f9;--success:#2EC28A;--warning:#FFB020;--danger:#F5525C;--bg:#f7f8fb;--card:#fff;--border:#e4e7ef;--r-md:14px;--r-lg:20px;--r-xl:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Onest',sans-serif;font-weight:300;background:var(--bg);color:var(--ink-900);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+.hero{background:var(--ink-900);color:#fff;padding:64px 48px 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;bottom:-80px;left:-40px;width:400px;height:400px;background:var(--gradient);border-radius:50%;opacity:.1;filter:blur(80px)}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.hero-logo{font-weight:900;font-size:16px;opacity:.35;margin-bottom:32px}
+.hero h1{font-weight:900;font-size:40px;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px}
+.hero h1 .gt{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-weight:300;font-size:16px;opacity:.5;max-width:560px}
+.container{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+.intro{font-size:17px;font-weight:300;color:var(--ink-500);margin-bottom:48px;line-height:1.8}
+.intro strong{color:var(--ink-900);font-weight:700}
+
+.section{margin-bottom:48px}
+.section-label{font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;padding:4px 14px;border-radius:999px;display:inline-block;color:#fff}
+.sl-blue{background:var(--blue)}.sl-purple{background:var(--purple)}.sl-ink{background:var(--ink-900)}.sl-green{background:var(--success)}.sl-orange{background:var(--warning)}.sl-red{background:var(--danger)}
+.section h2{font-weight:900;font-size:24px;letter-spacing:-.02em;margin-bottom:8px;margin-top:8px}
+.section-desc{font-weight:300;color:var(--ink-500);font-size:14px;margin-bottom:24px}
+
+/* Ladder steps */
+.ladder{display:flex;flex-direction:column;gap:0;margin-bottom:32px}
+.ladder-step{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:16px;overflow:hidden;position:relative}
+.ladder-step::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.ls-0::before{background:var(--danger)}.ls-1::before{background:var(--warning)}.ls-2::before{background:var(--blue)}.ls-3::before{background:var(--purple)}.ls-4::before{background:var(--success)}
+
+.ls-head{padding:20px 24px;display:flex;align-items:center;gap:16px;cursor:pointer}
+.ls-num{font-weight:900;font-size:24px;width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.ln-0{background:var(--danger)}.ln-1{background:var(--warning)}.ln-2{background:var(--blue)}.ln-3{background:var(--purple)}.ln-4{background:var(--success)}
+.ls-info{flex:1}
+.ls-info h3{font-weight:900;font-size:17px;letter-spacing:-.01em}
+.ls-info .ls-sub{font-weight:300;font-size:13px;color:var(--ink-400);margin-top:2px}
+.ls-toggle{font-size:14px;color:var(--ink-400);transition:transform .2s}
+.ladder-step.collapsed .ls-body{display:none}.ladder-step.collapsed .ls-toggle{transform:rotate(-90deg)}
+
+.ls-body{padding:0 24px 24px}
+.ls-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.ls-card{padding:16px 20px;border-radius:var(--r-md);font-size:13px;font-weight:300;line-height:1.6}
+.lsc-who{background:var(--ink-50);border:1px solid var(--border)}
+.lsc-thinks{background:#fff8f0;border:1px solid #ffe8cc}
+.ls-card h4{font-weight:700;font-size:13px;margin-bottom:6px;color:var(--ink-900)}
+.ls-card p{color:var(--ink-700)}
+
+.ls-action{background:var(--ink-50);border-radius:var(--r-md);padding:20px 24px;font-size:13px;line-height:1.7}
+.ls-action h4{font-weight:700;font-size:14px;margin-bottom:10px;color:var(--ink-900)}
+.ls-row{display:flex;gap:12px;padding:6px 0}
+.ls-row-label{font-weight:500;min-width:90px;flex-shrink:0;color:var(--ink-900);font-size:13px}
+.ls-row-val{font-weight:300;color:var(--ink-700);font-size:13px}
+
+/* Rule box */
+.rule-box{background:var(--ink-900);color:#fff;border-radius:var(--r-xl);padding:32px;margin-bottom:32px;position:relative;overflow:hidden}
+.rule-box::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:var(--gradient);border-radius:50%;opacity:.08;filter:blur(40px)}
+.rule-box h3{font-weight:900;font-size:20px;margin-bottom:16px;position:relative;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.rule-box p{font-weight:300;opacity:.75;font-size:15px;position:relative;line-height:1.7;margin-bottom:12px}
+.rule-box .highlight{font-weight:700;opacity:1}
+
+/* Strategy */
+.strat-flow{position:relative;margin-bottom:32px}
+.strat-flow::before{content:'';position:absolute;left:23px;top:24px;bottom:24px;width:2px;background:var(--gradient);border-radius:2px}
+.sf-step{display:flex;gap:16px;padding:16px 0;position:relative}
+.sf-dot{width:48px;height:48px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;flex-shrink:0;z-index:1}
+.sf-1{background:var(--danger)}.sf-2{background:var(--blue)}.sf-3{background:var(--success)}
+.sf-content{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 22px}
+.sf-content h4{font-weight:700;font-size:15px;margin-bottom:6px}
+.sf-content p{font-weight:300;font-size:13px;color:var(--ink-500);line-height:1.6}
+.sf-content .metrics{font-size:12px;font-weight:500;color:var(--purple);margin-top:8px}
+
+/* Matrix table */
+table.matrix{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px;font-size:12px;border:1px solid var(--border)}
+table.matrix th{background:var(--ink-900);color:#fff;padding:12px 12px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+table.matrix td{padding:12px;border-bottom:1px solid var(--border);vertical-align:top;font-weight:300;line-height:1.5}
+table.matrix tr:nth-child(even) td{background:var(--ink-50)}
+table.matrix td:first-child{font-weight:700}
+
+/* Niche examples */
+.niche{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden}
+.niche-head{padding:14px 24px;font-weight:900;font-size:14px;letter-spacing:-.01em;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.nh-beauty{background:var(--blue)}.nh-fashion{background:var(--purple)}.nh-health{background:var(--ink-900)}
+.niche.collapsed .niche-body{display:none}
+.niche-body{padding:0}
+.niche-row{display:grid;grid-template-columns:140px 1fr 160px 1fr;gap:0;border-bottom:1px solid var(--border);font-size:13px}
+.niche-row:last-child{border-bottom:none}
+.nr-cell{padding:12px 16px;font-weight:300;color:var(--ink-700);line-height:1.5;border-right:1px solid var(--border)}
+.nr-cell:last-child{border-right:none}
+.nr-cell strong{font-weight:700;color:var(--ink-900);display:block;margin-bottom:2px;font-size:12px}
+.nr-cell .hook{font-style:italic;color:var(--ink-500)}
+
+.footer{text-align:center;padding:48px 0 0;font-size:12px;color:var(--ink-400);font-weight:300}
+.footer-g{font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+@media(max-width:768px){.hero{padding:40px 20px 36px}.hero h1{font-size:28px}.ls-grid{grid-template-columns:1fr}.niche-row{grid-template-columns:1fr}.container{padding:32px 16px 60px}}
+@media print{body{background:#fff}.hero,.rule-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}.ladder-step.collapsed .ls-body{display:block !important}.niche.collapsed .niche-body{display:block !important}.section{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero"><div class="hero-inner">
+<div class="hero-logo">magic</div>
+<h1>Сходи обізнаності<br><span class="gt">Бена Ханта</span></h1>
+<div class="hero-sub">Як адаптувати креативи під рівень готовності аудиторії. Правильний контент правильній людині в правильний момент.</div>
+</div></div>
+
+<div class="container">
+
+<div class="intro">Модель Бена Ханта описує <strong>5 рівнів обізнаності клієнта</strong>: від "не знаю що маю проблему" до "готовий купити". Кожен рівень потребує різного типу контенту, кута і CTA. Якщо показати оффер -30% людині, яка ще не знає про проблему — це злив бюджету. Якщо показати едьютейнмент тому, хто вже був на сайті — це втрачена конверсія.</div>
+
+<!-- ===== 5 СХОДИНОК ===== -->
+<div class="section">
+<span class="section-label sl-purple">5 рівнів</span>
+<h2>Сходинки обізнаності</h2>
+<div class="section-desc">Від "не знаю про проблему" до "готовий купити". Кожна сходинка = інший тип креативу.</div>
+
+<!-- Step 0 -->
+<div class="ladder-step ls-0" id="s0">
+<div class="ls-head" onclick="toggle('s0')">
+<div class="ls-num ln-0">0</div>
+<div class="ls-info"><h3>Не усвідомлює проблему</h3><div class="ls-sub">"У мене все нормально" — TOFU</div></div>
+<span class="ls-toggle">&#9660;</span>
+</div>
+<div class="ls-body">
+<div class="ls-grid">
+<div class="ls-card lsc-who"><h4>Хто це</h4><p>Людина, яка не знає що у неї є проблема. Живе як є. Не шукає рішення, бо не бачить проблеми. Приклад: жінка 35 років, шкіра потроху змінюється, але вона цього не помічає або не зважає.</p></div>
+<div class="ls-card lsc-thinks"><h4>Що думає</h4><p>"У мене все нормально"<br>"Це не про мене"<br>"Навіщо мені крем, і так добре"<br><br>Будь-яка реклама продукту на цьому рівні — це шум.</p></div>
+</div>
+<div class="ls-action">
+<h4>Що показувати</h4>
+<p>Контент, який відкриває очі на проблему. Не продає — а змушує задуматись.</p>
+<div class="ls-row"><div class="ls-row-label">Кут</div><div class="ls-row-val">Едьютейнмент</div></div>
+<div class="ls-row"><div class="ls-row-label">Концепт</div><div class="ls-row-val">Listicle, POV, B-Roll + Voiceover</div></div>
+<div class="ls-row"><div class="ls-row-label">Хук</div><div class="ls-row-val">"5 ознак старіння шкіри, які ви не помічаєте"</div></div>
+<div class="ls-row"><div class="ls-row-label">CTA</div><div class="ls-row-val">М'який ("Дізнайся більше")</div></div>
+<div class="ls-row"><div class="ls-row-label">KPI</div><div class="ls-row-val">Hook Rate, Reach, CPM</div></div>
+<div class="ls-row"><div class="ls-row-label">Правило</div><div class="ls-row-val">Не продавайте на цій сходинці. Продаж = злив бюджету.</div></div>
+</div>
+</div></div>
+
+<!-- Step 1 -->
+<div class="ladder-step ls-1" id="s1">
+<div class="ls-head" onclick="toggle('s1')">
+<div class="ls-num ln-1">1</div>
+<div class="ls-info"><h3>Усвідомлює проблему</h3><div class="ls-sub">"Може щось можна зробити?" — TOFU</div></div>
+<span class="ls-toggle">&#9660;</span>
+</div>
+<div class="ls-body">
+<div class="ls-grid">
+<div class="ls-card lsc-who"><h4>Хто це</h4><p>Людина знає що має проблему, але не знає що з нею можна зробити. Шукає інформацію, не рішення. Приклад: "Так, у мене з'явились зморшки. Це нормально? Може щось можна зробити?"</p></div>
+<div class="ls-card lsc-thinks"><h4>Що думає</h4><p>"У мене є проблема"<br>"Може це вирішується?"<br>"Що взагалі існує?"<br><br>Відкрита до інформації, але не готова купувати.</p></div>
+</div>
+<div class="ls-action">
+<h4>Що показувати</h4>
+<p>Контент, який показує що рішення існують. Різні підходи до проблеми.</p>
+<div class="ls-row"><div class="ls-row-label">Кут</div><div class="ls-row-val">Pain Point, освітній контент</div></div>
+<div class="ls-row"><div class="ls-row-label">Концепт</div><div class="ls-row-val">Talking Head, B-Roll + Voiceover</div></div>
+<div class="ls-row"><div class="ls-row-label">Хук</div><div class="ls-row-val">"Зморшки після 30? Ось 3 причини і що з ними робити"</div></div>
+<div class="ls-row"><div class="ls-row-label">CTA</div><div class="ls-row-val">М'який ("Дізнайся який підхід тобі підходить")</div></div>
+<div class="ls-row"><div class="ls-row-label">KPI</div><div class="ls-row-val">CTR, Hold Rate</div></div>
+</div>
+</div></div>
+
+<!-- Step 2 -->
+<div class="ladder-step ls-2" id="s2">
+<div class="ls-head" onclick="toggle('s2')">
+<div class="ls-num ln-2">2</div>
+<div class="ls-info"><h3>Шукає рішення</h3><div class="ls-sub">"Які є варіанти?" — MOFU</div></div>
+<span class="ls-toggle">&#9660;</span>
+</div>
+<div class="ls-body">
+<div class="ls-grid">
+<div class="ls-card lsc-who"><h4>Хто це</h4><p>Знає про проблему і активно шукає рішення. Порівнює варіанти: салон vs крем vs процедури. Приклад: "Окей, я хочу щось зробити зі зморшками. Що є? Салон? Креми? Які?"</p></div>
+<div class="ls-card lsc-thinks"><h4>Що думає</h4><p>"Які є варіанти?"<br>"Що краще — салон чи крем?"<br>"Скільки це коштує?"<br><br>Порівнює категорії рішень, ще не бренди.</p></div>
+</div>
+<div class="ls-action">
+<h4>Що показувати</h4>
+<p>Контент, який показує перевагу вашого типу рішення над альтернативами.</p>
+<div class="ls-row"><div class="ls-row-label">Кут</div><div class="ls-row-val">Порівняння, Інгредієнт/Технологія, Social Proof</div></div>
+<div class="ls-row"><div class="ls-row-label">Концепт</div><div class="ls-row-val">Карусель, Інфографіка, B-Roll + Voiceover</div></div>
+<div class="ls-row"><div class="ls-row-label">Хук</div><div class="ls-row-val">"Салон за 2000₴ vs крем за 450₴ — порівнюємо результат через 30 днів"</div></div>
+<div class="ls-row"><div class="ls-row-label">CTA</div><div class="ls-row-val">М'який / Соціальний</div></div>
+<div class="ls-row"><div class="ls-row-label">KPI</div><div class="ls-row-val">CTR, ATC Rate</div></div>
+</div>
+</div></div>
+
+<!-- Step 3 -->
+<div class="ladder-step ls-3" id="s3">
+<div class="ls-head" onclick="toggle('s3')">
+<div class="ls-num ln-3">3</div>
+<div class="ls-info"><h3>Знає про продукт</h3><div class="ls-sub">"Чи він реально працює?" — MOFU/BOFU</div></div>
+<span class="ls-toggle">&#9660;</span>
+</div>
+<div class="ls-body">
+<div class="ls-grid">
+<div class="ls-card lsc-who"><h4>Хто це</h4><p>Знає про ваш продукт, можливо бачила рекламу, відвідала сайт. Але ще не купила — є сумніви. Приклад: "Бачила цей крем. Виглядає непогано. Але чи він реально працює?"</p></div>
+<div class="ls-card lsc-thinks"><h4>Що думає</h4><p>"Чому саме цей бренд?"<br>"А раптом не підійде?"<br>"Чи варто стільки платити?"<br><br>Потрібен доказ і впевненість.</p></div>
+</div>
+<div class="ls-action">
+<h4>Що показувати</h4>
+<p>Контент, який дає впевненість у вашому конкретному продукті.</p>
+<div class="ls-row"><div class="ls-row-label">Кут</div><div class="ls-row-val">UGC/Testimonial, Social Proof, До/Після, Founder Story</div></div>
+<div class="ls-row"><div class="ls-row-label">Концепт</div><div class="ls-row-val">Talking Head (UGC), Інтерв'ю, Screen Recording</div></div>
+<div class="ls-row"><div class="ls-row-label">Хук</div><div class="ls-row-val">"Чесно? Я не вірила. Але через 2 тижні чоловік сам помітив різницю"</div></div>
+<div class="ls-row"><div class="ls-row-label">CTA</div><div class="ls-row-val">Соціальний ("Приєднуйся до 50 000 задоволених клієнтів")</div></div>
+<div class="ls-row"><div class="ls-row-label">KPI</div><div class="ls-row-val">ATC Rate, CR</div></div>
+</div>
+</div></div>
+
+<!-- Step 4 -->
+<div class="ladder-step ls-4" id="s4">
+<div class="ls-head" onclick="toggle('s4')">
+<div class="ls-num ln-4">4</div>
+<div class="ls-info"><h3>Готовий купити</h3><div class="ls-sub">"Де знижка? Коли доставка?" — BOFU</div></div>
+<span class="ls-toggle">&#9660;</span>
+</div>
+<div class="ls-body">
+<div class="ls-grid">
+<div class="ls-card lsc-who"><h4>Хто це</h4><p>Вирішила купити. Потрібен тільки фінальний поштовх: оффер, зручність, терміновість. Приклад: "Хочу цей крем. Де краще ціна? Є знижка? Безкоштовна доставка?"</p></div>
+<div class="ls-card lsc-thinks"><h4>Що думає</h4><p>"Де купити дешевше?"<br>"Є знижка зараз?"<br>"Може почекати розпродаж?"<br><br>Не треба переконувати — треба дати причину купити зараз.</p></div>
+</div>
+<div class="ls-action">
+<h4>Що показувати</h4>
+<p>Оффер, знижка, бандл, безкоштовна доставка, обмежена пропозиція.</p>
+<div class="ls-row"><div class="ls-row-label">Кут</div><div class="ls-row-val">Оффер/Ціна, FOMO/Urgency</div></div>
+<div class="ls-row"><div class="ls-row-label">Концепт</div><div class="ls-row-val">Статика + текст, Screen Recording, DPA</div></div>
+<div class="ls-row"><div class="ls-row-label">Хук</div><div class="ls-row-val">"-30% тільки 24 години. Безкоштовна доставка."</div></div>
+<div class="ls-row"><div class="ls-row-label">CTA</div><div class="ls-row-val">Прямий ("Замовляй зараз"), Дефіцит</div></div>
+<div class="ls-row"><div class="ls-row-label">KPI</div><div class="ls-row-val">CR, CPA, ROAS</div></div>
+</div>
+</div></div>
+
+</div>
+
+<!-- ===== ГОЛОВНЕ ПРАВИЛО ===== -->
+<div class="rule-box">
+<h3>Не перескакуйте сходинки</h3>
+<p>Людина на сходинці 0 <span class="highlight">не готова</span> до оффера. Людина на сходинці 4 <span class="highlight">не потребує</span> едьютейнменту.</p>
+<p>Найчастіша помилка в e-commerce: мати в ротації тільки офери (-30%, купуй зараз). Переважна більшість людей, навіть у широкій аудиторії, ще не знають що у них є проблема, не знають що ваш продукт вирішує її, і не довіряють вам. Оффер для них — просто шум. Потрібен мікс креативів для різних сходинок.</p>
+<p><span class="highlight">Кожна сходинка потребує свого типу контенту. Перескочите — втратите і гроші, і людину.</span></p>
+</div>
+
+<!-- ===== СТРАТЕГІЯ ===== -->
+<div class="section">
+<span class="section-label sl-ink">Стратегія</span>
+<h2>Як це працює з широкими аудиторіями</h2>
+<div class="section-desc">Ми не використовуємо LAL, Engaged, Custom Audiences в налаштуваннях. Працюємо виключно з широкими аудиторіями. Алгоритм сам знаходить потрібних людей. Тому сходинку визначає не аудиторія, а сам креатив.</div>
+
+<div class="strat-flow">
+<div class="sf-step">
+<div class="sf-dot sf-1">1</div>
+<div class="sf-content">
+<h4>Креатив визначає сходинку, не аудиторія</h4>
+<p>При широких аудиторіях алгоритм Meta/TikTok сам знаходить людей, які відреагують на конкретний креатив. Якщо креатив побудований на Pain Point — алгоритм покаже його тим, хто має цю проблему. Якщо на Оффер — тим, хто вже готовий купити. Ваша задача: мати в ротації креативи для різних сходинок одночасно.</p>
+<div class="metrics">Принцип: не "кому показати", а "що показати". Алгоритм зробить решту.</div>
+</div>
+</div>
+<div class="sf-step">
+<div class="sf-dot sf-2">2</div>
+<div class="sf-content">
+<h4>Портфель креативів по сходинках</h4>
+<p>В кожному проєкті мають бути активні креативи для різних рівнів обізнаності. Не тільки BOFU-офери, не тільки TOFU-едьютейнмент — а мікс. Алгоритм розподілить бюджет між ними і знайде свою аудиторію для кожного.</p>
+<div class="metrics">Рекомендований мікс: 2-3 креативи TOFU (сходинки 0-1) + 2-3 MOFU (сходинки 2-3) + 1-2 BOFU (сходинка 4).</div>
+</div>
+</div>
+<div class="sf-step">
+<div class="sf-dot sf-3">3</div>
+<div class="sf-content">
+<h4>Аналіз: яка сходинка працює найкраще</h4>
+<p>Дивіться Тижневий звіт: які креативи дають найкращий ROAS? Якщо переважно BOFU — аудиторія "прогріта", є попит. Якщо TOFU дає хороший результат — є велика необізнана аудиторія, яку можна зачепити. Це підказує куди нахиляти портфель.</p>
+<div class="metrics">KPI по сходинках: TOFU = Hook Rate, CPM. MOFU = CTR, ATC Rate. BOFU = CR, CPA, ROAS.</div>
+</div>
+</div>
+</div>
+
+<div class="rule-box" style="margin-top:0">
+<h3>Це і є омніканальна стратегія magic</h3>
+<p><span class="highlight">Широка аудиторія + різні креативи для різних сходинок = алгоритм сам будує воронку.</span></p>
+<p>Ви не сегментуєте аудиторію вручну. Ви створюєте правильний контент для кожного рівня обізнаності, запускаєте на широку — і алгоритм Meta/TikTok знаходить правильних людей для кожного креативу. Сходинки Ханта при цьому потрібні щоб розуміти ЯКИЙ контент створювати, а не КОМУ його показувати.</p>
+</div>
+</div>
+
+<!-- ===== МАТРИЦЯ ===== -->
+<div class="section">
+<span class="section-label sl-green">Довідник</span>
+<h2>Матриця: сходинка, кут, концепт, хук, CTA, KPI</h2>
+
+<table class="matrix">
+<thead><tr><th>Сходинка</th><th>Що думає</th><th>Кути</th><th>Концепти</th><th>Тип хуку</th><th>CTA</th><th>KPI</th><th>Воронка</th></tr></thead>
+<tbody>
+<tr><td>0: Не усвідомлює</td><td>"У мене все ок"</td><td>Едьютейнмент</td><td>Listicle, POV, B-Roll</td><td>Шок, Цифра, Візуальний</td><td>М'який</td><td>Hook Rate, Reach</td><td>TOFU</td></tr>
+<tr><td>1: Проблема</td><td>"Може вирішується?"</td><td>Pain Point, Едьютейнмент</td><td>Talking Head, POV</td><td>Питання, Ситуація</td><td>М'який</td><td>CTR, Hold Rate</td><td>TOFU</td></tr>
+<tr><td>2: Шукає рішення</td><td>"Які варіанти?"</td><td>Порівняння, Інгредієнт, Social Proof</td><td>Карусель, Інфографіка</td><td>Bold Claim, Цифра</td><td>М'який / Соціальний</td><td>CTR, ATC Rate</td><td>MOFU</td></tr>
+<tr><td>3: Знає продукт</td><td>"Чи реально працює?"</td><td>UGC, Social Proof, До/Після</td><td>Talking Head, Інтерв'ю</td><td>Ситуація, Bold Claim</td><td>Соціальний</td><td>ATC Rate, CR</td><td>MOFU/BOFU</td></tr>
+<tr><td>4: Готовий купити</td><td>"Де знижка?"</td><td>Оффер, FOMO</td><td>Статика, Screen Rec, DPA</td><td>Стоп-текст, Цифра</td><td>Прямий, Дефіцит</td><td>CR, CPA, ROAS</td><td>BOFU</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== ПРИКЛАДИ ===== -->
+<div class="section">
+<span class="section-label sl-orange">Приклади</span>
+<h2>Повна воронка по нішах</h2>
+<div class="section-desc">Від сходинки 0 до 4: конкретні хуки і кути для кожного рівня</div>
+
+<div class="niche" id="n1">
+<div class="niche-head nh-beauty" onclick="toggle('n1')">Beauty: крем для обличчя <span class="ls-toggle" style="color:rgba(255,255,255,.5)">&#9660;</span></div>
+<div class="niche-body">
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 0</strong>Не усвідомлює</div><div class="nr-cell"><span class="hook">"5 ознак що ваша шкіра старіє швидше ніж повинна"</span></div><div class="nr-cell"><strong>Кут</strong>Едьютейнмент, Listicle</div><div class="nr-cell">Мета: змусити задуматись. Не продавати.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 1</strong>Усвідомлює</div><div class="nr-cell"><span class="hook">"Чому ваш крем не працює? 3 помилки, які ви робите щодня"</span></div><div class="nr-cell"><strong>Кут</strong>Pain Point, Talking Head</div><div class="nr-cell">Мета: показати що рішення існує.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 2</strong>Шукає рішення</div><div class="nr-cell"><span class="hook">"Салон за 2000₴ vs крем за 450₴ — результат через 30 днів"</span></div><div class="nr-cell"><strong>Кут</strong>Порівняння, Карусель</div><div class="nr-cell">Мета: переконати що крем — правильний вибір.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 3</strong>Знає продукт</div><div class="nr-cell"><span class="hook">"Чесно? Я не вірила. Але через 2 тижні чоловік сам помітив"</span></div><div class="nr-cell"><strong>Кут</strong>UGC, Talking Head</div><div class="nr-cell">Мета: впевненість у конкретному продукті.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 4</strong>Готовий купити</div><div class="nr-cell"><span class="hook">"-30% тільки 48 годин + безкоштовна доставка + пробник"</span></div><div class="nr-cell"><strong>Кут</strong>Оффер, Статика + текст</div><div class="nr-cell">Мета: фінальний поштовх. Прямий CTA.</div></div>
+</div></div>
+
+<div class="niche" id="n2">
+<div class="niche-head nh-fashion" onclick="toggle('n2')">Fashion: одяг / капсульний гардероб <span class="ls-toggle" style="color:rgba(255,255,255,.5)">&#9660;</span></div>
+<div class="niche-body">
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 0</strong></div><div class="nr-cell"><span class="hook">"Чому 80% речей у вашій шафі ви не носите. Тест за 30 секунд."</span></div><div class="nr-cell"><strong>Кут</strong>Едьютейнмент, POV</div><div class="nr-cell">Усвідомити проблему хаотичного гардеробу.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 1</strong></div><div class="nr-cell"><span class="hook">"Стоїш перед шафою 20 хв і одягаєш те саме. Знайомо?"</span></div><div class="nr-cell"><strong>Кут</strong>Pain Point, Talking Head</div><div class="nr-cell">Капсульний гардероб — рішення.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 2</strong></div><div class="nr-cell"><span class="hook">"Стиліст за 5000₴ vs наш сервіс за 800₴ — порівнюємо"</span></div><div class="nr-cell"><strong>Кут</strong>Порівняння, Інфографіка</div><div class="nr-cell">Ваш сервіс — оптимальний вибір.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 3</strong></div><div class="nr-cell"><span class="hook">"Замовила капсулу і перші 7 днів фоткала outfit щоранку"</span></div><div class="nr-cell"><strong>Кут</strong>UGC, До/Після</div><div class="nr-cell">Реальний досвід = впевненість.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 4</strong></div><div class="nr-cell"><span class="hook">"Весняна капсула: 10 речей = 30 outfit. -20% перше замовлення."</span></div><div class="nr-cell"><strong>Кут</strong>Оффер, FOMO</div><div class="nr-cell">Конвертувати. Прямий CTA.</div></div>
+</div></div>
+
+<div class="niche" id="n3">
+<div class="niche-head nh-health" onclick="toggle('n3')">Health: вітаміни / добавки <span class="ls-toggle" style="color:rgba(255,255,255,.5)">&#9660;</span></div>
+<div class="niche-body">
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 0</strong></div><div class="nr-cell"><span class="hook">"93% українців мають дефіцит вітаміну D. Ось як це впливає."</span></div><div class="nr-cell"><strong>Кут</strong>Едьютейнмент, Цифра</div><div class="nr-cell">Шокувати фактом, створити усвідомлення.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 1</strong></div><div class="nr-cell"><span class="hook">"О 15:00 ледве тримаєш очі? Це не кава потрібна. Це ось що."</span></div><div class="nr-cell"><strong>Кут</strong>Pain Point, B-Roll + VO</div><div class="nr-cell">Зв'язати симптом з причиною.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 2</strong></div><div class="nr-cell"><span class="hook">"Один пакетик замість 7 баночок. Все що потрібно — в одній дозі."</span></div><div class="nr-cell"><strong>Кут</strong>Benefit-First, Інгредієнт</div><div class="nr-cell">Простота вашого рішення.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 3</strong></div><div class="nr-cell"><span class="hook">"Місяць на цих вітамінах. Ось мій щоденник енергії."</span></div><div class="nr-cell"><strong>Кут</strong>UGC, До/Після</div><div class="nr-cell">Реальний доказ ефективності.</div></div>
+<div class="niche-row"><div class="nr-cell"><strong>Сходинка 4</strong></div><div class="nr-cell"><span class="hook">"Підписка -25%. Доставка щомісяця. Скасувати будь-коли."</span></div><div class="nr-cell"><strong>Кут</strong>Оффер, Ціннісний CTA</div><div class="nr-cell">Зняти ризик, дати зручність.</div></div>
+</div></div>
+</div>
+
+<div class="rule-box">
+<h3>Зв'язок JTBD + Сходи Ханта</h3>
+<p><span class="highlight">JTBD відповідає на питання ЩО сказати</span> — яку "роботу" продукт виконує для клієнта.</p>
+<p><span class="highlight">Сходи Ханта відповідають на питання КОМУ сказати</span> — на якому рівні обізнаності людина.</p>
+<p>Разом: кожна Job + кожна сходинка = конкретний креатив з конкретним кутом, хуком, CTA і KPI. Використовуйте обидва фреймворки при заповненні брифу.</p>
+</div>
+
+<div class="footer"><div class="footer-g">magic</div><div style="margin-top:4px">advertise for e-commerce</div></div>
+</div>
+
+<script>
+function toggle(id){document.getElementById(id).classList.toggle('collapsed')}
+</script>
+</body>
+</html>

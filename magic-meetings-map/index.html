@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карта зустрiчей Magic</title>
+<style>
+@font-face { font-family:'Onest'; font-weight:300; src:url('fonts/OnestLight.woff2') format('woff2'); font-display:swap }
+@font-face { font-family:'Onest'; font-weight:400; src:url('fonts/OnestRegular.woff2') format('woff2'); font-display:swap }
+@font-face { font-family:'Onest'; font-weight:500; src:url('fonts/OnestMedium.woff2') format('woff2'); font-display:swap }
+@font-face { font-family:'Onest'; font-weight:600; src:url('fonts/OnestSemiBold.woff2') format('woff2'); font-display:swap }
+@font-face { font-family:'Onest'; font-weight:700; src:url('fonts/OnestBold.woff2') format('woff2'); font-display:swap }
+@font-face { font-family:'Onest'; font-weight:900; src:url('fonts/OnestBlack.woff2') format('woff2'); font-display:swap }
+
+:root {
+  --blue: #38A0FF;
+  --purple: #AA7AFF;
+  --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
+  --bg: #F7F8FB;
+  --card: #FFFFFF;
+  --ink-900: #0C0E14;
+  --ink-700: #2F3441;
+  --ink-600: #4B5160;
+  --ink-500: #6E7687;
+  --ink-400: #9AA2B2;
+  --ink-200: #DDE2EB;
+  --ink-100: #EEF1F6;
+  --success: #2EC28A;
+  --warning: #FFB020;
+  --danger: #F5525C;
+}
+
+* { margin:0; padding:0; box-sizing:border-box }
+body { font-family:'Onest',system-ui,sans-serif; background:var(--bg); color:var(--ink-900); font-weight:300; font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased }
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--ink-900);
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute;
+  top:-60%;right:-10%;
+  width:500px;height:500px;
+  background:radial-gradient(circle, rgba(56,160,255,.15) 0%, rgba(170,122,255,.08) 40%, transparent 70%);
+  pointer-events:none;
+}
+.hero-inner { max-width:820px; margin:0 auto; position:relative; z-index:1 }
+.hero-logo { height:28px; margin-bottom:28px; opacity:.7 }
+.hero h1 { font-size:36px; font-weight:700; color:#fff; line-height:1.15; letter-spacing:-0.01em; margin-bottom:8px }
+.hero h1 span { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text }
+.hero-sub { font-size:15px; color:rgba(255,255,255,.5); font-weight:300 }
+
+/* ─── CONTAINER ─── */
+.container { max-width:820px; margin:0 auto; padding:32px 20px 80px }
+
+/* ─── SECTION LABELS ─── */
+.section-label {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.08em;
+  color:var(--ink-500); margin-bottom:16px; margin-top:40px;
+}
+.section-label .dot { width:8px; height:8px; border-radius:50% }
+
+/* ─── MEETING CARD ─── */
+.meeting-card {
+  background:var(--card);
+  border:1px solid var(--ink-200);
+  border-radius:14px;
+  padding:24px;
+  margin-bottom:14px;
+  transition: box-shadow .2s;
+}
+.meeting-card:hover { box-shadow:0 8px 20px rgba(20,30,60,.06) }
+
+.card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap }
+.card-title { font-size:18px; font-weight:700; line-height:1.2 }
+.card-pills { display:flex; gap:6px; flex-wrap:wrap }
+
+.pill {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:4px 10px; border-radius:999px;
+  font-size:11px; font-weight:600; white-space:nowrap;
+}
+.pill-day { background:#EAF5FF; color:#1566B8 }
+.pill-time { background:#F2EBFF; color:#5E30C4 }
+.pill-dur { background:var(--ink-100); color:var(--ink-600) }
+
+.card-meta { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:12px; font-size:13px; color:var(--ink-600) }
+.card-meta-item { display:flex; align-items:center; gap:5px }
+.card-meta-item svg { width:14px; height:14px; stroke:var(--ink-400); stroke-width:2; fill:none }
+
+.card-desc { font-size:14px; color:var(--ink-700); line-height:1.55; font-weight:300 }
+
+/* ─── DEPT BADGES ─── */
+.dept { display:inline-flex; padding:3px 9px; border-radius:999px; font-size:11px; font-weight:600; margin-right:4px }
+.dept-cs { background:#EAF5FF; color:#1566B8 }
+.dept-ua { background:#FFF3DC; color:#A06600 }
+.dept-cross { background:#F2EBFF; color:#5E30C4 }
+.dept-all { background:linear-gradient(135deg,#D9EBFF,#E8DDFF); color:#4B5160 }
+
+/* ─── WEEKLY MAP ─── */
+.week-grid {
+  display:grid;
+  grid-template-columns: 90px 1fr;
+  gap:0;
+  margin-top:8px;
+}
+.week-day-label {
+  font-size:13px; font-weight:600; color:var(--ink-500);
+  padding:14px 12px 14px 0;
+  border-bottom:1px solid var(--ink-200);
+  text-align:right;
+}
+.week-day-content {
+  padding:10px 0 10px 16px;
+  border-bottom:1px solid var(--ink-200);
+  display:flex; flex-wrap:wrap; gap:6px; align-items:center;
+}
+.week-grid > :nth-last-child(-n+2) { border-bottom:none }
+
+.week-chip {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 12px; border-radius:10px;
+  font-size:12px; font-weight:500; background:var(--card); border:1px solid var(--ink-200);
+}
+.week-chip .wc-time { font-weight:600; color:var(--blue); font-size:11px }
+.week-chip .wc-dur { color:var(--ink-400); font-size:11px }
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align:center; padding:32px 20px;
+  font-size:12px; color:var(--ink-400); font-weight:400;
+  letter-spacing:.04em;
+}
+
+@media(max-width:640px){
+  .hero { padding:32px 20px 28px }
+  .hero h1 { font-size:26px }
+  .container { padding:20px 16px 60px }
+  .week-grid { grid-template-columns:1fr; gap:0 }
+  .week-day-label { text-align:left; padding:12px 0 4px; border-bottom:none }
+  .week-day-content { padding:0 0 12px }
+}
+@media print {
+  body { background:#fff }
+  .hero { -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  .meeting-card { break-inside:avoid }
+}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero">
+  <div class="hero-inner">
+    <img src="logo-white.svg" alt="magic" class="hero-logo">
+    <h1>Карта <span>зустрiчей</span></h1>
+    <p class="hero-sub">Всi регулярнi зустрiчi агенцiї в одному мiсцi</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- WEEKLY CALENDAR -->
+  <!-- ═══════════════════════════════════════════════════ -->
+
+  <div class="section-label"><span class="dot" style="background:var(--blue)"></span> Тижневий календар</div>
+
+  <div class="meeting-card" style="padding:20px 24px">
+    <div class="week-grid">
+      <div class="week-day-label">Щодня</div>
+      <div class="week-day-content">
+        <div class="week-chip"><span class="wc-time">09:30*</span> Daily КС <span class="wc-dur">15 хв</span></div>
+        <div class="week-chip"><span class="wc-time">09:30*</span> Дейлiк UA <span class="wc-dur">10-15 хв</span></div>
+      </div>
+
+      <div class="week-day-label">Пн</div>
+      <div class="week-day-content">
+        <div class="week-chip"><span class="wc-time">—</span> Планерка UA <span class="wc-dur">45-60 хв</span></div>
+        <div class="week-chip"><span class="wc-time">11:00</span> Weekly Creative Review <span class="wc-dur">60-90 хв</span></div>
+        <div class="week-chip"><span class="wc-time">12:00</span> Weekly UAM Sync <span class="wc-dur">45-60 хв</span></div>
+      </div>
+
+      <div class="week-day-label">Пн / Вт</div>
+      <div class="week-day-content">
+        <div class="week-chip"><span class="wc-time">—</span> Growth Sync <span class="wc-dur">30 хв</span></div>
+      </div>
+
+      <div class="week-day-label">Ср</div>
+      <div class="week-day-content">
+        <div class="week-chip"><span class="wc-time">11:00</span> Mid-week UAM Sync <span class="wc-dur">20-30 хв</span></div>
+      </div>
+
+      <div class="week-day-label">Чт</div>
+      <div class="week-day-content">
+        <div class="week-chip"><span class="wc-time">12:00</span> Командна зустрiч з CEO <span class="wc-dur">60 хв</span></div>
+      </div>
+
+      <div class="week-day-label">Пт</div>
+      <div class="week-day-content">
+        <div class="week-chip"><span class="wc-time">—</span> Планерка Пт UA <span class="wc-dur">30-40 хв</span></div>
+        <div class="week-chip"><span class="wc-time">—</span> Закриття тижня <span class="wc-dur">15 хв</span></div>
+      </div>
+    </div>
+    <div style="font-size:12px; color:var(--ink-500); font-weight:400; margin-top:10px; padding:0 4px">* Дефолтний час 09:30. Команди можуть домовлятись мiж собою та змiщувати дейлiк за потреби.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- CREATIVE DEPARTMENT -->
+  <!-- ═══════════════════════════════════════════════════ -->
+
+  <div class="section-label"><span class="dot" style="background:#1566B8"></span> Креативний вiддiл</div>
+
+  <!-- 1. Daily Stand-up КС -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Daily Stand-up КС</div>
+      <div class="card-pills">
+        <span class="pill pill-day">щодня</span>
+        <span class="pill pill-time">09:30</span>
+        <span class="pill pill-dur">15 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Всi креативнi стратеги + Тiмлiд КС
+      </div>
+    </div>
+    <div class="card-desc">
+      Раунд по черзi: кожен стратег за 2 хв звiтує — що зробив вчора, що робить сьогоднi, чи є блокери. Проблеми, якi потребують обговорення, паркуються i вирiшуються пiсля стендапу.
+    </div>
+    <div style="font-size:12px; color:var(--ink-500); margin-top:8px; font-weight:400">Час 09:30 — дефолтний. Команда може домовитись мiж собою та змiстити дейлiк за потреби.</div>
+  </div>
+
+  <!-- 2. Weekly Creative Review -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Weekly Creative Review</div>
+      <div class="card-pills">
+        <span class="pill pill-day">понедiлок</span>
+        <span class="pill pill-time">11:00</span>
+        <span class="pill pill-dur">60-90 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Всi КС + Тiмлiд КС
+      </div>
+    </div>
+    <div class="card-desc">
+      Глибокий рев'ю результатiв креативiв за тиждень. По кожному клiєнту (~10 хв): дашборд тижня, топ/антитоп, причини спрацювання, статус пайплайну, рiшення по скейлу/стопу/рефрешу. Завершується cross-client patterns та inspiration share.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- UA DEPARTMENT -->
+  <!-- ═══════════════════════════════════════════════════ -->
+
+  <div class="section-label"><span class="dot" style="background:#A06600"></span> UA-вiддiл (трафiк)</div>
+
+  <!-- 3. Дейлік UA -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Дейлiк UA</div>
+      <div class="card-pills">
+        <span class="pill pill-day">щодня</span>
+        <span class="pill pill-time">09:30</span>
+        <span class="pill pill-dur">10-15 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        UAM + Тiмлiд трафiку
+      </div>
+    </div>
+    <div class="card-desc">
+      Швидкий прохiд по дашборду: проєкти нижче KPI, в нормi, блокери. Тiмлiд фiксує прiоритети на день. Рiшення, якi потребують бiльше 3 хв, паркуються.
+    </div>
+    <div style="font-size:12px; color:var(--ink-500); margin-top:8px; font-weight:400">Час 09:30 — дефолтний. Команда може домовитись мiж собою та змiстити дейлiк за потреби.</div>
+  </div>
+
+  <!-- 4. Планерка Пн UA -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Планерка понедiлок UA</div>
+      <div class="card-pills">
+        <span class="pill pill-day">понедiлок</span>
+        <span class="pill pill-dur">45-60 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        UAM + Тiмлiд трафiку
+      </div>
+    </div>
+    <div class="card-desc">
+      Детальний розбiр тижневих результатiв. По кожному проєкту: 3 конкретнi дiї за тиждень, висновки, тести, проблеми. Рiшення по стратегiї. Складання плану на наступний тиждень, формування запитiв до КС.
+    </div>
+  </div>
+
+  <!-- 5. Планерка Пт UA -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Планерка п'ятниця UA</div>
+      <div class="card-pills">
+        <span class="pill pill-day">п'ятниця</span>
+        <span class="pill pill-dur">30-40 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        UAM + Тiмлiд трафiку
+      </div>
+    </div>
+    <div class="card-desc">
+      Статус action items з понедiлка. Промiжнi результати тижня. Прiоритети i план дiй на наступний тиждень. Креативнi запити для передачi в КС-вiддiл.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- CROSS-DEPARTMENT -->
+  <!-- ═══════════════════════════════════════════════════ -->
+
+  <div class="section-label"><span class="dot" style="background:var(--purple)"></span> Крос-вiддiл (КС + UA)</div>
+
+  <!-- 6. Weekly UAM Sync -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Weekly UAM Sync</div>
+      <div class="card-pills">
+        <span class="pill pill-day">понедiлок</span>
+        <span class="pill pill-time">12:00</span>
+        <span class="pill pill-dur">45-60 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="dept dept-cs">КС</span> <span class="dept dept-ua">UAM</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      Дiагностична таблиця по кожному клiєнту: сигнали CTR, ATC, CR, CPM, ROAS. Класифiкацiя "це креатив чи зовнiшнє?". Узгодження прiоритетiв мiж вiддiлами, формування спiльного плану дiй.
+    </div>
+  </div>
+
+  <!-- 7. Mid-week UAM Sync -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Mid-week UAM Sync</div>
+      <div class="card-pills">
+        <span class="pill pill-day">середа</span>
+        <span class="pill pill-time">11:00</span>
+        <span class="pill pill-dur">20-30 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="dept dept-cs">КС</span> <span class="dept dept-ua">UAM</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      Швидкий обхiд прiоритетiв з понедiлка: що змiнилось, новi сигнали, коригування плану. Не повний розбiр — тiльки дельта вiд понедiлкового синку.
+    </div>
+  </div>
+
+  <!-- 8. Growth Sync -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Growth Sync</div>
+      <div class="card-pills">
+        <span class="pill pill-day">пн / вт</span>
+        <span class="pill pill-dur">30 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Growth Marketer + Тiмлiд КС + Тiмлiд UA
+      </div>
+    </div>
+    <div class="card-desc">
+      Рентген по цiлях для GM до розмови з клiєнтом. Дашборд (вiдповiдає Тiмлiд UA): швидкий статус (3 хв), розбiр жовтих/червоних (17 хв), зеленi з питанням "чи можемо масштабувати?" (5 хв), вплив на клiєнта (3 хв), Issues List (2 хв). RAG-система: 10%/25% пороги.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- COMPANY-WIDE -->
+  <!-- ═══════════════════════════════════════════════════ -->
+
+  <div class="section-label"><span class="dot" style="background:var(--gradient)"></span> Вся команда</div>
+
+  <!-- 9. CEO Weekly -->
+  <div class="meeting-card" style="border-color:#DDE2EB; border-width:2px">
+    <div class="card-top">
+      <div class="card-title">Щотижнева командна зустрiч з CEO</div>
+      <div class="card-pills">
+        <span class="pill pill-day">четвер</span>
+        <span class="pill pill-time">12:00</span>
+        <span class="pill pill-dur">60 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        CEO + Growth Marketer + Креативний стратег + Тiмлiд трафiку
+      </div>
+    </div>
+    <div class="card-desc" style="margin-bottom:14px">
+      Синхронiзацiя всiєї команди щодо прогресу до цiлей. Формат звiтування — 3F5T (Target, Top Record, Top 3 Highlights, Fact, Fact Quota Attainment, Forecast, Forecast Quota Attainment, Funnel). За 2 години до зустрiчi кожен надсилає звiт у чат.
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px">
+      <div style="background:#EAF5FF; border-radius:10px; padding:12px 14px">
+        <div style="font-size:12px; font-weight:600; color:#1566B8; margin-bottom:4px">Блок 1 — 15 хв</div>
+        <div style="font-size:13px; color:var(--ink-700); font-weight:300">Загальний огляд дашборду. Статус: зелена / жовта / червона зона. Що, чому, що зроблено</div>
+      </div>
+      <div style="background:#F2EBFF; border-radius:10px; padding:12px 14px">
+        <div style="font-size:12px; font-weight:600; color:#5E30C4; margin-bottom:4px">Блок 2 — 30 хв</div>
+        <div style="font-size:13px; color:var(--ink-700); font-weight:300">Iндивiдуальнi 3F5T-звiти. GM, Тiмлiд, КС — по 10 хв (5 хв звiт + 5 хв Q&A)</div>
+      </div>
+      <div style="background:#FFF3DC; border-radius:10px; padding:12px 14px">
+        <div style="font-size:12px; font-weight:600; color:#A06600; margin-bottom:4px">Блок 3 — 10 хв</div>
+        <div style="font-size:13px; color:var(--ink-700); font-weight:300">Рiшення та action items. Хто, що, до коли. Список у чат за 30 хв пiсля зустрiчi</div>
+      </div>
+      <div style="background:var(--ink-100); border-radius:10px; padding:12px 14px">
+        <div style="font-size:12px; font-weight:600; color:var(--ink-600); margin-bottom:4px">Блок 4 — 5 хв</div>
+        <div style="font-size:13px; color:var(--ink-700); font-weight:300">Прiоритети на тиждень: 1-3 ключовi задачi вiд кожного. CEO пiдтверджує або коригує</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Закриття тижня -->
+  <div class="meeting-card">
+    <div class="card-top">
+      <div class="card-title">Закриття тижня</div>
+      <div class="card-pills">
+        <span class="pill pill-day">п'ятниця</span>
+        <span class="pill pill-dur">15 хв</span>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Вся команда
+      </div>
+    </div>
+    <div class="card-desc">
+      Короткий сiнк перед вихiдними. Чи все важливе закрито цього тижня, чи немає нiчого, що потребує термiнової увагi у вихiднi. Побажати команді гарних вихідних.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">magic &nbsp;|&nbsp; advertise for e-commerce</div>
+
+</body>
+</html>

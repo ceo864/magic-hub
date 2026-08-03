@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding — Креативний стратег Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
+    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
+    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
+    --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  
+  .header{background:var(--dark);color:white;padding:48px 40px 36px;position:relative;overflow:hidden}
+  .header::after{content:"";position:absolute;top:0;right:0;width:400px;height:100%;background:var(--gradient);opacity:.15;border-radius:50%;filter:blur(80px)}
+  .header-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .header-left{flex:1}
+  .header-left .brand{font-weight:900;font-size:14px;opacity:.4;margin-bottom:18px;letter-spacing:.5px}
+  .header h1{font-size:32px;margin-bottom:8px;font-weight:700;line-height:1.15}
+  .header p{opacity:.6;font-size:15px;max-width:600px}
+  .header button{padding:10px 22px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
+  
+  .container{max-width:980px;margin:0 auto;padding:40px 24px 80px}
+  
+  .welcome{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+  .welcome h2{font-size:18px;font-weight:700;margin-bottom:14px;color:var(--dark)}
+  .welcome p{color:var(--text);font-size:14px;margin-bottom:10px;line-height:1.65}
+  .welcome p:last-child{margin-bottom:0}
+  
+  .week-overview{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:32px}
+  .day-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
+  .day-card .day-num{display:inline-block;width:36px;height:36px;line-height:36px;background:var(--gradient);color:white;font-weight:700;font-size:14px;border-radius:50%;margin-bottom:10px}
+  .day-card .day-name{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px}
+  .day-card .day-focus{font-size:11px;color:var(--muted);line-height:1.4}
+  
+  .day-section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden}
+  .day-head{padding:24px 28px;background:var(--dark);color:white;display:flex;align-items:center;gap:16px}
+  .day-head .day-num-big{width:52px;height:52px;background:var(--gradient);color:white;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;flex-shrink:0}
+  .day-head .day-info{flex:1}
+  .day-head h2{font-size:22px;font-weight:700;margin-bottom:4px}
+  .day-head .day-meta{font-size:13px;opacity:.7}
+  .day-body{padding:28px}
+  
+  .day-lead{font-size:14px;color:var(--text);margin-bottom:20px;line-height:1.65}
+  
+  .h3{font-size:13px;font-weight:700;color:var(--dark);margin:20px 0 12px;text-transform:uppercase;letter-spacing:.6px}
+  
+  .task-list{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px}
+  .task-list ul{list-style:none;padding:0}
+  .task-list li{padding:10px 0;font-size:13px;color:var(--text);display:flex;gap:12px;line-height:1.5;border-bottom:1px dashed var(--border)}
+  .task-list li:last-child{border-bottom:none}
+  .task-list li::before{content:"☐";color:var(--accent);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+  .task-list li strong{font-weight:700;color:var(--dark)}
+  
+  .resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  .resource-card{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:16px;border-left:3px solid var(--blue)}
+  .resource-card.purple{border-left-color:var(--purple)}
+  .resource-card.green{border-left-color:var(--green)}
+  .resource-card.orange{border-left-color:var(--orange)}
+  .resource-card h4{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .resource-card .tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:10px;background:white;color:var(--muted);border:1px solid var(--border)}
+  .resource-card p{font-size:12px;color:var(--text);line-height:1.45;margin-bottom:6px}
+  .resource-card p:last-child{margin-bottom:0}
+  
+  .hint{background:linear-gradient(135deg,#EBF4FF,#F3EEFF);border-radius:12px;padding:16px 18px;margin:14px 0;display:flex;gap:12px;align-items:flex-start}
+  .hint-icon{font-size:18px;flex-shrink:0}
+  .hint-text{font-size:13px;color:var(--text);line-height:1.55}
+  .hint-text strong{font-weight:700}
+  
+  .checkpoint{background:#0f1729;color:white;border-radius:14px;padding:20px;margin:18px 0}
+  .checkpoint h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);margin-bottom:12px}
+  .checkpoint ul{list-style:none;padding:0}
+  .checkpoint li{padding:6px 0;font-size:13px;opacity:.9;display:flex;gap:10px}
+  .checkpoint li::before{content:"☐";opacity:.6;flex-shrink:0}
+  
+  .mentor-block{background:linear-gradient(135deg,#FFF6EB,#FFEFF0);border-radius:12px;padding:18px;margin:14px 0}
+  .mentor-block h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:8px}
+  .mentor-block p{font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.55}
+  .mentor-block ul{list-style:none;padding:0;margin-top:8px}
+  .mentor-block li{padding:4px 0;font-size:13px;display:flex;gap:8px}
+  .mentor-block li::before{content:"→";color:var(--orange);font-weight:700;flex-shrink:0}
+  
+  .tab-ref{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:#EBF4FF;color:var(--blue);font-size:11px;font-weight:600;border-radius:12px}
+  .doc-ref{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:#F3EEFF;color:var(--purple);font-size:11px;font-weight:600;border-radius:12px}
+  
+  .conclusion{background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%);color:white;border-radius:16px;padding:28px;margin-top:36px;text-align:center}
+  .conclusion h2{font-size:20px;font-weight:700;margin-bottom:14px;color:white}
+  .conclusion p{font-size:14px;line-height:1.65;color:rgba(255,255,255,.85);max-width:680px;margin:0 auto}
+  
+  @media(max-width:768px){
+    .container{padding:24px 16px 60px}
+    .week-overview,.resource-grid{grid-template-columns:1fr}
+    .header{padding:32px 20px}
+    .header h1{font-size:24px}
+    .day-head{flex-wrap:wrap}
+  }
+  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.day-section,.welcome,.conclusion,.checkpoint,.mentor-block{break-inside:avoid;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <div class="brand">magic</div>
+      <h1>ONBOARDING — КРЕАТИВНИЙ СТРАТЕГ</h1>
+      <p>5-денний план входу в роботу. Від першого знайомства з системою до повної самостійної роботи з клієнтом.</p>
+    </div>
+    <button onclick="window.print()">Друк / PDF</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>Вітаємо в Magic</h2>
+    <p>Ти стаєш частиною команди креативних стратегів. Наша робота — створювати креативи що масштабують українські e-commerce бренди через performance-маркетинг на Meta і TikTok.</p>
+    <p><strong>Що тебе відрізняє від креативщика "просто з агенції":</strong> ти працюєш не з інтуїцією, а з даними. У тебе є інструменти (Reporting Framework, Бібліотека, Архів тестів) які роблять твою роботу системною — не "вдалося / не вдалося", а "що працює і чому".</p>
+    <p>Цей onboarding — твоя дорожня карта на перші 5 днів. Через тиждень ти зможеш самостійно вести 1-2 клієнтів. Через місяць — 4-5.</p>
+  </div>
+
+  <div class="week-overview">
+    <div class="day-card">
+      <div class="day-num">1</div>
+      <div class="day-name">Знайомство</div>
+      <div class="day-focus">Контекст, команда, інструменти</div>
+    </div>
+    <div class="day-card">
+      <div class="day-num">2</div>
+      <div class="day-name">Методологія</div>
+      <div class="day-focus">Кути, JTBD, сходинки Ханта</div>
+    </div>
+    <div class="day-card">
+      <div class="day-num">3</div>
+      <div class="day-name">Reporting Framework</div>
+      <div class="day-focus">Файл клієнта, дашборди</div>
+    </div>
+    <div class="day-card">
+      <div class="day-num">4</div>
+      <div class="day-name">Shadow клієнта</div>
+      <div class="day-focus">Спостереження за ментором</div>
+    </div>
+    <div class="day-card">
+      <div class="day-num">5</div>
+      <div class="day-name">Перший клієнт</div>
+      <div class="day-focus">Самостійна робота + супервізія</div>
+    </div>
+  </div>
+
+  <!-- DAY 1 -->
+  <section class="day-section">
+    <div class="day-head">
+      <div class="day-num-big">1</div>
+      <div class="day-info">
+        <h2>День 1 — Знайомство з агенцією</h2>
+        <div class="day-meta">Понеділок · контекст роботи, команда, основні інструменти</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <p class="day-lead">Сьогодні ти познайомишся з командою, зрозумієш специфіку Magic, отримаєш доступи. Багато читання — це ок.</p>
+
+      <h3 class="h3">Ранок (3 години)</h3>
+      <div class="task-list">
+        <ul>
+          <li><strong>Welcome зустріч з лідом</strong> · 30 хв · контекст агенції, наші клієнти, наш підхід, чим ми відрізняємось від інших</li>
+          <li><strong>Знайомство з командою</strong> · 30 хв · хто чим займається, до кого з якими питаннями</li>
+          <li><strong>Доступи</strong> · 30 хв · Google Workspace, Slack, Notion, Ads Manager (Meta + TikTok), PowerMyAnalytics</li>
+          <li><strong>Огляд Notion агенції</strong> · 60 хв · база знань, регламенти, шаблони</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Обід — буде sync з ментором</h3>
+      <p style="font-size:13px;color:var(--text);margin-bottom:14px">У тебе буде ментор з команди — досвідчений стратег який допоможе на перші 2 тижні. Обід — неформально, питай все що цікаво.</p>
+
+      <h3 class="h3">Після обіду (3-4 години) — читання</h3>
+      <div class="resource-grid">
+        <div class="resource-card purple">
+          <h4><span class="doc-ref">Документ</span> Як працювати з Reporting Framework</h4>
+          <p>Головна інструкція як ми працюємо з даними. Прочитай повністю, навіть якщо щось буде незрозумілим — повернешся пізніше.</p>
+        </div>
+        <div class="resource-card">
+          <h4><span class="doc-ref">Документ</span> Регламент зустрічей</h4>
+          <p>Daily, Weekly Creative Review, Weekly UAM Sync, Mid-week UAM Sync — чотири ритуали роботи. Зрозуміти структуру тижня.</p>
+        </div>
+        <div class="resource-card green">
+          <h4><span class="doc-ref">Документ</span> Creative Production SOP</h4>
+          <p>6 кроків від гіпотези до висновку. Поки що читаєш, не виконуєш. Друкований варіант — тримай під рукою.</p>
+        </div>
+        <div class="resource-card orange">
+          <h4><span class="doc-ref">Документ</span> Strategist + UA Interaction</h4>
+          <p>Як взаємодіємо з UAM-відділом. Хто за що відповідає, точки передачі.</p>
+        </div>
+      </div>
+
+      <div class="checkpoint">
+        <h4>Чекпойнт кінця дня 1</h4>
+        <ul>
+          <li>Я знаю кого як звати в команді</li>
+          <li>Всі доступи є і працюють</li>
+          <li>Я прочитав 4 базові документи (хоча б по одному разу)</li>
+          <li>Мені призначений ментор і ми знайомі</li>
+          <li>Я розумію загальну структуру тижня (Daily, Weekly Creative, Weekly UAM, Mid-week UAM)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 2 -->
+  <section class="day-section">
+    <div class="day-head">
+      <div class="day-num-big">2</div>
+      <div class="day-info">
+        <h2>День 2 — Методологія</h2>
+        <div class="day-meta">Вівторок · кути, Jobs To Be Done, сходинки Ханта, інспірація</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <p class="day-lead">Сьогодні ти познайомишся з фреймворками за якими ми класифікуємо креативи. Без цього робота з Бібліотекою буде беззмістовною.</p>
+
+      <h3 class="h3">Базові концепти які треба засвоїти</h3>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h4><span class="doc-ref">Документ</span> Creative Angles Playbook</h4>
+          <p>12 кутів які ми використовуємо. Pain Point, Benefit-First, UGC, FOMO, Social Proof тощо. Розуміти різницю обов'язково.</p>
+        </div>
+        <div class="resource-card green">
+          <h4><span class="doc-ref">Документ</span> SOP: Jobs To Be Done</h4>
+          <p>3 типи Job (Функціональна, Емоційна, Соціальна). Як правильно ідентифікувати Job для свого клієнта.</p>
+        </div>
+        <div class="resource-card purple">
+          <h4><span class="doc-ref">Документ</span> SOP: Awareness Ladder (Hunt)</h4>
+          <p>5 сходинок обізнаності. Не усвідомлює → Готовий купити. Креатив має бути на одній сходинці, не на 3-х одразу.</p>
+        </div>
+        <div class="resource-card orange">
+          <h4><span class="doc-ref">Документ</span> SOP: Inspiration Playbook</h4>
+          <p>Де брати ідеї для креативів. Ad Library, TikTok For You, кросс-нішевий перенос. Як систематизувати інспірацію.</p>
+        </div>
+      </div>
+
+      <h3 class="h3">Практичне завдання дня</h3>
+      <div class="task-list">
+        <ul>
+          <li>Відкрий <strong>Бібліотеку Meta</strong> одного з активних клієнтів (попроси ментора показати)</li>
+          <li>Знайди 5 креативів з різними кутами. Для кожного спробуй сам визначити кут/концепт/сходинку</li>
+          <li>Покажи ментору — він поправить де помилився</li>
+          <li>Послухай як ментор пояснює <strong>чому</strong> саме так класифікував</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Інспірація — самостійно</h3>
+      <div class="task-list">
+        <ul>
+          <li>Зайди в Meta Ad Library</li>
+          <li>Знайди 10 креативів які тобі сподобались (будь-якої ніші)</li>
+          <li>Для кожного: який кут? Який концепт? На яку сходинку? Який JTBD?</li>
+          <li>Збережи в Notion у свою особисту базу інспірації</li>
+        </ul>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">💡</div>
+        <div class="hint-text"><strong>Не панікуй якщо плутаєшся:</strong> розрізняти кут "Pain Point" і "Benefit-First" складно. Концепт "POV / Сторітелінг" і "Talking Head" іноді перетинаються. Це ок. Через 2-3 тижні почнеш бачити різницю інтуїтивно.</div>
+      </div>
+
+      <div class="checkpoint">
+        <h4>Чекпойнт кінця дня 2</h4>
+        <ul>
+          <li>Я можу назвати всі 12 кутів і пояснити різницю між найближчими (Pain Point vs Benefit-First, UGC vs Founder Story)</li>
+          <li>Я знаю 5 сходинок Ханта і можу на прикладі сказати на якій сходинці креатив</li>
+          <li>Я розумію різницю між Функціональною, Емоційною і Соціальною Job</li>
+          <li>Я знаю де шукати інспірацію</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 3 -->
+  <section class="day-section">
+    <div class="day-head">
+      <div class="day-num-big">3</div>
+      <div class="day-info">
+        <h2>День 3 — Reporting Framework</h2>
+        <div class="day-meta">Середа · глибоке занурення у файл клієнта · практика</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <p class="day-lead">Сьогодні ти повністю розберешся з нашим головним інструментом — Reporting Framework. Відкрий файл одного з клієнтів і пройди по кожній вкладці разом з ментором.</p>
+
+      <h3 class="h3">Огляд 14 вкладок з ментором (2 години)</h3>
+      <div class="task-list">
+        <ul>
+          <li><span class="tab-ref">Як працювати</span> — коротка інструкція, точка входу</li>
+          <li><span class="tab-ref">Бриф</span> — 24 колонки. JTBD і Гіпотеза тесту — обов'язкові поля</li>
+          <li><span class="tab-ref">Продукти</span> — список продуктів клієнта, тягнеться в dropdowns Звіту і Бібліотеки</li>
+          <li><span class="tab-ref">PMA Meta + TikTok</span> — куди приходять сирі дані, не редагуємо</li>
+          <li><span class="tab-ref">Звіт Meta + TikTok</span> — головна робоча вкладка. 27 колонок. Тут заповнюєш класифікацію (Продукт, Кут, Концепт, Сходинка, Job, Status)</li>
+          <li><span class="tab-ref">Бібліотека Meta + TikTok</span> — lifetime архів. Класифікація <strong>автоматично</strong> тягнеться зі Звіту. Ти ставиш тільки Досягнення (Winner/Loser)</li>
+          <li><span class="tab-ref">Дашборд тиждень</span> — щопонеділка дивишся це. Списки дій формуються по ручному Status, не по auto-Recom</li>
+          <li><span class="tab-ref">Дашборд бібліотека</span> — раз на місяць, патерни і комбінації</li>
+          <li><span class="tab-ref">Аналіз та дії</span> — текстовий freeform для висновків</li>
+          <li><span class="tab-ref">Бенчмарки</span> — пороги для рекомендацій, як калібрувати. Включає Target Frequency</li>
+          <li><span class="tab-ref">Архів тестів</span> — закриті тести з висновками</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Практичне завдання (2-3 години)</h3>
+      <div class="task-list">
+        <ul>
+          <li>Відкрий <strong>Звіт Meta</strong> клієнта твого ментора, поточний тиждень</li>
+          <li>Для кожного креативу з даними: подивись Recom (auto), зрозумій ЧОМУ система рекомендує саме це</li>
+          <li>Подивись Hook Rate і Hold Rate — які з них високі, які низькі? Що це означає для креативу?</li>
+          <li>Подивись Frequency. Які креативи близькі до 3.5? Що ти б рекомендував робити з ними?</li>
+          <li>Запиши свої спостереження. Покажи ментору. Він поправить твої висновки</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Розбір Дашборду бібліотека з ментором</h3>
+      <div class="task-list">
+        <ul>
+          <li>Відкрий <strong>Дашборд бібліотека</strong> того ж клієнта</li>
+          <li>Розглянь блок <strong>🏆 Героїв</strong> — найкращі креативи. Що в них спільного?</li>
+          <li>Подивись таблицю <strong>📐 Які кути дають Winners</strong>. Який кут найбільший % win? Чому, як думаєш?</li>
+          <li>Те саме для концептів, форматів, сходинок</li>
+          <li>Запитай ментора: які висновки він робив з цих патернів для брифів?</li>
+        </ul>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">📊</div>
+        <div class="hint-text"><strong>Ключове розуміння на сьогодні:</strong> Reporting Framework — це не звітна таблиця для клієнта. Це твій робочий стіл. Без нього ти просто не побачиш патерни які роблять твою роботу системною.</div>
+      </div>
+
+      <div class="checkpoint">
+        <h4>Чекпойнт кінця дня 3</h4>
+        <ul>
+          <li>Я знаю призначення кожної з 13 вкладок</li>
+          <li>Я можу пояснити що означає кожна з 5 рекомендацій (Референс / Рефреш термін / Рефреш план / Зупинити / Тестувати далі)</li>
+          <li>Я розумію як читати Hook Rate і Hold Rate в зв'язці</li>
+          <li>Я бачу патерни в Дашборді бібліотека і можу їх пояснити</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 4 -->
+  <section class="day-section">
+    <div class="day-head">
+      <div class="day-num-big">4</div>
+      <div class="day-info">
+        <h2>День 4 — Shadow роботи ментора</h2>
+        <div class="day-meta">Четвер · ти спостерігаєш, ментор робить · реальний клієнт</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <p class="day-lead">Сьогодні ти не виконуєш — ти спостерігаєш як ментор працює зі своїм клієнтом. Без тиску, з можливістю запитувати все.</p>
+
+      <h3 class="h3">Що ментор показує (4-5 годин впродовж дня)</h3>
+      <div class="task-list">
+        <ul>
+          <li><strong>Понеділковий ритуал</strong> — відкриває Дашборд тиждень, проходить по action lists, ухвалює рішення, ставить Status і Коментарі</li>
+          <li><strong>Робота з Брифом</strong> — формулює гіпотезу для нового креативу, заповнює рядок брифа, передає дизайнеру</li>
+          <li><strong>Аналіз нового креативу</strong> — як читає перші дані після запуску (1-2 тиждень)</li>
+          <li><strong>Закриття тесту</strong> — ставить Winner/Loser у Бібліотеці, пише висновок у Архів тестів</li>
+          <li><strong>Слак-комунікація з UAM</strong> — як просить інформацію, як передає рекомендації</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Що робиш ти</h3>
+      <div class="task-list">
+        <ul>
+          <li>Питай чому. Чому саме цей висновок? Чому ця гіпотеза? Чому саме цей кут?</li>
+          <li>Веди нотатки в Notion — рішення ментора, його логіка</li>
+          <li>Якщо щось було б зроблено інакше тобою — обговори чому</li>
+          <li>Спостерігай за деталями: як формулюють у коментарях, як називають креативи, як пишуть гіпотези</li>
+        </ul>
+      </div>
+
+      <div class="mentor-block">
+        <h4>Що питати ментора (мінімум)</h4>
+        <p>Перше враження — це найцінніший момент. Через 2 тижні ти багато речей сприйматимеш як даність. Сьогодні все дивно — питай:</p>
+        <ul>
+          <li>Чому цей креатив поставили Winner, а той ні? Який критерій?</li>
+          <li>Як ти зрозуміла що треба готувати рефреш саме зараз?</li>
+          <li>Звідки ти знала що цей кут спрацює для цього клієнта?</li>
+          <li>Що б ти зробила інакше зараз порівняно з тим коли тільки прийшла?</li>
+          <li>Як ти знаходиш баланс між інтуїцією і даними?</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Учасник Weekly Creative Review (якщо потрапляє)</h3>
+      <div class="task-list">
+        <ul>
+          <li>Ти на зустрічі як спостерігач, не виступаєш</li>
+          <li>Дивишся як інші стратеги показують свої клієнти</li>
+          <li>Записуєш цікаві патерни і прийоми</li>
+          <li>Після зустрічі — обговорюєш з ментором що тобі було незрозуміло</li>
+        </ul>
+      </div>
+
+      <div class="checkpoint">
+        <h4>Чекпойнт кінця дня 4</h4>
+        <ul>
+          <li>Я бачив як ментор виконує понеділковий ритуал від початку до кінця</li>
+          <li>Я розумію логіку ухвалення рішень (не просто "що", а "чому")</li>
+          <li>Я знаю як формулювати гіпотезу і заповнювати бриф</li>
+          <li>У мене є нотатки з 10+ практичних інсайтів які я використаю завтра</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 5 -->
+  <section class="day-section">
+    <div class="day-head">
+      <div class="day-num-big">5</div>
+      <div class="day-info">
+        <h2>День 5 — Перший клієнт самостійно</h2>
+        <div class="day-meta">П'ятниця · ти ведеш одного клієнта · ментор страхує</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <p class="day-lead">Сьогодні тобі дають одного клієнта — найпростішого, з гарними метриками, без палаючих проблем. Ти робиш сам, ментор перевіряє.</p>
+
+      <h3 class="h3">Що робиш самостійно</h3>
+      <div class="task-list">
+        <ul>
+          <li><strong>Налаштовуєш файл клієнта</strong> — перевіряєш Бенчмарки, PMA, чи дані тягнуться</li>
+          <li><strong>Заповнюєш стратегічні поля</strong> — для всіх активних креативів класифікуєш Кут / Концепт / Сходинку / Тип Job у Звіті і в Бібліотеці</li>
+          <li><strong>Виконуєш понеділковий ритуал</strong> — Дашборд тиждень → action lists → дії в Ads Manager (за погодженням з UAM)</li>
+          <li><strong>Записуєш Status і Коментар</strong> для кожного креативу про який ухвалив рішення</li>
+          <li><strong>Дивишся Дашборд бібліотека</strong> — формуєш 3 інсайти про патерни цього клієнта</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Перевірка ментором (наприкінці дня)</h3>
+      <div class="task-list">
+        <ul>
+          <li>Ментор разом з тобою проходить по твоєму файлу</li>
+          <li>Перевіряє правильність класифікацій (Кут/Концепт/Сходинка/Job)</li>
+          <li>Звіряє твої рішення зі своїми — де співпали, де відрізнялись і чому</li>
+          <li>Дає фідбек: що зробив добре, що варто змінити</li>
+          <li>Узгоджуєте план роботи з цим клієнтом на наступний тиждень</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Підсумкова зустріч з лідом</h3>
+      <div class="task-list">
+        <ul>
+          <li>30 хв · ретроспектива тижня</li>
+          <li>Що було складно, що було легко</li>
+          <li>Які питання залишились без відповіді</li>
+          <li>Що потрібно для виходу на повну продуктивність (2-3 тижні)</li>
+        </ul>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">🎯</div>
+        <div class="hint-text"><strong>Очікування першого тижня:</strong> ти не маєш бути ідеальним. Ти маєш зрозуміти СИСТЕМУ. Помилки в класифікаціях — нормально. Помилки в рішеннях — це чому є ментор. За 2-3 тижні все стане інтуїтивним.</div>
+      </div>
+
+      <div class="checkpoint">
+        <h4>Чекпойнт кінця тижня</h4>
+        <ul>
+          <li>Я веду одного клієнта самостійно (під супервізією ментора)</li>
+          <li>Я знаю всі 13 вкладок, всі 5 рекомендацій, 12 кутів, 10 концептів</li>
+          <li>Я можу написати гіпотезу і заповнити бриф</li>
+          <li>Я розумію свою роль і де моя зона відповідальності закінчується (UAM зона)</li>
+          <li>У мене є ментор з яким я можу зв'язатись з будь-яким питанням</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER WEEK 1 -->
+  <section class="day-section">
+    <div class="day-head" style="background:var(--gradient)">
+      <div class="day-num-big" style="background:white;color:var(--purple)">→</div>
+      <div class="day-info">
+        <h2>Що далі (тижні 2-4)</h2>
+        <div class="day-meta">Поступове входження у повну продуктивність</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h4>Тиждень 2</h4>
+          <p>2 клієнти. Ментор перевіряє рішення раз на день. Ти починаєш брифувати самостійно (1-2 креативи на клієнта).</p>
+        </div>
+        <div class="resource-card purple">
+          <h4>Тиждень 3</h4>
+          <p>3 клієнти. Ментор перевіряє раз на 2 дні. Ти ведеш Weekly UAM Sync разом з ментором.</p>
+        </div>
+        <div class="resource-card green">
+          <h4>Тиждень 4</h4>
+          <p>4-5 клієнтів (повне навантаження). Ментор тільки в форс-мажорах. Ти повністю в команді.</p>
+        </div>
+        <div class="resource-card orange">
+          <h4>Місяць 2-3</h4>
+          <p>Накопичуєш патерни. Перші Winners в твоїх Бібліотеках. Починаєш ділитись інсайтами на Weekly Creative Review — спостереження що підтвердились на 3+ клієнтах потрапляють у спільний <strong>Patterns Log агенції</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="conclusion">
+    <h2>Ласкаво просимо в команду</h2>
+    <p>Через місяць ти будеш ефективним креативним стратегом. Через 3 місяці — самостійним експертом. Через 6 місяців — людиною яка ділиться знаннями з новачками і робить агенцію сильнішою. Цей шлях починається сьогодні.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

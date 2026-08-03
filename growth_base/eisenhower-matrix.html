@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Матриця Ейзенхауера · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+  /* quadrant colors */
+  --q1:#F5525C; --q1-bg:#FFF1F2; --q1-soft:#FFE2E4;
+  --q2:#38A0FF; --q2-bg:#EFF7FF; --q2-soft:#DCEEFF;
+  --q3:#FFB020; --q3-bg:#FFF7EA; --q3-soft:#FFEFD2;
+  --q4:#9AA2B2; --q4-bg:#F4F5F8; --q4-soft:#E7EAF0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar .right{display:flex;align-items:center;gap:16px}
+.topbar .date{color:rgba(255,255,255,.6);font-size:13px;font-weight:500}
+.topbar .tag{color:rgba(255,255,255,.85);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
+.topbar .tag i{width:15px;height:15px}
+
+/* header strip */
+.head{background:var(--ink-900);color:#fff;padding:26px 0 30px;position:relative;overflow:hidden}
+.head .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.4;pointer-events:none}
+.head .b1{width:300px;height:300px;background:#AA7AFF;top:-130px;right:-40px}
+.head .b2{width:220px;height:220px;background:#38A0FF;bottom:-130px;left:-30px}
+.head .wrap{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.head h1{font-weight:900;font-size:clamp(26px,4vw,40px);letter-spacing:-.03em;line-height:1.05}
+.head h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.head p{color:rgba(255,255,255,.78);font-size:15px;margin-top:8px;max-width:540px}
+.head .learnbtn{border:0;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:13px;padding:10px 16px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;transition:.15s;white-space:nowrap}
+.head .learnbtn:hover{background:rgba(255,255,255,.2)}
+.head .learnbtn i{width:15px;height:15px}
+
+/* teaching panel */
+.learn{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-md);margin-top:-16px;position:relative;z-index:5;overflow:hidden;display:none}
+.learn.open{display:block}
+.learn .inner{padding:24px 26px}
+.learn h3{font-weight:800;font-size:18px;margin-bottom:6px}
+.learn p{font-size:15px;color:var(--ink-600);margin-bottom:14px;max-width:780px}
+.learn .axes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.axis{background:var(--ink-50);border-radius:var(--radius-md);padding:14px 16px}
+.axis b{font-weight:800;color:var(--ink-900)}
+.axis span{font-size:14px;color:var(--ink-600)}
+.learn .keypoint{margin-top:14px;background:var(--magic-gradient-soft);border-radius:var(--radius-md);padding:14px 16px;font-size:14.5px;color:#3a2a66;display:flex;gap:10px;align-items:flex-start}
+.learn .keypoint i{flex:none;width:18px;height:18px;stroke:#5E30C4;margin-top:2px}
+.learn .keypoint b{font-weight:700}
+
+/* add bar */
+.addbar{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:16px;margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.addbar .field{flex:1;min-width:220px;display:flex;align-items:center;gap:10px;background:var(--ink-50);border:1.5px solid var(--ink-200);border-radius:999px;padding:4px 6px 4px 18px;transition:.15s}
+.addbar .field:focus-within{border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.16)}
+.addbar .field i{width:19px;height:19px;stroke:var(--ink-400);flex:none}
+.addbar .field input{flex:1;border:0;background:transparent;font:inherit;font-weight:400;font-size:16px;padding:11px 0;outline:none}
+.toggles{display:flex;gap:8px}
+.tgl{border:0;font-weight:700;font-size:13px;padding:11px 16px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;transition:.15s;box-shadow:inset 0 0 0 1.5px var(--ink-200);background:#fff;color:var(--ink-500)}
+.tgl i{width:16px;height:16px}
+.tgl.imp.on{background:var(--magic-gradient);color:#fff;box-shadow:var(--shadow-glow-brand)}
+.tgl.urg.on{background:linear-gradient(135deg,#FF8A4C,#F5525C);color:#fff;box-shadow:0 12px 30px rgba(245,82,92,.3)}
+.addbtn{border:0;background:var(--ink-900);color:#fff;font-weight:700;font-size:15px;padding:13px 22px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;transition:.15s}
+.addbtn:hover{background:#000}
+.addbtn i{width:17px;height:17px}
+.preview-hint{width:100%;font-size:13px;color:var(--ink-400);padding-left:6px;margin-top:-2px}
+.preview-hint b{font-weight:700}
+.preview-hint .qd{font-weight:800;padding:2px 9px;border-radius:999px;font-size:12px}
+
+/* matrix */
+.matrixhead{display:grid;grid-template-columns:160px 1fr 1fr;gap:14px;margin:24px 0 0;align-items:end}
+.matrixhead .corner{}
+.matrixhead .colh{text-align:center;font-weight:800;font-size:14px;letter-spacing:.02em;padding-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.matrixhead .colh i{width:16px;height:16px}
+.colh.urg{color:var(--q1)} .colh.nurg{color:var(--q2)}
+
+.matrix{display:grid;grid-template-columns:160px 1fr 1fr;gap:14px;margin-top:10px}
+.rowh{display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:14px;writing-mode:horizontal-tb}
+.rowh span{transform:rotate(0);padding:0 4px}
+.rowh.imp{color:var(--q1)} .rowh.nimp{color:var(--ink-500)}
+
+.quad{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);min-height:200px;display:flex;flex-direction:column;border-top:5px solid var(--ink-200);transition:.15s}
+.quad.q1{border-top-color:var(--q1)} .quad.q2{border-top-color:var(--q2)}
+.quad.q3{border-top-color:var(--q3)} .quad.q4{border-top-color:var(--q4)}
+.quad.dragover{box-shadow:0 0 0 3px var(--magic-blue),var(--shadow-md);transform:translateY(-2px)}
+.quadhead{padding:16px 18px 12px;display:flex;align-items:center;gap:11px}
+.quadhead .qi{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex:none}
+.quad.q1 .qi{background:var(--q1-soft)} .quad.q1 .qi i{stroke:var(--q1)}
+.quad.q2 .qi{background:var(--q2-soft)} .quad.q2 .qi i{stroke:var(--q2)}
+.quad.q3 .qi{background:var(--q3-soft)} .quad.q3 .qi i{stroke:var(--q3)}
+.quad.q4 .qi{background:var(--q4-soft)} .quad.q4 .qi i{stroke:var(--q4)}
+.quadhead .qi i{width:19px;height:19px}
+.quadhead .qt{flex:1;min-width:0}
+.quadhead .action{font-weight:900;font-size:17px;letter-spacing:-.01em;line-height:1.1}
+.quad.q1 .action{color:var(--q1)} .quad.q2 .action{color:#1E82E0}
+.quad.q3 .action{color:#C98200} .quad.q4 .action{color:var(--ink-500)}
+.quadhead .qsub{font-size:12px;color:var(--ink-400);margin-top:1px}
+.quadhead .cnt{flex:none;font-weight:800;font-size:13px;color:var(--ink-400);background:var(--ink-100);padding:4px 11px;border-radius:999px;font-variant-numeric:tabular-nums}
+
+.tasklist{flex:1;padding:4px 14px 14px;display:flex;flex-direction:column;gap:8px;min-height:60px}
+.task{background:var(--ink-50);border-radius:var(--radius-md);padding:11px 12px;display:flex;gap:10px;align-items:flex-start;cursor:grab;transition:.12s;border:1.5px solid transparent}
+.task:hover{border-color:var(--ink-200);background:#fff;box-shadow:var(--shadow-sm)}
+.task.dragging{opacity:.4}
+.task .chk{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--ink-300);background:#fff;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.12s;cursor:pointer}
+.task .chk i{width:13px;height:13px;stroke:#fff;opacity:0;display:none}
+.task.done .chk{background:var(--magic-gradient);border-color:transparent}
+.task.done .chk i{opacity:1;display:block}
+.task .ttext{flex:1;min-width:0;font-size:15px;font-weight:500;color:var(--ink-800);word-break:break-word;line-height:1.4}
+.task.done .ttext{color:var(--ink-400);text-decoration:line-through}
+.task .acts{flex:none;display:flex;gap:2px;opacity:0;transition:.12s}
+.task:hover .acts,.task:focus-within .acts{opacity:1}
+.task .ib{border:0;background:transparent;color:var(--ink-300);padding:3px;border-radius:6px;display:flex;transition:.12s}
+.task .ib:hover{color:var(--ink-600);background:var(--ink-100)}
+.task .ib.del:hover{color:var(--danger);background:var(--danger-bg)}
+.task .ib i{width:15px;height:15px}
+.task .grip{flex:none;color:var(--ink-300);cursor:grab;display:flex;align-items:center;margin-top:2px}
+.task .grip i{width:15px;height:15px}
+/* move menu */
+.movewrap{position:relative}
+.movemenu{position:absolute;right:0;top:100%;margin-top:4px;background:#fff;border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;z-index:30;display:none;min-width:170px}
+.movemenu.open{display:block}
+.movemenu .mtitle{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-400);padding:6px 10px 4px}
+.movemenu button{width:100%;text-align:left;border:0;background:transparent;font:inherit;font-weight:600;font-size:13.5px;color:var(--ink-700);padding:9px 10px;border-radius:8px;display:flex;align-items:center;gap:9px;transition:.1s}
+.movemenu button:hover{background:var(--ink-50)}
+.movemenu button .sw{width:10px;height:10px;border-radius:3px;flex:none}
+.movemenu button.cur{color:var(--ink-300);cursor:default}
+.movemenu button.cur:hover{background:transparent}
+
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--ink-300);padding:18px;gap:6px}
+.empty i{width:26px;height:26px;stroke:var(--ink-200)}
+.empty span{font-size:13px}
+
+/* footer bar */
+.footbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:24px 0 0;padding:18px 0}
+.fstat{font-size:14px;color:var(--ink-500)}
+.fstat b{color:var(--ink-800);font-weight:700}
+.fspacer{flex:1}
+.fbtn{font-weight:700;border:0;padding:11px 18px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:14px;transition:.15s;background:#fff;color:var(--ink-700);box-shadow:inset 0 0 0 1.5px var(--ink-200)}
+.fbtn:hover{box-shadow:inset 0 0 0 1.5px var(--ink-400)}
+.fbtn i{width:16px;height:16px}
+.fbtn.danger:hover{color:var(--danger);box-shadow:inset 0 0 0 1.5px var(--danger)}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:26px 0;margin-top:30px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:880px){
+  .matrixhead,.matrix{grid-template-columns:1fr 1fr}
+  .matrixhead .corner,.rowh{display:none}
+  .quad{min-height:160px}
+}
+@media(max-width:560px){
+  .matrixhead,.matrix{grid-template-columns:1fr}
+  .matrixhead .colh{display:none}
+  .addbar{flex-direction:column;align-items:stretch}
+  .toggles{justify-content:space-between}
+}
+@media print{
+  .topbar,.addbar,.footbar,footer,.learnbtn,.task .acts,.task .grip{display:none!important}
+  body{background:#fff}
+  .head{background:#fff;color:#000;border-bottom:1px solid #ddd}
+  .head .blob{display:none}
+  .head h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .quad{break-inside:avoid;box-shadow:none;border:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <div class="right">
+      <span class="date" id="topDate"></span>
+      <span class="tag"><i data-lucide="layout-grid"></i>Матриця Ейзенхауера</span>
+    </div>
+  </div>
+</div>
+
+<header class="head">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div>
+      <h1>Пріоритети дня <span class="g">за матрицею Ейзенхауера</span></h1>
+      <p>Додай задачу, познач її як важливу та/або термінову — вона ляже в потрібний квадрант. Перетягуй між квадрантами, відмічай виконане.</p>
+    </div>
+    <button class="learnbtn" id="learnToggle"><i data-lucide="help-circle"></i>Як це працює</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- TEACHING -->
+  <div class="learn" id="learnPanel">
+    <div class="inner">
+      <h3>Логіка матриці</h3>
+      <p>Матрицю придумав Дуайт Ейзенхауер. Ідея проста: задачі сортуються за двома осями — <b>важливість</b> і <b>терміновість</b> — і кожна комбінація має свою дію. Головна пастка — плутати термінове з важливим.</p>
+      <div class="axes">
+        <div class="axis"><b>Важливо</b> — <span>рухає до твоїх цілей і результату. Якщо не зробити, постраждає головне.</span></div>
+        <div class="axis"><b>Терміново</b> — <span>вимагає реакції зараз, має дедлайн чи тисне ззовні. Але «зараз» ≠ «важливо».</span></div>
+      </div>
+      <div class="keypoint">
+        <i data-lucide="target"></i>
+        <span><b>Головний інсайт:</b> сильні спеціалісти живуть у квадранті «Важливо + Не терміново» (планування, стратегія, навчання). Слабкі — постійно гасять «Терміново + Не важливо». Чим більше встигаєш у синьому квадранті, тим менше пожеж у червоному.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD BAR -->
+  <div class="addbar">
+    <div class="field">
+      <i data-lucide="plus-circle"></i>
+      <input id="taskInput" type="text" placeholder="Нова задача… (Enter — додати)" autocomplete="off">
+    </div>
+    <div class="toggles">
+      <button class="tgl imp on" id="tImp"><i data-lucide="star"></i>Важливо</button>
+      <button class="tgl urg" id="tUrg"><i data-lucide="alarm-clock"></i>Терміново</button>
+    </div>
+    <button class="addbtn" id="addBtn"><i data-lucide="corner-down-left"></i>Додати</button>
+    <div class="preview-hint" id="previewHint"></div>
+  </div>
+
+  <!-- MATRIX HEADERS -->
+  <div class="matrixhead">
+    <div class="corner"></div>
+    <div class="colh urg"><i data-lucide="alarm-clock"></i>Терміново</div>
+    <div class="colh nurg"><i data-lucide="calendar"></i>Не терміново</div>
+  </div>
+
+  <!-- MATRIX -->
+  <div class="matrix">
+    <div class="rowh imp"><span>Важливо</span></div>
+
+    <!-- Q1: urgent + important -->
+    <div class="quad q1" data-q="1">
+      <div class="quadhead">
+        <div class="qi"><i data-lucide="flame"></i></div>
+        <div class="qt"><div class="action">Роби зараз</div><div class="qsub">Важливо + Терміново</div></div>
+        <span class="cnt" data-cnt="1">0</span>
+      </div>
+      <div class="tasklist" data-list="1"></div>
+    </div>
+
+    <!-- Q2: not urgent + important -->
+    <div class="quad q2" data-q="2">
+      <div class="quadhead">
+        <div class="qi"><i data-lucide="calendar-check"></i></div>
+        <div class="qt"><div class="action">Заплануй</div><div class="qsub">Важливо + Не терміново</div></div>
+        <span class="cnt" data-cnt="2">0</span>
+      </div>
+      <div class="tasklist" data-list="2"></div>
+    </div>
+
+    <div class="rowh nimp"><span>Не важливо</span></div>
+
+    <!-- Q3: urgent + not important -->
+    <div class="quad q3" data-q="3">
+      <div class="quadhead">
+        <div class="qi"><i data-lucide="users"></i></div>
+        <div class="qt"><div class="action">Делегуй</div><div class="qsub">Не важливо + Терміново</div></div>
+        <span class="cnt" data-cnt="3">0</span>
+      </div>
+      <div class="tasklist" data-list="3"></div>
+    </div>
+
+    <!-- Q4: not urgent + not important -->
+    <div class="quad q4" data-q="4">
+      <div class="quadhead">
+        <div class="qi"><i data-lucide="trash-2"></i></div>
+        <div class="qt"><div class="action">Прибери</div><div class="qsub">Не важливо + Не терміново</div></div>
+        <span class="cnt" data-cnt="4">0</span>
+      </div>
+      <div class="tasklist" data-list="4"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER BAR -->
+  <div class="footbar">
+    <div class="fstat" id="footStat">0 задач</div>
+    <div class="fspacer"></div>
+    <button class="fbtn" id="clearDone"><i data-lucide="check-check"></i>Прибрати виконані</button>
+    <button class="fbtn danger" id="resetAll"><i data-lucide="rotate-ccw"></i>Очистити все</button>
+    <button class="fbtn" id="printBtn"><i data-lucide="printer"></i>Друк</button>
+  </div>
+</div>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Дані зберігаються у твоєму браузері · ceo@magicecom.agency</span></div></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+
+/* ===== persistence (graceful) ===== */
+const KEY="magic_eisenhower_v1";
+const store={
+  read(){ try{ return JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){ return null; } },
+  write(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} }
+};
+
+const QMETA={
+  1:{action:"Роби зараз",color:"var(--q1)",sw:"#F5525C"},
+  2:{action:"Заплануй",color:"#1E82E0",sw:"#38A0FF"},
+  3:{action:"Делегуй",color:"#C98200",sw:"#FFB020"},
+  4:{action:"Прибери",color:"var(--ink-500)",sw:"#9AA2B2"},
+};
+function quadFor(imp,urg){ return imp ? (urg?1:2) : (urg?3:4); }
+
+/* ===== state ===== */
+let tasks = store.read() || seed();
+let uid = tasks.reduce((m,t)=>Math.max(m,t.id),0)+1;
+
+function seed(){
+  return [
+    {id:1,text:"Підготувати звіт 3F5T до четверга",q:1,done:false},
+    {id:2,text:"Перечитати розділ «Як зростають бренди»",q:2,done:false},
+    {id:3,text:"Опрацювати ABC-аналіз асортименту проєкту",q:2,done:false},
+    {id:4,text:"Переслати підрядникові доступи до кабінету",q:3,done:false},
+  ];
+}
+
+function save(){ store.write(tasks); }
+
+/* ===== date ===== */
+(function(){
+  const d=new Date();
+  $("#topDate").textContent = d.toLocaleDateString("uk-UA",{weekday:"long",day:"numeric",month:"long"});
+})();
+
+/* ===== add bar state ===== */
+let impOn=true, urgOn=false;
+function refreshToggles(){
+  $("#tImp").classList.toggle("on",impOn);
+  $("#tUrg").classList.toggle("on",urgOn);
+  const q=quadFor(impOn,urgOn);
+  $("#previewHint").innerHTML = `Потрапить у: <span class="qd" style="background:${QMETA[q].sw}22;color:${QMETA[q].color}">${QMETA[q].action}</span>`;
+}
+$("#tImp").onclick=()=>{ impOn=!impOn; refreshToggles(); };
+$("#tUrg").onclick=()=>{ urgOn=!urgOn; refreshToggles(); };
+
+function addTask(){
+  const inp=$("#taskInput");
+  const text=inp.value.trim();
+  if(!text) return;
+  tasks.push({id:uid++,text,q:quadFor(impOn,urgOn),done:false});
+  inp.value=""; save(); render(); inp.focus();
+}
+$("#addBtn").onclick=addTask;
+$("#taskInput").addEventListener("keydown",e=>{ if(e.key==="Enter") addTask(); });
+
+/* ===== render ===== */
+let openMenuId=null;
+
+function render(){
+  // clear lists
+  $$(".tasklist").forEach(l=>l.innerHTML="");
+  const counts={1:0,2:0,3:0,4:0};
+
+  tasks.forEach(t=>{
+    counts[t.q]++;
+    const list=document.querySelector(`.tasklist[data-list="${t.q}"]`);
+    const el=document.createElement("div");
+    el.className="task"+(t.done?" done":"");
+    el.draggable=true; el.dataset.id=t.id;
+    el.innerHTML=`
+      <div class="chk" data-act="done"><i data-lucide="check"></i></div>
+      <div class="ttext">${escapeHtml(t.text)}</div>
+      <div class="acts">
+        <div class="movewrap">
+          <button class="ib" data-act="move" title="Перемістити"><i data-lucide="move"></i></button>
+          <div class="movemenu" data-menu="${t.id}">
+            <div class="mtitle">Перемістити в</div>
+            ${[1,2,3,4].map(q=>`<button data-moveto="${q}" class="${q===t.q?'cur':''}"><span class="sw" style="background:${QMETA[q].sw}"></span>${QMETA[q].action}${q===t.q?' · зараз тут':''}</button>`).join("")}
+          </div>
+        </div>
+        <button class="ib del" data-act="del" title="Видалити"><i data-lucide="x"></i></button>
+      </div>
+      <span class="grip" title="Перетягни"><i data-lucide="grip-vertical"></i></span>`;
+    list.appendChild(el);
+  });
+
+  // empty states
+  $$(".tasklist").forEach(l=>{
+    if(!l.children.length){
+      const q=l.dataset.list;
+      const e=document.createElement("div"); e.className="empty";
+      e.innerHTML=`<i data-lucide="inbox"></i><span>Порожньо</span>`;
+      l.appendChild(e);
+    }
+  });
+
+  // counts
+  [1,2,3,4].forEach(q=>{ document.querySelector(`.cnt[data-cnt="${q}"]`).textContent=counts[q]; });
+  const total=tasks.length, done=tasks.filter(t=>t.done).length;
+  $("#footStat").innerHTML = total ? `<b>${total}</b> задач · виконано <b>${done}</b>` : "Немає задач — додай першу вгорі";
+
+  wireTasks();
+  lucide.createIcons();
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+/* ===== task interactions ===== */
+function wireTasks(){
+  $$(".task").forEach(el=>{
+    const id=+el.dataset.id;
+    el.querySelector('[data-act="done"]').onclick=e=>{ e.stopPropagation(); const t=tasks.find(x=>x.id===id); t.done=!t.done; save(); render(); };
+    el.querySelector('[data-act="del"]').onclick=e=>{ e.stopPropagation(); tasks=tasks.filter(x=>x.id!==id); save(); render(); };
+    const moveBtn=el.querySelector('[data-act="move"]');
+    const menu=el.querySelector(`[data-menu="${id}"]`);
+    moveBtn.onclick=e=>{ e.stopPropagation(); const isOpen=menu.classList.contains("open"); closeMenus(); if(!isOpen){ menu.classList.add("open"); openMenuId=id; } };
+    menu.querySelectorAll("[data-moveto]").forEach(b=>{
+      b.onclick=e=>{ e.stopPropagation(); const t=tasks.find(x=>x.id===id); t.q=+b.dataset.moveto; closeMenus(); save(); render(); };
+    });
+
+    // drag
+    el.addEventListener("dragstart",e=>{ el.classList.add("dragging"); e.dataTransfer.setData("text/plain",id); e.dataTransfer.effectAllowed="move"; });
+    el.addEventListener("dragend",()=>{ el.classList.remove("dragging"); $$(".quad").forEach(q=>q.classList.remove("dragover")); });
+  });
+}
+
+function closeMenus(){ $$(".movemenu").forEach(m=>m.classList.remove("open")); openMenuId=null; }
+document.addEventListener("click",closeMenus);
+
+/* ===== drag targets ===== */
+$$(".quad").forEach(quad=>{
+  quad.addEventListener("dragover",e=>{ e.preventDefault(); quad.classList.add("dragover"); e.dataTransfer.dropEffect="move"; });
+  quad.addEventListener("dragleave",e=>{ if(!quad.contains(e.relatedTarget)) quad.classList.remove("dragover"); });
+  quad.addEventListener("drop",e=>{
+    e.preventDefault(); quad.classList.remove("dragover");
+    const id=+e.dataTransfer.getData("text/plain");
+    const t=tasks.find(x=>x.id===id);
+    if(t){ t.q=+quad.dataset.q; save(); render(); }
+  });
+});
+
+/* ===== footer actions ===== */
+$("#clearDone").onclick=()=>{ tasks=tasks.filter(t=>!t.done); save(); render(); };
+$("#resetAll").onclick=()=>{
+  if(confirm("Очистити всі задачі? Дію не можна скасувати.")){ tasks=[]; save(); render(); }
+};
+$("#printBtn").onclick=()=>window.print();
+
+/* ===== learn panel ===== */
+$("#learnToggle").onclick=()=>$("#learnPanel").classList.toggle("open");
+
+/* ===== init ===== */
+refreshToggles();
+render();
+lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth-бібліотека · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --purple-50:#F2EBFF;
+  --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB; --ink-300:#C3CAD6;
+  --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160; --ink-700:#2F3441;
+  --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --warning:#FFB020; --danger:#F5525C;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+a{text-decoration:none;color:inherit}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar nav{display:flex;gap:5px;flex-wrap:wrap}
+.topbar nav a{color:rgba(255,255,255,.7);font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.15s}
+.topbar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.hero{background:var(--ink-900);color:#fff;padding:54px 0 60px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(64px);opacity:.42;pointer-events:none}
+.hero .b1{width:360px;height:360px;background:#AA7AFF;top:-140px;right:-50px}
+.hero .b2{width:260px;height:260px;background:#38A0FF;bottom:-130px;left:-40px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:620px;margin-top:14px}
+.herofacts{display:flex;gap:22px;margin-top:24px;flex-wrap:wrap}
+.herofacts .hf{display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.8)}
+.herofacts .hf i{width:17px;height:17px;stroke:#AA7AFF}
+
+section{padding:48px 0 0}
+.sec-label{display:flex;align-items:center;gap:12px;margin-bottom:6px;scroll-margin-top:78px}
+.sec-label .ci{width:46px;height:46px;border-radius:13px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:var(--shadow-glow-brand)}
+.sec-label .ci i{width:23px;height:23px;stroke:#fff}
+.sec-label h2{font-weight:900;font-size:27px;letter-spacing:-.02em}
+.sec-desc{font-size:15.5px;color:var(--ink-500);margin:0 0 20px 58px;max-width:680px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border-radius:var(--radius-xl);padding:22px;box-shadow:var(--shadow-sm);transition:.18s;display:flex;flex-direction:column;gap:0;border-top:4px solid var(--magic-blue);position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card .ci{width:46px;height:46px;border-radius:12px;background:var(--magic-gradient-soft);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.card .ci i{width:23px;height:23px;stroke:#5E30C4}
+.card h3{font-weight:800;font-size:18px;letter-spacing:-.01em;line-height:1.25}
+.card p{font-size:14px;color:var(--ink-500);margin-top:6px;line-height:1.5;flex:1}
+.card .go{margin-top:14px;display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:14px;color:var(--magic-purple)}
+.card .go i{width:16px;height:16px;transition:.18s}
+.card:hover .go i{transform:translateX(3px)}
+.card .num{position:absolute;top:16px;right:18px;font-weight:900;font-size:13px;color:var(--ink-200)}
+
+/* color variants per section */
+.s-learn .card{border-top-color:var(--magic-blue)}
+.s-tools .card{border-top-color:var(--success)}
+.s-tools .card .ci{background:#E4F8EF} .s-tools .card .ci i{stroke:#178a5f} .s-tools .card .go{color:#178a5f}
+.s-case .card{border-top-color:var(--magic-purple)}
+.s-case .card .ci{background:var(--purple-50)} .s-case .card .ci i{stroke:#5E30C4}
+.s-templates .card{border-top-color:var(--warning)}
+.s-templates .card .ci{background:#FFF3DC} .s-templates .card .ci i{stroke:#9a6a00} .s-templates .card .go{color:#9a6a00}
+
+.startbadge{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:#fff;background:var(--magic-gradient);padding:4px 10px;border-radius:999px;margin-bottom:10px;width:fit-content}
+.startbadge i{width:13px;height:13px}
+
+.note{background:var(--magic-gradient-soft);border-radius:var(--radius-xl);padding:20px 24px;display:flex;gap:15px;align-items:flex-start;margin-top:14px}
+.note i{flex:none;width:23px;height:23px;stroke:#5E30C4;margin-top:2px}
+.note .t{font-size:15px;color:#3a2a66;line-height:1.55}
+.note .t b{font-weight:700}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:30px 0;margin-top:56px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+footer .brand-word{color:#fff}
+
+@media(max-width:860px){ .grid{grid-template-columns:1fr 1fr} }
+@media(max-width:600px){ .grid{grid-template-columns:1fr} .topbar nav{display:none} .sec-desc{margin-left:0} }
+
+.soon{margin:0 0 0 58px;background:#fff;border:2px dashed var(--ink-200);border-radius:var(--radius-xl);padding:42px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.soon .si{width:56px;height:56px;border-radius:16px;background:var(--ink-100);display:flex;align-items:center;justify-content:center}
+.soon .si i{width:27px;height:27px;stroke:var(--ink-400)}
+.soon h3{font-weight:800;font-size:19px;color:var(--ink-700);letter-spacing:-.01em}
+.soon p{font-size:14.5px;color:var(--ink-400);max-width:440px;margin:0}
+@media(max-width:600px){ .soon{margin-left:0} }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <nav>
+      <a href="#learn">Навчання</a>
+      <a href="#tools">Інструменти</a>
+      <a href="#case">Кейс Rytual</a>
+      <a href="#templates">Шаблони</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="library"></i>Growth Marketer · внутрішня бібліотека</div>
+    <h1>Бібліотека <span class="g">Growth Marketer</span></h1>
+    <p class="sub">Усе для переходу в роль Growth: матриця компетенцій, навчальні матеріали, робочі інструменти й наскрізний приклад на бренді Rytual. Обирайте розділ і відкривайте.</p>
+    <div class="herofacts">
+      <div class="hf"><i data-lucide="graduation-cap"></i>Навчання й моделі</div>
+      <div class="hf"><i data-lucide="wrench"></i>Робочі інструменти</div>
+      <div class="hf"><i data-lucide="folder-open"></i>Кейс + шаблони</div>
+    </div>
+  </div>
+</header>
+
+<!-- LEARN -->
+<section id="learn"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="graduation-cap"></i></div><h2>Навчання</h2></div>
+    <p class="sec-desc">Почніть звідси: матриця показує, куди ростемо, далі — моделі та практики, що формують мислення Growth.</p>
+    <div class="grid s-learn">
+      <a class="card" href="growth-matrix.html">
+        <span class="num">01</span>
+        <div class="startbadge"><i data-lucide="flag"></i>Почати тут</div>
+        <div class="ci"><i data-lucide="layout-grid"></i></div>
+        <h3>Матриця компетенцій</h3>
+        <p>Карта ролі: 10 напрямків і рівні володіння кожним. Орієнтир, куди рухатись.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="card" href="marketing-models-guide.html">
+        <span class="num">02</span>
+        <div class="ci"><i data-lucide="layers"></i></div>
+        <h3>Маркетингові моделі</h3>
+        <p>SOSTAC, RACE, сходи обізнаності, JTBD, AARRR — як вони поєднуються в систему.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="card" href="ice-pie-guide.html">
+        <span class="num">03</span>
+        <div class="ci"><i data-lucide="list-ordered"></i></div>
+        <h3>ICE та PIE</h3>
+        <p>Як пріоритезувати гіпотези й тести — з калькулятором і прикладами.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="card" href="rfm-guide.html">
+        <span class="num">04</span>
+        <div class="ci"><i data-lucide="users"></i></div>
+        <h3>RFM-аналіз</h3>
+        <p>Сегментація бази для retention: хто цінний, кого повертати, як працювати.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="card" href="dtc-best-practices.html">
+        <span class="num">05</span>
+        <div class="ci"><i data-lucide="store"></i></div>
+        <h3>Найкращі практики DTC</h3>
+        <p>Головна, картка товару, кошик — на прикладі Rhode та інших брендів.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="card" href="glossary.html">
+        <span class="num">06</span>
+        <div class="ci"><i data-lucide="book-open"></i></div>
+        <h3>Глосарій</h3>
+        <p>Усі терміни Growth і ecommerce в одному місці, з пошуком. Тримайте під рукою.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci" style="background:linear-gradient(135deg,#2EC28A,#38A0FF)"><i data-lucide="wrench"></i></div><h2>Робочі інструменти</h2></div>
+    <p class="sec-desc">Те, чим користуєтесь щодня й на кожному проєкті.</p>
+    <div class="grid s-tools">
+      <a class="card" href="eisenhower-matrix.html">
+        <div class="ci"><i data-lucide="calendar-check"></i></div>
+        <h3>Матриця Ейзенхауера</h3>
+        <p>Щоденна пріоритезація задач: важливо проти термінового, зі збереженням.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="card" href="ecommerce-checklist.html">
+        <div class="ci"><i data-lucide="check-square"></i></div>
+        <h3>Чек-лист аудиту сайту</h3>
+        <p>8 секцій, 42 пункти з пріоритетами — проходити по кожному проєкту.</p>
+        <span class="go">Відкрити <i data-lucide="arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CASE -->
+<section id="case"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci" style="background:linear-gradient(135deg,#AA7AFF,#7A45EB)"><i data-lucide="bookmark"></i></div><h2>Наскрізний кейс · Rytual</h2></div>
+    <p class="sec-desc">Вигаданий бренд спешелті-кави, проведений через увесь Pre-Launch System — еталон, на який орієнтуватись, роблячи реальні проєкти.</p>
+    <div class="soon">
+      <div class="si"><i data-lucide="loader"></i></div>
+      <h3>Тут скоро будуть дані</h3>
+      <p>Матеріали кейсу в доопрацюванні — з'являться найближчим часом.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci" style="background:linear-gradient(135deg,#FFB020,#FF8A4C)"><i data-lucide="folder-open"></i></div><h2>Шаблони для роботи</h2></div>
+    <p class="sec-desc">Порожні каркаси, які заповнюєте даними реального проєкту. Орієнтир — заповнені приклади Rytual.</p>
+    <div class="soon">
+      <div class="si"><i data-lucide="loader"></i></div>
+      <h3>Тут скоро будуть дані</h3>
+      <p>Шаблони в доопрацюванні — з'являться найближчим часом.</p>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span class="brand-word">magic</span><span>Growth-бібліотека · advertise for e-commerce · ceo@magicecom.agency</span></div></footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

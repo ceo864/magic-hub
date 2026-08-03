@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Чек-лист аудиту e-commerce сайту · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar .tag{color:rgba(255,255,255,.6);font-size:13px;font-weight:400}
+
+.hero{background:var(--ink-900);color:#fff;padding:46px 0 54px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
+.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
+.hero .b2{width:240px;height:240px;background:#38A0FF;bottom:-120px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(32px,5.5vw,52px);line-height:1.03;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:640px;margin-top:14px}
+
+/* progress dashboard */
+.dash{margin-top:-34px;position:relative;z-index:10}
+.dashcard{background:#fff;border-radius:var(--radius-xl);padding:24px 26px;box-shadow:var(--shadow-lg);display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.ring{flex:none;width:96px;height:96px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .pc{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;letter-spacing:-.02em;background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dashinfo{flex:1;min-width:200px}
+.dashinfo h3{font-weight:800;font-size:19px;letter-spacing:-.01em}
+.dashinfo p{font-size:14px;color:var(--ink-500);margin-top:3px}
+.dashinfo .done{font-weight:700;color:var(--ink-800)}
+.dashactions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-weight:700;border:0;padding:12px 18px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:14px;transition:.2s}
+.btn i{width:16px;height:16px}
+.btn-primary{background:var(--magic-gradient);color:#fff;box-shadow:var(--shadow-glow-brand)}
+.btn-primary:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn-ghost{background:var(--ink-50);color:var(--ink-700);box-shadow:inset 0 0 0 1.5px var(--ink-200)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink-400)}
+
+.intro{padding:34px 0 0}
+.intro p{font-size:16px;color:var(--ink-600);max-width:760px;margin-bottom:14px}
+.intro .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+.legitem{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-600)}
+.legitem .pri{font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.pri-must{background:var(--danger-bg);color:#c2333c}
+.pri-should{background:var(--warning-bg);color:#9a6a00}
+.pri-nice{background:var(--info-bg);color:#1566B8}
+
+main{padding:22px 0 0}
+.section{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);margin-bottom:16px;overflow:hidden}
+.sechead{display:flex;align-items:center;gap:14px;padding:22px 24px;cursor:pointer;user-select:none}
+.sechead .si{flex:none;width:46px;height:46px;border-radius:13px;background:var(--magic-gradient-soft);display:flex;align-items:center;justify-content:center}
+.sechead .si i{width:23px;height:23px;stroke:#5E30C4}
+.sechead .stitle{flex:1;min-width:0}
+.sechead .stitle h2{font-weight:800;font-size:20px;letter-spacing:-.01em}
+.sechead .stitle .sdesc{font-size:14px;color:var(--ink-500);margin-top:2px}
+.sechead .sprog{flex:none;font-weight:800;font-size:13px;color:var(--ink-500);background:var(--ink-100);padding:6px 13px;border-radius:999px;font-variant-numeric:tabular-nums}
+.sechead .sprog.full{background:var(--success-bg);color:#178a5f}
+.sechead .chev{flex:none;width:20px;height:20px;stroke:var(--ink-400);transition:.2s}
+.section.open .chev{transform:rotate(180deg)}
+.secbody{display:none;padding:0 24px 12px}
+.section.open .secbody{display:block}
+
+.item{display:flex;gap:14px;padding:15px 0;border-top:1px solid var(--ink-100);align-items:flex-start}
+.item:first-child{border-top:0}
+.chk{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--ink-300);background:#fff;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.12s;cursor:pointer}
+.chk i{width:15px;height:15px;stroke:#fff;opacity:0;display:none;transition:.12s}
+.item.checked .chk i{opacity:1;display:block}
+.item.checked .chk{background:var(--magic-gradient);border-color:transparent}
+.ibody{flex:1;min-width:0}
+.ibody .itop{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+.ibody .itext{font-weight:600;font-size:16px;color:var(--ink-900);transition:.12s}
+.item.checked .itext{color:var(--ink-400);text-decoration:line-through}
+.ibody .pri{font-weight:800;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+.ibody .how{font-size:14px;color:var(--ink-600);margin-top:5px;line-height:1.5}
+.ibody .how b{font-weight:700;color:var(--ink-800)}
+.ibody .how code{font-family:var(--font);background:var(--ink-50);padding:1px 7px;border-radius:6px;font-weight:600;font-size:13px}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:40px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:680px){
+  .dashcard{gap:16px}
+  .sechead{padding:18px 16px;gap:11px}
+  .secbody{padding:0 16px 10px}
+}
+@media print{
+  .topbar,.dashactions,footer,.chev{display:none!important}
+  body{background:#fff}
+  .hero{background:#fff;color:#000;padding-bottom:18px;border-bottom:1px solid #ddd}
+  .hero .blob{display:none}
+  h1 .g,.ring .pc{color:#000!important;-webkit-text-fill-color:#000!important}
+  .section{break-inside:avoid;box-shadow:none;border:1px solid #e5e5e5}
+  .secbody{display:block!important}
+  .section .chev{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <span class="tag">Чек-лист аудиту e-commerce сайту</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="clipboard-check"></i>Робочий чек-лист · CRO + tech</div>
+    <h1>Що перевіряти <span class="g">на e-commerce сайті</span></h1>
+    <p class="sub">Базовий аудит сайту перед запуском і під час роботи: трекінг, швидкість, картка товару, checkout, довіра, аналітика. Відмічай зроблене — прогрес рахується сам.</p>
+  </div>
+</header>
+
+<div class="wrap dash">
+  <div class="dashcard">
+    <div class="ring">
+      <svg width="96" height="96" viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r="42" fill="none" stroke="#EEF1F6" stroke-width="9"/>
+        <circle id="ringArc" cx="48" cy="48" r="42" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round" stroke-dasharray="263.9" stroke-dashoffset="263.9"/>
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38A0FF"/><stop offset="1" stop-color="#AA7AFF"/></linearGradient></defs>
+      </svg>
+      <div class="pc" id="ringPct">0%</div>
+    </div>
+    <div class="dashinfo">
+      <h3 id="dashTitle">Прогрес аудиту</h3>
+      <p><span class="done" id="doneCount">0 з 0</span> пунктів перевірено · <span id="mustLeft"></span></p>
+    </div>
+    <div class="dashactions">
+      <button class="btn btn-ghost" id="expandAll"><i data-lucide="unfold-vertical"></i>Розгорнути все</button>
+      <button class="btn btn-ghost" id="resetAll"><i data-lucide="rotate-ccw"></i>Скинути</button>
+      <button class="btn btn-primary" id="printBtn"><i data-lucide="printer"></i>Зберегти / друк</button>
+    </div>
+  </div>
+</div>
+
+<section class="intro">
+  <div class="wrap">
+    <p>Чек-лист охоплює <b>8 зон</b>, які впливають на конверсію й на якість рекламного трафіку. Проходь зверху вниз: перші зони (трекінг, швидкість) критичні до запуску реклами, бо без них ти платиш за трафік наосліп.</p>
+    <div class="legend">
+      <div class="legitem"><span class="pri pri-must">критично</span>без цього не запускати рекламу</div>
+      <div class="legitem"><span class="pri pri-should">важливо</span>прямо впливає на конверсію</div>
+      <div class="legitem"><span class="pri pri-nice">бажано</span>покращення поверх бази</div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap" id="checklist"></div>
+</main>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Робочий документ · ceo@magicecom.agency</span></div></footer>
+
+<script>
+/* ===== DATA =====
+   pri: must | should | nice */
+const SECTIONS = [
+  {id:"tracking", icon:"radar", title:"Трекінг та аналітика", desc:"Без коректних даних оптимізація сліпа",
+   items:[
+     {pri:"must", t:"Встановлено й працює піксель Meta", h:"Перевір через Meta Pixel Helper, що події надсилаються. Без пікселя алгоритм не вчиться й немає атрибуції."},
+     {pri:"must", t:"Налаштовано GA4", h:"Базова веб-аналітика: трафік, поведінка, джерела, конверсії. Перевір, що дані реально надходять, а не «нуль» у звітах."},
+     {pri:"must", t:"Передаються ключові події", h:"<b>ViewContent, AddToCart, InitiateCheckout, Purchase</b> — мінімальний набір. Перевір кожну вручну, пройшовши шлях покупки."},
+     {pri:"must", t:"Немає дублів події Purchase", h:"Подвійне спрацювання завищує конверсії та ROAS і годує алгоритм брудним сигналом. Перевір, що покупка рахується один раз."},
+     {pri:"should", t:"Підключено server-side / CAPI", h:"Серверна передача (Conversions API) повертає події, втрачені браузером через ITP/iOS. Точніша атрибуція й кращі сигнали."},
+     {pri:"should", t:"Налаштовано передачу значення покупки", h:"Подія Purchase має передавати реальну суму й валюту — інакше неможливо оптимізувати під ROAS і рахувати дохід у кабінеті."},
+     {pri:"nice", t:"GTM для керування тегами", h:"Google Tag Manager спрощує керування пікселями й подіями без правок коду на кожну зміну."},
+   ]},
+  {id:"speed", icon:"gauge", title:"Швидкість та Core Web Vitals", desc:"Повільний сайт зливає оплачений трафік",
+   items:[
+     {pri:"must", t:"LCP перевірено на МОБІЛЬНОМУ", h:"Не довіряй десктопній цифрі — більшість трафіку мобільна. Перевір у PageSpeed Insights режим Mobile. <code>LCP &lt; 2.5с</code> — добре."},
+     {pri:"should", t:"INP у нормі", h:"Швидкість реакції на дії (клік, тап). <code>&lt; 200мс</code> — добре. Високий INP = інтерфейс гальмує у відповідь."},
+     {pri:"should", t:"CLS у нормі", h:"Верстка не стрибає під час завантаження. <code>&lt; 0.1</code> — добре. Стрибки = випадкові кліки й роздратування."},
+     {pri:"should", t:"Зображення стиснуті й у сучасному форматі", h:"Найчастіша причина повільного LCP — важкі фото. Перевір WebP/AVIF і lazy-load для нижніх зображень."},
+     {pri:"nice", t:"Перевірено швидкість на реальному 4G", h:"Лабораторні тести оптимістичні. Відкрий сайт на телефоні в мобільній мережі — відчуй реальний досвід клієнта."},
+   ]},
+  {id:"pdp", icon:"package", title:"Картка товару (PDP)", desc:"Тут ухвалюється рішення про покупку",
+   items:[
+     {pri:"must", t:"Якісні фото з кількох ракурсів", h:"Головне фото + деталі + товар у використанні. Для одягу — на моделі з указанням розміру/зросту."},
+     {pri:"must", t:"Зрозуміла ціна й наявність", h:"Ціна видима одразу, статус наявності чесний. Прихована ціна чи «уточнюйте» вбиває конверсію."},
+     {pri:"must", t:"Помітна кнопка «Додати в кошик»", h:"Контрастна, видима без прокручування на мобільному (above the fold). Головна дія сторінки має кидатись в очі."},
+     {pri:"should", t:"Зняті типові заперечення", h:"Таблиця розмірів, умови й строки доставки, політика повернення — прямо на сторінці, а не схованими в футері."},
+     {pri:"should", t:"Є відгуки й рейтинг (social proof)", h:"Реальні відгуки й фото покупців знижують сприйманий ризик на етапі рішення. Сильний важіль конверсії."},
+     {pri:"should", t:"Видно вартість доставки якомога раніше", h:"Шок від доставки на кроці оплати — класична причина відвалу. Краще показати орієнтир ще на PDP."},
+     {pri:"nice", t:"Релевантні допродажі", h:"Блок «з цим купують» / схожі товари піднімає AOV, якщо рекомендації справді доречні, а не випадкові."},
+   ]},
+  {id:"checkout", icon:"credit-card", title:"Кошик і checkout", desc:"Найкритичніший крок воронки",
+   items:[
+     {pri:"must", t:"Є гостьове оформлення", h:"Примусова реєстрація перед оплатою — одна з головних причин відвалу. Дай купити без створення акаунта."},
+     {pri:"must", t:"Мінімум полів і кроків", h:"Кожне зайве поле знижує конверсію. Залиш лише необхідне для оформлення й доставки."},
+     {pri:"must", t:"Достатньо способів оплати", h:"Карта + популярні локальні методи. Брак зручного способу оплати = втрачена покупка на останньому кроці."},
+     {pri:"should", t:"Видимий підсумок суми із доставкою", h:"Людина має бачити фінальну суму до натискання «оплатити», без прихованих доплат, що виринають в кінці."},
+     {pri:"should", t:"Мобільний checkout зручний", h:"Великі кнопки, правильні клавіатури для полів (цифрова для телефону/картки), нічого не «їде». Тестуй на телефоні."},
+     {pri:"should", t:"Кошик не «втрачається»", h:"Товари зберігаються при поверненні. Видно, що в кошику, і легко змінити кількість чи прибрати позицію."},
+     {pri:"nice", t:"Apple Pay / Google Pay", h:"Оплата в один тап помітно скорочує тертя на мобільному й піднімає завершення checkout."},
+   ]},
+  {id:"mobile", icon:"smartphone", title:"Мобільна версія та UX", desc:"Більшість трафіку — з телефону",
+   items:[
+     {pri:"must", t:"Сайт повноцінно працює на мобільному", h:"Не «адаптивний як вийшло», а реально зручний: ніщо не обрізане, кнопки натискаються, текст читається без зуму."},
+     {pri:"should", t:"Зрозуміла навігація й пошук", h:"Людина за пару тапів знаходить категорію чи товар. Робочий пошук по сайту — критичний для великих каталогів."},
+     {pri:"should", t:"Above the fold показує суть", h:"Перший екран: зрозуміло що це, кому, головне фото й дія — без прокручування. Не історія бренду й не popup на весь екран."},
+     {pri:"nice", t:"Popup-и не агресивні", h:"Якщо є вспливаюче вікно знижки — воно не блокує контент одразу й легко закривається на мобільному."},
+   ]},
+  {id:"trust", icon:"shield-check", title:"Довіра та прозорість", desc:"Незнайомому бренду треба зняти ризик",
+   items:[
+     {pri:"should", t:"Видимі контакти й спосіб зв'язку", h:"Телефон, месенджер, email. Реальні контакти підвищують довіру, особливо для нового бренду на холодному трафіку."},
+     {pri:"should", t:"Чесні умови доставки й повернення", h:"Окрема зрозуміла сторінка. Невизначеність щодо повернення зупиняє покупку сильніше, ніж сама ціна."},
+     {pri:"should", t:"Сторінка «Про нас» / історія бренду", h:"Знайомить і додає людяності. Важливо для побудови бренду, але <b>нижче згину</b>, не замість продукту."},
+     {pri:"nice", t:"Бейджі безпеки оплати", h:"Іконки платіжних систем і захищеного з'єднання заспокоюють на кроці оплати. Доповнення, а не заміна суті."},
+   ]},
+  {id:"seo", icon:"search", title:"Базове SEO та структура", desc:"Щоб сайт знаходили й розуміли",
+   items:[
+     {pri:"should", t:"Логічна структура каталогу (PLP → PDP)", h:"Зрозуміла ієрархія категорій і товарів. І для людини, і для пошуковика, і для рекламного фіда."},
+     {pri:"should", t:"Заголовки й описи товарів унікальні", h:"Не копії з сайту постачальника. Унікальний текст потрібен і для SEO, і для конверсії."},
+     {pri:"nice", t:"Налаштовано sitemap і robots", h:"Базова технічна гігієна, щоб пошуковики коректно індексували сайт."},
+     {pri:"nice", t:"Товарний фід для Google/Meta Shopping", h:"Коректний фід — основа Shopping-кампаній. Перевір, що ціни, наявність і фото підтягуються правильно."},
+   ]},
+  {id:"analytics-funnel", icon:"filter", title:"Воронка та дані для рішень", desc:"Щоб бачити, де тече, і діяти",
+   items:[
+     {pri:"should", t:"Видно воронку конверсії в аналітиці", h:"Покази → кліки → ATC → checkout → покупка. Дозволяє знайти крок із найбільшим відвалом — звідси починається CRO."},
+     {pri:"should", t:"Налаштовано цілі / конверсії в GA4", h:"Покупка й мікроконверсії (ATC, початок checkout) як цілі — щоб міряти ефективність, а не здогадуватись."},
+     {pri:"nice", t:"Підключено heatmap / session recordings", h:"Інструменти типу теплокарт показують, де люди клікають і де кидають сторінку — якісне доповнення до цифр воронки."},
+     {pri:"nice", t:"Налаштовано ABC-аналіз асортименту", h:"Регулярний перегляд, які SKU дають основну частку обороту — щоб концентрувати рекламний бюджет на локомотивах."},
+   ]},
+];
+
+/* ===== STATE (in-memory only) ===== */
+const state = {}; // id -> bool
+let uid=0;
+SECTIONS.forEach(s=>s.items.forEach(it=>{ it._id="i"+(uid++); state[it._id]=false; }));
+
+const $=s=>document.querySelector(s);
+const priLabel={must:"критично",should:"важливо",nice:"бажано"};
+const priClass={must:"pri-must",should:"pri-should",nice:"pri-nice"};
+
+function totals(){
+  let total=0,done=0,mustTotal=0,mustDone=0;
+  SECTIONS.forEach(s=>s.items.forEach(it=>{
+    total++; if(state[it._id])done++;
+    if(it.pri==="must"){mustTotal++; if(state[it._id])mustDone++;}
+  }));
+  return {total,done,mustTotal,mustDone};
+}
+
+function updateDash(){
+  const {total,done,mustTotal,mustDone}=totals();
+  const pct=total?Math.round(done/total*100):0;
+  $("#ringPct").textContent=pct+"%";
+  const circ=263.9;
+  $("#ringArc").style.transition="stroke-dashoffset .5s cubic-bezier(.22,1,.36,1)";
+  $("#ringArc").style.strokeDashoffset=circ*(1-pct/100);
+  $("#doneCount").textContent=`${done} з ${total}`;
+  const mLeft=mustTotal-mustDone;
+  $("#mustLeft").innerHTML = mLeft>0
+    ? `<b style="color:#c2333c">${mLeft}</b> критичних ще не закрито`
+    : `<b style="color:#178a5f">усі критичні закрито ✓</b>`;
+  // section progress pills
+  SECTIONS.forEach(s=>{
+    const d=s.items.filter(it=>state[it._id]).length;
+    const pill=document.querySelector(`#prog-${s.id}`);
+    if(pill){ pill.textContent=`${d}/${s.items.length}`; pill.classList.toggle("full", d===s.items.length); }
+  });
+}
+
+function render(){
+  const root=$("#checklist"); root.innerHTML="";
+  SECTIONS.forEach((s,si)=>{
+    const sec=document.createElement("div"); sec.className="section"+(si===0?" open":"");
+    const head=document.createElement("div"); head.className="sechead";
+    head.innerHTML=`
+      <div class="si"><i data-lucide="${s.icon}"></i></div>
+      <div class="stitle"><h2>${s.title}</h2><div class="sdesc">${s.desc}</div></div>
+      <span class="sprog" id="prog-${s.id}">0/${s.items.length}</span>
+      <i data-lucide="chevron-down" class="chev"></i>`;
+    head.onclick=()=>sec.classList.toggle("open");
+    sec.appendChild(head);
+
+    const body=document.createElement("div"); body.className="secbody";
+    s.items.forEach(it=>{
+      const row=document.createElement("div"); row.className="item"+(state[it._id]?" checked":"");
+      row.innerHTML=`
+        <div class="chk"><i data-lucide="check"></i></div>
+        <div class="ibody">
+          <div class="itop"><span class="itext">${it.t}</span><span class="pri ${priClass[it.pri]}">${priLabel[it.pri]}</span></div>
+          <div class="how">${it.h}</div>
+        </div>`;
+      const toggle=()=>{ state[it._id]=!state[it._id]; row.classList.toggle("checked",state[it._id]); updateDash(); };
+      row.querySelector(".chk").onclick=toggle;
+      row.querySelector(".itext").onclick=toggle;
+      body.appendChild(row);
+    });
+    sec.appendChild(body);
+    root.appendChild(sec);
+  });
+  lucide.createIcons();
+  updateDash();
+}
+
+$("#expandAll").onclick=()=>{
+  const secs=document.querySelectorAll(".section");
+  const anyClosed=[...secs].some(s=>!s.classList.contains("open"));
+  secs.forEach(s=>s.classList.toggle("open",anyClosed));
+  $("#expandAll").innerHTML = anyClosed
+    ? '<i data-lucide="fold-vertical"></i>Згорнути все'
+    : '<i data-lucide="unfold-vertical"></i>Розгорнути все';
+  lucide.createIcons();
+};
+$("#resetAll").onclick=()=>{
+  Object.keys(state).forEach(k=>state[k]=false);
+  render();
+};
+$("#printBtn").onclick=()=>window.print();
+
+render();
+lucide.createIcons();
+</script>
+</body>
+</html>

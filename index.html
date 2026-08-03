@@ -166,7 +166,6 @@ footer{border-top:1px solid var(--ink-200);margin-top:72px;padding:40px 0 56px}
 
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
-const BASE = "https://ceo864.github.io/";
 const DATA = [
   {cat:"onboarding", ico:"door-open", title:"Онбординг: адаптація", repos:[
     {t:"Онбординг Creative", d:"Адаптація креативної команди", r:"magic-creative-onboarding", i:"palette"},
@@ -200,6 +199,7 @@ const DATA = [
     {t:"Висновки у звітах", d:"Як писати висновки", r:"magic-vysnovky-u-zvitakh", i:"pen-line"},
     {t:"Прогноз (Lipsid)", d:"Модель прогнозування", r:"magic-lipsid-forecast", i:"line-chart"},
     {t:"Growth Base", d:"База зростання", r:"growth_base", i:"database"},
+    {t:"Growth Dashboard — повний довідник", d:"Як влаштований борд клієнтів: метрики, формули, навчальне відео", r:"growth-dashboard", i:"layout-dashboard"},
   ]},
 ];
 
@@ -217,7 +217,7 @@ DATA.forEach(sec=>{
     </div>
     <div class="grid">
       ${sec.repos.map(c=>`
-        <a class="card" href="${BASE}${c.r}/" target="_blank" rel="noopener" data-name="${(c.t+' '+c.d).toLowerCase()}">
+        <a class="card" href="${c.r}/" data-name="${(c.t+' '+c.d).toLowerCase()}">
           <div class="tile"><i data-lucide="${c.i}" style="width:20px;height:20px"></i></div>
           <div class="body"><h3>${c.t}</h3><p>${c.d}</p></div>
           <i class="arrow" data-lucide="arrow-up-right" style="width:18px;height:18px"></i>

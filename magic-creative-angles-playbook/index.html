@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Angles & Concepts Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #0f1729;
+    --accent: #38A0FF;
+    --accent2: #AA7AFF;
+    --bg: #f7f8fb;
+    --card: #FFFFFF;
+    --text: #1a2340;
+    --muted: #7580a0;
+    --border: #e4e7ef;
+    --green: #2EC28A;
+    --yellow: #FFB020;
+    --blue: #38A0FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body { -webkit-font-smoothing:antialiased;
+    font-family: 'Onest', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--accent2) 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+  .header h1 {
+    font-family: 'Onest', sans-serif; font-weight: 900; letter-spacing: -0.02em;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .header p {
+    opacity: 0.75;
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  .nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 16px 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav button {
+    padding: 8px 20px;
+    border: 2px solid var(--border);
+    border-radius: 24px;
+    background: var(--card);
+    font-family: 'Onest', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav button:hover { border-color: var(--accent); color: var(--accent); }
+  .nav button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Onest', sans-serif; font-weight: 900; letter-spacing: -0.02em;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--accent);
+    display: inline-block;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 32px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+  .card-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .tag-meta { background: #EBF0FF; color: var(--accent2); }
+  .tag-tiktok { background: #FFF0F3; color: var(--accent); }
+  .tag-both { background: #E8F8F0; color: var(--green); }
+  .tag-tofu { background: #EBF4FF; color: #38A0FF; }
+  .tag-mofu { background: #FFF6EB; color: #FFB020; }
+  .tag-bofu { background: #E8F8F0; color: #2EC28A; }
+
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .card p { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  
+  .card-example {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13px;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    margin-top: 8px;
+  }
+  .card-example strong { color: var(--accent); }
+
+  .card-metrics {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .metric-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--bg);
+    color: var(--muted);
+  }
+
+  .checklist {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+  .checklist h3 {
+    font-family: 'Onest', sans-serif; font-weight: 900; letter-spacing: -0.02em;
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--dark);
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .check-label { flex: 1; }
+  .check-label small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+  .funnel-map {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .funnel-col {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .funnel-col h4 {
+    font-family: 'Onest', sans-serif; font-weight: 900; letter-spacing: -0.02em;
+    font-size: 14px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+  }
+  .funnel-col.tofu h4 { border-color: #38A0FF; color: #38A0FF; }
+  .funnel-col.mofu h4 { border-color: #FFB020; color: #FFB020; }
+  .funnel-col.bofu h4 { border-color: #2EC28A; color: #2EC28A; }
+  .funnel-item {
+    padding: 6px 0;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .funnel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tofu .funnel-dot { background: #38A0FF; }
+  .mofu .funnel-dot { background: #FFB020; }
+  .bofu .funnel-dot { background: #2EC28A; }
+
+  table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+  table.matrix th {
+    background: var(--dark);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  table.matrix td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.matrix tr:nth-child(even) td { background: var(--bg); }
+
+  .combo-card {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--accent2) 100%);
+    color: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .combo-card h3 { color: var(--accent); font-size: 15px; margin-bottom: 8px; }
+  .combo-card p { opacity: 0.85; font-size: 13px; }
+  .combo-formula {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 12px;
+    font-family: 'Onest', sans-serif; font-weight: 900; letter-spacing: -0.02em;
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    .header { padding: 32px 20px; }
+    .header h1 { font-size: 22px; }
+    .container { padding: 20px 16px; }
+    .grid { grid-template-columns: 1fr; }
+    .funnel-map { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .nav { display: none; }
+    .section { display: block !important; page-break-inside: avoid; margin-bottom: 32px; }
+  }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div style="font-weight:900;font-size:16px;opacity:.35;margin-bottom:16px">magic</div><h1>CREATIVE ANGLES & CONCEPTS PLAYBOOK</h1>
+  <p>Фреймворк кутів, концептів та їх комбінацій для e-commerce | Meta & TikTok</p>
+</div>
+
+<div class="container">
+  <div class="nav">
+    <button class="active" onclick="showSection('angles')">Кути (Angles)</button>
+    <button onclick="showSection('concepts')">Концепти</button>
+    <button onclick="showSection('hooks')">Хуки & CTA</button>
+    <button onclick="showSection('funnel')">Карта воронки</button>
+    <button onclick="showSection('combos')">Комбо-формули</button>
+    <button onclick="showSection('checklist')">Чекліст</button>
+  </div>
+
+  <!-- ========== ANGLES ========== -->
+  <div id="angles" class="section active">
+    <div class="section-title">КУТИ (ANGLES)</div>
+    <p class="section-desc">Кут — це "під яким ракурсом" ми показуємо продукт. Один і той самий товар можна показати через 10+ різних кутів.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>Pain Point</h3>
+        <p>Показуємо проблему клієнта і як продукт її вирішує. Найсильніший кут для холодного трафіку.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Вже 3-й крем не допомагає від сухості? Ось чому — ви пропускаєте один крок..."
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий CTR</span>
+          <span class="metric-badge">TOFU/MOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>Benefit-First</h3>
+        <p>Починаємо з результату/переваги, а не з проблеми. Працює коли аудиторія знає чого хоче.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Шкіра як після салону за 2 хвилини на день — без записів і черг"
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий CR</span>
+          <span class="metric-badge">MOFU/BOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-tiktok">TikTok</span>
+        <h3>UGC / Testimonial</h3>
+        <p>Реальні або стилізовані відгуки від користувачів. Знижує бар'єр довіри.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Чесно? Я не вірила. Але через 2 тижні мій чоловік сам помітив різницю..."
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий Trust</span>
+          <span class="metric-badge">Усі етапи</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>FOMO / Urgency</h3>
+        <p>Обмеженість за часом, кількістю або ексклюзивністю. Штовхає до дії.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Залишилось 47 штук за цією ціною. Наступне завезення — через 3 місяці"
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий CR</span>
+          <span class="metric-badge">BOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>Інгредієнт / Технологія</h3>
+        <p>Фокус на складі, технології виробництва або унікальній характеристиці продукту.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "5% ніацинаміду + гіалуронова кислота = те, що дерматологи рекомендують №1"
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Середній CTR</span>
+          <span class="metric-badge">MOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-meta">Meta</span>
+        <h3>Social Proof / Цифри</h3>
+        <p>Кількість покупців, рейтинги, нагороди, цифри продажів як доказ якості.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "50 000+ замовлень. 4.8★ на основі 3 200 відгуків. №1 серед сироваток в Україні"
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий Trust</span>
+          <span class="metric-badge">MOFU/BOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-tiktok">TikTok</span>
+        <h3>Порівняння</h3>
+        <p>Продукт vs конкурент, vs стара версія, vs альтернативний спосіб. Ставить у вигідний контекст.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Салон за 2000₴ vs наш набір за 450₴ — порівнюємо результат через 30 днів"
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий Hook Rate</span>
+          <span class="metric-badge">MOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>Оффер / Ціна</h3>
+        <p>Фокус на знижці, бандлі, безкоштовній доставці або подарунку. Для тих, хто вже цікавиться.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "2 за ціною 1 тільки сьогодні + безкоштовна доставка Новою Поштою"
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий CR</span>
+          <span class="metric-badge">BOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-tiktok">TikTok</span>
+        <h3>Founder Story</h3>
+        <p>Історія засновника: чому створив продукт, що стоїть за брендом. Емоційний зв'язок.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Я 3 роки страждала від акне. Перепробувала все. І тоді створила свою формулу..."
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий Hold Rate</span>
+          <span class="metric-badge">TOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>Unboxing / Розпакування</h3>
+        <p>Показуємо досвід отримання: пакування, перше враження, комплектація. Візуально привабливий.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "Нарешті приїхала посилка! Дивіться яка розкішна коробка... А всередині..."
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий Hook Rate</span>
+          <span class="metric-badge">TOFU/MOFU</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-both">Meta + TikTok</span>
+        <h3>До / Після</h3>
+        <p>Візуальна трансформація. Один з найсильніших форматів для товарів з видимим результатом.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "День 1 → День 30. Без фільтрів. Без фотошопу. Тільки цей засіб."
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Найвищий CTR</span>
+          <span class="metric-badge">Усі етапи</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag tag-tiktok">TikTok</span>
+        <h3>Едьютейнмент</h3>
+        <p>Навчаємо чомусь корисному і ненав'язливо інтегруємо продукт. Найбільш органічний формат.</p>
+        <div class="card-example">
+          <strong>Приклад:</strong> "3 помилки в нанесенні крему, які старять вас на 5 років. Третя — найгірша..."
+        </div>
+        <div class="card-metrics">
+          <span class="metric-badge">Високий Reach</span>
+          <span class="metric-badge">TOFU</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CONCEPTS ========== -->
+  <div id="concepts" class="section">
+    <div class="section-title">КОНЦЕПТИ (FORMATS)</div>
+    <p class="section-desc">Концепт — це "в якому форматі/стилі" ми подаємо креатив. Кут + концепт = готовий креатив.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3> Talking Head</h3>
+        <p>Людина говорить на камеру. Найпростіший UGC-формат. Для TikTok — must have.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Відео</span>
+          <span class="metric-badge">15-60с</span>
+          <span class="metric-badge">TikTok ★★★</span>
+          <span class="metric-badge">Meta ★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📸 Статика з текстом</h3>
+        <p>Зображення продукту + сильний текстовий оверлей. Класика Meta.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Зображення</span>
+          <span class="metric-badge">Meta ★★★</span>
+          <span class="metric-badge">TikTok ★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3> Screen Recording</h3>
+        <p>Запис екрану: відгуки з сайту, пошук, процес замовлення. Автентичний вигляд.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Відео</span>
+          <span class="metric-badge">15-30с</span>
+          <span class="metric-badge">TikTok ★★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3> Карусель</h3>
+        <p>Серія слайдів: ідеально для порівнянь, списків переваг, до/після. Високий engagement на Meta.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">3-8 слайдів</span>
+          <span class="metric-badge">Meta ★★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎥 B-Roll + Voiceover</h3>
+        <p>Красиве відео продукту в дії з закадровим голосом. Преміальний вигляд.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Відео</span>
+          <span class="metric-badge">15-45с</span>
+          <span class="metric-badge">Meta ★★★</span>
+          <span class="metric-badge">TikTok ★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🧵 POV / Сторітелінг</h3>
+        <p>Від першої особи: "POV: ти нарешті знайшла ідеальний крем". Емоційне залучення.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Відео</span>
+          <span class="metric-badge">30-60с</span>
+          <span class="metric-badge">TikTok ★★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Інфографіка / Data Visual</h3>
+        <p>Цифри, графіки, порівняльні таблиці у візуальному форматі. Для раціональної аудиторії.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Зображення/Відео</span>
+          <span class="metric-badge">Meta ★★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎤 Інтерв'ю / Реакція</h3>
+        <p>Формат "запитання-відповідь" або реакція на продукт. Природно, як справжній контент.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Відео</span>
+          <span class="metric-badge">30-90с</span>
+          <span class="metric-badge">TikTok ★★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Вихідний продукт: Listicle / Топ-N</h3>
+        <p>"5 причин спробувати...", "3 речі, які я хотіла знати раніше". Структурований, легко засвоюється.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Відео/Карусель</span>
+          <span class="metric-badge">TikTok ★★★</span>
+          <span class="metric-badge">Meta ★★</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3> Dynamic Product Ad</h3>
+        <p>Динамічний каталог з персоналізованими товарами. Автоматизація + ретаргетинг.</p>
+        <div class="card-metrics">
+          <span class="metric-badge">Авто</span>
+          <span class="metric-badge">Meta ★★★</span>
+          <span class="metric-badge">BOFU</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HOOKS & CTA ========== -->
+  <div id="hooks" class="section">
+    <div class="section-title">ХУКИ & CTA</div>
+    <p class="section-desc">Хук — перші 1-3 секунди, які вирішують чи дивитимуть далі. CTA — фінальний поштовх до дії.</p>
+
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--accent);">ТИПИ ХУКІВ</h3>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th style="width:20%">Тип хука</th>
+          <th style="width:35%">Опис</th>
+          <th style="width:30%">Приклад</th>
+          <th style="width:15%">Де працює</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Шок / Контраст</strong></td>
+          <td>Щось несподіване в перших кадрах: дивна дія, контрастний візуал</td>
+          <td>"Не купуйте цей крем! ...поки не дочитаєте"</td>
+          <td>TikTok ★★★</td>
+        </tr>
+        <tr>
+          <td><strong>Питання</strong></td>
+          <td>Ставимо питання, яке резонує з болем аудиторії</td>
+          <td>"Чому ваш крем не працює? Відповідь вас здивує"</td>
+          <td>Meta + TikTok</td>
+        </tr>
+        <tr>
+          <td><strong>Заява / Bold Claim</strong></td>
+          <td>Сильне твердження, яке викликає цікавість або суперечку</td>
+          <td>"Це єдиний продукт, який я купила 6 разів"</td>
+          <td>TikTok ★★★</td>
+        </tr>
+        <tr>
+          <td><strong>Цифра / Статистика</strong></td>
+          <td>Конкретне число, яке привертає увагу</td>
+          <td>"93% покупців замовляють повторно"</td>
+          <td>Meta ★★★</td>
+        </tr>
+        <tr>
+          <td><strong>Ситуація / Сценарій</strong></td>
+          <td>Описуємо знайому ситуацію, з якою себе ідентифікують</td>
+          <td>"Коли ти витратила 5000₴ на косметику, а шкіра все одно..."</td>
+          <td>TikTok ★★★</td>
+        </tr>
+        <tr>
+          <td><strong>Візуальний хук</strong></td>
+          <td>Яскравий рух, колір, трансформація в першому кадрі (без тексту)</td>
+          <td>[Різкий зум на продукт / ASMR текстура / незвичний ракурс]</td>
+          <td>TikTok ★★★</td>
+        </tr>
+        <tr>
+          <td><strong>"Стоп-скролл" текст</strong></td>
+          <td>Великий контрастний текст на першому кадрі статики або відео</td>
+          <td>"СТОП ❌ якщо у вас суха шкіра"</td>
+          <td>Meta ★★★</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:16px; margin: 24px 0 16px; color:var(--green);">ТИПИ CTA</h3>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Тип CTA</th>
+          <th>Коли використовувати</th>
+          <th>Приклади</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Прямий</strong></td>
+          <td>BOFU, ретаргетинг, гарячі аудиторії</td>
+          <td>"Замовляй зараз", "Купити зі знижкою -30%"</td>
+        </tr>
+        <tr>
+          <td><strong>М'який</strong></td>
+          <td>TOFU, холодні аудиторії, дорогі товари</td>
+          <td>"Дізнайся більше", "Подивись каталог"</td>
+        </tr>
+        <tr>
+          <td><strong>Соціальний</strong></td>
+          <td>UGC, testimonial контент</td>
+          <td>"Приєднуйся до 50 000 задоволених клієнтів"</td>
+        </tr>
+        <tr>
+          <td><strong>Дефіцит</strong></td>
+          <td>Обмежені акції, дропи, сезонні товари</td>
+          <td>"Тільки 24 години", "Залишилось 12 штук"</td>
+        </tr>
+        <tr>
+          <td><strong>Ціннісний</strong></td>
+          <td>Товари з високим AOV</td>
+          <td>"Спробуй безкоштовно 14 днів", "Безкоштовна доставка"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== FUNNEL MAP ========== -->
+  <div id="funnel" class="section">
+    <div class="section-title">КАРТА ВОРОНКИ</div>
+    <p class="section-desc">Який кут, концепт і KPI на кожному етапі воронки для e-commerce.</p>
+
+    <div class="funnel-map">
+      <div class="funnel-col tofu">
+        <h4>TOFU — Увага</h4>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Ціль: Hook Rate, CPM, Reach, ThumbStop</p>
+        <div class="funnel-item"><div class="funnel-dot"></div>Pain Point</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Едьютейнмент</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Founder Story</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Unboxing</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>До / Після</div>
+        <hr style="margin:12px 0; border-color:#E3F2FD">
+        <p style="font-size:12px"><strong>Концепти:</strong> Talking Head, POV, B-Roll, Listicle</p>
+        <p style="font-size:12px"><strong>Хуки:</strong> Шок, Питання, Ситуація</p>
+      </div>
+
+      <div class="funnel-col mofu">
+        <h4>MOFU — Інтерес</h4>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Ціль: CTR, CPC, ATC Rate, Engagement</p>
+        <div class="funnel-item"><div class="funnel-dot"></div>Benefit-First</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Порівняння</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Social Proof</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Інгредієнт / Технологія</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>UGC / Testimonial</div>
+        <hr style="margin:12px 0; border-color:#FFF8E1">
+        <p style="font-size:12px"><strong>Концепти:</strong> Карусель, Інфографіка, Інтерв'ю</p>
+        <p style="font-size:12px"><strong>Хуки:</strong> Цифра, Bold Claim, Стоп-текст</p>
+      </div>
+
+      <div class="funnel-col bofu">
+        <h4>BOFU — Покупка</h4>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Ціль: CR, CPA, ROAS, Purchases</p>
+        <div class="funnel-item"><div class="funnel-dot"></div>Оффер / Ціна</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>FOMO / Urgency</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Social Proof (з CTA)</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>Ретаргетинг</div>
+        <div class="funnel-item"><div class="funnel-dot"></div>DPA</div>
+        <hr style="margin:12px 0; border-color:#E8F5E9">
+        <p style="font-size:12px"><strong>Концепти:</strong> DPA, Статика з CTA, Screen Rec</p>
+        <p style="font-size:12px"><strong>Хуки:</strong> Дефіцит, Ціна, Прямий CTA</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== COMBO FORMULAS ========== -->
+  <div id="combos" class="section">
+    <div class="section-title">КОМБО-ФОРМУЛИ</div>
+    <p class="section-desc">Готові рецепти: Кут + Концепт + Хук = працюючий креатив. Перевірені комбінації для e-commerce.</p>
+
+    <div class="grid">
+      <div class="combo-card">
+        <h3>Вбивця холодного трафіку</h3>
+        <p>Для знайомства з продуктом. Максимальний охват і CTR.</p>
+        <div class="combo-formula">Pain Point + Talking Head + Хук-питання → М'який CTA</div>
+      </div>
+      <div class="combo-card">
+        <h3>Конверсійна машина</h3>
+        <p>Для теплої аудиторії. Максимальний ROAS.</p>
+        <div class="combo-formula">Оффер + Статика з текстом + Стоп-скролл → Прямий CTA</div>
+      </div>
+      <div class="combo-card">
+        <h3> TikTok вірус</h3>
+        <p>Органічний вигляд. Максимальний Hold Rate.</p>
+        <div class="combo-formula">Едьютейнмент + POV + Хук-ситуація → Ціннісний CTA</div>
+      </div>
+      <div class="combo-card">
+        <h3>Довіра і конверсія</h3>
+        <p>Поєднує social proof і продаж. Для ретаргетингу.</p>
+        <div class="combo-formula">UGC + Інтерв'ю + Bold Claim → Соціальний CTA</div>
+      </div>
+      <div class="combo-card">
+        <h3>Трансформація</h3>
+        <p>Для товарів з видимим результатом. Найвищий CTR.</p>
+        <div class="combo-formula">До/Після + B-Roll + Візуальний хук → Прямий CTA</div>
+      </div>
+      <div class="combo-card">
+        <h3>Терміновий дожим</h3>
+        <p>Фінальний поштовх для тих, хто вагається.</p>
+        <div class="combo-formula">FOMO + Screen Recording + Цифра-хук → Дефіцитний CTA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CHECKLIST ========== -->
+  <div id="checklist" class="section">
+    <div class="section-title">ЧЕКЛІСТ</div>
+    <p class="section-desc">Перевірте кожен креатив перед запуском. Друкуйте або використовуйте онлайн.</p>
+
+    <div class="checklist">
+      <h3>Стратегія (перед виробництвом)</h3>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Визначено цільову аудиторію та її pain points<small>Хто саме побачить цей креатив? Яка їхня проблема?</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Обрано конкретний кут (angle)<small>Один креатив = один кут. Не змішуйте кілька.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Обрано концепт (формат)<small>Формат відповідає платформі та етапу воронки.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Визначено етап воронки (TOFU / MOFU / BOFU)<small>Від цього залежить CTA, тон і метрики оцінки.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Заповнений креативний бриф<small>Без брифу — не починаємо виробництво.</small></div></div>
+    </div>
+
+    <div class="checklist">
+      <h3>Хук & Контент (виробництво)</h3>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Хук чіпляє за перші 1-3 секунди<small>Перевірте: чи зупините ви скрол, побачивши це?</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Хук відповідає контенту (не клікбейт)<small>Після хуку глядач має отримати те, що очікував.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Є чіткий один меседж<small>Якщо не можете описати меседж в одному реченні — переробіть.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">CTA відповідає етапу воронки<small>TOFU: м'який. BOFU: прямий і конкретний.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Текстовий оверлей читабельний на мобільному<small>Перевірте на реальному телефоні, не на десктопі.</small></div></div>
+    </div>
+
+    <div class="checklist">
+      <h3>Технічна перевірка (перед запуском)</h3>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Формат і розмір відповідають платформі<small>Meta: 1:1, 4:5, 9:16. TikTok: 9:16. Перевірте safe zones.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Відео має субтитри<small>85% користувачів дивляться без звуку (Meta). TikTok — менше, але теж потрібно.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Назва файлу за конвенцією нейменгу<small>[Дата]_[Платформа]_[Кут]_[Концепт]_[Версія]</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Перевірено на відповідність рекламній політиці<small>Без заборонених тверджень, зображень, claims.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Landing page відповідає креативу<small>Оффер, візуал і CTA на сайті = те саме, що в рекламі.</small></div></div>
+    </div>
+
+    <div class="checklist">
+      <h3>Тестування (після запуску)</h3>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Визначено ціль тесту та гіпотезу<small>Що тестуємо? Що очікуємо побачити?</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Тестуємо одну змінну за раз<small>Хук OR CTA OR аудиторія — не все разом.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Достатній бюджет для статистичної значущості<small>Мінімум 50 конверсій або 3-5 днів для прийняття рішення.</small></div></div>
+      <div class="check-item"><input type="checkbox"><div class="check-label">Метрики зафіксовано в Тижневому звіті<small>Без даних — немає рішень.</small></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+
+<div style="text-align:center;padding:32px 0 16px;font-size:12px;color:#7580a0;font-weight:300"><span style="font-weight:900;background:linear-gradient(135deg,#38A0FF,#AA7AFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent">magic</span><div style="margin-top:4px">advertise for e-commerce</div></div>
+</body>
+</html>

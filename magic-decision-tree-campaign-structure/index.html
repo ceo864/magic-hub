@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Tree: Структура кампаній</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magic-blue: #38A0FF;
+    --magic-purple: #AA7AFF;
+    --magic-gradient: linear-gradient(135deg, #38A0FF, #AA7AFF);
+    --ink-800: #0D0D1A;
+    --ink-700: #1A1A2E;
+    --ink-600: #2A2A40;
+    --ink-500: #3D3D55;
+    --ink-400: #5A5A75;
+    --ink-300: #8080A0;
+    --ink-200: #B0B0C8;
+    --ink-100: #D8D8E8;
+    --ink-50: #F0F0F8;
+    --success: #2EC28A;
+    --warning: #FFB020;
+    --danger: #F5525C;
+    --white: #FFFFFF;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-pill: 9999px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Onest', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-700);
+    background: var(--ink-50);
+  }
+
+  .hero {
+    background: var(--ink-700);
+    padding: 64px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(56,160,255,0.12) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(56,160,255,0.15);
+    color: var(--magic-blue);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    background: var(--magic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-200);
+    max-width: 640px;
+    position: relative;
+  }
+
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ===== STAGES OVERVIEW ===== */
+  .stages-overview {
+    margin-bottom: 64px;
+  }
+  .stages-overview h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink-700);
+    margin-bottom: 8px;
+  }
+  .stages-overview .desc {
+    font-size: 16px;
+    color: var(--ink-400);
+    margin-bottom: 32px;
+    max-width: 700px;
+  }
+
+  .stage-flow {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    position: relative;
+  }
+  .stage-flow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 3px;
+    background: var(--ink-100);
+    z-index: 0;
+  }
+  .stage-card {
+    flex: 1;
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 28px 24px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .stage-card + .stage-card { margin-left: 16px; }
+  .stage-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  .stage-card:nth-child(1)::before { background: var(--magic-blue); }
+  .stage-card:nth-child(2)::before { background: var(--magic-purple); }
+  .stage-card:nth-child(3)::before { background: var(--success); }
+
+  .stage-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--white);
+    margin: 0 auto 12px;
+  }
+  .stage-card:nth-child(1) .stage-num { background: var(--magic-blue); }
+  .stage-card:nth-child(2) .stage-num { background: var(--magic-purple); }
+  .stage-card:nth-child(3) .stage-num { background: var(--success); }
+  .stage-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-700);
+    margin-bottom: 8px;
+  }
+  .stage-card p {
+    font-size: 13px;
+    color: var(--ink-400);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ===== DECISION SECTIONS ===== */
+  .decision-section {
+    margin-bottom: 56px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .section-icon {
+    width: 48px; height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .section-icon.blue { background: var(--magic-blue); }
+  .section-icon.purple { background: var(--magic-purple); }
+  .section-icon.green { background: var(--success); }
+  .section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink-700);
+  }
+  .section-header .label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .section-header .label.blue { color: var(--magic-blue); }
+  .section-header .label.purple { color: var(--magic-purple); }
+  .section-header .label.green { color: var(--success); }
+
+  /* Question block */
+  .question-block {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border: 2px solid var(--ink-100);
+  }
+  .question-block.highlight-blue { border-color: rgba(56,160,255,0.3); }
+  .question-block.highlight-purple { border-color: rgba(170,122,255,0.3); }
+  .question-block.highlight-green { border-color: rgba(46,194,138,0.3); }
+
+  .question {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-700);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .answers {
+    display: flex;
+    gap: 16px;
+  }
+  .answer {
+    flex: 1;
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    text-align: center;
+    cursor: default;
+    transition: all 0.2s;
+  }
+  .answer.yes {
+    background: rgba(46,194,138,0.08);
+    border: 2px solid rgba(46,194,138,0.2);
+  }
+  .answer.no {
+    background: rgba(245,82,92,0.06);
+    border: 2px solid rgba(245,82,92,0.15);
+  }
+  .answer.opt-a {
+    background: rgba(56,160,255,0.06);
+    border: 2px solid rgba(56,160,255,0.2);
+  }
+  .answer.opt-b {
+    background: rgba(170,122,255,0.06);
+    border: 2px solid rgba(170,122,255,0.2);
+  }
+  .answer-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .answer.yes .answer-label { color: var(--success); }
+  .answer.no .answer-label { color: var(--danger); }
+  .answer.opt-a .answer-label { color: var(--magic-blue); }
+  .answer.opt-b .answer-label { color: var(--magic-purple); }
+  .answer p {
+    font-size: 13px;
+    color: var(--ink-400);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Arrow */
+  .arrow-down {
+    text-align: center;
+    padding: 8px 0;
+    color: var(--ink-200);
+    font-size: 24px;
+  }
+
+  /* Result block */
+  .result-block {
+    border-radius: var(--radius-xl);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+  }
+  .result-block.blue-bg {
+    background: linear-gradient(135deg, rgba(56,160,255,0.08), rgba(56,160,255,0.03));
+    border: 1px solid rgba(56,160,255,0.15);
+  }
+  .result-block.purple-bg {
+    background: linear-gradient(135deg, rgba(170,122,255,0.08), rgba(170,122,255,0.03));
+    border: 1px solid rgba(170,122,255,0.15);
+  }
+  .result-block.green-bg {
+    background: linear-gradient(135deg, rgba(46,194,138,0.08), rgba(46,194,138,0.03));
+    border: 1px solid rgba(46,194,138,0.15);
+  }
+  .result-block h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .result-block.blue-bg h4 { color: var(--magic-blue); }
+  .result-block.purple-bg h4 { color: var(--magic-purple); }
+  .result-block.green-bg h4 { color: var(--success); }
+  .result-block p {
+    font-size: 14px;
+    color: var(--ink-500);
+    margin-bottom: 8px;
+  }
+  .result-block p:last-child { margin-bottom: 0; }
+
+  /* Structure diagram */
+  .structure-diagram {
+    background: var(--ink-700);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin: 16px 0;
+    font-family: 'Onest', monospace;
+    color: var(--ink-100);
+    font-size: 14px;
+    line-height: 2;
+  }
+  .structure-diagram .level-campaign { color: var(--magic-blue); font-weight: 700; }
+  .structure-diagram .level-adgroup { color: var(--magic-purple); font-weight: 700; }
+  .structure-diagram .level-ad { color: var(--success); font-weight: 700; }
+  .structure-diagram .dim { color: var(--ink-400); }
+
+  /* Warning callout */
+  .warning-block {
+    background: rgba(245,82,92,0.06);
+    border: 1px solid rgba(245,82,92,0.15);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .warning-block .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 6px;
+  }
+  .warning-block p {
+    font-size: 13px;
+    color: var(--ink-500);
+    margin: 0;
+  }
+
+  /* Callout */
+  .callout {
+    background: linear-gradient(135deg, rgba(56,160,255,0.06), rgba(170,122,255,0.06));
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin: 20px 0;
+    border: 1px solid rgba(56,160,255,0.12);
+  }
+  .callout-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--magic-blue);
+    margin-bottom: 6px;
+  }
+  .callout p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  /* Table */
+  .table-wrap {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--ink-700);
+    color: var(--white);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    padding: 12px 16px;
+    text-align: left;
+  }
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--ink-50);
+    font-size: 13px;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  .divider {
+    height: 1px;
+    background: var(--ink-100);
+    margin: 48px 0;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--ink-300);
+    font-size: 13px;
+  }
+  .footer .logo {
+    font-weight: 900;
+    font-size: 18px;
+    background: var(--magic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 40px 24px; }
+    .hero h1 { font-size: 32px; }
+    .stage-flow { flex-direction: column; }
+    .stage-card + .stage-card { margin-left: 0; margin-top: 12px; }
+    .stage-flow::before { display: none; }
+    .answers { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero">
+  <div class="hero-badge">DECISION FRAMEWORK</div>
+  <h1>Структура кампаній<br>Meta & TikTok Ads</h1>
+  <div class="subtitle">Як визначити на який рівень ставити продукти та креативи. Покрокове дерево рішень для кожного етапу роботи з клієнтом.</div>
+</div>
+
+<div class="content">
+
+  <!-- ===== STAGES OVERVIEW ===== -->
+  <div class="stages-overview">
+    <h2>Три етапи еволюції структури</h2>
+    <p class="desc">Структура кампаній не статична. Вона змінюється з кожним етапом роботи з проєктом — від пошуку товарів-переможців до повноцінної креативної стратегії.</p>
+
+    <div class="stage-flow">
+      <div class="stage-card">
+        <div class="stage-num">1</div>
+        <h3>Пошук товарів-переможців</h3>
+        <p>Немає даних про те, які товари продаються найкраще. Система сама визначає переможців.</p>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">2</div>
+        <h3>Товари визначені</h3>
+        <p>Знаємо які товари працюють. Структуруємо кабінет для зручності управління.</p>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">3</div>
+        <h3>Креативна стратегія</h3>
+        <p>Працюємо з кутами, сходинками, форматами. Масштабуємо через креативи.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== STAGE 1 ===== -->
+  <div class="decision-section">
+    <div class="section-header">
+      <div class="section-icon blue">1</div>
+      <div>
+        <div class="label blue">ЕТАП 1</div>
+        <h2>Пошук товарів-переможців</h2>
+      </div>
+    </div>
+
+    <div class="question-block highlight-blue">
+      <div class="question">Чи є відомі товари-локомотиви?</div>
+      <div class="answers">
+        <div class="answer no">
+          <div class="answer-label">Ні, невідомо</div>
+          <p>Немає даних, які товари продаються найкраще. Це новий клієнт або нова категорія.</p>
+        </div>
+        <div class="answer yes">
+          <div class="answer-label">Так, відомо</div>
+          <p>Є дані з аналітики, ABC-аналізу або попереднього досвіду. Знаємо хіти.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">&#8595;</div>
+
+    <div class="result-block blue-bg">
+      <h4>Якщо НІ — продукти на рівень оголошення (Ad)</h4>
+      <p>Кидаємо різні товари на рівень Ad в одній групі оголошень. Система сама визначить, який продукт найкращий, і розподілить на нього більше бюджету.</p>
+
+      <div class="structure-diagram">
+        <span class="level-campaign">Campaign</span> <span class="dim">(одна кампанія)</span><br>
+        &nbsp;&nbsp;<span class="dim">└─</span> <span class="level-adgroup">Ad Group</span> <span class="dim">(одна група)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1</span> <span class="dim">— Товар A, креатив 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 2</span> <span class="dim">— Товар B, креатив 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 3</span> <span class="dim">— Товар C, креатив 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 4</span> <span class="dim">— Товар D, креатив 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">└─</span> <span class="level-ad">Ad 5</span> <span class="dim">— Товар E, креатив 1</span>
+      </div>
+    </div>
+
+    <div class="warning-block">
+      <div class="title">Критичне правило: однакова цінова категорія</div>
+      <p>Товари в одній групі повинні мати однакову або близьку ціну. Якщо в одній групі буде товар за $30 і товар за $300 — система віддасть весь бюджет на найдешевший, бо по ньому простіше отримати конверсії. Це спотворить результати тесту.</p>
+    </div>
+
+    <div class="warning-block">
+      <div class="title">Критичне правило: однаковий кут та концепт</div>
+      <p>Всі товари в одній групі повинні бути під однаковим кутом (angle) та концептом креативу. Інакше система може обрати "переможця" не через сам товар, а через те що один концепт креативу спрацював краще за інший. Ми тестуємо товар, не креатив — тому креативи мають бути максимально однакові за стилем і подачею.</p>
+    </div>
+
+    <div class="result-block green-bg">
+      <h4>Якщо ТАК — переходимо до Етапу 2</h4>
+      <p>Якщо вже знаємо товари-переможці (з ABC-аналізу, з попереднього досвіду, з даних клієнта) — пропускаємо пошук і одразу структуруємо кабінет.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== STAGE 2 ===== -->
+  <div class="decision-section">
+    <div class="section-header">
+      <div class="section-icon purple">2</div>
+      <div>
+        <div class="label purple">ЕТАП 2</div>
+        <h2>Товари визначені</h2>
+      </div>
+    </div>
+
+    <p style="color: var(--ink-400); margin-bottom: 24px;">Ми знайшли товари-переможці (або клієнт прийшов з цими даними). Тепер потрібно вирішити, на який рівень їх поставити для зручності управління.</p>
+
+    <div class="question-block highlight-purple">
+      <div class="question">Скільки товарів-переможців / категорій?</div>
+      <div class="answers">
+        <div class="answer opt-a">
+          <div class="answer-label">Мало (1-3 товари)</div>
+          <p>Чіткі хіти. Можна кожному виділити окрему кампанію.</p>
+        </div>
+        <div class="answer opt-b">
+          <div class="answer-label">Багато (4+ товарів / категорій)</div>
+          <p>Є декілька категорій або багато хітів. Потрібна зручна структура для управління.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">&#8595;</div>
+
+    <div class="result-block blue-bg">
+      <h4>Мало товарів — продукт на рівень кампанії (Campaign)</h4>
+      <p>Кожен товар-переможець = окрема кампанія. Зручно управляти бюджетами, бачити результат по кожному товару окремо.</p>
+
+      <div class="structure-diagram">
+        <span class="level-campaign">Campaign 1</span> <span class="dim">— Товар A (bestseller)</span><br>
+        &nbsp;&nbsp;<span class="dim">└─</span> <span class="level-adgroup">Ad Group 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1-5</span> <span class="dim">— 3-5 креативів</span><br>
+        <br>
+        <span class="level-campaign">Campaign 2</span> <span class="dim">— Товар B (bestseller)</span><br>
+        &nbsp;&nbsp;<span class="dim">└─</span> <span class="level-adgroup">Ad Group 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1-5</span> <span class="dim">— 3-5 креативів</span>
+      </div>
+    </div>
+
+    <div class="result-block purple-bg">
+      <h4>Багато товарів — продукт на рівень групи оголошень (Ad Group)</h4>
+      <p>Товари або категорії розподіляються по Ad Groups всередині однієї кампанії. Зручно коли є 4+ хітів і потрібно бачити розбивку без створення десятків кампаній.</p>
+
+      <div class="structure-diagram">
+        <span class="level-campaign">Campaign</span> <span class="dim">— Категорія / Бренд</span><br>
+        &nbsp;&nbsp;<span class="dim">├─</span> <span class="level-adgroup">Ad Group 1</span> <span class="dim">— Товар A</span><br>
+        &nbsp;&nbsp;<span class="dim">│</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">└─</span> <span class="level-ad">Ad 1-5</span> <span class="dim">— 3-5 креативів</span><br>
+        &nbsp;&nbsp;<span class="dim">├─</span> <span class="level-adgroup">Ad Group 2</span> <span class="dim">— Товар B</span><br>
+        &nbsp;&nbsp;<span class="dim">│</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">└─</span> <span class="level-ad">Ad 1-5</span> <span class="dim">— 3-5 креативів</span><br>
+        &nbsp;&nbsp;<span class="dim">├─</span> <span class="level-adgroup">Ad Group 3</span> <span class="dim">— Товар C</span><br>
+        &nbsp;&nbsp;<span class="dim">│</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">└─</span> <span class="level-ad">Ad 1-5</span> <span class="dim">— 3-5 креативів</span><br>
+        &nbsp;&nbsp;<span class="dim">└─</span> <span class="level-adgroup">...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== STAGE 3 ===== -->
+  <div class="decision-section">
+    <div class="section-header">
+      <div class="section-icon green">3</div>
+      <div>
+        <div class="label green">ЕТАП 3</div>
+        <h2>Креативна стратегія</h2>
+      </div>
+    </div>
+
+    <p style="color: var(--ink-400); margin-bottom: 24px;">Товари-переможці знайдені та структуровані. Тепер фокус на креативах: тестуємо різні кути (angles), сходинки, формати. Де саме тестувати — залежить від бюджету.</p>
+
+    <div class="question-block highlight-green">
+      <div class="question">Який бюджет на кампанію на місяць?</div>
+      <div class="answers">
+        <div class="answer opt-a">
+          <div class="answer-label">До ~$50K / міс</div>
+          <p>Недостатньо бюджету, щоб розбивати тести по групах. Тестуємо все на рівні креативу.</p>
+        </div>
+        <div class="answer opt-b">
+          <div class="answer-label">Від ~$50K / міс</div>
+          <p>Достатньо бюджету для повного тестування кутів на рівні груп оголошень.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">&#8595;</div>
+
+    <div class="result-block blue-bg">
+      <h4>До ~$50K — кути та сходинки на рівні креативу (Ad)</h4>
+      <p>Всі angles тестуються через різні креативи всередині однієї групи оголошень. Система сама визначить найкращий кут. Продукт на рівні кампанії або Ad Group.</p>
+
+      <div class="structure-diagram">
+        <span class="level-campaign">Campaign</span> <span class="dim">— Товар A</span><br>
+        &nbsp;&nbsp;<span class="dim">└─</span> <span class="level-adgroup">Ad Group 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1</span> <span class="dim">— Angle: UGC розпаковка</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 2</span> <span class="dim">— Angle: Pain point</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 3</span> <span class="dim">— Angle: Результат / до-після</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 4</span> <span class="dim">— Angle: Порівняння</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">└─</span> <span class="level-ad">Ad 5</span> <span class="dim">— Angle: Testimonial</span>
+      </div>
+
+      <p style="font-size: 13px; color: var(--ink-300); margin-top: 12px;">Поточна реальність: бюджети ~$10K/міс — працюємо в цьому форматі.</p>
+    </div>
+
+    <div class="result-block purple-bg">
+      <h4>Від ~$50K — кути на рівні групи оголошень (Ad Group)</h4>
+      <p>Кожен angle = окрема група оголошень з 3-5 креативами. Продукт виноситься на рівень кампанії. Можна чітко бачити який кут працює найкраще та масштабувати його окремо.</p>
+
+      <div class="structure-diagram">
+        <span class="level-campaign">Campaign</span> <span class="dim">— Товар A</span><br>
+        &nbsp;&nbsp;<span class="dim">├─</span> <span class="level-adgroup">Ad Group 1</span> <span class="dim">— Angle: UGC розпаковка</span><br>
+        &nbsp;&nbsp;<span class="dim">│</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1-3</span> <span class="dim">— варіації UGC</span><br>
+        &nbsp;&nbsp;<span class="dim">├─</span> <span class="level-adgroup">Ad Group 2</span> <span class="dim">— Angle: Pain point</span><br>
+        &nbsp;&nbsp;<span class="dim">│</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1-3</span> <span class="dim">— варіації pain point</span><br>
+        &nbsp;&nbsp;<span class="dim">├─</span> <span class="level-adgroup">Ad Group 3</span> <span class="dim">— Angle: Результат</span><br>
+        &nbsp;&nbsp;<span class="dim">│</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">├─</span> <span class="level-ad">Ad 1-3</span> <span class="dim">— варіації результату</span><br>
+        &nbsp;&nbsp;<span class="dim">└─</span> <span class="level-adgroup">...</span> <span class="dim">до 10 Ad Groups</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== SUMMARY TABLE ===== -->
+  <div class="decision-section">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--ink-600);">&#8801;</div>
+      <div>
+        <h2>Зведена таблиця</h2>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Етап</th>
+            <th>Campaign</th>
+            <th>Ad Group</th>
+            <th>Ad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Пошук переможців</strong></td>
+            <td>Одна кампанія</td>
+            <td>Одна група (однакова цінова категорія)</td>
+            <td style="color: var(--magic-blue); font-weight: 700;">Різні продукти</td>
+          </tr>
+          <tr>
+            <td><strong>2. Товари визначені (мало)</strong></td>
+            <td style="color: var(--magic-blue); font-weight: 700;">Кожен товар = кампанія</td>
+            <td>Одна група</td>
+            <td>3-5 креативів</td>
+          </tr>
+          <tr>
+            <td><strong>2. Товари визначені (багато)</strong></td>
+            <td>Одна кампанія</td>
+            <td style="color: var(--magic-purple); font-weight: 700;">Кожен товар = група</td>
+            <td>3-5 креативів</td>
+          </tr>
+          <tr>
+            <td><strong>3. Креативна стратегія (до $50K)</strong></td>
+            <td>Товар = кампанія</td>
+            <td>Одна група</td>
+            <td style="color: var(--success); font-weight: 700;">Різні angles</td>
+          </tr>
+          <tr>
+            <td><strong>3. Креативна стратегія (від $50K)</strong></td>
+            <td style="color: var(--magic-blue); font-weight: 700;">Товар = кампанія</td>
+            <td style="color: var(--magic-purple); font-weight: 700;">Кожен angle = група</td>
+            <td>3-5 варіацій angle</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Незмінні правила</div>
+      <p>Кожна група оголошень має 3-5 креативів обов'язково. Оптимізаційна ціль — завжди Purchase (ніколи нижче). Мінімальний бюджет — 3x CPA на Ad Group на день. Не вносити зміни до завершення learning phase (50 конверсій за 7 днів). Ця логіка однакова для Meta Ads та TikTok Ads.</p>
+    </div>
+
+    <div class="warning-block">
+      <div class="title">$50K — не точна цифра</div>
+      <p>Порог залежить від ніші, CPA та кількості товарів. При бюджетах ~$10K/міс — точно працюємо на рівні креативу. Суть: чи достатньо бюджету, щоб кожна Ad Group набирала 50 конверсій за 7 днів? Якщо ні — не розбиваємо на групи.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="logo">magic</div>
+  <div>advertise for e-commerce</div>
+  <div style="margin-top: 6px; font-size: 11px;">Внутрішній документ. Не для розповсюдження.</div>
+</div>
+
+</body>
+</html>

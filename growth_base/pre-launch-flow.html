@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magic Pre-Launch System — повний flow · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar nav{display:flex;gap:5px;flex-wrap:wrap}
+.topbar nav a{color:rgba(255,255,255,.7);font-size:12.5px;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:999px;transition:.15s}
+.topbar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.hero{background:var(--ink-900);color:#fff;padding:48px 0 56px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
+.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
+.hero .b2{width:240px;height:240px;background:#38A0FF;bottom:-120px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(32px,5.5vw,54px);line-height:1.03;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:680px;margin-top:14px}
+
+/* journey timeline */
+.journey{margin-top:-30px;position:relative;z-index:10}
+.jcard{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);padding:24px}
+.jrow{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px;align-items:stretch}
+.jstep{border-radius:var(--radius-md);padding:16px;position:relative}
+.jstep .jn{font-weight:800;font-size:11px;letter-spacing:.05em;text-transform:uppercase;opacity:.7}
+.jstep .jt{font-weight:800;font-size:16px;margin-top:3px;letter-spacing:-.01em}
+.jstep .jd{font-size:12.5px;margin-top:4px;line-height:1.4}
+.jstep .jprice{font-size:11px;font-weight:700;margin-top:7px;display:inline-block;padding:3px 8px;border-radius:999px}
+.j1{background:var(--blue-50)} .j1 .jt{color:#1566B8} .j1 .jd{color:#3a5a7a} .j1 .jprice{background:#fff;color:#1566B8}
+.j2{background:var(--purple-50)} .j2 .jt{color:#5E30C4} .j2 .jd{color:#52407a} .j2 .jprice{background:#fff;color:#5E30C4}
+.j3{background:var(--magic-gradient-soft)} .j3 .jt{color:#3a2a66} .j3 .jd{color:#4a3a72} .j3 .jprice{background:#fff;color:#5E30C4}
+.j4{background:var(--ink-900);color:#fff} .j4 .jt{color:#fff} .j4 .jd{color:rgba(255,255,255,.75)} .j4 .jprice{background:rgba(255,255,255,.16);color:#fff}
+.jarrow{display:flex;align-items:center;justify-content:center;color:var(--ink-300)}
+.jarrow i{width:20px;height:20px}
+.jfinal{margin-top:12px;background:linear-gradient(135deg,#1A1D26,#2F3441);border-radius:var(--radius-md);padding:14px 18px;display:flex;align-items:center;gap:12px;color:#fff}
+.jfinal i{flex:none;width:22px;height:22px;stroke:#AA7AFF}
+.jfinal b{font-weight:800}
+.jfinal span{font-size:14px;color:rgba(255,255,255,.8)}
+
+section{padding:50px 0 0}
+.sec-label{display:flex;align-items:center;gap:13px;margin-bottom:10px;scroll-margin-top:78px}
+.sec-label .ph{flex:none;width:50px;height:50px;border-radius:14px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand)}
+.sec-label .ph span{font-weight:900;font-size:22px;color:#fff}
+.sec-label .meta .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
+.sec-label .meta h2{font-weight:900;font-size:29px;letter-spacing:-.02em}
+.lead{font-size:17px;color:var(--ink-600);max-width:780px;margin-bottom:22px}
+p{font-size:15.5px;color:var(--ink-700);margin-bottom:13px}
+p b,li b,td b{font-weight:700;color:var(--ink-900)}
+
+.phasebar{display:flex;gap:14px;flex-wrap:wrap;background:#fff;border-radius:var(--radius-lg);padding:16px 20px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+.phasebar .pm{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-600);font-weight:600}
+.phasebar .pm i{width:16px;height:16px;stroke:var(--magic-blue)}
+.phasebar .pm b{color:var(--ink-900);font-weight:800}
+
+.card{background:#fff;border-radius:var(--radius-xl);padding:26px 28px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.subhead{font-weight:800;font-size:15px;color:var(--ink-800);margin:16px 0 9px;display:flex;align-items:center;gap:8px}
+.subhead:first-child{margin-top:0}
+.subhead i{width:17px;height:17px;stroke:var(--magic-blue)}
+
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:9px;margin:4px 0}
+ul.clean li{display:flex;gap:10px;font-size:15px;color:var(--ink-700);line-height:1.5}
+ul.clean li i{flex:none;width:17px;height:17px;stroke:var(--magic-blue);margin-top:3px}
+
+.qlist{display:flex;flex-direction:column;gap:8px}
+.qitem{background:var(--ink-50);border-radius:var(--radius-md);padding:13px 16px;border-left:3px solid var(--magic-blue)}
+.qitem .qq{font-weight:700;font-size:14.5px;color:var(--ink-900)}
+.qitem .qe{font-size:13.5px;color:var(--ink-500);margin-top:2px}
+
+.output{background:var(--magic-gradient-soft);border-radius:var(--radius-lg);padding:18px 20px;margin-top:14px}
+.output .oh{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:#5E30C4;margin-bottom:8px}
+.output .oh i{width:16px;height:16px;stroke:#5E30C4}
+.output p{font-size:14.5px;color:#3a2a66;margin-bottom:0;line-height:1.55}
+.output p b{color:#2a1a52;font-weight:700}
+
+/* 8 audit areas */
+.audit{display:flex;flex-direction:column;gap:10px}
+.auditarea{background:#fff;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;border-left:4px solid var(--magic-purple)}
+.auditarea .ah{display:flex;align-items:center;gap:11px;padding:13px 16px}
+.auditarea .ahn{flex:none;width:28px;height:28px;border-radius:8px;background:var(--purple-50);color:#5E30C4;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.auditarea .aht{font-weight:800;font-size:15.5px}
+.auditarea .ab{padding:0 16px 14px 55px}
+.auditarea .check{font-size:13.5px;color:var(--ink-500);margin-bottom:6px}
+.auditarea .finding{font-size:14.5px;color:var(--ink-800);background:var(--ink-50);border-radius:10px;padding:10px 13px;line-height:1.5}
+.auditarea .finding .ft{font-weight:700;font-size:12px;color:var(--danger);text-transform:uppercase;letter-spacing:.03em;display:block;margin-bottom:2px}
+
+/* weeks */
+.weeks{display:flex;flex-direction:column;gap:12px}
+.week{display:flex;gap:16px;align-items:flex-start}
+.week .wn{flex:none;width:96px;border-radius:var(--radius-md);background:var(--magic-gradient);color:#fff;padding:14px 10px;text-align:center;box-shadow:var(--shadow-glow-brand)}
+.week .wn .wl{font-weight:800;font-size:12px;opacity:.85}
+.week .wn .wt{font-weight:900;font-size:16px;margin-top:2px}
+.week.highlight .wn{background:linear-gradient(135deg,#1A1D26,#2F3441)}
+.week .wbody{flex:1;background:#fff;border-radius:var(--radius-md);padding:15px 18px;box-shadow:var(--shadow-sm)}
+.week .wbody ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.week .wbody li{display:flex;gap:9px;font-size:14.5px;color:var(--ink-700);line-height:1.45}
+.week .wbody li i{flex:none;width:16px;height:16px;stroke:var(--magic-blue);margin-top:3px}
+.week.highlight .wbody{box-shadow:0 0 0 2px var(--magic-purple),var(--shadow-sm)}
+.wtag{display:inline-block;font-weight:800;font-size:11px;letter-spacing:.03em;text-transform:uppercase;background:var(--magic-gradient);color:#fff;padding:3px 10px;border-radius:999px;margin-bottom:7px}
+
+/* ladder */
+.ladder{display:flex;flex-direction:column;gap:13px}
+.rung{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);overflow:hidden;border-left:5px solid var(--ink-300)}
+.rung.r0{border-left-color:var(--danger)}
+.rung.r1{border-left-color:var(--warning)}
+.rung.r2{border-left-color:#E0A800}
+.rung.r3{border-left-color:var(--magic-blue)}
+.rung.r4{border-left-color:#5E8BFF}
+.rung.r5{border-left-color:var(--magic-purple)}
+.rung.rc{border-left-color:var(--success)}
+.runghead{display:flex;align-items:center;gap:13px;padding:17px 22px}
+.runghead .rnum{flex:none;width:42px;height:42px;border-radius:11px;color:#fff;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center}
+.rung.r0 .rnum{background:var(--danger)} .rung.r1 .rnum{background:var(--warning)} .rung.r2 .rnum{background:#E0A800}
+.rung.r3 .rnum{background:var(--magic-blue)} .rung.r4 .rnum{background:#5E8BFF} .rung.r5 .rnum{background:var(--magic-purple)}
+.rung.rc .rnum{background:var(--success)}
+.runghead .rinfo{flex:1;min-width:0}
+.runghead .rname{font-weight:800;font-size:18px;letter-spacing:-.01em}
+.runghead .rknows{font-size:13.5px;color:var(--ink-500);margin-top:1px}
+.runghead .rstage{flex:none;font-weight:800;font-size:11px;letter-spacing:.03em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:var(--ink-100);color:var(--ink-600)}
+.rungbody{padding:0 22px 18px}
+.rrow{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--ink-100);align-items:start}
+.rrow .rl{font-weight:700;font-size:13px;color:var(--ink-500);display:flex;align-items:center;gap:7px}
+.rrow .rl i{width:15px;height:15px;stroke:var(--ink-400)}
+.rrow .rv{font-size:14.5px;color:var(--ink-700);line-height:1.55}
+.rmsg{background:var(--ink-50);border-radius:10px;padding:10px 13px;margin:5px 0;font-size:14.5px;color:var(--ink-800);border-left:3px solid var(--magic-blue);line-height:1.45}
+.rmsg .mt{font-weight:700;font-size:11.5px;color:var(--magic-purple);display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+
+.spotlight{background:var(--ink-900);color:#fff;border-radius:var(--radius-2xl);padding:30px 34px;position:relative;overflow:hidden;margin:8px 0 18px}
+.spotlight .blob{position:absolute;width:300px;height:300px;border-radius:999px;filter:blur(70px);opacity:.3;background:#F5525C;top:-130px;right:-50px}
+.spotlight .si{position:relative;z-index:1}
+.spotlight .stag{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:rgba(245,82,92,.2);color:#FFB3B8;padding:6px 13px;border-radius:999px;margin-bottom:12px}
+.spotlight .stag i{width:14px;height:14px}
+.spotlight h3{font-weight:900;font-size:24px;letter-spacing:-.02em;margin-bottom:10px}
+.spotlight p{color:rgba(255,255,255,.85);font-size:16px;margin-bottom:10px}
+.spotlight p b{color:#fff;font-weight:700}
+.spotlight .keyrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.spotlight .kbox{background:rgba(255,255,255,.08);border-radius:var(--radius-md);padding:15px 17px}
+.spotlight .kbox h4{font-size:13px;font-weight:800;color:#FFB3B8;letter-spacing:.03em;text-transform:uppercase;margin-bottom:7px}
+.spotlight .kbox p{font-size:14px;color:rgba(255,255,255,.82);margin-bottom:0;line-height:1.5}
+
+.linkcard{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.linkcard .lci{flex:none;width:54px;height:54px;border-radius:14px;background:var(--magic-gradient-soft);display:flex;align-items:center;justify-content:center}
+.linkcard .lci i{width:26px;height:26px;stroke:#5E30C4}
+.linkcard .lcb{flex:1;min-width:200px}
+.linkcard .lcb h3{font-weight:800;font-size:18px;letter-spacing:-.01em}
+.linkcard .lcb p{font-size:14px;color:var(--ink-500);margin-bottom:0;margin-top:2px}
+.linkcard .lcbtn{border:0;background:var(--magic-gradient);color:#fff;font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--shadow-glow-brand);text-decoration:none;transition:.15s}
+.linkcard .lcbtn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.linkcard .lcbtn i{width:16px;height:16px}
+
+.callout{border-radius:var(--radius-xl);padding:20px 24px;display:flex;gap:15px;align-items:flex-start;margin:16px 0}
+.callout i{flex:none;width:23px;height:23px;margin-top:2px}
+.callout.tip{background:var(--success-bg)} .callout.tip i{stroke:#178a5f} .callout.tip .ctext{color:#155e44}
+.callout.info{background:var(--info-bg)} .callout.info i{stroke:#1566B8} .callout.info .ctext{color:#1c4d80}
+.callout .ctext{font-size:15px;line-height:1.55} .callout .ctext b{font-weight:700}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:50px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:780px){
+  .topbar nav{display:none}
+  .jrow{grid-template-columns:1fr}
+  .jarrow{transform:rotate(90deg);padding:4px 0}
+  .spotlight .keyrow{grid-template-columns:1fr}
+  .rrow{grid-template-columns:1fr}
+  .week{flex-direction:column}
+  .week .wn{width:100%}
+}
+@media print{
+  .topbar,footer,.lcbtn{display:none!important}
+  body{background:#fff}
+  .hero,.spotlight,.j4,.jfinal{background:#fff!important;color:#000!important;border:1px solid #ccc}
+  .hero .blob,.spotlight .blob{display:none}
+  h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .card,.auditarea,.rung,.week,.spotlight,.linkcard{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <nav>
+      <a href="#flow">Flow</a>
+      <a href="#discovery">Discovery</a>
+      <a href="#blueprint">Blueprint</a>
+      <a href="#setup">Setup Month</a>
+      <a href="#strategy">Стратегія</a>
+      <a href="#ladder">Сходи · щабель 0</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="rocket"></i>Pre-Launch System · повний flow</div>
+    <h1>Від Discovery Session <span class="g">до готової стратегії</span></h1>
+    <p class="sub">Як працює Magic Pre-Launch System крок за кроком: що відбувається на кожному етапі, які дані збираємо, як вони перетікають далі — і чому стратегія є фінальним продуктом Setup Month. З конкретними виходами на прикладі бренду Rytual.</p>
+  </div>
+</header>
+
+<!-- JOURNEY -->
+<div class="wrap journey">
+  <div class="jcard">
+    <div class="jrow">
+      <div class="jstep j1"><div class="jn">Етап 1</div><div class="jt">Discovery Session</div><div class="jd">Бриф + анамнез бізнесу. Чи готові масштабуватись.</div><span class="jprice">безкоштовно · 60 хв</span></div>
+      <div class="jarrow"><i data-lucide="arrow-right"></i></div>
+      <div class="jstep j2"><div class="jn">Етап 2</div><div class="jt">Growth Blueprint</div><div class="jd">Аудит за 8 напрямками. Знахідки + план.</div><span class="jprice">500€ · 1–2 тижні</span></div>
+      <div class="jarrow"><i data-lucide="arrow-right"></i></div>
+      <div class="jstep j3"><div class="jn">Етап 3</div><div class="jt">Setup Month</div><div class="jd">4 тижні підготовки. Fixes → креатив → план → запуск.</div><span class="jprice">передоплата 500€ · 4 тижні</span></div>
+      <div class="jarrow"><i data-lucide="arrow-right"></i></div>
+      <div class="jstep j4"><div class="jn">Результат</div><div class="jt">Magic Framework</div><div class="jd">Масштабування з результатом з 1-го дня.</div><span class="jprice">3000€ + 5%</span></div>
+    </div>
+    <div class="jfinal">
+      <i data-lucide="presentation"></i>
+      <span><b>Кінцевий продукт Pre-Launch System — стратегія-презентація.</b> Вона народжується на Тижні 3 Setup Month і спирається на дані Discovery + Growth Blueprint. Це міст від підготовки до масштабування.</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="flow"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="callout info">
+      <i data-lucide="info"></i>
+      <div class="ctext"><b>Принцип Magic.</b> «Жоден пілот не злітає без передпольотної перевірки — хоч би як пасажири поспішали.» Pre-Launch System знімає ризики, які інші агенції тихо перекладають на клієнта в перший місяць. Кожен етап нижче показано на прикладі вигаданого бренду <b>Rytual</b> (спешелті-кава, DTC) — щоб виходи були конкретні.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 1: DISCOVERY -->
+<section id="discovery"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ph"><span>1</span></div><div class="meta"><div class="n">Етап 1</div><h2>Discovery Session</h2></div></div>
+    <div class="phasebar">
+      <div class="pm"><i data-lucide="gift"></i><b>Безкоштовно</b></div>
+      <div class="pm"><i data-lucide="clock"></i>~60 хвилин</div>
+      <div class="pm"><i data-lucide="video"></i>Zoom / Google Meet</div>
+      <div class="pm"><i data-lucide="file-text"></i>На виході: коротке резюме + рішення</div>
+    </div>
+
+    <div class="card">
+      <div class="subhead"><i data-lucide="target"></i>Мета</div>
+      <p>Зрозуміти бізнес і відповісти на одне питання: <b>чи готовий він масштабуватись зараз — чи спершу потрібна підготовка.</b> Це бриф + анамнез, не продаж.</p>
+
+      <div class="subhead"><i data-lucide="help-circle"></i>Конкретні питання, які ставимо</div>
+      <div class="qlist">
+        <div class="qitem"><div class="qq">Поточні цифри</div><div class="qe">Дохід, витрати на рекламу, ROAS, середній чек — у числах, не «нормально».</div></div>
+        <div class="qitem"><div class="qq">Як рахували ефективність</div><div class="qe">По ROAS у кабінеті? По марже? По останньому кліку? Це показує зрілість обліку.</div></div>
+        <div class="qitem"><div class="qq">Ресурси</div><div class="qe">Команда, хто робить контент, який бюджет готові вкладати в масштабування.</div></div>
+        <div class="qitem"><div class="qq">Інструменти</div><div class="qe">CRM, платформа сайту, адмінка, які рекламні кабінети вже є.</div></div>
+        <div class="qitem"><div class="qq">Точка Б</div><div class="qe">Куди хоче дійти: обсяги, терміни, амбіції. Щоб зрозуміти розрив між зараз і метою.</div></div>
+      </div>
+
+      <div class="output">
+        <div class="oh"><i data-lucide="clipboard-check"></i>Що Rytual отримує на виході Discovery</div>
+        <p>«Оборот <b>325 000 ₴/міс</b>, ROAS 2.9, середній чек 650 ₴. Ефективність рахували лише по ROAS у кабінеті — <b>не по марже</b>. Повтор низький, підписка майже не використовується. Команда 2 особи, контент слабкий. Точка Б — 600 000 ₴/міс за пів року. <b>Рішення: масштабувати наосліп ризиковано</b> — низький повтор і ймовірні втрати в трекінгу означають, що бюджет литиметься в діру. Рекомендація — Growth Blueprint.»</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <i data-lucide="git-branch"></i>
+      <div class="ctext"><b>Розвилка після Discovery.</b> Якщо бізнес уже готовий (коректна аналітика, здорова економіка, є дані) → одразу в Magic Framework. Якщо є ризики → Growth Blueprint. Rytual іде в Blueprint.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 2: BLUEPRINT -->
+<section id="blueprint"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ph"><span>2</span></div><div class="meta"><div class="n">Етап 2</div><h2>Growth Blueprint</h2></div></div>
+    <div class="phasebar">
+      <div class="pm"><i data-lucide="credit-card"></i><b>500€</b> (зараховується у Framework)</div>
+      <div class="pm"><i data-lucide="clock"></i>1–2 тижні</div>
+      <div class="pm"><i data-lucide="layers"></i>Аудит за 8 напрямками</div>
+    </div>
+    <p class="lead">Розширений аудит бізнесу. Для кожного з 8 напрямків — <b>що перевіряємо й конкретна знахідка</b> на прикладі Rytual. Це фактаж, на якому потім будується стратегія.</p>
+
+    <div class="audit">
+      <div class="auditarea"><div class="ah"><div class="ahn">1</div><div class="aht">Технічний аудит</div></div><div class="ab">
+        <div class="check">Пікселі, GA4, GTM, структура кабінетів, коректність передачі подій.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Pixel втрачає ~30% подій Purchase (немає server-side/CAPI), GA4 не передає значення покупки. Рішення наосліп: оптимізація на брудному сигналі. Виправлення = ~40 000 ₴/міс врятованого бюджету.</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">2</div><div class="aht">Креативний аудит</div></div><div class="ab">
+        <div class="check">Поточні креативи, формати, меседжі, креативна стратегія.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Усі креативи — про продукт і знижку (нижні щаблі воронки). Немає контенту під холодну аудиторію, що не усвідомлює проблеми (щабель 0), і немає UGC. Воронка згори порожня.</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">3</div><div class="aht">Юніт-економіка</div></div><div class="ab">
+        <div class="check">CAC, LTV, маржинальність, середній чек, точка беззбитковості.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Контрибуція з замовлення 292,5 ₴ (650 × 45%) <b>нижча за CAC 320 ₴</b> — мінус на першій покупці. LTV:CAC ≈ 1.28 — тонко. Без повторних покупок масштабування лише прискорить збитки.</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">4</div><div class="aht">CRO-аудит</div></div><div class="ab">
+        <div class="check">Де втрачається конверсія, UX-помилки, швидкість, мобільна версія.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Checkout вимагає реєстрацію, мобільний LCP 4,2 с (норма &lt;2,5), на PDP немає відгуків і демонстрації результату в чашці. Перехід кошик→оплата тече.</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">5</div><div class="aht">Товарний аналіз (ABC)</div></div><div class="ab">
+        <div class="check">ABC/XYZ асортименту, товари-локомотиви, маржинальні хіти.</div>
+        <div class="finding"><span class="ft">Знахідка</span>3 SKU зерна дають ~60% обороту (локомотиви), решта розпорошує бюджет. Рекламний фокус має бути на bestseller-зерні, а не рівномірно на весь асортимент.</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">6</div><div class="aht">Дослідження ринку</div></div><div class="ab">
+        <div class="check">Google Trends, конкуренти, відкриті дані по ніші.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Ніша спешелті зростає, запит на «каву вдома» вгору. Конкуренти б'ються знижками, <b>ніхто не будує «ранковий ритуал»</b> — вільне місце для дистинктивного позиціонування (за Sharp — упізнаваність &gt; знижки).</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">7</div><div class="aht">Аудиторії та сегментація</div></div><div class="ab">
+        <div class="check">Хто купує, найприбутковіші сегменти, look-alike, ретаргет.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Ретаргет змішаний в одну аудиторію, немає поділу за рівнем обізнаності. Look-alike побудований на всіх відвідувачах, а не на покупцях. База не сегментована за RFM.</div>
+      </div></div>
+
+      <div class="auditarea"><div class="ah"><div class="ahn">8</div><div class="aht">Воронка та шлях клієнта</div></div><div class="ab">
+        <div class="check">Від першого дотику до повтору, retention, upsell, розриви.</div>
+        <div class="finding"><span class="ft">Знахідка</span>Перехід кошик→оплата −40%, повтор 20%, підписка 5%, немає post-purchase і winback флоу. Найбільша діра — <b>retention</b>: бізнес тримається на перших покупках.</div>
+      </div></div>
+    </div>
+
+    <div class="output">
+      <div class="oh"><i data-lucide="list-checks"></i>Що Rytual отримує на виході Blueprint</div>
+      <p><b>Пріоритезований план + quick wins:</b> (1) полагодити Pixel/CAPI — найшвидший ефект, ~40k₴/міс; (2) гостьовий checkout + швидкість + відгуки на PDP; (3) сегментувати аудиторії за обізнаністю й RFM; (4) закласти retention-флоу й підписку. Кожен пункт — з орієнтовним терміном. <b>Це фактаж, що стане основою стратегії в Setup Month.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 3: SETUP -->
+<section id="setup"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ph"><span>3</span></div><div class="meta"><div class="n">Етап 3</div><h2>Setup Month</h2></div></div>
+    <div class="phasebar">
+      <div class="pm"><i data-lucide="credit-card"></i>Передоплата <b>500€</b> за Framework</div>
+      <div class="pm"><i data-lucide="clock"></i>4 тижні</div>
+      <div class="pm"><i data-lucide="check-circle"></i>На виході: бізнес готовий масштабуватись</div>
+    </div>
+    <p class="lead">Місяць повної підготовки. Кожен тиждень — свій результат. <b>На Тижні 3 народжується стратегія</b> — той самий фінальний продукт.</p>
+
+    <div class="weeks">
+      <div class="week"><div class="wn"><div class="wl">Тиждень 1</div><div class="wt">Fixes</div></div><div class="wbody"><ul>
+        <li><i data-lucide="check"></i>Підключаємо CAPI/server-side, прибираємо дубль Purchase, налаштовуємо передачу значення покупки</li>
+        <li><i data-lucide="check"></i>Гостьовий checkout, прискорення мобільної версії, віджет відгуків на PDP</li>
+        <li><i data-lucide="check"></i>Цілі й події в GA4 — щоб дані були чисті ще до першої гривні реклами</li>
+      </ul></div></div>
+
+      <div class="week"><div class="wn"><div class="wl">Тиждень 2</div><div class="wt">Creative</div></div><div class="wbody"><ul>
+        <li><i data-lucide="check"></i>Сценарії під <b>кожен щабель обізнаності</b> — від lifestyle-контенту для щабля 0 до офферних для щабля 5</li>
+        <li><i data-lucide="check"></i>UGC-сценарії, статика й відео; нова PDP з демонстрацією результату в чашці</li>
+        <li><i data-lucide="check"></i>Креативна стратегія: angles за JTBD (ранковий ритуал, простота)</li>
+      </ul></div></div>
+
+      <div class="week highlight"><div class="wn"><div class="wl">Тиждень 3</div><div class="wt">Plan</div></div><div class="wbody">
+        <span class="wtag">тут народжується стратегія</span>
+        <ul>
+        <li><i data-lucide="check"></i><b>Повна стратегія за SOSTAC</b> на даних Discovery + Blueprint: situation, objectives, strategy</li>
+        <li><i data-lucide="check"></i>План кампаній за RACE, структура кабінетів, розподіл бюджету, комунікаційна стратегія за сходами</li>
+        <li><i data-lucide="check"></i>Дашборд AARRR, пріоритезація ICE, роадмеп — усе зводиться в <b>стратегію-презентацію</b></li>
+      </ul></div></div>
+
+      <div class="week"><div class="wn"><div class="wl">Тиждень 4</div><div class="wt">Launch-ready</div></div><div class="wbody"><ul>
+        <li><i data-lucide="check"></i>Кампанії заведені в Meta, Google, TikTok за планом; підписка налаштована</li>
+        <li><i data-lucide="check"></i>Флоу live: post-purchase, abandoned cart, welcome; RFM-сегменти зібрані</li>
+        <li><i data-lucide="check"></i>Фінальна перевірка — і бізнес готовий до масштабування з результатом з 1-го дня</li>
+      </ul></div></div>
+    </div>
+
+    <div class="callout info">
+      <i data-lucide="users"></i>
+      <div class="ctext"><b>Розподіл відповідальності.</b> Magic: креативи, аналітика, план кампаній, налаштування кабінетів. Клієнт: правки на сайті, доробки по CRO, доступи, контент (фото/відео). Разом: узгодження стратегії, пріоритизація, фінальна перевірка. Немає підрядників — Magic допомагає знайти.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY culmination -->
+<section id="strategy"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ph"><i data-lucide="presentation" style="width:24px;height:24px;stroke:#fff"></i></div><div class="meta"><div class="n">Фінальний продукт</div><h2>Стратегія-презентація</h2></div></div>
+    <p class="lead">Усе зібране в Setup перетворюється на <b>одну стратегію-презентацію</b> — це кінцевий продукт Pre-Launch System, який Magic презентує клієнту перед стартом масштабування.</p>
+
+    <div class="card">
+      <div class="subhead"><i data-lucide="arrow-down-up"></i>Як дані перетікають у стратегію</div>
+      <ul class="clean">
+        <li><i data-lucide="check"></i><span><b>Discovery</b> → точка Б і цілі (Objectives): 600k/міс, repeat вгору, без зростання CAC.</span></li>
+        <li><i data-lucide="check"></i><span><b>Blueprint, юніт-економіка + воронка</b> → Situation і висновок про вузьке місце (retention).</span></li>
+        <li><i data-lucide="check"></i><span><b>Blueprint, дослідження ринку + аудиторії</b> → Strategy й позиціонування (ритуал, дистинктивність).</span></li>
+        <li><i data-lucide="check"></i><span><b>Blueprint, креативний аудит</b> → комунікаційна стратегія за сходами обізнаності (включно зі щаблем 0).</span></li>
+        <li><i data-lucide="check"></i><span><b>Blueprint, ABC + технічний</b> → Tactics (RACE) і бюджет на локомотиви.</span></li>
+      </ul>
+    </div>
+
+    <div class="linkcard">
+      <div class="lci"><i data-lucide="file-bar-chart"></i></div>
+      <div class="lcb"><h3>Готова стратегія Rytual</h3><p>Повний приклад фінального продукту — усі складові, тексти, прорахунки</p></div>
+      <a class="lcbtn" href="strategy-rytual-example.html" target="_blank"><i data-lucide="external-link"></i>Відкрити приклад</a>
+    </div>
+    <div class="linkcard">
+      <div class="lci"><i data-lucide="monitor-play"></i></div>
+      <div class="lcb"><h3>Шаблон презентації</h3><p>Слайди для захисту стратегії перед клієнтом — заміни плейсхолдери</p></div>
+      <a class="lcbtn" href="strategy-template-presentation.html" target="_blank"><i data-lucide="external-link"></i>Відкрити шаблон</a>
+    </div>
+  </div>
+</section>
+
+<!-- LADDER with rung 0 -->
+<section id="ladder"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ph"><i data-lucide="message-square" style="width:24px;height:24px;stroke:#fff"></i></div><div class="meta"><div class="n">Комунікаційна стратегія · сходи Бена Ханта</div><h2>Меседжі за щаблями · від 0</h2></div></div>
+    <p class="lead">Серце комунікації — <b>що казати на кожному щаблі обізнаності</b>. Раніше щабель «0» був надто загальним, тож тут він розписаний детально: це найскладніший і найважливіший рівень для холодного трафіку.</p>
+
+    <!-- SPOTLIGHT on rung 0 -->
+    <div class="spotlight">
+      <div class="blob"></div>
+      <div class="si">
+        <div class="stag"><i data-lucide="alert-circle"></i>Чому щабель 0 — особливий</div>
+        <h3>Людина не має проблеми. Зовсім.</h3>
+        <p>На щаблі 0 людина <b>цілком задоволена</b> своєю розчинною кавою з магазину. Вона не думає про якість, у неї <b>немає болю</b>, який можна «вирішити». Тому пряма реклама («краща кава!») відскакує — немає відчутої потреби, на яку вона лягає.</p>
+        <p><b>Головна помилка:</b> говорити мовою проблеми/рішення там, де проблеми ще немає. Це не працює. Завдання щабля 0 — <b>не продати, а посіяти бажання й створити першу впізнаваність</b>, перевести людину на щабель 1.</p>
+        <div class="keyrow">
+          <div class="kbox"><h4>Чого НЕ робити</h4><p>Не продавати в лоб. Не казати «твоя кава погана». Не давати оффер. Не таргетувати «любителів кави» — вони вже вище на сходах.</p></div>
+          <div class="kbox"><h4>Що робити</h4><p>Сіяти бажання через стиль життя, естетику, цікавість. М'яко руйнувати «нормальність». Чіпляти через суміжну ідентичність, не через каву.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ladder">
+      <!-- RUNG 0 -->
+      <div class="rung r0">
+        <div class="runghead"><div class="rnum">0</div><div class="rinfo"><div class="rname">Немає проблеми</div><div class="rknows">п'є розчинну / масмаркет і повністю задоволена; про якість не думає</div></div><span class="rstage">Reach · демонд-ген</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Посіяти бажання й створити першу впізнаваність. <b>Не продати.</b> Перевести на щабель 1.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg"><span class="mt">TikTok / Reels — стиль життя</span>«POV: субота, нікуди не поспішаєш, і перша чашка кави — це окремий маленький ритуал, а не паливо нашвидкуруч»</div>
+            <div class="rmsg"><span class="mt">Естетика / curiosity</span>«Як виглядає ідеальний повільний ранок» — атмосферне відео, кава у кадрі, жодного «купи»</div>
+            <div class="rmsg"><span class="mt">М'яке руйнування статус-кво</span>«Ти звик, що кава вранці — це просто щоб прокинутись. А якщо вона може бути найкращою частиною ранку?»</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="crosshair"></i>Таргет</div><div class="rv">Інтерес до <b>домашнього затишку, slow living, self-care, естетики дому</b> — НЕ «кава». Широкі холодні аудиторії Meta+TikTok.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">Охоплення, перегляди відео, утримання уваги, впізнаваність — <b>не конверсія</b>. Це побудова mental availability (за Sharp — досягаємо нових/легких покупців категорії).</div></div>
+        </div>
+      </div>
+
+      <!-- RUNG 1 -->
+      <div class="rung r1">
+        <div class="runghead"><div class="rnum">1</div><div class="rinfo"><div class="rname">Усвідомлює проблему</div><div class="rknows">починає помічати, що його кава так собі — але не знає, що з цим робити</div></div><span class="rstage">Reach → Act</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Назвати проблему словами клієнта й натякнути, що рішення існує.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg"><span class="mt">Контент</span>«3 ознаки, що ваша кава несвіжа — і чому вона завжди трохи розчаровує»</div>
+            <div class="rmsg"><span class="mt">Meta</span>«Справа не в кавоварці. Справа в зерні — і в тому, коли його обсмажили»</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="crosshair"></i>Таргет</div><div class="rv">Ті, хто взаємодіяв з контентом щабля 0; ширші аудиторії з інтересом до кави.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">Залучення, кліки в контент, перші візити на сайт.</div></div>
+        </div>
+      </div>
+
+      <!-- RUNG 2 -->
+      <div class="rung r2">
+        <div class="runghead"><div class="rnum">2</div><div class="rinfo"><div class="rname">Шукає й порівнює рішення</div><div class="rknows">знає, що спешелті існує; обирає тип, спосіб, де брати</div></div><span class="rstage">Act · MOFU</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Допомогти зорієнтуватись і захопити контакт (email).</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg"><span class="mt">Квіз</span>«Не знаєте, з чого почати? Пройдіть тест — підберемо зерно під ваш смак за 1 хвилину»</div>
+            <div class="rmsg"><span class="mt">Google Search</span>На «спешелті кава купити»: «Свіжообсмажена кава під ваш смак — підбір за 1 хв»</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="crosshair"></i>Таргет</div><div class="rv">Ретаргет відвідувачів, пошуковий попит, лід-магніт.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">Ліди, проходження квіза, захоплені email.</div></div>
+        </div>
+      </div>
+
+      <!-- RUNG 3 -->
+      <div class="rung r3">
+        <div class="runghead"><div class="rnum">3</div><div class="rinfo"><div class="rname">Знає Rytual</div><div class="rknows">бачив бренд, порівнює з іншими обсмажувачами</div></div><span class="rstage">Convert</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Показати, чому саме Rytual, і зняти заперечення.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg"><span class="mt">Email — welcome</span>«Чому Rytual: обсмажуємо під ваше замовлення, відправляємо за 24 год, доставка за 2 дні»</div>
+            <div class="rmsg"><span class="mt">Ретаргет</span>Відгуки + «300+ оцінок 4,9★» + просте заварювання за 3 кроки</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="crosshair"></i>Таргет</div><div class="rv">Ретаргет тих, хто на сайті/у квізі; brand-запити в Google.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">ATC, перегляди PDP, додавання в кошик.</div></div>
+        </div>
+      </div>
+
+      <!-- RUNG 4 -->
+      <div class="rung r4">
+        <div class="runghead"><div class="rnum">4</div><div class="rinfo"><div class="rname">Оцінює, майже готовий</div><div class="rknows">розуміє цінність, вагається — потрібен останній аргумент</div></div><span class="rstage">Convert · BOFU</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Зняти останнє тертя й сумнів.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg"><span class="mt">Гарантія / простота</span>«Не сподобається — повернемо гроші. Скасуєте підписку будь-коли»</div>
+            <div class="rmsg"><span class="mt">Соц. доказ + результат</span>«Понад 5000 ранків стали кращими. Подивіться, як заварюють інші»</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="crosshair"></i>Таргет</div><div class="rv">Ретаргет тих, хто був у кошику/на checkout, але не оплатив.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">Перехід кошик→оплата, ініціація checkout.</div></div>
+        </div>
+      </div>
+
+      <!-- RUNG 5 -->
+      <div class="rung r5">
+        <div class="runghead"><div class="rnum">5</div><div class="rinfo"><div class="rname">Готовий купити</div><div class="rknows">потрібен поштовх — оффер чи нагадування</div></div><span class="rstage">Convert · BOFU</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Закрити покупку, бажано — у підписку.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg"><span class="mt">Оффер</span>«Перша підписка −20% + безкоштовна доставка. Скасуєте будь-коли»</div>
+            <div class="rmsg"><span class="mt">Abandoned cart</span>Тема листа: «Ваше зерно ще у кошику ☕ Завершити замовлення?»</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="crosshair"></i>Таргет</div><div class="rv">Abandoned cart флоу (email/SMS), BOFU-ретаргет, brand-Google.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">Покупки, конверсія, частка підписки.</div></div>
+        </div>
+      </div>
+
+      <!-- CARE -->
+      <div class="rung rc">
+        <div class="runghead"><div class="rnum">✓</div><div class="rinfo"><div class="rname">Наявний клієнт</div><div class="rknows">уже купив — утримання, повтор, лояльність</div></div><span class="rstage">Engage · Care</span></div>
+        <div class="rungbody">
+          <div class="rrow"><div class="rl"><i data-lucide="target"></i>Ціль</div><div class="rv">Чудовий перший досвід → друга покупка → підписка → реферал.</div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="message-circle"></i>Меседжі</div><div class="rv">
+            <div class="rmsg" style="border-left-color:var(--success)"><span class="mt" style="color:#178a5f">Post-purchase · день 1</span>«Як заварити ідеальну чашку Rytual — 3 прості кроки» (турбота, не продаж)</div>
+            <div class="rmsg" style="border-left-color:var(--success)"><span class="mt" style="color:#178a5f">День 14 · підписка</span>«Запас добігає кінця? Оформіть підписку — кава приїжджатиме сама»</div>
+            <div class="rmsg" style="border-left-color:var(--success)"><span class="mt" style="color:#178a5f">Реферал</span>«Поділіться Rytual — другу 100 ₴ на перше замовлення, вам 100 ₴ на наступне»</div>
+          </div></div>
+          <div class="rrow"><div class="rl"><i data-lucide="activity"></i>Метрика</div><div class="rv">Repeat rate, частка підписки, LTV, реферали.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <i data-lucide="check-circle-2"></i>
+      <div class="ctext"><b>Головне про щабель 0.</b> Це демонд-ген, а не продаж: створюємо бажання й впізнаваність там, де проблеми ще немає, через стиль життя й емоцію, міряємо увагою, а не конверсією. Це прямо лягає на Magic Framework (Meta+TikTok формують попит) і на Sharp (досягаємо нових покупців категорії = penetration). Не плутати з щаблем 1, де вже можна говорити про проблему.</div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Pre-Launch System · flow на прикладі Rytual · ceo@magicecom.agency</span></div></footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стратегія Rytual — еталонний приклад · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar nav{display:flex;gap:4px;flex-wrap:wrap}
+.topbar nav a{color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;padding:6px 9px;border-radius:999px;transition:.15s}
+.topbar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.hero{background:var(--ink-900);color:#fff;padding:46px 0 54px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
+.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
+.hero .b2{width:240px;height:240px;background:#38A0FF;bottom:-120px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.refbadge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.refbadge i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(32px,5.5vw,54px);line-height:1.03;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:660px;margin-top:14px}
+
+section{padding:50px 0 0}
+.sec-label{display:flex;align-items:center;gap:11px;margin-bottom:10px;scroll-margin-top:78px}
+.sec-label .ci{width:46px;height:46px;border-radius:13px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:var(--shadow-glow-brand)}
+.sec-label .ci .lt{font-weight:900;font-size:18px;color:#fff}
+.sec-label .ci i{width:22px;height:22px;stroke:#fff}
+.sec-label .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
+.sec-label h2{font-weight:900;font-size:28px;letter-spacing:-.02em}
+.lead{font-size:17px;color:var(--ink-600);max-width:780px;margin-bottom:22px}
+p{font-size:15.5px;color:var(--ink-700);margin-bottom:13px}
+p b,li b,td b{font-weight:700;color:var(--ink-900)}
+.card{background:#fff;border-radius:var(--radius-xl);padding:26px 28px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.card h3{font-weight:800;font-size:19px;letter-spacing:-.01em;margin-bottom:10px}
+.card h3 .pre{font-weight:700;font-size:12px;color:var(--magic-purple);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:3px}
+.subhead{font-weight:800;font-size:15px;color:var(--ink-800);margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.subhead i{width:17px;height:17px;stroke:var(--magic-blue)}
+
+.refnote{background:var(--magic-gradient-soft);border-radius:var(--radius-xl);padding:22px 26px;display:flex;gap:16px;align-items:flex-start}
+.refnote i{flex:none;width:24px;height:24px;stroke:#5E30C4;margin-top:2px}
+.refnote .t{font-size:15.5px;color:#3a2a66;line-height:1.55}
+.refnote .t b{font-weight:700}
+
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:9px;margin:6px 0}
+ul.clean li{display:flex;gap:10px;font-size:15px;color:var(--ink-700);line-height:1.5}
+ul.clean li i{flex:none;width:17px;height:17px;stroke:var(--magic-blue);margin-top:3px}
+
+table{width:100%;border-collapse:collapse;margin:8px 0}
+.tablewrap{overflow-x:auto;border-radius:var(--radius-md);box-shadow:var(--shadow-sm)}
+th,td{text-align:left;padding:12px 14px;font-size:14.5px;vertical-align:top}
+thead th{background:var(--ink-900);color:#fff;font-weight:600;font-size:13px}
+thead th.num{text-align:right}
+tbody tr{border-top:1px solid var(--ink-100);background:#fff}
+tbody td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+tbody td:first-child{font-weight:600;color:var(--ink-900)}
+.delta-up{color:#178a5f;font-weight:700} .delta-down{color:#c2333c;font-weight:700}
+
+/* SWOT */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.swotbox{border-radius:var(--radius-md);padding:16px 18px}
+.swotbox h4{font-weight:800;font-size:14px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:9px}
+.swotbox ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.swotbox li{font-size:14px;line-height:1.45;padding-left:14px;position:relative}
+.swotbox li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:999px}
+.sw-s{background:var(--success-bg)} .sw-s h4{color:#178a5f} .sw-s li::before{background:#2EC28A}
+.sw-w{background:var(--danger-bg)} .sw-w h4{color:#c2333c} .sw-w li::before{background:#F5525C}
+.sw-o{background:var(--blue-50)} .sw-o h4{color:#1566B8} .sw-o li::before{background:#38A0FF}
+.sw-t{background:var(--warning-bg)} .sw-t h4{color:#9a6a00} .sw-t li::before{background:#FFB020}
+
+/* JTBD */
+.jtbd{background:var(--ink-900);color:#fff;border-radius:var(--radius-lg);padding:22px 24px;margin:8px 0}
+.jtbd .q{font-size:19px;font-weight:700;line-height:1.4;letter-spacing:-.01em}
+.jtbd .q .hl{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+.jobs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.jobcard{background:rgba(255,255,255,.08);border-radius:12px;padding:13px 15px}
+.jobcard .jt{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px}
+.jobcard .jd{font-size:14px;color:#fff;line-height:1.4}
+
+/* RACE stages */
+.race{display:flex;flex-direction:column;gap:12px}
+.racestage{border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-sm);border-left:5px solid var(--magic-blue);background:#fff}
+.racestage:nth-child(2){border-left-color:#5E8BFF}
+.racestage:nth-child(3){border-left-color:var(--magic-purple)}
+.racestage:nth-child(4){border-left-color:#C98200}
+.racestage .rsh{display:flex;align-items:center;gap:11px;margin-bottom:8px;flex-wrap:wrap}
+.racestage .rsb{flex:none;font-weight:900;font-size:13px;letter-spacing:.04em;color:#fff;background:var(--magic-gradient);padding:6px 13px;border-radius:8px}
+.racestage:nth-child(4) .rsb{background:linear-gradient(135deg,#FF9636,#C98200)}
+.racestage .rsn{font-weight:800;font-size:17px}
+.racestage .rsmeta{flex:none;margin-left:auto;font-size:12px;font-weight:700;color:var(--ink-400);background:var(--ink-100);padding:4px 11px;border-radius:999px}
+.racestage ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.racestage li{display:flex;gap:9px;font-size:14.5px;color:var(--ink-700);line-height:1.45}
+.racestage li i{flex:none;width:16px;height:16px;stroke:var(--magic-blue);margin-top:3px}
+
+/* communication ladder */
+.commstage{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);margin-bottom:14px;overflow:hidden}
+.commhead{display:flex;align-items:center;gap:13px;padding:18px 22px}
+.commhead .rung{flex:none;width:40px;height:40px;border-radius:11px;background:var(--magic-gradient);color:#fff;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand)}
+.commhead .cht{flex:1;min-width:0}
+.commhead .cht .lvl{font-weight:800;font-size:17px;letter-spacing:-.01em}
+.commhead .cht .knows{font-size:13px;color:var(--ink-500);margin-top:1px}
+.commhead .stage-pill{flex:none;font-weight:800;font-size:11px;letter-spacing:.03em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:var(--blue-50);color:#1566B8}
+.commbody{padding:0 22px 18px}
+.commrow{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--ink-100);align-items:start}
+.commrow .clabel{font-weight:700;font-size:13px;color:var(--ink-500);display:flex;align-items:center;gap:7px}
+.commrow .clabel i{width:15px;height:15px;stroke:var(--ink-400)}
+.commrow .cval{font-size:14.5px;color:var(--ink-700);line-height:1.55}
+.msg{background:var(--ink-50);border-radius:10px;padding:10px 13px;margin:4px 0;font-size:14.5px;color:var(--ink-800);border-left:3px solid var(--magic-blue);line-height:1.45}
+.msg .mtag{font-weight:700;font-size:12px;color:var(--magic-purple);display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+
+/* metric dashboard */
+.kpigrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpi{background:#fff;border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow-sm)}
+.kpi .kl{font-size:13px;color:var(--ink-500);font-weight:600}
+.kpi .kv{font-weight:900;font-size:26px;letter-spacing:-.02em;margin-top:4px}
+.kpi .kt{font-size:12px;margin-top:3px;font-weight:700}
+.kpi .kt.up{color:#178a5f} .kpi .kt.down{color:#c2333c}
+
+/* ICE table highlight */
+tbody tr.win td{background:linear-gradient(90deg,rgba(46,194,138,.10),transparent)}
+
+/* roadmap */
+.month{display:flex;gap:14px;margin-bottom:12px}
+.month .mlabel{flex:none;width:90px;font-weight:800;font-size:14px;color:#fff;background:var(--magic-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 8px;box-shadow:var(--shadow-glow-brand)}
+.month .mtasks{flex:1;background:#fff;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-sm)}
+.month .mtasks ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.month .mtasks li{display:flex;gap:9px;font-size:14.5px;color:var(--ink-700);line-height:1.45}
+.month .mtasks li i{flex:none;width:16px;height:16px;stroke:var(--magic-blue);margin-top:3px}
+
+.callout{border-radius:var(--radius-xl);padding:20px 24px;display:flex;gap:15px;align-items:flex-start;margin:16px 0}
+.callout i{flex:none;width:23px;height:23px;margin-top:2px}
+.callout.tip{background:var(--success-bg)} .callout.tip i{stroke:#178a5f} .callout.tip .ctext{color:#155e44}
+.callout.warn{background:var(--warning-bg)} .callout.warn i{stroke:#9a6a00} .callout.warn .ctext{color:#6b4e12}
+.callout .ctext{font-size:15px;line-height:1.55} .callout .ctext b{font-weight:700}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:50px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:760px){
+  .topbar nav{display:none}
+  .swot,.jobs,.kpigrid{grid-template-columns:1fr}
+  .commrow{grid-template-columns:1fr}
+}
+@media print{
+  .topbar,footer{display:none!important}
+  body{background:#fff}
+  .hero{background:#fff;color:#000;border-bottom:1px solid #ddd}
+  .hero .blob{display:none}
+  h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .jtbd{background:#fff;color:#000;border:1px solid #ccc}
+  .jtbd .q .hl{color:#000!important;-webkit-text-fill-color:#000!important}
+  .card,.commstage,.racestage,.callout,.month{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <nav>
+      <a href="#about">Бренд</a>
+      <a href="#situation">Situation</a>
+      <a href="#audience">Аудиторія</a>
+      <a href="#objectives">Objectives</a>
+      <a href="#strategy">Strategy</a>
+      <a href="#tactics">Tactics</a>
+      <a href="#comms">Комунікація</a>
+      <a href="#numbers">Прорахунки</a>
+      <a href="#metrics">AARRR</a>
+      <a href="#ice">Пріоритети</a>
+      <a href="#action">Action</a>
+      <a href="#control">Control</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="refbadge"><i data-lucide="bookmark"></i>Еталонний приклад · для орієнтиру</div>
+    <h1>Маркетингова стратегія <span class="g">Rytual</span></h1>
+    <p class="sub">Повна стратегія вигаданого DTC-бренду спешелті-кави за моделями Magic: SOSTAC, RACE, сходи обізнаності, JTBD, AARRR. З текстами меседжів і прорахунками. Шаблон, на який орієнтуватись, роблячи реальні стратегії.</p>
+  </div>
+</header>
+
+<section id="about"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="refnote">
+      <i data-lucide="info"></i>
+      <div class="t"><b>Як читати цей документ.</b> Rytual — вигаданий бренд, цифри умовні, але реалістичні й узгоджені між собою. Це <b>еталон структури й логіки</b>: бери цей каркас, підставляй реальні дані свого проєкту й роби справжню стратегію. Кожен блок підписаний моделлю, за якою працює.</div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3><span class="pre">Про бренд</span>Rytual — спешелті-кава для дому</h3>
+      <p>DTC-бренд: свіжообсмажена спешелті-кава під замовлення, доставка по Україні, можливість підписки. Продаж — переважно через власний сайт. Позиціонування — «affordable specialty»: якість кав'ярні вдома без преміум-націнки.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Параметр</th><th class="num">Значення</th><th>Коментар</th></tr></thead>
+          <tbody>
+            <tr><td>Середній чек (AOV)</td><td class="num">650 ₴</td><td>пачка 250 г + аксесуар/друга пачка</td></tr>
+            <tr><td>Маржа</td><td class="num">45 %</td><td>після собівартості зерна й пакування</td></tr>
+            <tr><td>CAC</td><td class="num">320 ₴</td><td>вартість залучення нового клієнта</td></tr>
+            <tr><td>Трафік</td><td class="num">25 000 / міс</td><td>переважно мобільний</td></tr>
+            <tr><td>Конверсія (CR)</td><td class="num">2 %</td><td>500 замовлень/міс</td></tr>
+            <tr><td>Повтор (repeat rate)</td><td class="num">20 %</td><td>низький — головна проблема</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SITUATION -->
+<section id="situation"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><span class="lt">S</span></div><div><span class="n">SOSTAC · 1</span><h2>Situation — де ми зараз</h2></div></div>
+
+    <div class="card">
+      <div class="subhead"><i data-lucide="bar-chart-3"></i>Поточна картина</div>
+      <p>Бізнес генерує <b>325 000 ₴/міс</b> (500 замовлень × 650 ₴). Трафік і конверсія в нормі для ніші, але <b>~80% доходу — це перші покупки</b>, повтор лише 20%. Контрибуційна маржа з першої покупки 292,5 ₴ <b>нижча за CAC 320 ₴</b> — клієнт окупається тільки якщо повертається. Зараз він повертається рідко, тож зростання CAC робить юніт-економіку крихкою. Підписка є, але нею користується ~5% замовлень.</p>
+
+      <div class="subhead"><i data-lucide="users"></i>Ринок і конкуренти</div>
+      <p>Ніша спешелті-кави в Україні зростає: люди переходять із масмаркету на якісне зерно. Конкуренти — локальні обсмажувачі та маркетплейси. Перевага Rytual — свіжість (обсмажка під замовлення), зручність (доставка + підписка) і бренд-комунікація. Слабкість — невпізнаваність і залежність від перших покупок.</p>
+
+      <div class="subhead"><i data-lucide="layout-grid"></i>SWOT</div>
+      <div class="swot">
+        <div class="swotbox sw-s"><h4>Сильні сторони</h4><ul>
+          <li>Свіжообсмажене зерно під замовлення</li>
+          <li>Готова інфраструктура підписки</li>
+          <li>Чітке позиціонування «affordable specialty»</li>
+        </ul></div>
+        <div class="swotbox sw-w"><h4>Слабкі сторони</h4><ul>
+          <li>Повтор лише 20%, бізнес на перших покупках</li>
+          <li>Маржа з 1-ї покупки нижча за CAC</li>
+          <li>Низька впізнаваність бренду</li>
+        </ul></div>
+        <div class="swotbox sw-o"><h4>Можливості</h4><ul>
+          <li>Перехід ринку з масмаркету на спешелті</li>
+          <li>Підписка як драйвер LTV і передбачуваного доходу</li>
+          <li>Контент про каву (освіта = попит)</li>
+        </ul></div>
+        <div class="swotbox sw-t"><h4>Загрози</h4><ul>
+          <li>Зростання CAC і конкуренції за увагу</li>
+          <li>Цінова чутливість частини аудиторії</li>
+          <li>Сезонність споживання кави</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="search"></i></div><div><span class="n">Вхід · JTBD + RFM</span><h2>Аудиторія</h2></div></div>
+
+    <div class="card">
+      <h3><span class="pre">JTBD · навіщо «наймають» продукт</span>Робота, яку виконує Rytual</h3>
+      <div class="jtbd">
+        <div class="q">«Коли мій ранок починається метушливо, я хочу <span class="hl">просту чашку справді смачної кави</span>, щоб відчути момент спокою й почати день, як мені подобається.»</div>
+        <div class="jobs">
+          <div class="jobcard"><div class="jt">Функціональна</div><div class="jd">Смачна кава вдома без походу в кав'ярню</div></div>
+          <div class="jobcard"><div class="jt">Емоційна</div><div class="jd">Момент спокою, маленький ритуал для себе</div></div>
+          <div class="jobcard"><div class="jt">Соціальна</div><div class="jd">«Я з тих, хто розбирається в каві»</div></div>
+        </div>
+      </div>
+      <p style="margin-top:14px">Висновок для комунікації: продаємо <b>не «зерно з нотками шоколаду»</b>, а <b>ранковий ритуал і смак, який легко повторити вдома</b>. Це визначає меседжі, креативи й те, що показуємо на сайті (просте заварювання, момент, результат у чашці).</p>
+
+      <h3 style="margin-top:22px"><span class="pre">RFM · сегментація наявної бази</span>Кого як ведемо</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Сегмент</th><th>Хто це</th><th>Дія</th></tr></thead>
+          <tbody>
+            <tr><td>Чемпіони</td><td>купують часто, нещодавно</td><td>підписка, привілеї, прохання про відгук/реферал</td></tr>
+            <tr><td>Новачки</td><td>1 покупка нещодавно</td><td><b>онбординг до 2-ї покупки</b> — ключ до repeat rate</td></tr>
+            <tr><td>У зоні ризику</td><td>купували, замовкли</td><td>winback: «давно не бачились» + нагадування</td></tr>
+            <tr><td>Сплячі</td><td>давно й мало</td><td>остання реактивація, далі — прибрати з розсилок</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section id="objectives"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><span class="lt">O</span></div><div><span class="n">SOSTAC · 2</span><h2>Objectives — куди йдемо</h2></div></div>
+    <p class="lead">Цілі за SMART на квартал (Q3). Залучення нових <b>не зупиняємо</b> — додаємо повторні покупки, щоб LTV покривав CAC.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Ціль</th><th class="num">Зараз</th><th class="num">Мета (кінець Q3)</th><th>Як</th></tr></thead>
+        <tbody>
+          <tr><td>Оборот / міс</td><td class="num">325 000 ₴</td><td class="num">455 000 ₴ <span class="delta-up">+40%</span></td><td>повтор + підписка + новий трафік</td></tr>
+          <tr><td>Repeat rate</td><td class="num">20 %</td><td class="num">35 % <span class="delta-up">+15 п.п.</span></td><td>post-purchase, підписка, winback</td></tr>
+          <tr><td>Частка підписки</td><td class="num">5 %</td><td class="num">20 %</td><td>оффер підписки на checkout і в флоу</td></tr>
+          <tr><td>LTV : CAC</td><td class="num">1.28</td><td class="num">2.1</td><td>зростання повторних покупок</td></tr>
+          <tr><td>Нові клієнти / міс</td><td class="num">~350</td><td class="num">≥ 350</td><td>тримаємо penetration, CAC ≤ 320 ₴</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Узгодження з доказовим маркетингом.</b> За Sharp, зростання дають нові покупці (penetration) — тому acquisition лишається. Retention тут — не джерело росту, а спосіб <b>звести юніт-економіку</b>: щоб клієнт окупався не з першої покупки. Дві задачі паралельно, не замість.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><span class="lt">S</span></div><div><span class="n">SOSTAC · 3</span><h2>Strategy — як загалом</h2></div></div>
+    <div class="card">
+      <ul class="clean">
+        <li><i data-lucide="check"></i><span><b>Позиціонування:</b> «кав'ярня вдома» — якість спешелті без преміум-націнки й без складності. Простота як головний меседж.</span></li>
+        <li><i data-lucide="check"></i><span><b>Acquisition (penetration):</b> розширюємо базу через Meta+TikTok з освітнім контентом про каву — формуємо попит, бо більшість на масмаркеті.</span></li>
+        <li><i data-lucide="check"></i><span><b>Retention (економіка):</b> перетворюємо перших покупців на постійних через підписку, post-purchase флоу й turbота про перший досвід заварювання.</span></li>
+        <li><i data-lucide="check"></i><span><b>Омніканально (Magic Framework):</b> Meta+TikTok формують попит, Google закриває сформований, email/SMS утримують. Канали як одна система.</span></li>
+        <li><i data-lucide="check"></i><span><b>Підписка</b> — стратегічний важіль: передбачуваний дохід і вищий LTV без зростання CAC.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TACTICS / RACE -->
+<section id="tactics"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><span class="lt">T</span></div><div><span class="n">SOSTAC · 4 · виконання за RACE</span><h2>Tactics — чим конкретно</h2></div></div>
+    <p class="lead">Виконання розкладене за <b>RACE</b>: що робимо на кожному етапі шляху клієнта.</p>
+    <div class="race">
+      <div class="racestage">
+        <div class="rsh"><span class="rsb">REACH</span><span class="rsn">Привести</span><span class="rsmeta">Meta · TikTok · 60% бюджету</span></div>
+        <ul>
+          <li><i data-lucide="check"></i>Холодні кампанії Meta+TikTok з освітнім і lifestyle-контентом про каву</li>
+          <li><i data-lucide="check"></i>UGC-відео: ранковий ритуал, заварювання вдома, реакція на смак</li>
+          <li><i data-lucide="check"></i>Контент-блог + органіка під SEO («як обрати спешелті каву»)</li>
+        </ul>
+      </div>
+      <div class="racestage">
+        <div class="rsh"><span class="rsb">ACT</span><span class="rsn">Залучити</span><span class="rsmeta">сайт · квіз · email-захоплення</span></div>
+        <ul>
+          <li><i data-lucide="check"></i>Квіз «підбери своє зерно за смаком» — мікродія + захоплення email</li>
+          <li><i data-lucide="check"></i>Ретаргет тих, хто переглядав, але не купив (browse abandonment)</li>
+          <li><i data-lucide="check"></i>Лід-магніт: гайд «5 помилок у заварюванні» в обмін на email</li>
+        </ul>
+      </div>
+      <div class="racestage">
+        <div class="rsh"><span class="rsb">CONVERT</span><span class="rsn">Продати</span><span class="rsmeta">Google · ретаргет · 30% бюджету</span></div>
+        <ul>
+          <li><i data-lucide="check"></i>Google Search/Shopping на гарячі запити (закриваємо сформований попит)</li>
+          <li><i data-lucide="check"></i>PDP з простим заварюванням, відгуками, оффером на <b>стартовий набір</b></li>
+          <li><i data-lucide="check"></i>Abandoned cart флоу + оффер першої підписки −20%</li>
+        </ul>
+      </div>
+      <div class="racestage">
+        <div class="rsh"><span class="rsb">ENGAGE</span><span class="rsn">Утримати</span><span class="rsmeta">email/SMS · підписка · 10%</span></div>
+        <ul>
+          <li><i data-lucide="check"></i>Post-purchase флоу: гайд заварювання, чого чекати, коли оновити запас</li>
+          <li><i data-lucide="check"></i>Підписка: автодоставка кожні 2–4 тижні зі знижкою</li>
+          <li><i data-lucide="check"></i>RFM-сегменти, winback, реферальна програма «приведи друга»</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNICATION STRATEGY -->
+<section id="comms"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="message-square"></i></div><div><span class="n">Комунікаційна стратегія · сходи обізнаності</span><h2>Які меседжі на якому етапі</h2></div></div>
+    <p class="lead">Серце стратегії: <b>що саме казати</b> на кожному рівні обізнаності. Чим вище щабель — тим прямішим стає меседж: від освіти про каву до прямого офферу. Нижче — реальні тексти під кожен щабель і канал.</p>
+
+    <div class="commstage">
+      <div class="commhead"><div class="rung">1</div><div class="cht"><div class="lvl">Не усвідомлює проблему</div><div class="knows">п'є розчинну / масмаркет, не думає про якість</div></div><span class="stage-pill">Reach · TOFU</span></div>
+      <div class="commbody">
+        <div class="commrow"><div class="clabel"><i data-lucide="target"></i>Ціль</div><div class="cval">Посіяти думку, що ранкова кава може бути кращою. Не продавати.</div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="message-circle"></i>Меседжі</div><div class="cval">
+          <div class="msg"><span class="mtag">Meta — hook</span>«Чому ранкова кава вдома завжди трохи розчаровує — і до чого тут зовсім не кавоварка»</div>
+          <div class="msg"><span class="mtag">TikTok — відео</span>Поруч дві чашки: масмаркет vs свіжообсмажене. «Відчуй різницю з першого ковтка»</div>
+        </div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="radio"></i>Канали</div><div class="cval">Meta + TikTok (холодний трафік), Reels, органічний контент</div></div>
+      </div>
+    </div>
+
+    <div class="commstage">
+      <div class="commhead"><div class="rung">2</div><div class="cht"><div class="lvl">Усвідомлює проблему</div><div class="knows">розуміє, що його кава так собі, не знає, що робити</div></div><span class="stage-pill">Reach → Act</span></div>
+      <div class="commbody">
+        <div class="commrow"><div class="clabel"><i data-lucide="target"></i>Ціль</div><div class="cval">Назвати причину проблеми й натякнути на рішення — спешелті.</div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="message-circle"></i>Меседжі</div><div class="cval">
+          <div class="msg"><span class="mtag">Контент</span>«3 ознаки, що ваша кава несвіжа (і чому це вбиває смак)»</div>
+          <div class="msg"><span class="mtag">Meta</span>«Справа не в техніці. Справа в зерні — і в тому, коли його обсмажили»</div>
+        </div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="radio"></i>Канали</div><div class="cval">Meta/TikTok, блог, перший ретаргет</div></div>
+      </div>
+    </div>
+
+    <div class="commstage">
+      <div class="commhead"><div class="rung">3</div><div class="cht"><div class="lvl">Знає про рішення</div><div class="knows">знає, що спешелті існує, обирає тип і де брати</div></div><span class="stage-pill">Act · MOFU</span></div>
+      <div class="commbody">
+        <div class="commrow"><div class="clabel"><i data-lucide="target"></i>Ціль</div><div class="cval">Допомогти зорієнтуватись і захопити контакт (email).</div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="message-circle"></i>Меседжі</div><div class="cval">
+          <div class="msg"><span class="mtag">Квіз</span>«Не знаєте, з чого почати? Пройдіть тест і ми підберемо зерно під ваш смак за 1 хвилину»</div>
+          <div class="msg"><span class="mtag">Google Search</span>На запит «спешелті кава купити»: «Свіжообсмажена кава під ваш смак — підбір за 1 хв»</div>
+        </div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="radio"></i>Канали</div><div class="cval">Google Search, ретаргет, квіз на сайті, лід-магніт</div></div>
+      </div>
+    </div>
+
+    <div class="commstage">
+      <div class="commhead"><div class="rung">4</div><div class="cht"><div class="lvl">Знає Rytual</div><div class="knows">бачив бренд, порівнює з іншими обсмажувачами</div></div><span class="stage-pill">Convert · MOFU→BOFU</span></div>
+      <div class="commbody">
+        <div class="commrow"><div class="clabel"><i data-lucide="target"></i>Ціль</div><div class="cval">Показати, чому саме Rytual — і зняти заперечення.</div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="message-circle"></i>Меседжі</div><div class="cval">
+          <div class="msg"><span class="mtag">Email — welcome</span>«Чому Rytual: обсмажуємо під ваше замовлення, відправляємо за 24 год, доставка за 2 дні»</div>
+          <div class="msg"><span class="mtag">Ретаргет</span>Відгуки + «300+ оцінок 4,9★» + просте заварювання за 3 кроки</div>
+        </div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="radio"></i>Канали</div><div class="cval">Ретаргет Meta, Google Brand, email-nurture</div></div>
+      </div>
+    </div>
+
+    <div class="commstage">
+      <div class="commhead"><div class="rung">5</div><div class="cht"><div class="lvl">Готовий купити</div><div class="knows">потрібен поштовх — оффер чи зняття останнього тертя</div></div><span class="stage-pill">Convert · BOFU</span></div>
+      <div class="commbody">
+        <div class="commrow"><div class="clabel"><i data-lucide="target"></i>Ціль</div><div class="cval">Закрити покупку, бажано — у підписку.</div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="message-circle"></i>Меседжі</div><div class="cval">
+          <div class="msg"><span class="mtag">Оффер</span>«Перша підписка −20% + безкоштовна доставка. Скасуєте будь-коли»</div>
+          <div class="msg"><span class="mtag">Abandoned cart</span>Тема листа: «Ваше зерно ще у кошику ☕ Завершити замовлення?»</div>
+        </div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="radio"></i>Канали</div><div class="cval">Ретаргет BOFU, email/SMS abandoned cart, Google Brand</div></div>
+      </div>
+    </div>
+
+    <div class="commstage" style="border:2px solid var(--success)">
+      <div class="commhead"><div class="rung" style="background:var(--success);box-shadow:none">✓</div><div class="cht"><div class="lvl">Наявні клієнти</div><div class="knows">уже купили — утримання, повтор, лояльність</div></div><span class="stage-pill" style="background:var(--success-bg);color:#178a5f">Engage · Care</span></div>
+      <div class="commbody">
+        <div class="commrow"><div class="clabel"><i data-lucide="target"></i>Ціль</div><div class="cval">Чудовий перший досвід → друга покупка → підписка → реферал.</div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="message-circle"></i>Меседжі</div><div class="cval">
+          <div class="msg" style="border-left-color:var(--success)"><span class="mtag" style="color:#178a5f">Post-purchase · день 1</span>«Як заварити ідеальну чашку Rytual — 3 прості кроки» (турбота, не продаж)</div>
+          <div class="msg" style="border-left-color:var(--success)"><span class="mtag" style="color:#178a5f">День 14</span>«Запас добігає кінця? Оформіть підписку — і кава приїжджатиме сама»</div>
+          <div class="msg" style="border-left-color:var(--success)"><span class="mtag" style="color:#178a5f">Реферал</span>«Поділіться Rytual — другу 100 ₴ на перше замовлення, вам 100 ₴ на наступне»</div>
+        </div></div>
+        <div class="commrow"><div class="clabel"><i data-lucide="radio"></i>Канали</div><div class="cval">Email/SMS флоу, підписка, реферальна програма</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section id="numbers"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="calculator"></i></div><div><span class="n">Прорахунки</span><h2>Економіка й бюджет</h2></div></div>
+
+    <div class="card">
+      <div class="subhead"><i data-lucide="coins"></i>Юніт-економіка</div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Показник</th><th class="num">Розрахунок</th><th class="num">Значення</th></tr></thead>
+          <tbody>
+            <tr><td>Контрибуція з замовлення</td><td class="num">650 × 45%</td><td class="num">292,5 ₴</td></tr>
+            <tr><td>Прибуток з 1-ї покупки</td><td class="num">292,5 − 320</td><td class="num delta-down">−27,5 ₴</td></tr>
+            <tr><td>LTV зараз (1,4 покупки/рік)</td><td class="num">1,4 × 292,5</td><td class="num">410 ₴</td></tr>
+            <tr><td>LTV : CAC зараз</td><td class="num">410 / 320</td><td class="num">1.28</td></tr>
+            <tr><td>LTV ціль (2,3 покупки/рік)</td><td class="num">2,3 × 292,5</td><td class="num">673 ₴</td></tr>
+            <tr class="win"><td>LTV : CAC ціль</td><td class="num">673 / 320</td><td class="num delta-up">2.1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:14px;color:var(--ink-500)">Висновок: на першій покупці бренд у мінусі (−27,5 ₴). Прибуток народжується з повторних — тому retention критичний для економіки, а підписка піднімає частоту покупок найшвидше.</p>
+
+      <div class="subhead"><i data-lucide="git-fork"></i>Воронка (місяць)</div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Етап</th><th class="num">Конверсія</th><th class="num">К-сть</th></tr></thead>
+          <tbody>
+            <tr><td>Візити</td><td class="num">—</td><td class="num">25 000</td></tr>
+            <tr><td>Додали в кошик</td><td class="num">6 %</td><td class="num">1 500</td></tr>
+            <tr><td>Перейшли в checkout</td><td class="num">50 % від ATC</td><td class="num">750</td></tr>
+            <tr><td>Оплатили</td><td class="num">67 % від checkout</td><td class="num">~500</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subhead"><i data-lucide="wallet"></i>Бюджет реклами (112 000 ₴/міс)</div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Етап RACE</th><th class="num">Частка</th><th class="num">Сума</th><th>На що</th></tr></thead>
+          <tbody>
+            <tr><td>Reach</td><td class="num">60 %</td><td class="num">67 200 ₴</td><td>холодні Meta+TikTok, попит</td></tr>
+            <tr><td>Convert</td><td class="num">30 %</td><td class="num">33 600 ₴</td><td>ретаргет + Google гарячий</td></tr>
+            <tr><td>Engage</td><td class="num">10 %</td><td class="num">11 200 ₴</td><td>email/SMS-інструмент, retention</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:14px;color:var(--ink-500)">ROAS зараз ≈ 2,9 (325 000 / 112 000) — у нормі ніші. Зростання прибутку плануємо не від роздування бюджету, а від повторних покупок і підписки.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AARRR -->
+<section id="metrics"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="activity"></i></div><div><span class="n">Вимірювання · AARRR</span><h2>Метрики й вузьке місце</h2></div></div>
+    <p class="lead">Воронка в метриках. Знаходимо найслабшу стадію — це фокус. Тут однозначно <b>Retention</b>.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Стадія</th><th>Метрика</th><th class="num">Зараз</th><th class="num">Мета</th></tr></thead>
+        <tbody>
+          <tr><td>Acquisition</td><td>візити / CAC</td><td class="num">25 000 / 320 ₴</td><td class="num">30 000 / ≤320 ₴</td></tr>
+          <tr><td>Activation</td><td>ATC rate / CR</td><td class="num">6 % / 2 %</td><td class="num">7 % / 2,4 %</td></tr>
+          <tr class="win"><td>Retention</td><td>repeat rate</td><td class="num delta-down">20 %</td><td class="num delta-up">35 %</td></tr>
+          <tr><td>Referral</td><td>частка рефералів</td><td class="num">~2 %</td><td class="num">8 %</td></tr>
+          <tr><td>Revenue</td><td>оборот / LTV:CAC</td><td class="num">325k / 1.28</td><td class="num">455k / 2.1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="kpigrid" style="margin-top:14px">
+      <div class="kpi"><div class="kl">Оборот / міс</div><div class="kv">455k ₴</div><div class="kt up">+40% ціль</div></div>
+      <div class="kpi"><div class="kl">Repeat rate</div><div class="kv">35%</div><div class="kt up">+15 п.п.</div></div>
+      <div class="kpi"><div class="kl">LTV : CAC</div><div class="kv">2.1</div><div class="kt up">з 1.28</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ICE -->
+<section id="ice"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><i data-lucide="list-ordered"></i></div><div><span class="n">Пріоритезація · ICE</span><h2>Що робимо першим</h2></div></div>
+    <p class="lead">Ініціативи під вузьке місце (retention) проганяємо через ICE (Impact × Confidence × Ease). Беремо зверху вниз.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Ініціатива</th><th class="num">I</th><th class="num">C</th><th class="num">E</th><th class="num">Score</th></tr></thead>
+        <tbody>
+          <tr class="win"><td>Post-purchase флоу + гайд заварювання</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num delta-up">512</td></tr>
+          <tr><td>Програма підписки (оффер на checkout)</td><td class="num">9</td><td class="num">7</td><td class="num">6</td><td class="num">378</td></tr>
+          <tr><td>Бандл «кава + аксесуар» для AOV</td><td class="num">7</td><td class="num">7</td><td class="num">7</td><td class="num">343</td></tr>
+          <tr><td>Winback-флоу для зони ризику</td><td class="num">7</td><td class="num">6</td><td class="num">7</td><td class="num">294</td></tr>
+          <tr><td>Нові креативні angles на холодну</td><td class="num">8</td><td class="num">6</td><td class="num">6</td><td class="num">288</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION -->
+<section id="action"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><span class="lt">A</span></div><div><span class="n">SOSTAC · 5</span><h2>Action — хто й коли</h2></div></div>
+    <p class="lead">Роадмеп на квартал. Послідовність — за пріоритетом ICE: спершу те, що найшвидше зрушить retention.</p>
+    <div class="month"><div class="mlabel">Місяць 1</div><div class="mtasks"><ul>
+      <li><i data-lucide="check"></i>Налаштувати post-purchase флоу + гайд заварювання (Growth + email)</li>
+      <li><i data-lucide="check"></i>Запустити квіз «підбери зерно» з email-захопленням</li>
+      <li><i data-lucide="check"></i>Базовий дашборд AARRR, зафіксувати точку відліку</li>
+    </ul></div></div>
+    <div class="month"><div class="mlabel">Місяць 2</div><div class="mtasks"><ul>
+      <li><i data-lucide="check"></i>Запустити програму підписки + оффер на checkout і в флоу</li>
+      <li><i data-lucide="check"></i>Бандл «кава + аксесуар», A/B-тест на AOV</li>
+      <li><i data-lucide="check"></i>Нові креативні angles на холодну (за JTBD — ритуал, простота)</li>
+    </ul></div></div>
+    <div class="month"><div class="mlabel">Місяць 3</div><div class="mtasks"><ul>
+      <li><i data-lucide="check"></i>Winback-флоу для зони ризику + реферальна програма</li>
+      <li><i data-lucide="check"></i>Масштабувати те, що спрацювало; вимкнути слабке</li>
+      <li><i data-lucide="check"></i>Звести підсумок кварталу, перерахувати цілі на наступний</li>
+    </ul></div></div>
+  </div>
+</section>
+
+<!-- CONTROL -->
+<section id="control"><span style="position:relative;top:-72px"></span>
+  <div class="wrap">
+    <div class="sec-label"><div class="ci"><span class="lt">C</span></div><div><span class="n">SOSTAC · 6</span><h2>Control — як міряємо й коригуємо</h2></div></div>
+    <div class="card">
+      <ul class="clean">
+        <li><i data-lucide="check"></i><span><b>Дашборд AARRR</b> оновлюється щотижня; статус по кожній цілі — зелена/жовта/червона зона.</span></li>
+        <li><i data-lucide="check"></i><span><b>Щотижнева зустріч</b> (формат 3F5T): що відхилилось, чому, що вже зроблено.</span></li>
+        <li><i data-lucide="check"></i><span><b>Головна метрика кварталу — repeat rate.</b> Якщо не росте — перевіряємо post-purchase і підписку першими.</span></li>
+        <li><i data-lucide="check"></i><span><b>Кожна ініціатива — гіпотеза з метрикою.</b> Тестуємо, фіксуємо результат, перераховуємо ICE.</span></li>
+        <li><i data-lucide="check"></i><span>Наприкінці кварталу — підсумок, оновлення SOSTAC і новий цикл.</span></li>
+      </ul>
+    </div>
+    <div class="callout tip">
+      <i data-lucide="check-circle-2"></i>
+      <div class="ctext"><b>Підсумок.</b> Одна зв'язна стратегія: SOSTAC дав каркас, JTBD пояснив навіщо купують, RACE розклав виконання, сходи обізнаності дали меседжі, AARRR показав вузьке місце (retention), ICE визначив порядок. Acquisition і retention працюють паралельно — нові покупці дають ріст, повторні роблять економіку прибутковою.</div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Еталонний приклад стратегії · ceo@magicecom.agency</span></div></footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

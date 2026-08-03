@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Checklists — 3 чеклісти креативного стратега</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
+    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
+    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
+    --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  
+  .header{background:var(--dark);color:white;padding:48px 40px 36px;position:relative;overflow:hidden}
+  .header::after{content:"";position:absolute;top:0;right:0;width:400px;height:100%;background:var(--gradient);opacity:.15;border-radius:50%;filter:blur(80px)}
+  .header-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .header-left{flex:1}
+  .header-left .brand{font-weight:900;font-size:14px;opacity:.4;margin-bottom:18px;letter-spacing:.5px}
+  .header h1{font-size:32px;margin-bottom:8px;font-weight:700;line-height:1.15}
+  .header p{opacity:.6;font-size:15px;max-width:600px}
+  .header button{padding:10px 22px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
+  
+  .container{max-width:980px;margin:0 auto;padding:40px 24px 80px}
+  
+  .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+  .intro h2{font-size:18px;font-weight:700;margin-bottom:14px;color:var(--dark)}
+  .intro p{color:var(--text);font-size:14px;margin-bottom:10px;line-height:1.65}
+  .intro p:last-child{margin-bottom:0}
+  
+  .checklist-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
+  .ov-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center;border-top:4px solid var(--blue)}
+  .ov-card.orange{border-top-color:var(--orange)}
+  .ov-card.green{border-top-color:var(--green)}
+  .ov-card .ov-icon{font-size:32px;margin-bottom:10px}
+  .ov-card h3{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px}
+  .ov-card p{font-size:12px;color:var(--muted);line-height:1.45}
+  
+  .checklist-section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:32px;overflow:hidden}
+  .cl-head{padding:24px 28px;background:var(--dark);color:white;display:flex;align-items:center;gap:16px}
+  .cl-head .cl-num{width:48px;height:48px;background:var(--gradient);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;flex-shrink:0}
+  .cl-head .cl-info{flex:1}
+  .cl-head h2{font-size:22px;font-weight:700;margin-bottom:4px}
+  .cl-head .cl-meta{font-size:13px;opacity:.7}
+  .cl-body{padding:28px}
+  .cl-lead{font-size:14px;color:var(--text);margin-bottom:20px;line-height:1.65}
+  
+  .check-block{margin-bottom:22px}
+  .check-block h3{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+  .check-items{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+  .check-items ul{list-style:none;padding:0}
+  .check-items li{padding:10px 0;font-size:13px;color:var(--text);display:flex;gap:12px;line-height:1.5;border-bottom:1px dashed var(--border)}
+  .check-items li:last-child{border-bottom:none}
+  .check-items li::before{content:"☐";color:var(--accent);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+  .check-items li strong{font-weight:700;color:var(--dark);display:inline}
+  .check-items li small{font-size:12px;color:var(--muted);display:block;margin-top:4px}
+  
+  .hint{background:linear-gradient(135deg,#EBF4FF,#F3EEFF);border-radius:12px;padding:16px 18px;margin:14px 0;display:flex;gap:12px;align-items:flex-start}
+  .hint-icon{font-size:18px;flex-shrink:0}
+  .hint-text{font-size:13px;color:var(--text);line-height:1.55}
+  .hint-text strong{font-weight:700}
+  
+  .warn{background:#FFF4F5;border:1px solid #F5BCC0;border-radius:12px;padding:16px 18px;margin:14px 0;display:flex;gap:12px;align-items:flex-start}
+  .warn-icon{font-size:18px;flex-shrink:0;color:var(--danger)}
+  .warn-text{font-size:13px;color:var(--text);line-height:1.55}
+  .warn-text strong{font-weight:700;color:var(--danger)}
+  
+  .quick-ref{background:#0f1729;color:white;border-radius:14px;padding:20px;margin:18px 0}
+  .quick-ref h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);margin-bottom:12px}
+  .quick-ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px}
+  .quick-ref-grid > div{padding:10px 12px;background:rgba(255,255,255,.05);border-radius:8px}
+  .quick-ref-grid strong{color:white;font-weight:700;display:block;margin-bottom:4px}
+  .quick-ref-grid span{opacity:.7;line-height:1.5}
+  
+  .tab-ref{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:#EBF4FF;color:var(--blue);font-size:11px;font-weight:600;border-radius:12px}
+  
+  @media(max-width:768px){
+    .container{padding:24px 16px 60px}
+    .checklist-overview{grid-template-columns:1fr}
+    .header{padding:32px 20px}
+    .header h1{font-size:24px}
+    .cl-head{flex-wrap:wrap}
+    .quick-ref-grid{grid-template-columns:1fr}
+  }
+  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.checklist-section,.intro,.check-block,.hint,.warn,.quick-ref{break-inside:avoid;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <div class="brand">magic</div>
+      <h1>CREATIVE CHECKLISTS</h1>
+      <p>3 чеклісти креативного стратега: Бриф, Pre-launch, Post-launch аналіз. Друкуй і тримай під рукою.</p>
+    </div>
+    <button onclick="window.print()">Друк / PDF</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Навіщо чеклісти</h2>
+    <p>Складна робота розбивається на прості кроки. Чеклісти не для того щоб виглядати бюрократом — вони щоб не забути критичне і не передавати в продакшн напівсирий бриф.</p>
+    <p>Три моменти у роботі стратега де чеклист реально економить час і помилки: <strong>перед передачею брифа у продакшн</strong>, <strong>перед запуском креативу в кабінет</strong>, <strong>при першому тижневому аналізі нового креативу</strong>.</p>
+  </div>
+
+  <div class="checklist-overview">
+    <div class="ov-card">
+      <div class="ov-icon">📝</div>
+      <h3>Бриф</h3>
+      <p>Перед передачею в продакшн. ~5 хв перевірки.</p>
+    </div>
+    <div class="ov-card orange">
+      <div class="ov-icon">🚀</div>
+      <h3>Pre-launch</h3>
+      <p>Перед заливом у Ads Manager. ~10 хв перевірки.</p>
+    </div>
+    <div class="ov-card green">
+      <div class="ov-icon">📊</div>
+      <h3>Post-launch</h3>
+      <p>Перший тижневий аналіз нового креативу. ~15 хв.</p>
+    </div>
+  </div>
+
+  <!-- CHECKLIST 1: BRIEF -->
+  <section class="checklist-section">
+    <div class="cl-head">
+      <div class="cl-num">1</div>
+      <div class="cl-info">
+        <h2>Чекліст: Бриф</h2>
+        <div class="cl-meta">Коли: перед передачею брифа дизайнеру/відеографу · Тривалість: ~5 хв</div>
+      </div>
+    </div>
+    <div class="cl-body">
+      <p class="cl-lead">Слабкий бриф = слабкий креатив. Перевір що заповнено все необхідне і гіпотеза чітко сформульована.</p>
+
+      <div class="check-block">
+        <h3>Стратегічна основа</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>JTBD сформульовано</strong> у форматі "Коли [ситуація], хочу [результат], щоб [цінність]"
+              <small>Конкретна "робота" яку креатив виконує для глядача. Обов'язкове поле</small></span>
+            </li>
+            <li>
+              <span><strong>Гіпотеза тесту</strong> розгорнуто описана у полі "Що тестуємо й чому впевнені"
+              <small>Формат: "Якщо... то... бо...". Посилаємось на дані Бібліотеки або Patterns Log агенції</small></span>
+            </li>
+            <li>
+              <span><strong>Patterns Log переглянуто</strong> — перевірив чи є підтверджені патерни що працюють у схожих клієнтів
+              <small>Якщо такі є — використай як основу гіпотези</small></span>
+            </li>
+            <li><strong>Кут</strong> вказаний з 12 наших стандартних</li>
+            <li><strong>Концепт</strong> вказаний з 10 наших стандартних</li>
+            <li><strong>Сходинка Ханта</strong> — конкретно 0/1/2/3/4 (не "десь у середині")</li>
+            <li><strong>Тип Job</strong> — функціональна / емоційна / соціальна</li>
+            <li><strong>Продукт</strong> вказаний з вкладки Продукти (dropdown)</li>
+            <li>
+              <span><strong>Pain Point</strong> описаний у 1-2 реченнях
+              <small>Конкретний біль аудиторії — не "люди хочуть бути красивими"</small></span>
+            </li>
+            <li>
+              <span><strong>Desire</strong> описаний у 1-2 реченнях
+              <small>Бажаний результат — не "купити продукт"</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Структура креативу</h3>
+        <div class="check-items">
+          <ul>
+            <li><strong>Тип хуку</strong> вказаний (Питання / Bold claim / Цифра / Шок-факт тощо)</li>
+            <li>
+              <span><strong>Хук (текст)</strong> — конкретний текст перших 3 секунд
+              <small>Не "ідея для хука", а готова фраза</small></span>
+            </li>
+            <li>
+              <span><strong>Body / Сценарій</strong> описаний
+              <small>Для відео — структура сцен. Для статики — текстове повідомлення і візуальна композиція</small></span>
+            </li>
+            <li><strong>CTA</strong> вказаний з нашого списку (Замовити / Купити / Дізнатись більше)</li>
+            <li><strong>Тон</strong> вибраний (Дружній / Авторитетний / Емоційний / Раціональний тощо)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Технічне і організаційне</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Назва креативу за конвенцією</strong>: ДДММРР_Формат_Кут_Концепт_v1
+              <small>Приклад: 100526_Video_PainPoint_TalkingHead_v1</small></span>
+            </li>
+            <li><strong>Платформа</strong> вказана (Meta / TikTok / Both)</li>
+            <li><strong>Формат</strong> вказаний (Video / Static / Carousel / GIF)</li>
+            <li><strong>Аудиторія</strong> описана коротко (для контексту дизайнера)</li>
+            <li>
+              <span><strong>Референси</strong> — 2-3 посилання на креативи для натхнення
+              <small>Не "копіюємо їх", а "ось напрямок"</small></span>
+            </li>
+            <li><strong>Дедлайн</strong> поставлений (реалістичний з огляду на завантаження продакшена)</li>
+            <li><strong>Стратег</strong> вказаний (хто відповідальний за тест)</li>
+            <li><strong>Статус</strong> = "В роботі" або "Чернетка"</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="warn">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><strong>Стоп-сигнали:</strong> якщо хоча б один з наступних пунктів пустий — не передавай бриф у продакшн: <strong>JTBD, Гіпотеза тесту, Хук (текст), Body, CTA, Дедлайн</strong>. Інше можна заповнити в процесі — це не можна.</div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">💡</div>
+        <div class="hint-text"><strong>Передача:</strong> після перевірки чеклиста — повідомлення продакшену в Slack з посиланням на рядок у вкладці <span class="tab-ref">Бриф</span> і коротким коментарем (1-2 речення про головну ідею).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST 2: PRE-LAUNCH -->
+  <section class="checklist-section">
+    <div class="cl-head" style="background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%)">
+      <div class="cl-num" style="background:linear-gradient(135deg,var(--orange),#FF8C42)">2</div>
+      <div class="cl-info">
+        <h2>Чекліст: Pre-launch</h2>
+        <div class="cl-meta">Коли: креатив готовий, перед заливом у Ads Manager · Тривалість: ~10 хв</div>
+      </div>
+    </div>
+    <div class="cl-body">
+      <p class="cl-lead">Креатив прийшов з продакшена. Перед тим як UAM його запустить — перевір що все технічно і контентно ок. Дрібна помилка тут = втрачений тиждень роботи.</p>
+
+      <div class="check-block">
+        <h3>Технічні параметри</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Формат відповідає платформі</strong>
+              <small>Meta Reels/Stories: 9:16 (1080x1920). Meta Feed: 1:1 або 4:5. TikTok: 9:16 обов'язково</small></span>
+            </li>
+            <li>
+              <span><strong>Тривалість в межах оптимуму</strong>
+              <small>Meta: 15-60 сек оптимально. TikTok: 9-60 сек, краще 15-30</small></span>
+            </li>
+            <li>
+              <span><strong>Розмір файлу не перевищує ліміт</strong>
+              <small>Meta video: до 4GB. TikTok: до 500MB. Якщо більше — пережми</small></span>
+            </li>
+            <li>
+              <span><strong>Якість зображення/відео</strong>
+              <small>Мінімум 720p для відео, 1080p бажано. Статика — без артефактів стиснення</small></span>
+            </li>
+            <li>
+              <span><strong>Subtitle або текст</strong>
+              <small>Для відео — субтитри обов'язково (50%+ дивляться без звуку)</small></span>
+            </li>
+            <li>
+              <span><strong>Звук читається без навушників</strong>
+              <small>Без свистів, без занадто тихих місць — Meta модерація це не любить</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Контент і відповідність брифу</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Хук відповідає брифу</strong>
+              <small>Перші 3 сек — те що було в полі "Хук (текст)" у Брифі</small></span>
+            </li>
+            <li>
+              <span><strong>Кут читається</strong>
+              <small>Якщо в брифі "Pain Point" — креатив явно показує проблему, а не одразу benefit</small></span>
+            </li>
+            <li>
+              <span><strong>Body виконує обіцянку хука</strong>
+              <small>Хук обіцяв одне, body має це розкрити</small></span>
+            </li>
+            <li>
+              <span><strong>CTA чіткий і одиничний</strong>
+              <small>Один заклик ("Купити"), не три варіанти на вибір</small></span>
+            </li>
+            <li>
+              <span><strong>Текст читається на мобільному</strong>
+              <small>Тестуй на телефоні, не на десктопі. Шрифт не менше 14pt еквіваленту</small></span>
+            </li>
+            <li><strong>Логотип / бренд видимий</strong> (але не домінує)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Модерація і відповідність політикам</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Немає шокуючого контенту</strong>
+              <small>Особливо для медицини/б'юті: до/після — не агресивне</small></span>
+            </li>
+            <li><strong>Немає обіцянок які не можеш виконати</strong> ("100% результат", "гарантовано")</li>
+            <li><strong>Немає згадок конкурентів</strong></li>
+            <li><strong>Немає чутливих категорій</strong> (зброя, наркотики, дискримінація)</li>
+            <li><strong>Авторські права на музику/відео</strong> перевірено</li>
+            <li><strong>Якщо є люди — згоди на використання</strong> отримані</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Лінк і трекінг</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Лінк правильний</strong>
+              <small>Веде на потрібну посадку, а не на головну</small></span>
+            </li>
+            <li>
+              <span><strong>UTM-мітки на місці</strong>
+              <small>Source, medium, campaign — за конвенцією клієнта</small></span>
+            </li>
+            <li><strong>Посадка відкривається без помилок</strong></li>
+            <li><strong>Подія "Покупка" / "ATC" зрозуміла</strong> для пікселя (з UAM)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Передача UAM</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Назва креативу за конвенцією</strong>
+              <small>ДДММРР_Формат_Кут_Концепт_v1 — точно так в Ads Manager</small></span>
+            </li>
+            <li>
+              <span><strong>Файл доступний UAM</strong>
+              <small>Google Drive / Dropbox папка клієнта</small></span>
+            </li>
+            <li>
+              <span><strong>Slack-повідомлення UAM</strong>
+              <small>"Готовий новий креатив [назва]. Для ад-сету [назва]. Дата запуску: [дата]"</small></span>
+            </li>
+            <li><strong>Бриф оновлений</strong> — статус "Готово"</li>
+            <li>
+              <span><strong>Креатив доданий у Бібліотеку</strong>
+              <small>Хоча даних PMA ще немає, можна заздалегідь занести метадані (формат, кут, концепт, сходинка, тип Job, дата створення)</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="warn">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><strong>Найважливіше:</strong> назва креативу має точно співпадати в трьох місцях: Бриф, Ads Manager, Бібліотека. Якщо в Ads Manager буде "FOMO_v1" а в Бібліотеці "100526_Video_FOMO_Carousel_v1" — PMA не зв'яже їх, і всі дані по цьому креативу зникнуть.</div>
+      </div>
+
+      <div class="quick-ref">
+        <h4>Швидка довідка платформ</h4>
+        <div class="quick-ref-grid">
+          <div>
+            <strong>Meta</strong>
+            <span>Reels/Stories: 9:16 (1080x1920) · Feed: 1:1 (1080x1080) або 4:5 (1080x1350) · Відео: до 60 сек оптимально · Файл: до 4GB · Текст в зображенні: ≤20% (рекомендовано)</span>
+          </div>
+          <div>
+            <strong>TikTok</strong>
+            <span>Тільки 9:16 (1080x1920) · Відео: 9-60 сек, оптимум 15-30 · Файл: до 500MB · Звук обов'язково · Subtitle для немовних креативів</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST 3: POST-LAUNCH -->
+  <section class="checklist-section">
+    <div class="cl-head" style="background:linear-gradient(135deg,#1a2340 0%,#0f1729 100%)">
+      <div class="cl-num" style="background:linear-gradient(135deg,var(--green),#1FA070)">3</div>
+      <div class="cl-info">
+        <h2>Чекліст: Post-launch (перший аналіз)</h2>
+        <div class="cl-meta">Коли: 7-14 днів після запуску, перший тижневий аналіз · Тривалість: ~15 хв</div>
+      </div>
+    </div>
+    <div class="cl-body">
+      <p class="cl-lead">Креатив запустився, дані почали приходити. Перший тиждень — це learning phase. Другий — вже видно тренд. Перевір що все в порядку технічно і інтерпретуй перші сигнали правильно.</p>
+
+      <div class="check-block">
+        <h3>Технічна перевірка — дані тягнуться</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Креатив з'явився у Звіті</strong>
+              <small>У <span class="tab-ref">Звіт Meta</span> або <span class="tab-ref">Звіт TikTok</span> з'явився новий рядок з назвою креативу</small></span>
+            </li>
+            <li>
+              <span><strong>Spend більше нуля</strong>
+              <small>Якщо $0 — креатив не отримує показів. Перевір з UAM статус в Ads Manager</small></span>
+            </li>
+            <li>
+              <span><strong>Креатив з'явився у Бібліотеці</strong>
+              <small>З правильною Датою запуску і Лicifet ROAS (нехай малий, але формула рахує)</small></span>
+            </li>
+            <li>
+              <span><strong>Назви співпадають</strong>
+              <small>Якщо в PMA назва відрізняється від Бібліотеки — дані не зв'яжуться. Виправ в Ads Manager або переназви</small></span>
+            </li>
+            <li>
+              <span><strong>AD Status у Звіті</strong>
+              <small>Має бути ACTIVE. Якщо PAUSED — перевір з UAM чи це автостоп модерації</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Заповнити стратегічні поля</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>У Звіті</strong> для цього креативу
+              <small>Кут, Концепт, Сходинка, Тип Job — заповнити одразу, інакше Рекомендація буде неточною</small></span>
+            </li>
+            <li>
+              <span><strong>У Бібліотеці</strong> — те саме
+              <small>Якщо вже заповнено заздалегідь — перевір актуальність</small></span>
+            </li>
+            <li>
+              <span><strong>CTR пік</strong>
+              <small>Зараз рахується автоматично (зелена колонка). Через 2-3 тижні число стабілізується</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Інтерпретація перших даних (день 4-7)</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Learning phase ще йде</strong>
+              <small>Перші 3 дні дані ненадійні. Не роби висновків. Якщо CTR &lt;0.5% — обговори з UAM, інакше чекай</small></span>
+            </li>
+            <li>
+              <span><strong>Recom у колонці X</strong>
+              <small>Зараз буде "Тестувати далі" — це нормально. Через тиждень з'явиться чітка рекомендація</small></span>
+            </li>
+            <li>
+              <span><strong>Hook Rate в межах очікувань</strong>
+              <small>Цільовий 25%+ для відео. Якщо &lt;15% з самого початку — слабкий хук, документуй у Коментарі</small></span>
+            </li>
+            <li>
+              <span><strong>Hold Rate в межах очікувань</strong>
+              <small>Цільовий 35%+. Якщо &lt;20% — тіло ролика не виконує обіцянку</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Інтерпретація на другому тижні (день 8-14)</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Тренд читається</strong>
+              <small>Креатив або зростає (ROAS, CTR збільшуються), або падає, або плато</small></span>
+            </li>
+            <li>
+              <span><strong>Recom стає надійним</strong>
+              <small>"Референс для нових" / "Тестувати далі" / "Зупинити" — це робочі рекомендації, не learning</small></span>
+            </li>
+            <li>
+              <span><strong>Гіпотеза підтверджується чи ні</strong>
+              <small>Чи метрики наближаються до того що було в гіпотезі? Якщо так — вектор правильний</small></span>
+            </li>
+            <li>
+              <span><strong>Status у Звіті</strong>
+              <small>Заповни своє рішення: Тестувати далі / Референс для нових / Рефреш плановий тощо</small></span>
+            </li>
+            <li>
+              <span><strong>Коментар у Звіті</strong>
+              <small>Одне речення про те що бачиш. "ROAS росте, Hook стабільний. Гіпотеза підтверджується"</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="check-block">
+        <h3>Документація навчання</h3>
+        <div class="check-items">
+          <ul>
+            <li>
+              <span><strong>Якщо креатив явно loser</strong> (ROAS &lt; 1, CPA удвічі вище таргета)
+              <small>Зупини через UAM. Постав Loser у Бібліотеці. Пиши висновок у Архіві тестів про невдалу гіпотезу</small></span>
+            </li>
+            <li>
+              <span><strong>Якщо креатив явно winner</strong> (ROAS вище скейлу, стабільний CTR і Hook)
+              <small>Не ставимо Winner ще — мало даних. Через 2 тижні (4 тиждень життя) — постав Winner</small></span>
+            </li>
+            <li>
+              <span><strong>Якщо креатив "ні те ні се"</strong>
+              <small>Залиш тестуватись далі. Через 2 тижні повернись до перевірки. Recom скаже що робити</small></span>
+            </li>
+            <li>
+              <span><strong>Якщо патерн повторюється у кількох клієнтів</strong>
+              <small>Принось на Weekly Creative Review для додавання у Patterns Log агенції. Так знання з твого клієнта стає капіталом команди</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">⏱️</div>
+        <div class="hint-text"><strong>Терпіння — твоя зброя:</strong> найчастіша помилка — закривати тести раніше за 14 днів. Learning phase + перші дні нестабільні. Дай креативу шанс показати себе на повних даних. 2 тижні — мінімум для висновку.</div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">📝</div>
+        <div class="hint-text"><strong>Документуй процес мислення:</strong> через 3 місяці ти не пам'ятатимеш чому залишив креатив тестуватись довше. Коментар з логікою — твоя пам'ять.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <div class="intro" style="background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%);color:white;text-align:center;border:none">
+    <h2 style="color:white">Як використовувати ці чеклісти</h2>
+    <p style="color:rgba(255,255,255,.85)"><strong style="color:white">Друкуй і тримай біля комп'ютера.</strong> Або зберігай як закладку в браузері. Або скопіюй у Notion як шаблон для повторного використання.</p>
+    <p style="color:rgba(255,255,255,.85)">Чеклісти не замінюють твоє мислення — вони <strong style="color:white">гарантують що ти не забув критичних кроків</strong>. Через рік практики більшість пунктів стане автоматичною, але новачку чи в стресовій ситуації — це порятунок.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

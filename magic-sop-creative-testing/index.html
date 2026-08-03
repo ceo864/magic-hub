@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOP: Тестування креативів — UA Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magic-blue: #38A0FF;
+    --magic-purple: #AA7AFF;
+    --magic-gradient: linear-gradient(135deg, #38A0FF, #AA7AFF);
+    --ink-700: #1A1A2E;
+    --ink-600: #2A2A40;
+    --ink-500: #3D3D55;
+    --ink-400: #5A5A75;
+    --ink-300: #8080A0;
+    --ink-200: #B0B0C8;
+    --ink-100: #D8D8E8;
+    --ink-50: #F0F0F8;
+    --success: #2EC28A;
+    --warning: #FFB020;
+    --danger: #F5525C;
+    --white: #FFFFFF;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-pill: 9999px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Onest', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; color: var(--ink-700); background: var(--ink-50); }
+
+  .hero { background: var(--ink-700); padding: 64px 48px 48px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -40%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(56,160,255,0.12) 0%, transparent 70%); }
+  .hero-badge { display: inline-block; background: rgba(56,160,255,0.15); color: var(--magic-blue); font-weight: 500; font-size: 13px; letter-spacing: 0.05em; padding: 6px 16px; border-radius: var(--radius-pill); margin-bottom: 20px; position: relative; }
+  .hero h1 { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; background: var(--magic-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; position: relative; }
+  .hero .subtitle { font-size: 18px; font-weight: 300; color: var(--ink-200); max-width: 640px; position: relative; }
+
+  .nav { background: var(--white); border-bottom: 1px solid var(--ink-100); padding: 20px 48px; position: sticky; top: 0; z-index: 100; display: flex; gap: 8px; flex-wrap: wrap; }
+  .nav a { display: inline-block; padding: 6px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 500; color: var(--ink-500); text-decoration: none; background: var(--ink-50); transition: all 0.2s; }
+  .nav a:hover { background: var(--magic-gradient); color: var(--white); }
+
+  .content { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .section { margin-bottom: 56px; }
+  .section-number { font-size: 13px; font-weight: 700; background: var(--magic-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .section h2 { font-size: 32px; font-weight: 700; color: var(--ink-700); margin-bottom: 8px; }
+  .section-desc { font-size: 16px; color: var(--ink-400); margin-bottom: 28px; max-width: 700px; }
+  h3 { font-size: 22px; font-weight: 700; color: var(--ink-700); margin: 32px 0 16px; }
+
+  .card { background: var(--white); border-radius: var(--radius-lg); padding: 24px 28px; margin-bottom: 12px; border-left: 4px solid transparent; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .card.blue { border-left-color: var(--magic-blue); }
+  .card.purple { border-left-color: var(--magic-purple); }
+  .card.green { border-left-color: var(--success); }
+  .card.yellow { border-left-color: var(--warning); }
+  .card.red { border-left-color: var(--danger); }
+  .card-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .card-label.blue { color: var(--magic-blue); }
+  .card-label.purple { color: var(--magic-purple); }
+  .card-label.green { color: var(--success); }
+  .card-label.red { color: var(--danger); }
+  .card-label.yellow { color: var(--warning); }
+  .card h4 { font-size: 15px; font-weight: 700; color: var(--ink-700); margin-bottom: 6px; }
+  .card p { font-size: 14px; color: var(--ink-400); margin-bottom: 8px; line-height: 1.6; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+  .table-wrap { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: var(--ink-700); color: var(--white); font-weight: 500; font-size: 12px; letter-spacing: 0.03em; padding: 12px 16px; text-align: left; }
+  td { padding: 14px 16px; border-bottom: 1px solid var(--ink-50); font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  .callout { background: linear-gradient(135deg, rgba(56,160,255,0.06), rgba(170,122,255,0.06)); border-radius: var(--radius-lg); padding: 20px 24px; margin: 20px 0; border: 1px solid rgba(56,160,255,0.12); }
+  .callout-title { font-weight: 700; font-size: 14px; color: var(--magic-blue); margin-bottom: 6px; }
+  .callout p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  .warning-block { background: rgba(245,82,92,0.06); border: 1px solid rgba(245,82,92,0.15); border-radius: var(--radius-lg); padding: 20px 24px; margin: 20px 0; }
+  .warning-block .title { font-size: 14px; font-weight: 700; color: var(--danger); margin-bottom: 6px; }
+  .warning-block p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  .vs-block { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 16px 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .vs-wrong { background: rgba(245,82,92,0.06); padding: 20px 24px; border-right: 2px solid var(--ink-100); }
+  .vs-right { background: rgba(46,194,138,0.06); padding: 20px 24px; }
+  .vs-wrong h5 { font-size: 13px; font-weight: 700; color: var(--danger); margin-bottom: 8px; }
+  .vs-right h5 { font-size: 13px; font-weight: 700; color: var(--success); margin-bottom: 8px; }
+  .vs-wrong p, .vs-right p { font-size: 13px; color: var(--ink-500); margin: 0; line-height: 1.6; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; }
+  .badge-blue { background: rgba(56,160,255,0.12); color: var(--magic-blue); }
+  .badge-green { background: rgba(46,194,138,0.12); color: var(--success); }
+  .badge-red { background: rgba(245,82,92,0.12); color: var(--danger); }
+  .badge-yellow { background: rgba(255,176,32,0.12); color: var(--warning); }
+
+  .divider { height: 1px; background: var(--ink-100); margin: 48px 0; }
+
+  .footer { text-align: center; padding: 40px; color: var(--ink-300); font-size: 13px; }
+  .footer .logo { font-weight: 900; font-size: 18px; background: var(--magic-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
+
+  @media (max-width: 768px) { .hero { padding: 40px 24px; } .hero h1 { font-size: 32px; } .grid-2, .grid-3 { grid-template-columns: 1fr; } .vs-block { grid-template-columns: 1fr; } .vs-wrong { border-right: none; border-bottom: 2px solid var(--ink-100); } }
+  @media print { .nav { display: none; } .card, .table-wrap { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero">
+  <div class="hero-badge">TRAINING SOP</div>
+  <h1>Тестування креативів<br>Meta Ads & TikTok Ads</h1>
+  <div class="subtitle">Навчальний SOP для UA Manager. Як тестувати, коли вимикати, коли масштабувати, і що робити коли нових креативів немає.</div>
+</div>
+
+<nav class="nav">
+  <a href="#rules">Правила</a>
+  <a href="#angles">Сходинки, кути, концепти</a>
+  <a href="#battle">Creative Battle</a>
+  <a href="#budget">Бюджет до креативу</a>
+  <a href="#decisions">Коли вимикати</a>
+  <a href="#fatigue">Creative Fatigue</a>
+  <a href="#situations">Типові ситуації</a>
+  <a href="#diagnostics">Діагностика</a>
+  <a href="#naming">Нейминг</a>
+  <a href="#mistakes">Типові помилки</a>
+</nav>
+
+<div class="content">
+
+<!-- 01 RULES -->
+<div class="section" id="rules">
+  <div class="section-number">01</div>
+  <h2>Залізні правила тестування</h2>
+  <p class="section-desc">Правила, які не обговорюються. Вивчити напам'ять.</p>
+
+  <div class="grid-2">
+    <div class="card blue">
+      <h4>$100-150 на креатив</h4>
+      <p>Мінімум $100-150 відкруту на один креатив перед тим як приймати рішення — працює він чи ні. Менше — це шум, не дані.</p>
+    </div>
+    <div class="card purple">
+      <h4>Не більше 10 креативів</h4>
+      <p>Максимум 10 креативів паралельно в одній групі оголошень. Більше — система не встигає розподілити бюджет, дані розмиваються.</p>
+    </div>
+    <div class="card green">
+      <h4>+2 нових на тиждень</h4>
+      <p>Щотижня додавати мінімум 2 нових креативи в кампанію. Це не рекомендація — це обов'язок. Без нових креативів = creative fatigue = падіння результатів.</p>
+    </div>
+    <div class="card yellow">
+      <h4>Мін. 5 різних форматів</h4>
+      <p>Мінімум 5 креативів у групі, всі різних форматів: статика + карусель + UGC-відео + продуктове відео + інший формат. Не можна 5 однотипних.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>Одна змінна за раз</h4>
+      <p>Змінюєш креативи — не чіпай бюджет. Змінюєш бюджет — не чіпай креативи. Інакше неможливо визначити, що спрацювало.</p>
+    </div>
+    <div class="card">
+      <h4>Завжди Purchase</h4>
+      <p>Оптимізаційна ціль — завжди Purchase. Ніколи не переходити на ATC, ViewContent або трафік. Ніколи.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Тестуємо постійно</div>
+    <p>Тестування — це не фаза проєкту, яка закінчується. Це безперервний процес. Кожен тиждень нові креативи. Кожен тиждень аналіз. Момент коли ти перестаєш тестувати — момент коли результати починають падати.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 02 HIERARCHY -->
+<div class="section" id="angles">
+  <div class="section-number">02</div>
+  <h2>Сходинки, кути, концепти</h2>
+  <p class="section-desc">Три рівні креативної стратегії. Від стратегічного рівня (на якій сходинці людина) до конкретного виконання (який концепт).</p>
+
+  <h3>Ієрархія: сходинка → кут → концепт</h3>
+
+  <div class="grid-3">
+    <div class="card blue">
+      <div class="card-label blue">РІВЕНЬ 1 — СТРАТЕГІЧНИЙ</div>
+      <h4>Сходинка</h4>
+      <p>На якому рівні усвідомлення знаходиться людина за сходинками Бена Ханта. Визначає ЩО ми комунікуємо.</p>
+    </div>
+    <div class="card purple">
+      <div class="card-label purple">РІВЕНЬ 2 — ТАКТИЧНИЙ</div>
+      <h4>Кут (angle)</h4>
+      <p>Конкретний комунікаційний підхід в рамках сходинки. Визначає ЯК ми доносимо меседж.</p>
+    </div>
+    <div class="card green">
+      <div class="card-label green">РІВЕНЬ 3 — ВИКОНАННЯ</div>
+      <h4>Концепт</h4>
+      <p>Креативне виконання кута. Формат + стиль подачі. Визначає В ЯКОМУ ВИГЛЯДІ людина це бачить.</p>
+    </div>
+  </div>
+
+  <h3>Сходинки Бена Ханта</h3>
+  <p>Кожна сходинка — це рівень готовності людини до покупки. Чим вище сходинка — тим ближче до покупки. Наш креатив повинен відповідати сходинці, на якій знаходиться аудиторія.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Сходинка</th><th>Стан людини</th><th>Що комунікуємо</th><th>Приклад (рюкзак для подорожей)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Не знає про проблему</strong></td>
+          <td>Навіть не думає що їй це потрібно</td>
+          <td>"Розбудити" проблему, показати що вона існує</td>
+          <td>"73% мандрівників переплачують за багаж. А ти?"</td>
+        </tr>
+        <tr>
+          <td><strong>2. Знає проблему</strong></td>
+          <td>Відчуває біль, але не шукає рішення</td>
+          <td>Підсилити біль, показати що є рішення</td>
+          <td>"Кожна подорож починається з хаосу в рюкзаку..."</td>
+        </tr>
+        <tr>
+          <td><strong>3. Знає рішення</strong></td>
+          <td>Шукає рішення, але не знає ваш продукт</td>
+          <td>Показати що наш продукт — найкраще рішення</td>
+          <td>"Порівняв 5 рюкзаків для carry-on — ось переможець"</td>
+        </tr>
+        <tr>
+          <td><strong>4. Знає продукт</strong></td>
+          <td>Бачив нас, але не впевнений</td>
+          <td>Зняти сумніви, дати соціальний доказ</td>
+          <td>Відгуки, UGC, "50,000 вже подорожують з цим рюкзаком"</td>
+        </tr>
+        <tr>
+          <td><strong>5. Готовий купити</strong></td>
+          <td>Впевнений, потрібен фінальний push</td>
+          <td>Дати причину купити зараз</td>
+          <td>"Безкоштовна доставка тільки до кінця тижня"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Де ми працюємо найчастіше</div>
+    <p>В e-commerce з холодним трафіком ми здебільшого працюємо на сходинках 1-3 (люди не знають наш продукт). Сходинки 4-5 — це ретаргетинг і повторні покупки.</p>
+  </div>
+
+  <h3>Кути (angles)</h3>
+  <p>Кут — це конкретний комунікаційний підхід в рамках обраної сходинки. На одній сходинці може бути декілька кутів.</p>
+
+  <div class="card purple">
+    <div class="card-label purple">ПРИКЛАД: СХОДИНКА 2 (ЗНАЄ ПРОБЛЕМУ) → РІЗНІ КУТИ</div>
+    <p><strong>Кут "Pain Point":</strong> Фокус на болі — "Твій рюкзак ніколи не вміщає все, і ти завжди щось забуваєш"</p>
+    <p><strong>Кут "Негативний досвід":</strong> Фокус на негативному минулому досвіді — "Останній раз коли я летів, мій рюкзак порвався прямо в аеропорту"</p>
+    <p><strong>Кут "Страх":</strong> Фокус на тому, що буде якщо не вирішити — "Уяви: ти стоїш на реєстрації і рюкзак не влізає в carry-on"</p>
+  </div>
+
+  <div class="card purple">
+    <div class="card-label purple">ПРИКЛАД: СХОДИНКА 3 (ЗНАЄ РІШЕННЯ) → РІЗНІ КУТИ</div>
+    <p><strong>Кут "Порівняння":</strong> "Я купив 3 рюкзаки на Amazon і порівняв — ось чому цей переміг"</p>
+    <p><strong>Кут "Експерт":</strong> "Як travel-блогер з 50 країнами за плечима, я перепробував все..."</p>
+    <p><strong>Кут "Інгредієнти/Характеристики":</strong> "Cordura 1000D тканина, YKK блискавки, 15 відділень — ось чому він невбиванний"</p>
+  </div>
+
+  <h3>Концепти</h3>
+  <p>Концепт — це креативне виконання конкретного кута. Той самий кут, але в різному форматі і стилі. Це рівень, на якому працює дизайнер / відеограф.</p>
+
+  <div class="card green">
+    <div class="card-label green">ПРИКЛАД: КУТ "PAIN POINT" → РІЗНІ КОНЦЕПТИ</div>
+    <p><strong>Концепт "TalkingHead":</strong> Відео — людина на камеру каже "Теж маєш проблему з хаосом у рюкзаку?"</p>
+    <p><strong>Концепт "Static":</strong> Статика — фото розчавленого рюкзака з текстом "Знайомо?" → поруч новий рюкзак</p>
+    <p><strong>Концепт "POV":</strong> Відео від першої особи — руки шукають щось у хаотичному рюкзаку → cut → все на місці в новому</p>
+    <p><strong>Концепт "Carousel":</strong> Карусель — 5 слайдів "5 проблем які вирішує цей рюкзак"</p>
+    <p><strong>Концепт "UGC":</strong> Реальна людина розпаковує і показує як все ідеально пакується</p>
+  </div>
+
+  <h3>Повна ієрархія на одному прикладі</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Рівень</th><th>Що обираємо</th><th>Приклад</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Сходинка</strong></td>
+          <td>Рівень 2 — знає проблему</td>
+          <td>Людина знає що її рюкзак незручний</td>
+        </tr>
+        <tr>
+          <td><strong>Кут</strong></td>
+          <td>Pain Point</td>
+          <td>"Біль від хаосу в рюкзаку"</td>
+        </tr>
+        <tr>
+          <td><strong>Концепт</strong></td>
+          <td>TalkingHead</td>
+          <td>Відео де людина на камеру говорить про проблему</td>
+        </tr>
+        <tr>
+          <td><strong>Нейминг</strong></td>
+          <td colspan="2"><code>010126 | Video | PainPoint | TalkingHead | v1</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Порядок тестування</h3>
+  <div class="card blue">
+    <div class="card-label blue">ЕТАП 1 → ЕТАП 2 → ЕТАП 3</div>
+    <h4>Від сходинки до концепту</h4>
+    <p><strong>Етап 1 — Тестуємо сходинки та кути:</strong> Запускаємо креативи з різних сходинок і різних кутів (5 креативів, кожен — інший кут або інша сходинка). Creative battle визначає переможця.</p>
+    <p><strong>Етап 2 — Тестуємо концепти переможного кута:</strong> Для кута-переможця робимо 5 різних концептів (TalkingHead, Static, POV, Carousel, UGC). Знаходимо найкращий концепт.</p>
+    <p><strong>Етап 3 — Ітерації найкращого концепту:</strong> Для концепту-переможця робимо версії (v1, v2, v3) — інший хук, інший CTA, інший монтаж. Масштабуємо найкращу версію.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Як це відображається в неймінгу</div>
+    <p>Нейминг креативу: DDMMYY | Формат | Кут | Концепт | Версія. Сходинка не дублюється в неймінгу — вона визначається на стратегічному рівні і зафіксована в плані на проєкт.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 03 CREATIVE BATTLE -->
+<div class="section" id="battle">
+  <div class="section-number">03</div>
+  <h2>Creative Battle</h2>
+  <p class="section-desc">Як ми тестуємо креативи. Формат "бою" в одній групі оголошень.</p>
+
+  <div class="card blue">
+    <div class="card-label blue">ФОРМАТ ТЕСТУВАННЯ</div>
+    <h4>Всі креативи в одній групі — система обирає переможця</h4>
+    <p>Ми не створюємо окремі групи під кожен креатив. Всі креативи (5-10 штук) завантажуються в одну Ad Group. Система (Advantage+) сама розподіляє бюджет на ті, що працюють найкраще. Це і є "creative battle".</p>
+  </div>
+
+  <h3>Коли кути виносяться на рівень Ad Group</h3>
+  <p>При бюджетах від ~$50K/міс кожен кут = окрема група оголошень з 5 креативами (різними концептами). Продукт виноситься на рівень Campaign. Це дозволяє чітко бачити який кут працює і масштабувати його окремо.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>До ~$50K/міс</h4>
+      <p>Кути на рівні Ad. Всі angles в одній групі. Creative battle. Концепти — різні формати одного кута.</p>
+    </div>
+    <div class="card">
+      <h4>Від ~$50K/міс</h4>
+      <p>Кути на рівні Ad Group. Кожен angle = окрема група з 5 концептами (різних форматів).</p>
+    </div>
+  </div>
+
+  <div class="warning-block">
+    <div class="title">Ніколи не дублюємо кампанії</div>
+    <p>Горизонтальний скейл (дублювання кампаній з тими ж креативами) створює Auction Overlap — ви конкуруєте самі з собою і піднімаєте CPA. Масштабування тільки через: збільшення бюджету, нові продукти, нові ринки, нові канали.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 04 BUDGET -->
+<div class="section" id="budget">
+  <div class="section-number">04</div>
+  <h2>Бюджет до креативу</h2>
+  <p class="section-desc">Скільки грошей потрібно на тест одного креативу і скільки креативів може витримати бюджет.</p>
+
+  <div class="card blue">
+    <div class="card-label blue">ПРАВИЛО</div>
+    <h4>$100-150 відкруту на креатив</h4>
+    <p>Мінімум $100-150 витрачених системою на один креатив перед тим, як приймати рішення про нього. Менше — недостатньо даних для висновку. Це не ручний розподіл — це те, що система сама витратила на креатив.</p>
+  </div>
+
+  <h3>Як рахувати кількість креативів під бюджет</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Денний бюджет</th><th>Рекомендована к-ть креативів</th><th>Час на валідний тест</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>$20/день</td><td>3-5 креативів</td><td>5-7 днів ($100-140 на кожен)</td></tr>
+        <tr><td>$50/день</td><td>5-7 креативів</td><td>3-5 днів</td></tr>
+        <tr><td>$100/день</td><td>5-10 креативів</td><td>2-3 дні</td></tr>
+        <tr><td>$300/день</td><td>5-10 креативів</td><td>1-2 дні</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Не більше 10 паралельно</div>
+    <p>Навіть з великим бюджетом — не більше 10 креативів в одній групі. Більше — система розмиває дані і жоден креатив не набирає достатньо для висновку. Краще менше, але з даними, ніж більше, але наосліп.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 05 DECISIONS -->
+<div class="section" id="decisions">
+  <div class="section-number">05</div>
+  <h2>Коли вимикати креатив</h2>
+  <p class="section-desc">Чіткі правила — коли креатив заслуговує на стоп, а коли нехай працює.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Ситуація</th><th>Рішення</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Система витратила $100-150+ і креатив не показує результат (CPA > 1.5x target)</td>
+          <td><span class="badge badge-red">Вимкнути</span> — достатньо даних, креатив не працює</td>
+        </tr>
+        <tr>
+          <td>Пройшло 3-7 днів, система взагалі не відливає бюджет на креатив</td>
+          <td><span class="badge badge-yellow">Можна вимкнути</span> — але тільки якщо потрібно звільнити місце для нових</td>
+        </tr>
+        <tr>
+          <td>Креатив працює, але не найкращий (ROAS ок, але не топ)</td>
+          <td><span class="badge badge-green">Залишити</span> — він не заважає і може стати backup</td>
+        </tr>
+        <tr>
+          <td>Система не витрачає на креатив, але місця в групі достатньо (&lt;10)</td>
+          <td><span class="badge badge-green">Залишити</span> — він не коштує грошей і не заважає</td>
+        </tr>
+        <tr>
+          <td>Creative Fatigue: Frequency > 3, CTR падає</td>
+          <td><span class="badge badge-yellow">Рефреш</span> — якщо кут працював. Або <span class="badge badge-red">Заміна</span> — якщо кут не працював</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warning-block">
+    <div class="title">Не вимикай все крім одного!</div>
+    <p>Навіть якщо система зливає весь бюджет на один креатив — не вимикай решту. Вони працюють як резерв. Коли основний втомиться — система автоматично перейде на наступний. Вимикаючи все крім одного — ти залишаєшся без страховки.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 06 FATIGUE -->
+<div class="section" id="fatigue">
+  <div class="section-number">06</div>
+  <h2>Creative Fatigue</h2>
+  <p class="section-desc">Коли креатив втомлюється і що з цим робити.</p>
+
+  <div class="grid-2">
+    <div class="card red">
+      <div class="card-label red">СИГНАЛИ FATIGUE</div>
+      <h4>Як розпізнати</h4>
+      <p>Frequency > 3 (аудиторія бачила креатив 3+ рази)</p>
+      <p>CTR тренд вниз протягом 3-5 днів</p>
+      <p>CPA поступово росте без інших причин</p>
+    </div>
+    <div class="card green">
+      <div class="card-label green">ЩО РОБИТИ</div>
+      <h4>Два варіанти</h4>
+      <p><strong>Рефреш</strong> — якщо кут працював: новий концепт того самого кута. Новий хук, новий монтаж, нові субтитри, інший формат. Кут та сходинка ті самі.</p>
+      <p><strong>Повна заміна</strong> — якщо кут не працював з початку: інший кут або інша сходинка. Нова комунікація з нуля.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">+2 нових креативи на тиждень = захист від fatigue</div>
+    <p>Якщо щотижня додаєш 2 нових креативи — у тебе завжди є свіжий контент. Fatigue стає проблемою тільки коли ти перестаєш додавати нові креативи.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 07 SITUATIONS -->
+<div class="section" id="situations">
+  <div class="section-number">07</div>
+  <h2>Типові ситуації</h2>
+  <p class="section-desc">Реальні ситуації, з якими стикається UAM, і правильні рішення.</p>
+
+  <h3>Ситуація 1: Хочемо масштабувати, але "мало креативів"</h3>
+  <div class="vs-block">
+    <div class="vs-wrong">
+      <h5>❌ Як роблять неправильно</h5>
+      <p>Не масштабують бюджет, бо "немає нових креативів". Чекають поки КС зробить нові. Тим часом результати стоять на місці або падають.</p>
+    </div>
+    <div class="vs-right">
+      <h5>✓ Як потрібно</h5>
+      <p>Масштабувати з тим що є. Два варіанти:</p>
+      <p><strong>1.</strong> Просто збільшити бюджет +20% — якщо ROAS > target, система впорається з наявними креативами.</p>
+      <p><strong>2.</strong> Увімкнути старі креативи — найкращі з тих що раніше зупинили. Дати їм другий шанс як підтримку для масштабування.</p>
+    </div>
+  </div>
+
+  <h3>Ситуація 2: Результати падають, система зливає на один креатив</h3>
+  <div class="vs-block">
+    <div class="vs-wrong">
+      <h5>❌ Як роблять неправильно</h5>
+      <p>Вимикають всі креативи крім одного з найбільшою кількістю конверсій. "Залишимо тільки те що працює." В результаті — один креатив швидко втомлюється, немає backup, все падає ще більше.</p>
+    </div>
+    <div class="vs-right">
+      <h5>✓ Як потрібно</h5>
+      <p>НЕ вимикати. Нехай один креатив бере основний бюджет — це нормально. Інші повинні бути увімкнені паралельно, навіть якщо система не відливає на них бюджет. Вони — резерв. Коли основний втомиться, система автоматично перейде на наступний.</p>
+    </div>
+  </div>
+
+  <h3>Ситуація 3: Всі креативи втомились, нових немає</h3>
+  <div class="vs-block">
+    <div class="vs-wrong">
+      <h5>❌ Як роблять неправильно</h5>
+      <p>Панікують. Зупиняють кампанію. Або продовжують крутити втомлені креативи і дивляться як CPA росте.</p>
+    </div>
+    <div class="vs-right">
+      <h5>✓ Як потрібно</h5>
+      <p><strong>1.</strong> Увімкнути найкращі зі старих зупинених креативів — аудиторія могла оновитись.</p>
+      <p><strong>2.</strong> Зменшити бюджет на 20-30% щоб знизити Frequency.</p>
+      <p><strong>3.</strong> Терміновий запит до КС — рефреш найкращого кута (новий концепт: інший хук, формат, монтаж).</p>
+      <p><strong>4.</strong> Не зупиняти кампанію — це ресетить learning phase.</p>
+    </div>
+  </div>
+
+  <h3>Ситуація 4: Новий креатив не отримує бюджет від системи</h3>
+  <div class="vs-block">
+    <div class="vs-wrong">
+      <h5>❌ Як роблять неправильно</h5>
+      <p>Вимикають старі креативи щоб "дати шанс" новому. Або збільшують бюджет різко щоб "хватило на всіх".</p>
+    </div>
+    <div class="vs-right">
+      <h5>✓ Як потрібно</h5>
+      <p>Залишити як є. Система знає краще. Якщо через 3-7 днів креатив так і не отримав бюджету — можна вимкнути, але тільки якщо потрібно місце для наступного нового.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 08 DIAGNOSTICS -->
+<div class="section" id="diagnostics">
+  <div class="section-number">08</div>
+  <h2>Діагностика: це креатив чи ні?</h2>
+  <p class="section-desc">Перед тим як просити нові креативи — перевір чи проблема взагалі в них.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Сигнал</th><th>Що це значить</th><th>Висновок</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: var(--danger);">CTR впав</strong>, ATC та CR стабільні</td>
+          <td>Люди перестали клікати. Fatigue або кут не резонує.</td>
+          <td><span class="badge badge-red">Креатив →</span> рефреш або новий кут</td>
+        </tr>
+        <tr>
+          <td><strong>CTR ок</strong>, <strong style="color: var(--danger);">ATC впав</strong>, CR стабільна</td>
+          <td>Клікають, але не додають в кошик. Посадка не відповідає оферу.</td>
+          <td><span class="badge badge-blue">Не креатив →</span> перевірити landing</td>
+        </tr>
+        <tr>
+          <td><strong>CTR ок, ATC ок</strong>, <strong style="color: var(--danger);">CR впав</strong></td>
+          <td>Додають, але не купують. Проблема в checkout.</td>
+          <td><span class="badge badge-blue">Не креатив →</span> checkout, доставка, оплата</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">CPM різко виріс</strong>, все стабільне</td>
+          <td>Аукціон дорожчий. Конкуренція, сезон.</td>
+          <td><span class="badge badge-blue">Не креатив →</span> ринкова ситуація</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">Технічні аномалії</strong> (NaN, нулі, розрив)</td>
+          <td>Атрибуція зламалась.</td>
+          <td><span class="badge badge-blue">Не креатив →</span> піксель, CAPI, GTM</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Правило діагностики</div>
+    <p>Не кажи "креативи не працюють" без цифр. Правильно: "CTR впав з 1.8% до 0.9%, Frequency 4.1, ATC та CR стабільні — гіпотеза: creative fatigue." Проблема = гіпотеза + дані.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 09 NAMING -->
+<div class="section" id="naming">
+  <div class="section-number">09</div>
+  <h2>Нейминг креативів</h2>
+  <p class="section-desc">Єдина конвенція для всіх креативів. Дата як ідентифікатор, формат злитний (DDMMYY).</p>
+
+  <h3>Кути на рівні Ad (стандарт)</h3>
+  <div class="card blue">
+    <div class="card-label blue">ШАБЛОН</div>
+    <p><strong>[DDMMYY] | [Формат] | [Кут] | [Концепт] | [Версія]</strong></p>
+    <p style="color: var(--ink-300);">Приклад: 010126 | Video | PainPoint | TalkingHead | v1</p>
+  </div>
+
+  <h3>Кути на рівні Ad Group ($50K+)</h3>
+  <div class="card purple">
+    <div class="card-label purple">ШАБЛОН</div>
+    <p><strong>[DDMMYY] | [Формат] | [Концепт] | [Версія]</strong></p>
+    <p style="color: var(--ink-300);">Кут вже в назві Ad Group, тому в Ad не дублюємо.</p>
+    <p style="color: var(--ink-300);">Приклад: 010126 | Video | TalkingHead | v1</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 10 MISTAKES -->
+<div class="section" id="mistakes">
+  <div class="section-number">10</div>
+  <h2>Типові помилки UAM</h2>
+  <p class="section-desc">Помилки, які вже робили, й яких не повинні повторювати.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Помилка</th><th>Чому це погано</th><th>Як правильно</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Вимкнути все крім одного креативу</strong></td>
+          <td>Один креатив швидко втомиться, немає backup</td>
+          <td>Залишити всі увімкненими, навіть без бюджету</td>
+        </tr>
+        <tr>
+          <td><strong>Не масштабувати бо "мало креативів"</strong></td>
+          <td>Втрачаємо можливість зростання</td>
+          <td>Масштабувати з наявними або увімкнути старі</td>
+        </tr>
+        <tr>
+          <td><strong>Завантажити 5 однакових UGC</strong></td>
+          <td>Система не має вибору між форматами</td>
+          <td>Мінімум 5 різних форматів</td>
+        </tr>
+        <tr>
+          <td><strong>Казати "креативи не працюють" без цифр</strong></td>
+          <td>Неможливо визначити причину</td>
+          <td>Дані + гіпотеза: "CTR впав з X до Y, Freq Z"</td>
+        </tr>
+        <tr>
+          <td><strong>Вимкнути креатив після 1 дня</strong></td>
+          <td>Недостатньо даних, це шум</td>
+          <td>Мін. $100-150 відкруту перед рішенням</td>
+        </tr>
+        <tr>
+          <td><strong>Дублювати кампанію для масштабування</strong></td>
+          <td>Auction overlap — конкуруєш сам з собою</td>
+          <td>Збільшити бюджет +20%, не дублювати</td>
+        </tr>
+        <tr>
+          <td><strong>Перейти на ATC оптимізацію</strong></td>
+          <td>Притягнеш тих хто додає в кошик, але не купує</td>
+          <td>Завжди Purchase. Ніколи нижче.</td>
+        </tr>
+        <tr>
+          <td><strong>Не додавати нові креативи тижнями</strong></td>
+          <td>Creative fatigue, падіння результатів</td>
+          <td>Мінімум 2 нових на тиждень</td>
+        </tr>
+        <tr>
+          <td><strong>Вимкнути старі креативи щоб "дати шанс" новим</strong></td>
+          <td>Забираєш перевірених переможців</td>
+          <td>Додавай нові поруч, система сама розподілить</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="logo">magic</div>
+  <div>advertise for e-commerce</div>
+  <div style="margin-top: 6px; font-size: 11px;">Внутрішній документ. Не для розповсюдження.</div>
+</div>
+
+</body>
+</html>

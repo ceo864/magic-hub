@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICE та PIE — пріоритезація гіпотез · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:40}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar nav{display:flex;gap:6px;flex-wrap:wrap}
+.topbar nav a{color:rgba(255,255,255,.7);font-size:13px;font-weight:600;text-decoration:none;padding:6px 11px;border-radius:999px;transition:.15s}
+.topbar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* HERO */
+.hero{background:var(--ink-900);color:#fff;padding:52px 0 60px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
+.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
+.hero .b2{width:260px;height:260px;background:#38A0FF;bottom:-140px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(34px,6vw,56px);line-height:1.03;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:620px;margin-top:16px}
+
+section{padding:52px 0 0}
+.sec-label{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.sec-label .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
+.sec-label h2{font-weight:900;font-size:30px;letter-spacing:-.02em}
+.lead{font-size:17px;color:var(--ink-600);max-width:730px;margin-bottom:24px}
+p{font-size:16px;color:var(--ink-700);margin-bottom:14px}
+p b,li b{font-weight:700;color:var(--ink-900)}
+.anchor{position:relative;top:-70px}
+
+/* WHY card */
+.why{background:var(--ink-900);color:#fff;border-radius:var(--radius-2xl);padding:34px 38px;position:relative;overflow:hidden}
+.why .blob{position:absolute;width:280px;height:280px;border-radius:999px;filter:blur(70px);opacity:.3;background:#7A8CFF;top:-120px;right:-40px}
+.why .inner{position:relative;z-index:1}
+.why h3{font-weight:800;font-size:22px;letter-spacing:-.01em;margin-bottom:12px}
+.why p{color:rgba(255,255,255,.82);font-size:17px;margin-bottom:0}
+.why .pull{font-weight:700;color:#fff}
+
+/* concept cards */
+.framerow{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.frame{background:#fff;border-radius:var(--radius-xl);padding:28px;box-shadow:var(--shadow-sm);border-top:5px solid var(--magic-blue)}
+.frame.pie{border-top-color:var(--magic-purple)}
+.frame .ftag{display:inline-block;font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+.frame.ice .ftag{background:var(--blue-50);color:#1566B8}
+.frame.pie .ftag{background:var(--purple-50);color:#5E30C4}
+.frame h3{font-weight:900;font-size:24px;letter-spacing:-.02em;margin-bottom:4px}
+.frame .full{font-size:14px;color:var(--ink-400);margin-bottom:16px}
+.crit{display:flex;gap:13px;padding:13px 0;border-top:1px solid var(--ink-100)}
+.crit:first-of-type{border-top:0}
+.crit .cl{flex:none;width:34px;height:34px;border-radius:10px;background:var(--magic-gradient-soft);color:#5E30C4;font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center}
+.frame.pie .crit .cl{background:var(--purple-50)}
+.crit .cb b{font-weight:700;font-size:15px;color:var(--ink-900)}
+.crit .cb span{display:block;font-size:14px;color:var(--ink-600);margin-top:2px;line-height:1.45}
+.formula{margin-top:16px;background:var(--ink-50);border-radius:var(--radius-md);padding:14px 16px;font-size:15px;font-weight:600;color:var(--ink-800);display:flex;align-items:center;gap:9px}
+.formula i{width:17px;height:17px;stroke:var(--magic-blue)}
+.frame.pie .formula i{stroke:var(--magic-purple)}
+.formula code{font-family:var(--font);background:#fff;padding:2px 8px;border-radius:7px;box-shadow:var(--shadow-sm);font-weight:700}
+
+/* steps */
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{background:#fff;border-radius:var(--radius-lg);padding:22px 24px;box-shadow:var(--shadow-sm);display:flex;gap:18px;align-items:flex-start}
+.step .sn{flex:none;width:38px;height:38px;border-radius:11px;background:var(--magic-gradient);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand)}
+.step .sb h4{font-weight:800;font-size:17px;margin-bottom:4px}
+.step .sb p{margin-bottom:0;font-size:15px;color:var(--ink-600)}
+
+/* scale legend */
+.scalebox{background:var(--magic-gradient-soft);border-radius:var(--radius-xl);padding:24px 26px;margin-top:8px}
+.scalebox h4{font-weight:800;font-size:17px;color:#3a2a66;margin-bottom:14px}
+.scalegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.scaleband{background:#fff;border-radius:var(--radius-md);padding:14px;text-align:center;box-shadow:var(--shadow-sm)}
+.scaleband .rng{font-weight:900;font-size:20px;letter-spacing:-.01em}
+.scaleband .lab{font-size:13px;color:var(--ink-500);margin-top:2px}
+.r-lo .rng{color:var(--danger)} .r-mid .rng{color:var(--warning)} .r-hi .rng{color:var(--success)}
+
+/* TABLE / worked example */
+.tablewrap{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:14px 16px;font-size:15px}
+thead th{background:var(--ink-900);color:#fff;font-weight:600;font-size:13px;letter-spacing:.03em}
+thead th.num{text-align:center}
+tbody tr{border-top:1px solid var(--ink-100)}
+tbody td:first-child{font-weight:600;color:var(--ink-900)}
+td.num{text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+tbody tr.win{background:linear-gradient(90deg,rgba(46,194,138,.10),transparent)}
+.scorecell{font-weight:900;font-variant-numeric:tabular-nums}
+.rankpill{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--ink-100);color:var(--ink-600)}
+.rankpill.r1{background:var(--success-bg);color:#178a5f}
+.tnote{font-size:14px;color:var(--ink-500);margin-top:12px;line-height:1.5}
+
+/* callouts */
+.callout{border-radius:var(--radius-xl);padding:22px 26px;display:flex;gap:16px;align-items:flex-start;margin:18px 0}
+.callout i{flex:none;width:24px;height:24px;margin-top:2px}
+.callout .ctext{font-size:15.5px;line-height:1.55}
+.callout.warn{background:var(--warning-bg)} .callout.warn i{stroke:#9a6a00} .callout.warn .ctext{color:#6b4e12}
+.callout.tip{background:var(--success-bg)} .callout.tip i{stroke:#178a5f} .callout.tip .ctext{color:#155e44}
+.callout.info{background:var(--info-bg)} .callout.info i{stroke:#1566B8} .callout.info .ctext{color:#1c4d80}
+.callout .ctext b{font-weight:700}
+
+/* when to use */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cmpcard{background:#fff;border-radius:var(--radius-xl);padding:24px;box-shadow:var(--shadow-sm)}
+.cmpcard .ch{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cmpcard .ch .dot{width:12px;height:12px;border-radius:4px}
+.cmpcard.ice .ch .dot{background:var(--magic-blue)} .cmpcard.pie .ch .dot{background:var(--magic-purple)}
+.cmpcard .ch h4{font-weight:800;font-size:18px}
+.cmpcard ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.cmpcard li{display:flex;gap:10px;font-size:15px;color:var(--ink-700);line-height:1.45}
+.cmpcard li i{flex:none;width:17px;height:17px;stroke:var(--success);margin-top:3px}
+
+/* CALCULATOR */
+.calc{background:#fff;border-radius:var(--radius-2xl);padding:30px;box-shadow:var(--shadow-md)}
+.calc-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.toggle{display:inline-flex;background:var(--ink-100);border-radius:999px;padding:4px}
+.toggle button{border:0;background:transparent;font-weight:700;font-size:14px;color:var(--ink-500);padding:9px 18px;border-radius:999px;transition:.15s}
+.toggle button.on{background:var(--magic-gradient);color:#fff;box-shadow:var(--shadow-glow-brand)}
+.calc-hint{font-size:13px;color:var(--ink-500);flex:1;min-width:200px}
+.btn{font-weight:700;border:0;padding:12px 20px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:14px;transition:.2s}
+.btn i{width:16px;height:16px}
+.btn-primary{background:var(--magic-gradient);color:#fff;box-shadow:var(--shadow-glow-brand)}
+.btn-primary:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn-ghost{background:var(--ink-50);color:var(--ink-700);box-shadow:inset 0 0 0 1.5px var(--ink-200)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink-400)}
+.calc-table{width:100%;border-collapse:collapse}
+.calc-table th{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-400);text-align:center;padding:0 6px 10px}
+.calc-table th.htext{text-align:left}
+.calc-table td{padding:7px 6px;vertical-align:middle}
+.calc-table input[type=text]{width:100%;font:inherit;font-weight:400;font-size:15px;padding:11px 13px;border:1.5px solid var(--ink-200);border-radius:11px;outline:none;transition:.15s}
+.calc-table input[type=text]:focus{border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.16)}
+.numin{width:62px;font:inherit;font-weight:700;text-align:center;font-size:15px;padding:10px 4px;border:1.5px solid var(--ink-200);border-radius:10px;outline:none;transition:.15s}
+.numin:focus{border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.16)}
+.scoreout{font-weight:900;font-size:18px;text-align:center;font-variant-numeric:tabular-nums;min-width:54px}
+.rmrow{background:transparent;border:0;color:var(--ink-300);cursor:pointer;padding:6px}
+.rmrow:hover{color:var(--danger)}
+.rmrow i{width:18px;height:18px}
+.rankcol{text-align:center;font-weight:900;font-size:16px;width:40px}
+.rankcol .medal{display:inline-flex;width:28px;height:28px;border-radius:999px;align-items:center;justify-content:center;font-size:13px;color:#fff;background:var(--ink-300)}
+.rankcol .medal.m1{background:var(--success)} .rankcol .medal.m2{background:var(--magic-blue)} .rankcol .medal.m3{background:var(--magic-purple)}
+.calc-foot{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.faint{color:var(--ink-400);font-size:13px}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:56px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:760px){
+  .framerow,.cmp{grid-template-columns:1fr}
+  .scalegrid{grid-template-columns:1fr}
+  .topbar nav{display:none}
+}
+@media print{
+  .topbar,.calc-toolbar .btn,.calc-foot,footer,.rmrow{display:none!important}
+  body{background:#fff}
+  .hero,.why{background:#fff;color:#000;border:1px solid #ddd}
+  .hero .blob,.why .blob{display:none}
+  h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .frame,.step,.calc,.tablewrap{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <nav>
+      <a href="#why">Навіщо</a>
+      <a href="#ice">ICE</a>
+      <a href="#pie">PIE</a>
+      <a href="#example">Приклад</a>
+      <a href="#whichone">Що обрати</a>
+      <a href="#mistakes">Помилки</a>
+      <a href="#calc">Калькулятор</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="list-ordered"></i>Навчальний матеріал · CRO</div>
+    <h1>Пріоритезація гіпотез:<br><span class="g">ICE та PIE</span></h1>
+    <p class="sub">Коли ідей більше, ніж часу, ці два фреймворки допомагають вирішити, що тестувати першим — за впливом, а не за чуйкою. Механіка, приклади з e-commerce і чесні засторо́ги.</p>
+  </div>
+</header>
+
+<section id="why"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="why">
+      <div class="blob"></div>
+      <div class="inner">
+        <h3>Проблема, яку вони вирішують</h3>
+        <p>Уяви: <span class="pull">8 ідей покращень лендингу й тиждень часу.</span> Без системи береш ту, що подобається, або найочевиднішу — і легко зливаєш тиждень на косметику замість вузького місця воронки. ICE та PIE дають спільну мову: проганяєш усі ідеї через однакові критерії, перемножуєш бали — і нагору спливає те, що дає багато, ймовірно спрацює й коштує дешево. Це не «об'єктивна істина», а дисципліна: фреймворк змушує проговорити, <span class="pull">чому одне важливіше за інше.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="frameworks"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">01</span><h2>Два фреймворки</h2></div>
+    <p class="lead">Логіка в них однакова — оцінити кожну ідею за трьома критеріями (зазвичай 1–10) і перемножити. Різниця в тому, <b>що саме</b> оцінюють.</p>
+    <div class="framerow">
+
+      <div class="frame ice">
+        <span class="ftag">ICE</span>
+        <h3>ICE</h3>
+        <div class="full">Impact · Confidence · Ease</div>
+        <div class="crit"><div class="cl">I</div><div class="cb"><b>Impact — вплив</b><span>Наскільки сильно це вплине на результат, якщо спрацює.</span></div></div>
+        <div class="crit"><div class="cl">C</div><div class="cb"><b>Confidence — впевненість</b><span>Наскільки ти впевнений, що спрацює: є дані й досвід — чи це здогад.</span></div></div>
+        <div class="crit"><div class="cl">E</div><div class="cb"><b>Ease — легкість</b><span>Наскільки легко й швидко впровадити (час, ресурс, складність).</span></div></div>
+        <div class="formula"><i data-lucide="calculator"></i>Score = <code>I × C × E</code></div>
+      </div>
+
+      <div class="frame pie">
+        <span class="ftag">PIE</span>
+        <h3>PIE</h3>
+        <div class="full">Potential · Importance · Ease</div>
+        <div class="crit"><div class="cl">P</div><div class="cb"><b>Potential — потенціал</b><span>Наскільки погано зараз і скільки можна виграти на цій сторінці/кроці.</span></div></div>
+        <div class="crit"><div class="cl">I</div><div class="cb"><b>Importance — важливість</b><span>Цінність місця: скільки трафіку на нього й яка його грошова вага.</span></div></div>
+        <div class="crit"><div class="cl">E</div><div class="cb"><b>Ease — легкість</b><span>Складність впровадження тесту саме тут.</span></div></div>
+        <div class="formula"><i data-lucide="calculator"></i>Score = <code>P × I × E</code></div>
+      </div>
+
+    </div>
+    <div class="callout info">
+      <i data-lucide="info"></i>
+      <div class="ctext">PIE придумали у WiderFunnel саме для CRO — щоб вирішувати, <b>яку сторінку</b> тестувати першою. ICE ширший: ним пріоритезують будь-що — гіпотези, фічі, рекламні тести, задачі. Бали множать, бо так слабка ланка (напр. дуже низька Ease) сильно тягне підсумок донизу — і це правильно.</div>
+    </div>
+  </div>
+</section>
+
+<section id="howto"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">02</span><h2>Як працювати: крок за кроком</h2></div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb"><h4>Збери всі ідеї в один список</h4><p>Гіпотези покращень, тести, фічі — усе в одну таблицю. Не оцінюй на льоту, спершу просто випиши.</p></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb"><h4>Сформулюй кожну як гіпотезу, а не задачу</h4><p>Не «змінити кнопку», а «якщо зробити checkout гостьовим, конверсія в оплату зросте, бо приберемо тертя реєстрації». Так Impact і Confidence оцінюються чесніше.</p></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb"><h4>Постав бали 1–10 за кожним критерієм</h4><p>Краще оцінювати командою (2–3 людини), щоб збити суб'єктивність. Confidence підкріплюй даними: є кейс / бенчмарк / тест — вищий бал; «мені здається» — нижчий.</p></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb"><h4>Перемнож і відсортуй</h4><p>I×C×E (або P×I×E) → сортуй від більшого. Зверху — те, що береш у роботу першим.</p></div></div>
+      <div class="step"><div class="sn">5</div><div class="sb"><h4>Тестуй, фіксуй результат, перераховуй</h4><p>Після тесту Confidence по суміжних гіпотезах змінюється (отримав дані). Пріоритети — живий список, а не висічене в камені.</p></div></div>
+    </div>
+
+    <div class="scalebox">
+      <h4>Орієнтир для балів 1–10</h4>
+      <div class="scalegrid">
+        <div class="scaleband r-lo"><div class="rng">1–3</div><div class="lab">слабко / важко / непевно</div></div>
+        <div class="scaleband r-mid"><div class="rng">4–7</div><div class="lab">помірно</div></div>
+        <div class="scaleband r-hi"><div class="rng">8–10</div><div class="lab">сильно / легко / впевнено</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="example"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">03</span><h2>Приклад на ICE</h2></div>
+    <p class="lead">Той самий кейс: 8 ідей для інтернет-магазину, тиждень часу. Оцінюємо за ICE й дивимось, що виграє. Зверни увагу — найлегша ідея (зміна кольору кнопки) опиняється внизу, бо її Impact мізерний.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Гіпотеза</th><th class="num">Impact</th><th class="num">Confidence</th><th class="num">Ease</th><th class="num">Score</th><th class="num">Пріоритет</th></tr></thead>
+        <tbody>
+          <tr class="win"><td>Гостьовий checkout (прибрати примусову реєстрацію)</td><td class="num">9</td><td class="num">8</td><td class="num">7</td><td class="num scorecell" style="color:#178a5f">504</td><td class="num"><span class="rankpill r1"><i data-lucide="trophy" style="width:13px;height:13px"></i>1</span></td></tr>
+          <tr><td>Показати вартість доставки раніше (на сторінці товару)</td><td class="num">8</td><td class="num">7</td><td class="num">7</td><td class="num scorecell">392</td><td class="num"><span class="rankpill">2</span></td></tr>
+          <tr><td>Додати відгуки й реальні фото на PDP</td><td class="num">7</td><td class="num">7</td><td class="num">7</td><td class="num scorecell">343</td><td class="num"><span class="rankpill">3</span></td></tr>
+          <tr><td>Додати Apple Pay / Google Pay на checkout</td><td class="num">7</td><td class="num">6</td><td class="num">5</td><td class="num scorecell">210</td><td class="num"><span class="rankpill">4</span></td></tr>
+          <tr><td>Прискорити мобільну версію (Core Web Vitals)</td><td class="num">8</td><td class="num">6</td><td class="num">4</td><td class="num scorecell">192</td><td class="num"><span class="rankpill">5</span></td></tr>
+          <tr><td>Спрощений хедер на сторінці оплати</td><td class="num">5</td><td class="num">6</td><td class="num">6</td><td class="num scorecell">180</td><td class="num"><span class="rankpill">6</span></td></tr>
+          <tr><td>Банер з УТП на головній</td><td class="num">4</td><td class="num">5</td><td class="num">8</td><td class="num scorecell">160</td><td class="num"><span class="rankpill">7</span></td></tr>
+          <tr><td>Змінити колір головної кнопки</td><td class="num">3</td><td class="num">4</td><td class="num">10</td><td class="num scorecell" style="color:#c2333c">120</td><td class="num"><span class="rankpill">8</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">Висновок: попри те, що «колір кнопки» впроваджується за 10 хвилин (Ease 10), її загальний бал найнижчий — впливу майже немає. А «гостьовий checkout» складніший, але виграє, бо б'є у вузьке місце воронки з високою впевненістю. <b>Саме це й перевіряє тест на пріоритезацію: рішення за впливом, а не за зручністю.</b></p>
+
+    <div class="callout tip">
+      <i data-lucide="lightbulb"></i>
+      <div class="ctext"><b>Зв'язок із CRO-процесом Magic.</b> Спершу дані воронки показують, де найбільша втрата (напр. кошик → оплата). Потім гіпотези під це вузьке місце проганяються через ICE/PIE. І лише тоді — чистий A/B-тест переможця. Послідовність: <b>дані → пріоритезація → тест</b>, а не навпаки.</div>
+    </div>
+  </div>
+</section>
+
+<section id="pie-example"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">04</span><h2>Приклад на PIE</h2></div>
+    <p class="lead">PIE зручний, коли питання не «що поміняти», а «<b>яку сторінку</b> взяти в роботу першою». Оцінюємо сторінки магазину.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Сторінка</th><th class="num">Potential</th><th class="num">Importance</th><th class="num">Ease</th><th class="num">Score</th><th class="num">Пріоритет</th></tr></thead>
+        <tbody>
+          <tr class="win"><td>Сторінка оплати (checkout)</td><td class="num">9</td><td class="num">9</td><td class="num">6</td><td class="num scorecell" style="color:#178a5f">486</td><td class="num"><span class="rankpill r1"><i data-lucide="trophy" style="width:13px;height:13px"></i>1</span></td></tr>
+          <tr><td>Сторінка товару (PDP) бестселера</td><td class="num">7</td><td class="num">8</td><td class="num">7</td><td class="num scorecell">392</td><td class="num"><span class="rankpill">2</span></td></tr>
+          <tr><td>Каталог / категорія</td><td class="num">6</td><td class="num">7</td><td class="num">6</td><td class="num scorecell">252</td><td class="num"><span class="rankpill">3</span></td></tr>
+          <tr><td>Головна сторінка</td><td class="num">5</td><td class="num">6</td><td class="num">5</td><td class="num scorecell">150</td><td class="num"><span class="rankpill">4</span></td></tr>
+          <tr><td>Сторінка «Про нас»</td><td class="num">4</td><td class="num">2</td><td class="num">8</td><td class="num scorecell" style="color:#c2333c">64</td><td class="num"><span class="rankpill">5</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">Checkout виграє: і потенціал високий (там тече), і важливість максимальна (усі покупки проходять через нього). «Про нас» внизу — навіть якщо її легко переробити, трафік і вага малі. <b>Importance в PIE рятує від спокуси «покращувати» сторінки, які ніхто не бачить.</b></p>
+  </div>
+</section>
+
+<section id="whichone"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">05</span><h2>Що обрати — ICE чи PIE</h2></div>
+    <div class="cmp">
+      <div class="cmpcard ice">
+        <div class="ch"><span class="dot"></span><h4>Бери ICE, коли…</h4></div>
+        <ul>
+          <li><i data-lucide="check"></i><span>пріоритезуєш <b>гіпотези й тести</b> загалом, не лише сторінки</span></li>
+          <li><i data-lucide="check"></i><span>важлива <b>впевненість</b> — є дані чи це здогад</span></li>
+          <li><i data-lucide="check"></i><span>список різнорідний: креативи, фічі, задачі, експерименти</span></li>
+          <li><i data-lucide="check"></i><span>потрібен швидкий універсальний інструмент</span></li>
+        </ul>
+      </div>
+      <div class="cmpcard pie">
+        <div class="ch"><span class="dot"></span><h4>Бери PIE, коли…</h4></div>
+        <ul>
+          <li><i data-lucide="check"></i><span>вирішуєш, <b>яку сторінку чи розділ</b> оптимізувати першим</span></li>
+          <li><i data-lucide="check"></i><span>важить <b>трафік і грошова вага</b> місця (Importance)</span></li>
+          <li><i data-lucide="check"></i><span>це класичний <b>CRO-роадмеп</b> по сайту</span></li>
+          <li><i data-lucide="check"></i><span>хочеш уникнути роботи над сторінками з малим трафіком</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout info">
+      <i data-lucide="git-merge"></i>
+      <div class="ctext">На практиці їх часто поєднують: <b>PIE</b> вибирає сторінку («беремось за checkout»), а <b>ICE</b> пріоритезує конкретні гіпотези всередині неї («що саме на checkout міняти першим»). Не обов'язково триматися однієї абревіатури — головне послідовність критеріїв у межах одного списку.</div>
+    </div>
+  </div>
+</section>
+
+<section id="mistakes"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">06</span><h2>Чесні засторо́ги й типові помилки</h2></div>
+    <p class="lead">Фреймворк виглядає математично, але всередині — суб'єктивні бали. Якщо про це забути, ICE/PIE перетворюються на красиве виправдання вже ухваленого рішення.</p>
+
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Завищена Confidence.</b> Найчастіша вада: ставиш 9 тому, що <b>віриш</b> в ідею, а не тому, що є дані. Правило: високий Confidence лише за наявності кейсу, бенчмарку або попереднього тесту. «Мені здається» — це максимум 5.</div>
+    </div>
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Підгонка балів під улюблену ідею.</b> Якщо нишком крутиш цифри, поки твій фаворит не опиниться нагорі, — фреймворк безсилий. Оцінюй критерії <b>до</b> того, як подивишся на підсумок, і краще не наодинці.</div>
+    </div>
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Бали без шкали.</b> Якщо в команди немає спільного розуміння, що таке «Impact 8», цифри несумісні. Домовтесь про орієнтири (див. блок «Орієнтир для балів») перед оцінкою.</div>
+    </div>
+    <div class="callout warn">
+      <i data-lucide="alert-triangle"></i>
+      <div class="ctext"><b>Гіпотеза = задача.</b> «Поміняти банер» неможливо чесно оцінити за Impact. Формулюй як «якщо… то… бо…» — інакше Confidence і Impact беруться зі стелі.</div>
+    </div>
+    <div class="callout tip">
+      <i data-lucide="check-circle-2"></i>
+      <div class="ctext"><b>Як користуватись правильно:</b> ICE/PIE не дають істину — вони <b>дисциплінують розмову</b>. Цінність не в числі 504, а в тому, що команда вголос проговорила, чому checkout важливіший за колір кнопки, і не злила тиждень не туди.</div>
+    </div>
+  </div>
+</section>
+
+<section id="calc"><span class="anchor"></span>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">07</span><h2>Інтерактивний калькулятор</h2></div>
+    <p class="lead">Впиши свої гіпотези, постав бали 1–10 — таблиця сама порахує score й відсортує за пріоритетом. Перемикач угорі змінює модель (ICE / PIE). Дані ніде не зберігаються — це тренажер.</p>
+
+    <div class="calc">
+      <div class="calc-toolbar">
+        <div class="toggle">
+          <button id="modeICE" class="on">ICE</button>
+          <button id="modePIE">PIE</button>
+        </div>
+        <span class="calc-hint" id="modeHint">I × C × E — Impact, Confidence, Ease</span>
+        <button class="btn btn-ghost" id="addRow"><i data-lucide="plus"></i>Додати рядок</button>
+        <button class="btn btn-primary" id="sortRows"><i data-lucide="arrow-down-up"></i>Відсортувати</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="calc-table">
+          <thead>
+            <tr>
+              <th class="rankcol">#</th>
+              <th class="htext">Гіпотеза</th>
+              <th id="c1">Impact</th>
+              <th id="c2">Confidence</th>
+              <th id="c3">Ease</th>
+              <th>Score</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="calcBody"></tbody>
+        </table>
+      </div>
+      <div class="calc-foot">
+        <button class="btn btn-ghost" id="loadDemo"><i data-lucide="flask-conical"></i>Заповнити прикладом</button>
+        <button class="btn btn-ghost" id="printCalc"><i data-lucide="printer"></i>Роздрукувати</button>
+        <span class="faint" style="align-self:center">Бали поза межами 1–10 округляться.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Навчальний матеріал · ceo@magicecom.agency</span></div></footer>
+
+<script>
+/* ===== CONFIG ===== */
+const MODES = {
+  ICE: {cols:["Impact","Confidence","Ease"], hint:"I × C × E — Impact (вплив), Confidence (впевненість), Ease (легкість)"},
+  PIE: {cols:["Potential","Importance","Ease"], hint:"P × I × E — Potential (потенціал), Importance (важливість), Ease (легкість)"}
+};
+let mode = "ICE";
+let rows = [];
+let idSeq = 1;
+
+const DEMO_ICE = [
+  {name:"Гостьовий checkout", v:[9,8,7]},
+  {name:"Показати вартість доставки раніше", v:[8,7,7]},
+  {name:"Відгуки й фото на сторінці товару", v:[7,7,7]},
+  {name:"Apple Pay / Google Pay", v:[7,6,5]},
+  {name:"Прискорити мобільну версію", v:[8,6,4]},
+  {name:"Колір головної кнопки", v:[3,4,10]},
+];
+const DEMO_PIE = [
+  {name:"Сторінка оплати (checkout)", v:[9,9,6]},
+  {name:"Сторінка товару бестселера", v:[7,8,7]},
+  {name:"Каталог / категорія", v:[6,7,6]},
+  {name:"Головна сторінка", v:[5,6,5]},
+  {name:"Сторінка «Про нас»", v:[4,2,8]},
+];
+
+const $ = s=>document.querySelector(s);
+const clamp = n => { n = parseInt(n,10); if(isNaN(n)) return ""; return Math.max(1,Math.min(10,n)); };
+
+function score(v){
+  if(v.some(x=>x===""||x===null||isNaN(x))) return null;
+  return v[0]*v[1]*v[2];
+}
+function scoreColor(s){
+  if(s===null) return "var(--ink-300)";
+  if(s>=350) return "#178a5f";
+  if(s>=180) return "var(--ink-800)";
+  return "#c2333c";
+}
+
+function render(){
+  // headers
+  $("#c1").textContent = MODES[mode].cols[0];
+  $("#c2").textContent = MODES[mode].cols[1];
+  $("#c3").textContent = MODES[mode].cols[2];
+  $("#modeHint").textContent = MODES[mode].hint;
+
+  // ranks: compute order by score (nulls last)
+  const scored = rows.map(r=>({id:r.id, s:score(r.v)}));
+  const ranked = scored.filter(x=>x.s!==null).sort((a,b)=>b.s-a.s);
+  const rankMap = {}; ranked.forEach((x,i)=>rankMap[x.id]=i+1);
+
+  const body = $("#calcBody"); body.innerHTML="";
+  rows.forEach(r=>{
+    const s = score(r.v);
+    const rank = rankMap[r.id];
+    const tr = document.createElement("tr");
+
+    const medalCls = rank===1?"m1":rank===2?"m2":rank===3?"m3":"";
+    tr.innerHTML = `
+      <td class="rankcol">${rank?`<span class="medal ${medalCls}">${rank}</span>`:'<span class="faint">—</span>'}</td>
+      <td><input type="text" placeholder="Опиши гіпотезу…" value="${r.name.replace(/"/g,'&quot;')}" data-id="${r.id}" data-f="name"></td>
+      <td style="text-align:center"><input class="numin" type="text" inputmode="numeric" value="${r.v[0]}" data-id="${r.id}" data-f="0"></td>
+      <td style="text-align:center"><input class="numin" type="text" inputmode="numeric" value="${r.v[1]}" data-id="${r.id}" data-f="1"></td>
+      <td style="text-align:center"><input class="numin" type="text" inputmode="numeric" value="${r.v[2]}" data-id="${r.id}" data-f="2"></td>
+      <td class="scoreout" style="color:${scoreColor(s)}">${s===null?'·':s}</td>
+      <td><button class="rmrow" data-id="${r.id}" title="Видалити"><i data-lucide="x"></i></button></td>`;
+    body.appendChild(tr);
+  });
+
+  // wire inputs
+  body.querySelectorAll("input").forEach(inp=>{
+    inp.addEventListener("input", e=>{
+      const id = +e.target.dataset.id, f = e.target.dataset.f;
+      const row = rows.find(r=>r.id===id);
+      if(f==="name"){ row.name = e.target.value; }
+      else {
+        const c = clamp(e.target.value);
+        row.v[+f] = c;
+        // live score update without full re-render (keep focus)
+        const s = score(row.v);
+        const cell = e.target.closest("tr").querySelector(".scoreout");
+        cell.textContent = s===null?'·':s; cell.style.color = scoreColor(s);
+      }
+    });
+    inp.addEventListener("blur", ()=>render());
+  });
+  body.querySelectorAll(".rmrow").forEach(b=>{
+    b.onclick = ()=>{ rows = rows.filter(r=>r.id!==+b.dataset.id); render(); };
+  });
+  lucide.createIcons();
+}
+
+function addRow(name="", v=["","",""]){
+  rows.push({id:idSeq++, name, v:[...v]});
+}
+function setMode(m){
+  mode=m;
+  $("#modeICE").classList.toggle("on", m==="ICE");
+  $("#modePIE").classList.toggle("on", m==="PIE");
+  render();
+}
+function loadDemo(){
+  rows=[]; idSeq=1;
+  const d = mode==="ICE"?DEMO_ICE:DEMO_PIE;
+  d.forEach(x=>addRow(x.name, x.v));
+  render();
+}
+function sortRows(){
+  rows.sort((a,b)=>{
+    const sa=score(a.v), sb=score(b.v);
+    if(sa===null && sb===null) return 0;
+    if(sa===null) return 1;
+    if(sb===null) return -1;
+    return sb-sa;
+  });
+  render();
+}
+
+$("#modeICE").onclick=()=>setMode("ICE");
+$("#modePIE").onclick=()=>setMode("PIE");
+$("#addRow").onclick=()=>{ addRow(); render(); };
+$("#sortRows").onclick=sortRows;
+$("#loadDemo").onclick=loadDemo;
+$("#printCalc").onclick=()=>window.print();
+
+// seed with a few empty rows
+addRow(); addRow(); addRow();
+render();
+lucide.createIcons();
+</script>
+</body>
+</html>

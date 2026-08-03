@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Глосарій Growth-маркетолога · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar .tag{color:rgba(255,255,255,.6);font-size:13px;font-weight:400}
+
+.hero{background:var(--ink-900);color:#fff;padding:46px 0 130px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
+.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
+.hero .b2{width:240px;height:240px;background:#38A0FF;bottom:-120px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(32px,5.5vw,52px);line-height:1.03;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:620px;margin-top:14px}
+
+/* SEARCH BAR floating */
+.searchwrap{margin-top:-90px;position:relative;z-index:10}
+.searchcard{background:#fff;border-radius:var(--radius-xl);padding:20px;box-shadow:var(--shadow-lg)}
+.searchbox{display:flex;align-items:center;gap:12px;background:var(--ink-50);border:1.5px solid var(--ink-200);border-radius:999px;padding:4px 6px 4px 18px;transition:.15s}
+.searchbox:focus-within{border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.16)}
+.searchbox i{width:20px;height:20px;stroke:var(--ink-400);flex:none}
+.searchbox input{flex:1;border:0;background:transparent;font:inherit;font-weight:400;font-size:16px;padding:11px 0;outline:none}
+.searchbox .clr{border:0;background:var(--ink-200);width:34px;height:34px;border-radius:999px;display:none;align-items:center;justify-content:center;flex:none}
+.searchbox .clr.show{display:flex}
+.searchbox .clr i{width:16px;height:16px;stroke:var(--ink-600)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.fbtn{border:0;background:var(--ink-50);color:var(--ink-600);font-weight:700;font-size:13px;padding:9px 15px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--ink-200);transition:.15s}
+.fbtn:hover{box-shadow:inset 0 0 0 1.5px var(--ink-400)}
+.fbtn.on{background:var(--magic-gradient);color:#fff;box-shadow:var(--shadow-glow-brand)}
+.countline{font-size:13px;color:var(--ink-500);margin-top:14px;padding-left:4px}
+.countline b{color:var(--ink-800);font-weight:700}
+
+main{padding:36px 0 0}
+.catblock{margin-bottom:14px}
+.cathead{display:flex;align-items:center;gap:11px;margin:30px 0 14px;scroll-margin-top:80px}
+.cathead .ci{width:38px;height:38px;border-radius:11px;background:var(--magic-gradient-soft);display:flex;align-items:center;justify-content:center;flex:none}
+.cathead .ci i{width:20px;height:20px;stroke:#5E30C4}
+.cathead h2{font-weight:900;font-size:24px;letter-spacing:-.02em}
+.cathead .cc{margin-left:auto;font-weight:800;font-size:12px;color:var(--ink-400);background:var(--ink-100);padding:4px 11px;border-radius:999px}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.term{background:#fff;border-radius:var(--radius-lg);padding:20px 22px;box-shadow:var(--shadow-sm);transition:.18s;border-left:4px solid transparent}
+.term:hover{box-shadow:var(--shadow-md);border-left-color:var(--magic-blue)}
+.term .th{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+.term .name{font-weight:800;font-size:18px;letter-spacing:-.01em;color:var(--ink-900)}
+.term .full{font-size:13px;color:var(--ink-400);font-weight:500}
+.term .def{font-size:15px;color:var(--ink-700);line-height:1.55}
+.term .def b{font-weight:700;color:var(--ink-900)}
+.term .magic{margin-top:10px;font-size:13.5px;color:#5E30C4;background:var(--purple-50);border-radius:10px;padding:9px 12px;display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.term .magic i{flex:none;width:15px;height:15px;stroke:#7A45EB;margin-top:2px}
+.term .bench{margin-top:8px;font-size:13px;font-weight:600;color:#178a5f;background:var(--success-bg);border-radius:8px;padding:6px 11px;display:inline-flex;gap:7px;align-items:center}
+.term .bench i{width:14px;height:14px;stroke:#178a5f}
+
+.noresult{text-align:center;padding:50px 20px;color:var(--ink-500)}
+.noresult i{width:42px;height:42px;stroke:var(--ink-300);margin-bottom:12px}
+.noresult p{font-size:16px}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:54px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:720px){
+  .cards{grid-template-columns:1fr}
+}
+@media print{
+  .topbar,.searchwrap,footer{display:none!important}
+  body{background:#fff}
+  .hero{background:#fff;color:#000;padding-bottom:20px;border-bottom:1px solid #ddd}
+  .hero .blob{display:none}
+  h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .term{break-inside:avoid;box-shadow:none;border:1px solid #e5e5e5}
+  .cards{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <span class="tag">Глосарій Growth-маркетолога</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="book-marked"></i>Довідник термінів · база знань</div>
+    <h1>Глосарій <span class="g">Growth-маркетолога</span></h1>
+    <p class="sub">Усі терміни, що зустрічаються в тестах і матриці компетенцій — коротко, людською мовою, з прикладами й бенчмарками Magic. Шукай або фільтруй за категорією.</p>
+  </div>
+</header>
+
+<div class="wrap searchwrap">
+  <div class="searchcard">
+    <div class="searchbox">
+      <i data-lucide="search"></i>
+      <input id="q" type="text" placeholder="Пошук терміна… (напр. ROAS, воронка, checkout)" autocomplete="off">
+      <button class="clr" id="clr" title="Очистити"><i data-lucide="x"></i></button>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="countline" id="count"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap" id="glossary"></div>
+</main>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Жива база — доповнюється новими термінами · ceo@magicecom.agency</span></div></footer>
+
+<script>
+/* ===== CATEGORIES ===== */
+const CATS = [
+  {id:"metrics",  name:"Метрики й економіка", icon:"bar-chart-3"},
+  {id:"funnel",   name:"Воронка й трафік",     icon:"filter"},
+  {id:"retention",name:"Retention і email",    icon:"repeat"},
+  {id:"site",     name:"Сайт і технічне",      icon:"code-2"},
+  {id:"cro",      name:"CRO й тестування",     icon:"git-compare"},
+  {id:"frameworks",name:"Фреймворки",          icon:"list-ordered"},
+  {id:"theory",   name:"Маркетинг-теорія",     icon:"book-open"},
+];
+
+/* ===== TERMS =====
+   c = category id; name; full (decoding); def; magic (optional context); bench (optional benchmark) */
+const TERMS = [
+// --- METRICS ---
+{c:"metrics", name:"ROAS", full:"Return on Ad Spend", def:"Окупність реклами: дохід поділити на витрати на рекламу. ROAS 4 означає 4₴ доходу на кожну 1₴ реклами. <b>Не враховує собівартість і маржу</b>, тому сам по собі не доводить прибутковості.", bench:"Норма Meta 2–4x · добре >4x"},
+{c:"metrics", name:"CAC", full:"Customer Acquisition Cost", def:"Вартість залучення одного нового клієнта: скільки коштує перетворити незнайомця на покупця. Порівнюється з маржею з покупки, щоб зрозуміти, чи окупається клієнт."},
+{c:"metrics", name:"CPA", full:"Cost Per Acquisition", def:"Вартість одного цільового результату — найчастіше одного замовлення. Близький до CAC, але CPA рахує будь-яку конверсію, а CAC — саме нового клієнта.", bench:"Норма Meta 300–800₴ · добре <300₴"},
+{c:"metrics", name:"LTV", full:"Lifetime Value", def:"Скільки прибутку приносить клієнт за весь час співпраці. Спрощено: <b>AOV × частота покупок × тривалість утримання</b>. Головний орієнтир retention-маркетингу."},
+{c:"metrics", name:"AOV", full:"Average Order Value", def:"Середній чек — середня сума одного замовлення. Важіль LTV: піднімається бандлами, апсейлами й кросейлами. Краще дивитися ще й на медіану, бо середнє ховає розкид."},
+{c:"metrics", name:"Contribution margin", full:"Маржинальний прибуток", def:"Прибуток із замовлення після собівартості товару й витрат на рекламу. <b>Найчесніший показник прибутковості</b> — на відміну від ROAS, бо враховує реальні витрати, а не лише дохід.", magic:"У Magic рішення про масштабування ухвалюють за contribution margin, а не за голим ROAS."},
+{c:"metrics", name:"CTR", full:"Click-Through Rate", def:"Відсоток людей, що клікнули, побачивши рекламу. Показує, наскільки креатив чіпляє. Високий CTR при низькій конверсії = проблема не в рекламі, а на сайті чи в оффері.", bench:"Норма Meta 0.8–1.5% · добре >1.5%"},
+{c:"metrics", name:"CPC", full:"Cost Per Click", def:"Вартість одного кліку по рекламі. Залежить від конкуренції, якості креативу й аудиторії.", bench:"Норма Meta 8–15₴ · добре <8₴"},
+{c:"metrics", name:"CPM", full:"Cost Per Mille", def:"Вартість 1000 показів реклами. Базовий показник вартості охоплення майданчика.", bench:"Норма Meta 120–250₴ · добре <120₴"},
+{c:"metrics", name:"CR", full:"Conversion Rate", def:"Коефіцієнт конверсії — відсоток відвідувачів, що зробили цільову дію (покупку). Ключова метрика ефективності сайту й воронки.", bench:"Норма Meta 1–2.5% · добре >2.5%"},
+{c:"metrics", name:"ATC Rate", full:"Add to Cart Rate", def:"Відсоток відвідувачів, що додали товар у кошик. Проміжний сигнал залученості між кліком і покупкою.", bench:"Норма Meta 3–6% · добре >6%"},
+{c:"metrics", name:"Hook Rate", full:"3-секундний показник", def:"Відсоток глядачів, що додивилися перші 3 секунди відео-креативу. Низький Hook Rate = слабкий початок, люди гортають, не дійшовши до суті.", bench:"Норма Meta 15–30% · добре >30%"},
+{c:"metrics", name:"Thumb Stop", full:"Thumb Stop Ratio", def:"Відсоток людей, що зупинилися на креативі в стрічці (перестали гортати). Показує, наскільки візуал «ловить» увагу в перші частки секунди.", bench:"Норма Meta 20–35% · добре >35%"},
+{c:"metrics", name:"SKU", full:"Stock Keeping Unit", def:"Окрема товарна позиція в асортименті (конкретний товар у конкретному варіанті). «400 SKU» = 400 різних позицій у каталозі."},
+
+// --- FUNNEL ---
+{c:"funnel", name:"Воронка", full:"Sales / Conversion Funnel", def:"Шлях клієнта від першого контакту до покупки (і далі до повтору): показ → клік → перегляд → кошик → оплата. На кожному кроці частина людей відпадає; завдання — знайти, де тече найбільше."},
+{c:"funnel", name:"TOFU", full:"Top of Funnel", def:"Верх воронки — холодна аудиторія, перший контакт із брендом. Тут працює знайомство й формування попиту, а <b>не</b> агресивний продаж.", magic:"У Magic попит угорі воронки формують Meta й TikTok."},
+{c:"funnel", name:"MOFU", full:"Middle of Funnel", def:"Середина воронки — етап розгляду (consideration). Людина вже знає бренд і порівнює. Працюють докази, порівняння, відгуки, демонстрація переваг."},
+{c:"funnel", name:"BOFU", full:"Bottom of Funnel", def:"Низ воронки — гаряча аудиторія, готова купити. Тут доречні дотиск, зняття заперечень, нагадування про кошик, стимул завершити покупку.", magic:"У Magic сформований попит унизу воронки закриває Google."},
+{c:"funnel", name:"Message match", full:"Конгруентність повідомлення", def:"Відповідність між обіцянкою реклами й тим, що людина бачить на лендингу. Якщо реклама про одне, а сторінка про інше — високий CTR, але низька конверсія: очікування не справдилось."},
+{c:"funnel", name:"Омніканальність", full:"Omnichannel marketing", def:"Підхід, де канали (Meta, Google, TikTok, email) працюють як <b>одна узгоджена система</b>, а не конкурують за бюджет. Кожен виконує свою роль і підсилює інші.", magic:"Ядро Magic Framework: Meta+TikTok формують попит, Google його закриває."},
+{c:"funnel", name:"UGC", full:"User-Generated Content", def:"Контент, що виглядає як знятий звичайним користувачем, а не бренд-студією: огляди, розпакування, відгуки. Часто конвертує краще за «вилизану» рекламу через довіру й нативність."},
+{c:"funnel", name:"Angle", full:"Кут / рекламний кут", def:"Підхід, під яким подається продукт у креативі: біль клієнта, розпакування, порівняння, соціальний доказ тощо. Один товар можна продавати через різні angles і тестувати, який працює."},
+
+// --- RETENTION ---
+{c:"retention", name:"Retention", full:"Утримання клієнтів", def:"Робота над тим, щоб клієнти поверталися й купували повторно. Дешевше за залучення нових і прямо піднімає LTV. Реалізується через email/SMS-флоу й сервіс."},
+{c:"retention", name:"RFM", full:"Recency, Frequency, Monetary", def:"Сегментація бази за трьома вимірами: коли купував востаннє, як часто й на скільки. Дозволяє слати кожному сегменту своє повідомлення замість одного на всіх."},
+{c:"retention", name:"Welcome-флоу", full:"Welcome series", def:"Автоматична серія листів новому підписнику чи покупцю: знайомство з брендом, бестселери, умови. Перший крок онбордингу."},
+{c:"retention", name:"Abandoned cart", full:"Залишений кошик", def:"Тригерний флоу для тих, хто <b>додав товар у кошик, але не оплатив</b>. Нагадує завершити покупку й знімає заперечення (доставка, гарантія)."},
+{c:"retention", name:"Browse abandonment", full:"Залишений перегляд", def:"Флоу для тих, хто <b>дивився товари, але не додав у кошик</b>. М'якший за abandoned cart — людина ще на ранішому етапі інтересу."},
+{c:"retention", name:"Post-purchase", full:"Післяпродажний флоу", def:"Серія після покупки: підтвердження, інструкції, турбота, згодом — допродаж чи прохання про відгук. Працює на повторну покупку й LTV."},
+{c:"retention", name:"Winback", full:"Реактиваційний флоу", def:"Спроба повернути клієнта, що давно не купував («ми скучили», нагадування про переваги, інколи стимул). Якщо мовчить 180+ днів — краще прибрати з розсилок."},
+
+// --- SITE / TECH ---
+{c:"site", name:"PDP", full:"Product Detail Page", def:"Сторінка конкретного товару. Ключова для конверсії: тут фото, ціна, опис, відповіді на заперечення (розміри, доставка, повернення) і кнопка купівлі."},
+{c:"site", name:"PLP", full:"Product Listing Page", def:"Сторінка каталогу чи категорії зі списком товарів. Звідси користувач переходить на PDP конкретного товару."},
+{c:"site", name:"Checkout", full:"Оформлення замовлення", def:"Процес оплати — найкритичніший крок воронки. Конверсію піднімає гостьове оформлення й мінімум полів; вбиває примусова реєстрація, шок від доставки й мало способів оплати."},
+{c:"site", name:"Core Web Vitals", full:"CWV — метрики Google", def:"Три показники якості сторінки: <b>LCP</b> (швидкість появи контенту), <b>INP</b> (швидкість реакції на дії), <b>CLS</b> (стабільність верстки). Впливають і на конверсію, і на SEO."},
+{c:"site", name:"LCP", full:"Largest Contentful Paint", def:"За скільки секунд завантажується найбільший видимий елемент (головне фото чи заголовок) — момент, коли сторінка «здається завантаженою». Перевіряти треба на мобільному, де він гірший.", bench:"Добре <2.5с · погано >4с"},
+{c:"site", name:"INP", full:"Interaction to Next Paint", def:"Наскільки швидко сторінка реагує на дію користувача (клік, тап, ввід). Високий INP = інтерфейс «гальмує» у відповідь.", bench:"Добре <200мс"},
+{c:"site", name:"CLS", full:"Cumulative Layout Shift", def:"Наскільки стрибає верстка під час завантаження (коли елементи зміщуються й ти випадково тиснеш не туди). Низький CLS = стабільна сторінка.", bench:"Добре <0.1"},
+{c:"site", name:"Pixel", full:"Meta Pixel / піксель", def:"Код на сайті, що передає рекламній системі події (перегляд, кошик, покупка). На цих даних будується оптимізація й атрибуція. Браузерний піксель втрачає частину подій через блокувальники."},
+{c:"site", name:"CAPI", full:"Conversions API (server-side)", def:"Серверна передача подій рекламним системам в обхід браузера. Відновлює конверсії, втрачені пікселем через ITP / iOS-обмеження — точніша атрибуція й кращі сигнали для алгоритму."},
+{c:"site", name:"GA4", full:"Google Analytics 4", def:"Поточна версія Google Analytics — система веб-аналітики: трафік, поведінка, конверсії, джерела. Основний інструмент для аналізу того, що відбувається на сайті."},
+{c:"site", name:"ITP", full:"Intelligent Tracking Prevention", def:"Механізм приватності (Safari/iOS), що обмежує відстеження в браузері. Через нього браузерний піксель «недораховує» події — звідси потреба в server-side / CAPI."},
+{c:"site", name:"UX", full:"User Experience", def:"Зручність користування сайтом: наскільки легко й приємно людині знайти товар і дійти до покупки. Погана UX-помилка може зливати конверсію навіть при гарному дизайні."},
+
+// --- CRO ---
+{c:"cro", name:"CRO", full:"Conversion Rate Optimization", def:"Оптимізація конверсії: системна робота над тим, щоб більший відсоток відвідувачів робив покупку. Послідовність: <b>дані воронки → гіпотези → пріоритезація → тест</b>.", magic:"У Magic CRO — один з 8 напрямків аудиту Growth Blueprint."},
+{c:"cro", name:"A/B-тест", full:"Спліт-тестування", def:"Порівняння двох версій (A і B), де міняється <b>одна змінна</b>, щоб чесно зрозуміти її вплив. Потребує достатньої вибірки й статистичної значущості — не можна зупиняти на ранній «перемозі»."},
+{c:"cro", name:"Статистична значущість", full:"Statistical significance", def:"Впевненість, що різниця між варіантами тесту не випадкова, а реальна. Без неї «переможець», обраний на 3-й день на малій вибірці, часто згасає на проді."},
+{c:"cro", name:"Гіпотеза", full:"Hypothesis", def:"Припущення у форматі «якщо <b>зробити X</b>, то <b>зміниться Y</b>, бо <b>причина Z</b>». Відрізняється від задачі тим, що має очікуваний результат і причину — це можна перевірити."},
+{c:"cro", name:"Social proof", full:"Соціальний доказ", def:"Відгуки, рейтинги, кейси, реальні фото покупців на сторінці. Знижують сприйманий ризик і підвищують довіру на етапі рішення про покупку."},
+{c:"cro", name:"Above the fold", full:"Вище згину", def:"Зона екрана, видима без прокручування. Тут має бути головне: зрозуміла цінність, фото товару й заклик до дії — щоб не втратити людину в перші секунди."},
+
+// --- FRAMEWORKS ---
+{c:"frameworks", name:"ICE", full:"Impact · Confidence · Ease", def:"Фреймворк пріоритезації гіпотез. Кожну оцінюєш 1–10 за впливом, упевненістю й легкістю, перемножуєш — і береш у роботу те, що нагорі. Універсальний: для тестів, фіч, задач."},
+{c:"frameworks", name:"PIE", full:"Potential · Importance · Ease", def:"Фреймворк пріоритезації для CRO: оцінюєш <b>яку сторінку</b> взяти першою за потенціалом покращення, важливістю (трафік, гроші) і легкістю. Importance рятує від роботи над сторінками без трафіку."},
+{c:"frameworks", name:"SMART", full:"Specific, Measurable, Achievable, Relevant, Time-bound", def:"Критерії правильно поставленої цілі: конкретна, вимірювана, досяжна, релевантна, обмежена в часі. Відрізняє ціль («ROAS 4 до 30 вересня») від наміру («покращити рекламу»)."},
+{c:"frameworks", name:"ABC-аналіз", full:"ABC analysis", def:"Ранжування асортименту за внеском у оборот чи прибуток: невелика частка SKU (A) дає основну частку результату. Так знаходять товари-локомотиви для масштабування.", magic:"Саме через ABC у кейсах Magic знаходили bestseller'и."},
+{c:"frameworks", name:"Ціль vs задача", full:"Goal vs Task", def:"Ціль — бажаний вимірюваний <b>результат</b> (CPA <300₴ за квартал). Задача — <b>крок</b>, що веде до неї (зняти 6 креативів, налаштувати CAPI). Плутати їх — типова помилка планування."},
+
+// --- THEORY ---
+{c:"theory", name:"Penetration", full:"Проникнення / охоплення категорії", def:"Кількість покупців бренду в категорії. За Ehrenberg-Bass <b>зростання йде переважно від penetration</b> (нові й легкі покупці), а не від поглиблення лояльності існуючих."},
+{c:"theory", name:"Distinctive assets", full:"Дистинктивні ассети", def:"Елементи, за якими бренд упізнають без назви: колір, форма, шрифт, маскот, звук. Працюють на впізнаваність і згадування — на відміну від диференціації (раціональних переваг).", magic:"Дистинктивний ассет Magic — синьо-фіолетовий градієнт і lowercase «magic»."},
+{c:"theory", name:"Differentiation", full:"Диференціація", def:"«Чим ми кращі / унікальніші» — раціональні переваги бренду. За Sharp у багатьох категоріях differentiation переоцінена: відмінності легко копіюються, а впізнаваність (distinctiveness) практичніша."},
+{c:"theory", name:"Mental availability", full:"Ментальна доступність", def:"Наскільки легко бренд згадується в момент потреби. Будується послідовним використанням дистинктивних ассетів і охопленням. Одна з двох опор зростання за Sharp."},
+{c:"theory", name:"Physical availability", full:"Фізична доступність", def:"Наскільки легко бренд знайти й купити (присутність на полицях, у каналах, зручність покупки). Друга опора зростання за Ehrenberg-Bass поряд із mental availability."},
+{c:"theory", name:"Double jeopardy", full:"Закон подвійної загрози", def:"Бренди з меншою часткою ринку програють двічі: і менше покупців, і трохи нижча лояльність. Звідси висновок — ставка лише на лояльність вузького ядра не дає росту."},
+{c:"theory", name:"Ehrenberg-Bass", full:"Інститут Ehrenberg-Bass", def:"Дослідницький інститут, чиї емпіричні «закони маркетингу» лягли в основу доказового маркетингу й книги Byron Sharp «Як зростають бренди» — базового читання для Growth у Magic."},
+];
+
+/* ===== RENDER ===== */
+const $=s=>document.querySelector(s);
+let activeCat="all";
+let query="";
+
+function buildFilters(){
+  const f=$("#filters");
+  const all=document.createElement("button");
+  all.className="fbtn on"; all.dataset.cat="all"; all.textContent="Усі";
+  f.appendChild(all);
+  CATS.forEach(c=>{
+    const b=document.createElement("button");
+    b.className="fbtn"; b.dataset.cat=c.id; b.textContent=c.name;
+    f.appendChild(b);
+  });
+  f.querySelectorAll(".fbtn").forEach(b=>{
+    b.onclick=()=>{
+      activeCat=b.dataset.cat;
+      f.querySelectorAll(".fbtn").forEach(x=>x.classList.toggle("on", x===b));
+      render();
+    };
+  });
+}
+
+function matches(t){
+  if(activeCat!=="all" && t.c!==activeCat) return false;
+  if(!query) return true;
+  const hay=(t.name+" "+(t.full||"")+" "+t.def+" "+(t.magic||"")).toLowerCase();
+  return hay.includes(query);
+}
+
+function render(){
+  const root=$("#glossary"); root.innerHTML="";
+  let total=0;
+  CATS.forEach(cat=>{
+    const items=TERMS.filter(t=>t.c===cat.id && matches(t));
+    if(!items.length) return;
+    total+=items.length;
+    const block=document.createElement("div"); block.className="catblock";
+    const head=document.createElement("div"); head.className="cathead"; head.id="cat-"+cat.id;
+    head.innerHTML=`<div class="ci"><i data-lucide="${cat.icon}"></i></div><h2>${cat.name}</h2><span class="cc">${items.length}</span>`;
+    block.appendChild(head);
+    const grid=document.createElement("div"); grid.className="cards";
+    items.forEach(t=>{
+      const card=document.createElement("div"); card.className="term";
+      let html=`<div class="th"><span class="name">${t.name}</span>`;
+      if(t.full) html+=`<span class="full">${t.full}</span>`;
+      html+=`</div><div class="def">${t.def}</div>`;
+      if(t.bench) html+=`<div class="bench"><i data-lucide="target"></i>${t.bench}</div>`;
+      if(t.magic) html+=`<div class="magic"><i data-lucide="sparkles"></i><span>${t.magic}</span></div>`;
+      card.innerHTML=html;
+      grid.appendChild(card);
+    });
+    block.appendChild(grid);
+    root.appendChild(block);
+  });
+
+  if(total===0){
+    root.innerHTML=`<div class="noresult"><i data-lucide="search-x"></i><p>Нічого не знайдено за запитом «${query}». Спробуй інше слово або скинь фільтр.</p></div>`;
+  }
+  const totalAll=TERMS.length;
+  $("#count").innerHTML = query||activeCat!=="all"
+    ? `Показано <b>${total}</b> з ${totalAll} термінів`
+    : `Усього <b>${totalAll}</b> термінів у глосарії`;
+  lucide.createIcons();
+}
+
+$("#q").addEventListener("input",e=>{
+  query=e.target.value.trim().toLowerCase();
+  $("#clr").classList.toggle("show", !!query);
+  render();
+});
+$("#clr").onclick=()=>{ $("#q").value=""; query=""; $("#clr").classList.remove("show"); render(); $("#q").focus(); };
+
+buildFilters();
+render();
+lucide.createIcons();
+</script>
+</body>
+</html>

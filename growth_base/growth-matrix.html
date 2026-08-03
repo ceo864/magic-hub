@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Marketer — матриця компетенцій · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --blue-50:#EAF5FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
+  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
+  --danger:#F5525C; --info:#38A0FF;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px; --radius-pill:999px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:var(--ink-900);color:#fff;padding:64px 0 72px}
+.hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.5}
+.blob1{width:380px;height:380px;background:#AA7AFF;top:-120px;right:-60px}
+.blob2{width:280px;height:280px;background:#38A0FF;bottom:-120px;left:-40px}
+.hero .wrap{position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.brand-tile{width:44px;height:44px;border-radius:13px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand);padding:9px}
+.brand-tile svg{width:100%;height:100%}
+.brand-word{font-weight:900;font-size:26px;letter-spacing:-.04em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:20px}
+.eyebrow i{width:14px;height:14px}
+h1.title{font-weight:900;font-size:clamp(38px,6vw,64px);line-height:1.02;letter-spacing:-.03em;max-width:760px}
+h1.title .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{font-size:19px;font-weight:300;color:rgba(255,255,255,.82);max-width:620px;margin-top:20px}
+
+/* PRINCIPLE */
+.principle{margin-top:-40px;position:relative;z-index:2}
+.principle-card{background:#fff;border-radius:var(--radius-xl);padding:32px 36px;box-shadow:var(--shadow-lg);display:flex;gap:22px;align-items:flex-start}
+.principle-ic{flex:none;width:52px;height:52px;border-radius:15px;background:var(--magic-gradient);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand)}
+.principle-ic i{width:26px;height:26px}
+.principle h3{font-weight:800;font-size:21px;letter-spacing:-.01em;margin-bottom:8px}
+.principle p{font-size:16px;color:var(--ink-600)}
+.principle p b{font-weight:700;color:var(--ink-900)}
+
+/* SECTION */
+section{padding:56px 0 0}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.sec-head .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
+.sec-head h2{font-weight:900;font-size:30px;letter-spacing:-.02em}
+.sec-sub{color:var(--ink-500);font-size:16px;margin-bottom:28px;max-width:720px}
+
+/* LEVELS */
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.level{background:#fff;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm);border-top:4px solid var(--ink-200)}
+.level.l1{border-top-color:var(--magic-blue)}
+.level.l2{border-top-color:var(--magic-purple)}
+.level.l3{border-top-color:transparent;background:#fff;position:relative}
+.level.l3::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:4px 4px 0 0;background:var(--magic-gradient-h)}
+.lvl-tag{display:inline-block;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:14px}
+.lvl-tag.l1{background:var(--blue-50);color:#1566B8}
+.lvl-tag.l2{background:var(--purple-50);color:#5E30C4}
+.lvl-tag.l3{background:var(--magic-gradient);color:#fff}
+.level h4{font-weight:800;font-size:18px;margin-bottom:6px}
+.level p{font-size:14px;color:var(--ink-600);line-height:1.5}
+
+/* BLOCKS */
+.blocks{display:flex;flex-direction:column;gap:18px}
+.block{background:#fff;border-radius:var(--radius-xl);padding:30px 32px;box-shadow:var(--shadow-sm);transition:.25s}
+.block:hover{box-shadow:var(--shadow-md)}
+.block-top{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.block-ic{flex:none;width:50px;height:50px;border-radius:15px;background:var(--magic-gradient-soft);color:#5E30C4;display:flex;align-items:center;justify-content:center}
+.block-ic i{width:24px;height:24px;stroke:#7A45EB}
+.block-titles{flex:1;min-width:200px}
+.block-titles .kicker{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400)}
+.block-titles h3{font-weight:800;font-size:21px;letter-spacing:-.01em;line-height:1.15;margin-top:2px}
+.target{flex:none;display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:8px 14px;border-radius:999px}
+.target i{width:14px;height:14px}
+.target.l2{background:var(--purple-50);color:#5E30C4}
+.target.l3{background:var(--magic-gradient);color:#fff}
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+.skill{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:var(--ink-700)}
+.skill i{flex:none;width:18px;height:18px;stroke:var(--magic-blue);margin-top:3px}
+.skill b{font-weight:700;color:var(--ink-900)}
+
+/* SUMMARY TABLE */
+.tablewrap{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:15px 24px;font-size:15px}
+thead th{background:var(--ink-900);color:#fff;font-weight:600;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+tbody tr{border-top:1px solid var(--ink-100)}
+tbody td:first-child{font-weight:600;color:var(--ink-900)}
+td .lvlmini{display:inline-block;font-weight:800;font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.lvlmini.l2{background:var(--purple-50);color:#5E30C4}
+.lvlmini.l3{background:var(--magic-gradient);color:#fff}
+td.howcol{color:var(--ink-500);font-size:14px}
+
+/* FOOTER */
+footer{margin-top:64px;background:var(--ink-900);color:rgba(255,255,255,.66);padding:32px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;font-size:14px}
+.foot-brand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;font-size:18px;letter-spacing:-.02em}
+.foot-brand .ft{width:28px;height:28px;border-radius:9px;background:var(--magic-gradient);padding:6px;display:flex}
+.foot-brand .ft svg{width:100%;height:100%}
+
+@media(max-width:820px){
+  .levels{grid-template-columns:1fr}
+  .skills{grid-template-columns:1fr}
+  .principle-card{flex-direction:column;gap:14px}
+  th,td{padding:12px 16px}
+  .howcol{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-word">magic</div>
+    </div>
+    <div class="eyebrow"><i data-lucide="layout-grid"></i>Опис ролі · внутрішній документ</div>
+    <h1 class="title">Growth Marketer<br><span class="g">матриця компетенцій</span></h1>
+    <p class="lede">Що повинен знати й уміти Growth Marketer, який веде e-commerce проєкт у Magic — від доказового маркетингу до retention. Із рівнями володіння по кожному напрямку.</p>
+  </div>
+</header>
+
+<div class="wrap principle">
+  <div class="principle-card">
+    <div class="principle-ic"><i data-lucide="compass"></i></div>
+    <div>
+      <h3>Принцип ролі</h3>
+      <p>Growth Marketer — це не таргетолог із ширшим списком задач. Це людина, яка <b>робить руками ядро</b> (медіабаїнг, креативна стратегія, аналіз воронки, CRO, дослідження, retention-логіка) і <b>компетентно керує суміжним</b> (сайт, дизайн, складні e-mail-флоу): ставить ТЗ, обирає й контролює підрядника, оцінює результат на рівні. Не треба бути senior-розробником чи дизайнером — треба говорити з ними на рівних і відповідати за результат.</p>
+    </div>
+  </div>
+</div>
+
+<section id="levels">
+  <div class="wrap">
+    <div class="sec-head"><span class="n">01</span><h2>Три рівні володіння</h2></div>
+    <p class="sec-sub">Кожен напрямок нижче має цільовий рівень. Це знімає питання «чи не забагато»: широта велика, але глибина різна.</p>
+    <div class="levels">
+      <div class="level l1">
+        <span class="lvl-tag l1">L1 · базово розуміє</span>
+        <h4>Орієнтується</h4>
+        <p>Розуміє принципи й термінологію, може поговорити зі спеціалістом, відрізнити добре від поганого на базовому рівні. Сам не виконує.</p>
+      </div>
+      <div class="level l2">
+        <span class="lvl-tag l2">L2 · керує і ставить ТЗ</span>
+        <h4>Керує</h4>
+        <p>Самостійно формулює задачу й ТЗ, обирає та координує підрядника, оцінює якість результату. Робить сам базові речі, складне делегує.</p>
+      </div>
+      <div class="level l3">
+        <span class="lvl-tag l3">L3 · робить сам</span>
+        <h4>Виконує</h4>
+        <p>Володіє напрямком на рівні самостійного виконання та прийняття рішень. Це ядро ролі — тут Growth відповідає за результат особисто.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blocks">
+  <div class="wrap">
+    <div class="sec-head"><span class="n">02</span><h2>Десять напрямків компетенцій</h2></div>
+    <p class="sec-sub">Performance-маркетинг для e-commerce у повному обсязі: від стратегії до інструментів.</p>
+    <div class="blocks">
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="book-open"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 1</div><h3>Доказовий маркетинг</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span><b>«Як зростають бренди»</b> (Byron Sharp, Ehrenberg-Bass): mental &amp; physical availability, distinctive brand assets</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Penetration &gt; loyalty: зростання йде від нових покупців, а не лояльності</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Закон подвійної загрози, light vs heavy buyers</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Performance vs brand і баланс між ними (логіка 60/40)</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Unit-економіка: CAC, AOV, LTV, маржа, contribution margin, payback</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Уміє пояснити клієнту рішення мовою даних, а не «здається»</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="target"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 2</div><h3>Performance / медіабаїнг</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span><b>Meta Ads:</b> структура кабінету, типи кампаній, Advantage+, CBO/ABO, атрибуція</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Google Ads:</b> коли Search, коли Shopping, коли PMax</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>TikTok Ads:</b> логіка майданчика й нативного креативу</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Креативна стратегія: angles, hooks, ітерації, тестування гіпотез</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>На що оптимізувати: ROAS / CPA / contribution margin</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Масштабування: горизонтальне vs вертикальне, читання метрик і дії</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="filter"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 3</div><h3>Воронки</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span>TOFU / MOFU / BOFU: відповідність меседжу етапу обізнаності</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Логіка awareness → consideration → conversion → retention</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Зв'язок реклама → лендинг → checkout як єдина система</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Будує й запускає воронки у відповідних інструментах</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Бачить, де воронка «протікає», і чому</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Розуміє різницю між холодним, теплим і гарячим трафіком</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="code-2"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 4</div><h3>Сайт / e-commerce tech</h3></div>
+          <span class="target l2"><i data-lucide="clipboard-list"></i>L2 · керує + ТЗ</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span><b>Виходить на zoom із розробником і складає ТЗ</b> на правильний e-commerce сайт самостійно</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Розуміє платформи (Shopify тощо), структуру PDP / PLP / checkout</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Best practices checkout: гостьове оформлення, мінімум кроків</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Швидкість і Core Web Vitals, мобільний UX та їх вплив на конверсію</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Трекінг: Pixel, GA4, server-side / Conversions API — навіщо й де</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Оцінює роботу розробника, а не сліпо приймає</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="git-compare"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 5</div><h3>CRO</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span>Аналіз воронки: де відвал відносно бенчмарку, а не «загалом погано»</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Гіпотези й пріоритезація (ICE / PIE), а не хаотичні правки</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>A/B-тести: одна змінна, розмір вибірки, значущість</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Читає heatmap і session recordings, робить висновки</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Евристики: friction, clarity, trust signals</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Пропонує конкретні рішення</b>, а не «давайте покращимо конверсію»</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="search"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 6</div><h3>Дослідження / аналітика</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span>Аналіз / дослідження ринку та конкурентів</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Аналіз продуктів, пошук winner-товарів (зокрема ABC-аналіз)</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Data literacy: середнє ховає розподіл, кореляція ≠ причинність</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Впевнено працює з таблицями та дашбордом</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Базовий cohort-аналіз і читання динаміки</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Робить дослідження вглиб, а не «загуглив три статті»</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="repeat"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 7</div><h3>Retention / LTV</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span><b>Запускає й будує базові e-mail / SMS-флоу</b> у відповідних інструментах</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Ключові флоу: welcome, abandoned cart, browse abandonment, post-purchase, winback</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Сегментація та RFM</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Важелі LTV: AOV, частота покупок, retention rate</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Знає, як підвищити LTV</b> у конкретному проєкті</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Складні автоматизації — ставить ТЗ і контролює (L2)</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="palette"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 8</div><h3>Дизайн</h3></div>
+          <span class="target l2"><i data-lucide="clipboard-list"></i>L2 · керує + ТЗ</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span>Складає <b>чіткий бриф дизайнеру</b> й оцінює результат</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Відрізняє сильний креатив / лендинг від слабкого та аргументує</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Розуміє ієрархію, value prop вище згину, social proof</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Знає, коли робити самому, а коли ескалувати дизайнеру</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Базова візуальна грамотність: типографіка, контраст, читабельність</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Не малює сам — формулює задачу так, щоб дизайнер влучив</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="scale"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 9 · наскрізний</div><h3>Самоменеджмент і комунікація</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span>Ставить цілі за <b>SMART</b>: конкретні, вимірювані, досяжні, релевантні, в часі</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Відрізняє цілі від задач:</b> ціль — це результат, задача — крок до нього</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Чітко формулює думку й робить висновки з даних, а не «потік свідомості»</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>Тайм-менеджмент і пріоритезація: встигає важливе, а не лише термінове</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Аргументує позицію й захищає її</b> фактами, а не емоціями</span></div>
+          <div class="skill"><i data-lucide="check"></i><span>На «дурну» правку клієнта не киває одразу — аргументовано відстоює рішення; поступається, коли клієнт має рацію</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-top">
+          <div class="block-ic"><i data-lucide="layout-grid"></i></div>
+          <div class="block-titles"><div class="kicker">Блок 10 · наскрізний</div><h3>Маркетингові моделі та фреймворки</h3></div>
+          <span class="target l3"><i data-lucide="hand"></i>L3 · робить сам</span>
+        </div>
+        <div class="skills">
+          <div class="skill"><i data-lucide="check"></i><span><b>Пріоритезація:</b> ICE (гіпотези й тести), матриця Ейзенхауера (щоденні задачі), PIE (CRO-сторінки)</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Планування:</b> веде маркетинг за <b>RACE</b> (Reach → Act → Convert → Engage) / See-Think-Do-Care</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Стратегія:</b> будує план за <b>SOSTAC</b>, позиціонування — за STP (сегментація-таргетинг-позиціонування)</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Комунікація:</b> меседжинг за рівнями обізнаності (сходи Ханта / Шварца), копірайт за AIDA та PAS</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Аудиторія:</b> аналіз через <b>JTBD</b> (навіщо «наймають» продукт), сегментація через RFM</span></div>
+          <div class="skill"><i data-lucide="check"></i><span><b>Метрики росту:</b> розуміє воронку <b>AARRR</b> (acquisition → activation → retention → referral → revenue)</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="summary">
+  <div class="wrap">
+    <div class="sec-head"><span class="n">03</span><h2>Зведена матриця</h2></div>
+    <p class="sec-sub">Швидкий орієнтир для найму, оцінки та постановки планів розвитку.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Напрямок</th><th>Цільовий рівень</th><th class="howcol">Що це означає на практиці</th></tr></thead>
+        <tbody>
+          <tr><td>Доказовий маркетинг</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">Веде рішення на даних, фундамент мислення</td></tr>
+          <tr><td>Performance / медіабаїнг</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">Запускає й оптимізує Meta / Google / TikTok</td></tr>
+          <tr><td>Воронки</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">Будує й запускає в інструментах</td></tr>
+          <tr><td>Сайт / e-commerce tech</td><td><span class="lvlmini l2">L2 керує + ТЗ</span></td><td class="howcol">Пише ТЗ, веде розробника, не кодить</td></tr>
+          <tr><td>CRO</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">Аналіз воронки + конкретні рішення</td></tr>
+          <tr><td>Дослідження / аналітика</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">Ринок, продукт, winner-товари, дані</td></tr>
+          <tr><td>Retention / LTV</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">Базові флоу сам, складні — ТЗ</td></tr>
+          <tr><td>Дизайн</td><td><span class="lvlmini l2">L2 керує + ТЗ</span></td><td class="howcol">Бриф і оцінка, не малює сам</td></tr>
+          <tr><td>Самоменеджмент і комунікація</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">SMART, цілі vs задачі, аргументація, пушбек</td></tr>
+          <tr><td>Маркетингові моделі та фреймворки</td><td><span class="lvlmini l3">L3 робить сам</span></td><td class="howcol">ICE, RACE, SOSTAC, JTBD, сходи Ханта, AARRR</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">magic</div>
+    <div>advertise for e-commerce · ceo@magicecom.agency</div>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

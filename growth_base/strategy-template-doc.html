@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шаблон стратегії (робочий документ) · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
+  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --purple-50:#F2EBFF; --blue-50:#EAF5FF;
+  --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB; --ink-300:#C3CAD6;
+  --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160; --ink-700:#2F3441;
+  --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --success:#2EC28A; --warning:#FFB020; --danger:#F5525C;
+  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10);
+  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+button{font-family:var(--font);cursor:pointer}
+
+.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
+.topbar .acts{display:flex;gap:10px}
+.tbtn{border:0;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:13px;padding:9px 15px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.tbtn:hover{background:rgba(255,255,255,.22)}
+.tbtn i{width:15px;height:15px}
+
+.hero{background:var(--ink-900);color:#fff;padding:40px 0 46px;position:relative;overflow:hidden}
+.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.4;pointer-events:none}
+.hero .b1{width:300px;height:300px;background:#AA7AFF;top:-120px;right:-40px}
+.hero .b2{width:220px;height:220px;background:#38A0FF;bottom:-120px;left:-30px}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:16px}
+.eyebrow i{width:14px;height:14px}
+h1{font-weight:900;font-size:clamp(28px,5vw,46px);line-height:1.04;letter-spacing:-.03em}
+h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:17px;color:rgba(255,255,255,.8);max-width:600px;margin-top:12px}
+
+/* meta fields */
+.metacard{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);margin-top:-26px;position:relative;z-index:10;padding:22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.field label{display:block;font-weight:700;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-500);margin-bottom:6px}
+.field input{width:100%;font:inherit;font-weight:500;font-size:15px;padding:11px 14px;border:1.5px solid var(--ink-200);border-radius:11px;outline:none;transition:.15s;background:var(--ink-50)}
+.field input:focus{border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.16);background:#fff}
+
+.howto{background:var(--magic-gradient-soft);border-radius:var(--radius-xl);padding:20px 24px;margin-top:22px;display:flex;gap:15px;align-items:flex-start}
+.howto i{flex:none;width:23px;height:23px;stroke:#5E30C4;margin-top:2px}
+.howto .t{font-size:15px;color:#3a2a66;line-height:1.55}
+.howto .t b{font-weight:700}
+
+section{padding:34px 0 0}
+.block{background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);margin-bottom:16px;overflow:hidden}
+.blockhead{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--ink-100)}
+.blockhead .bi{flex:none;width:44px;height:44px;border-radius:12px;background:var(--magic-gradient);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow-brand)}
+.blockhead .bi .lt{font-weight:900;font-size:18px;color:#fff}
+.blockhead .bi i{width:21px;height:21px;stroke:#fff}
+.blockhead .bt{flex:1;min-width:0}
+.blockhead .bt .model{font-weight:700;font-size:12px;color:var(--magic-purple);letter-spacing:.04em;text-transform:uppercase}
+.blockhead .bt h2{font-weight:800;font-size:21px;letter-spacing:-.01em}
+.blockbody{padding:20px 24px}
+
+.prompt{font-size:14px;color:var(--ink-500);background:var(--ink-50);border-left:3px solid var(--magic-purple);border-radius:8px;padding:10px 14px;margin-bottom:12px;line-height:1.5}
+.prompt b{color:var(--ink-700);font-weight:700}
+.flabel{font-weight:700;font-size:14px;color:var(--ink-800);margin:14px 0 6px;display:flex;align-items:center;gap:8px}
+.flabel i{width:16px;height:16px;stroke:var(--magic-blue)}
+.fill{width:100%;font:inherit;font-weight:300;font-size:15px;color:var(--ink-900);padding:13px 15px;border:1.5px dashed var(--ink-300);border-radius:var(--radius-md);outline:none;transition:.15s;background:#fff;resize:vertical;min-height:64px;line-height:1.55}
+.fill:focus{border-style:solid;border-color:var(--magic-blue);box-shadow:0 0 0 3px rgba(56,160,255,.14)}
+.fill::placeholder{color:var(--ink-300)}
+.fill.short{min-height:46px}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fourcol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* SWOT mini */
+.swotgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.swotcell h4{font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:6px}
+.swotcell.s h4{color:#178a5f} .swotcell.w h4{color:#c2333c}
+.swotcell.o h4{color:#1566B8} .swotcell.t h4{color:#9a6a00}
+
+/* table-like fillable */
+.rowfill{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.rowfill .fill{min-height:44px}
+.rowhint{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:6px}
+.rowhint span{font-weight:700;font-size:12px;color:var(--ink-400);text-transform:uppercase;letter-spacing:.03em}
+
+.addbtn{border:0;background:var(--ink-50);color:var(--ink-600);font-weight:700;font-size:13px;padding:9px 15px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--ink-200);display:inline-flex;align-items:center;gap:7px;transition:.15s;margin-top:4px}
+.addbtn:hover{box-shadow:inset 0 0 0 1.5px var(--magic-blue);color:var(--magic-blue)}
+.addbtn i{width:15px;height:15px}
+
+/* RACE/comm mini blocks */
+.stageblock{border:1.5px solid var(--ink-200);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px}
+.stageblock .sbh{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.stageblock .sbtag{font-weight:800;font-size:12px;color:#fff;background:var(--magic-gradient);padding:4px 11px;border-radius:7px}
+.stageblock .sbn{font-weight:700;font-size:14px;color:var(--ink-700)}
+
+footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:24px 0;margin-top:40px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+
+@media(max-width:720px){
+  .metacard,.twocol,.fourcol,.swotgrid,.rowfill,.rowhint{grid-template-columns:1fr}
+  .topbar .acts .label{display:none}
+}
+@media print{
+  .topbar,.howto,footer,.addbtn{display:none!important}
+  body{background:#fff}
+  .hero{background:#fff;color:#000;border-bottom:1px solid #ddd}
+  .hero .blob{display:none}
+  h1 .g{color:#000!important;-webkit-text-fill-color:#000!important}
+  .fill,.field input{border:1px solid #ccc;border-style:solid}
+  .block{break-inside:avoid;box-shadow:none;border:1px solid #e5e5e5}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand-word">magic</span>
+    <div class="acts">
+      <button class="tbtn" id="exampleBtn"><i data-lucide="book-open"></i><span class="label">Приклад Rytual</span></button>
+      <button class="tbtn" id="printBtn"><i data-lucide="printer"></i><span class="label">Зберегти / PDF</span></button>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><i data-lucide="file-edit"></i>Робочий документ · шаблон</div>
+    <h1>Шаблон стратегії <span class="g">за моделями Magic</span></h1>
+    <p class="sub">Порожній каркас за SOSTAC + RACE + сходи + JTBD + AARRR. Заповнюй поля даними реального проєкту. Підказки під кожним блоком кажуть, що писати.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="metacard">
+    <div class="field"><label>Бренд / клієнт</label><input type="text" placeholder="Назва"></div>
+    <div class="field"><label>Період</label><input type="text" placeholder="напр. Q3 2026"></div>
+    <div class="field"><label>Автор</label><input type="text" placeholder="Growth Marketer"></div>
+  </div>
+
+  <div class="howto">
+    <i data-lucide="lightbulb"></i>
+    <div class="t"><b>Як користуватись.</b> Заповнюй поля зверху вниз. Кнопка «Приклад Rytual» нагорі відкриє готову стратегію в новій вкладці — підглядай, як виглядає заповнений блок. Заповнив — «Зберегти / PDF». Поля не зберігаються автоматично, тож одразу друкуй у PDF після заповнення.</div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- ABOUT -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><i data-lucide="package"></i></div><div class="bt"><div class="model">Старт</div><h2>Про бренд і вхідні дані</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> чим займається бренд, що продає, кому. Базові цифри проєкту — це фундамент усіх розрахунків нижче.</div>
+        <div class="flabel"><i data-lucide="edit-3"></i>Опис бренду й позиціонування</div>
+        <textarea class="fill" placeholder="DTC-бренд ..., продає ..., для ... Позиціонування — ..."></textarea>
+        <div class="rowhint"><span>Показник</span><span>Значення</span><span>Коментар</span></div>
+        <div class="rowfill"><input class="fill short" placeholder="AOV"><input class="fill short" placeholder="₴"><input class="fill short" placeholder="як рахували"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Маржа"><input class="fill short" placeholder="%"><input class="fill short" placeholder="після чого"></div>
+        <div class="rowfill"><input class="fill short" placeholder="CAC"><input class="fill short" placeholder="₴"><input class="fill short" placeholder="канал"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Трафік / CR"><input class="fill short" placeholder="к-сть / %"><input class="fill short" placeholder="замовлень"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Repeat rate"><input class="fill short" placeholder="%"><input class="fill short" placeholder="нотатка"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><span class="lt">S</span></div><div class="bt"><div class="model">SOSTAC · 1</div><h2>Situation — де ми зараз</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> поточна картина (цифри, головна проблема), ринок і конкуренти, SWOT. Чесно — це основа для цілей.</div>
+        <div class="flabel"><i data-lucide="bar-chart-3"></i>Поточна картина</div>
+        <textarea class="fill" placeholder="Бізнес генерує ... Головна проблема — ... Юніт-економіка: ..."></textarea>
+        <div class="flabel"><i data-lucide="users"></i>Ринок і конкуренти</div>
+        <textarea class="fill" placeholder="Ніша ..., конкуренти ..., наша перевага ..., слабкість ..."></textarea>
+        <div class="flabel"><i data-lucide="layout-grid"></i>SWOT</div>
+        <div class="swotgrid">
+          <div class="swotcell s"><h4>Сильні</h4><textarea class="fill" placeholder="• ..."></textarea></div>
+          <div class="swotcell w"><h4>Слабкі</h4><textarea class="fill" placeholder="• ..."></textarea></div>
+          <div class="swotcell o"><h4>Можливості</h4><textarea class="fill" placeholder="• ..."></textarea></div>
+          <div class="swotcell t"><h4>Загрози</h4><textarea class="fill" placeholder="• ..."></textarea></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><i data-lucide="search"></i></div><div class="bt"><div class="model">Вхід · JTBD + RFM</div><h2>Аудиторія</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>JTBD:</b> формула «Коли [ситуація], я хочу [мотивація], щоб [результат]». Не демографія, а робота, яку наймають продукт виконати.</div>
+        <div class="flabel"><i data-lucide="briefcase"></i>Job statement</div>
+        <textarea class="fill short" placeholder="Коли ..., я хочу ..., щоб ..."></textarea>
+        <div class="twocol" style="margin-top:8px">
+          <div><div class="flabel" style="margin-top:6px"><i data-lucide="circle"></i>Функціональна</div><textarea class="fill short" placeholder="що робить"></textarea></div>
+          <div><div class="flabel" style="margin-top:6px"><i data-lucide="heart"></i>Емоційна</div><textarea class="fill short" placeholder="що відчуває"></textarea></div>
+        </div>
+        <div class="flabel"><i data-lucide="users-2"></i>RFM-сегменти й дії</div>
+        <div class="rowhint" style="grid-template-columns:1fr 2fr"><span>Сегмент</span><span>Дія</span></div>
+        <div class="rowfill" style="grid-template-columns:1fr 2fr"><input class="fill short" placeholder="Чемпіони"><input class="fill short" placeholder="привілеї, реферал"></div>
+        <div class="rowfill" style="grid-template-columns:1fr 2fr"><input class="fill short" placeholder="Новачки"><input class="fill short" placeholder="онбординг до 2-ї покупки"></div>
+        <div class="rowfill" style="grid-template-columns:1fr 2fr"><input class="fill short" placeholder="У зоні ризику"><input class="fill short" placeholder="winback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- O -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><span class="lt">O</span></div><div class="bt"><div class="model">SOSTAC · 2 · SMART</div><h2>Objectives — куди йдемо</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> цілі за SMART — конкретні, вимірювані, в часі. Колонки «зараз → мета → як». Пам'ятай: acquisition не зупиняємо, retention додаємо.</div>
+        <div class="rowhint"><span>Ціль</span><span>Зараз → Мета</span><span>Як</span></div>
+        <div class="rowfill"><input class="fill short" placeholder="Оборот/міс"><input class="fill short" placeholder="... → ..."><input class="fill short" placeholder="за рахунок"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Repeat rate"><input class="fill short" placeholder="... → ..."><input class="fill short" placeholder="..."></div>
+        <div class="rowfill"><input class="fill short" placeholder="LTV:CAC"><input class="fill short" placeholder="... → ..."><input class="fill short" placeholder="..."></div>
+        <div class="rowfill"><input class="fill short" placeholder="Нові клієнти"><input class="fill short" placeholder="... → ..."><input class="fill short" placeholder="penetration"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRATEGY -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><span class="lt">S</span></div><div class="bt"><div class="model">SOSTAC · 3</div><h2>Strategy — як загалом</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> позиціонування, головний підхід, як acquisition і retention працюють паралельно, роль омніканальності й ключових важелів.</div>
+        <textarea class="fill" placeholder="Позиціонування: ...&#10;Acquisition (penetration): ...&#10;Retention (економіка): ...&#10;Омніканально: Meta+TikTok формують попит, Google закриває, email/SMS утримують&#10;Ключовий важіль: ..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- TACTICS / RACE -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><span class="lt">T</span></div><div class="bt"><div class="model">SOSTAC · 4 · RACE</div><h2>Tactics — чим конкретно</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> конкретні дії на кожному етапі RACE — канали, контент, кампанії.</div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">REACH</span><span class="sbn">Привести трафік</span></div><textarea class="fill short" placeholder="Канали, контент, кампанії на холодну аудиторію..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">ACT</span><span class="sbn">Залучити (мікродії)</span></div><textarea class="fill short" placeholder="Квіз, лід-магніт, ретаргет переглядів..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">CONVERT</span><span class="sbn">Продати</span></div><textarea class="fill short" placeholder="Google, PDP, оффер, abandoned cart..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">ENGAGE</span><span class="sbn">Утримати</span></div><textarea class="fill short" placeholder="Post-purchase, підписка, RFM, реферал..."></textarea></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMS -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><i data-lucide="message-square"></i></div><div class="bt"><div class="model">Комунікація · сходи обізнаності</div><h2>Меседжі за етапами</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> для кожного рівня обізнаності — реальні тексти меседжів і канали. Чим вище щабель, тим прямішим стає меседж (від освіти до офферу).</div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">1</span><span class="sbn">Не усвідомлює проблему · Reach</span></div><textarea class="fill short" placeholder="Меседж (освіта про проблему) + канали..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">2</span><span class="sbn">Усвідомлює проблему</span></div><textarea class="fill short" placeholder="Меседж (назвати причину, натякнути на рішення)..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">3</span><span class="sbn">Знає про рішення · Act</span></div><textarea class="fill short" placeholder="Меседж (допомогти обрати) + захоплення email..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">4</span><span class="sbn">Знає твій бренд · Convert</span></div><textarea class="fill short" placeholder="Меседж (чому ми, зняти заперечення) + докази..."></textarea></div>
+        <div class="stageblock"><div class="sbh"><span class="sbtag">5</span><span class="sbn">Готовий купити · BOFU</span></div><textarea class="fill short" placeholder="Оффер + abandoned cart..."></textarea></div>
+        <div class="stageblock" style="border-color:var(--success)"><div class="sbh"><span class="sbtag" style="background:var(--success)">✓</span><span class="sbn">Наявні клієнти · Engage</span></div><textarea class="fill short" placeholder="Post-purchase, підписка, реферал — турбота, не продаж..."></textarea></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><i data-lucide="calculator"></i></div><div class="bt"><div class="model">Прорахунки</div><h2>Економіка й бюджет</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Юніт-економіка:</b> контрибуція = AOV × маржа. Прибуток з 1-ї покупки = контрибуція − CAC. LTV = середні покупки/рік × контрибуція. Перевір LTV:CAC.</div>
+        <div class="rowhint"><span>Показник</span><span>Розрахунок</span><span>Значення</span></div>
+        <div class="rowfill"><input class="fill short" placeholder="Контрибуція/замовлення"><input class="fill short" placeholder="AOV × маржа"><input class="fill short" placeholder="₴"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Прибуток з 1-ї покупки"><input class="fill short" placeholder="контриб − CAC"><input class="fill short" placeholder="₴"></div>
+        <div class="rowfill"><input class="fill short" placeholder="LTV зараз"><input class="fill short" placeholder="покупки/рік × контриб"><input class="fill short" placeholder="₴"></div>
+        <div class="rowfill"><input class="fill short" placeholder="LTV:CAC"><input class="fill short" placeholder="LTV / CAC"><input class="fill short" placeholder="x"></div>
+        <div class="flabel"><i data-lucide="wallet"></i>Бюджет реклами за RACE</div>
+        <div class="rowhint"><span>Етап</span><span>Частка</span><span>Сума</span></div>
+        <div class="rowfill"><input class="fill short" placeholder="Reach"><input class="fill short" placeholder="%"><input class="fill short" placeholder="₴"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Convert"><input class="fill short" placeholder="%"><input class="fill short" placeholder="₴"></div>
+        <div class="rowfill"><input class="fill short" placeholder="Engage"><input class="fill short" placeholder="%"><input class="fill short" placeholder="₴"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AARRR -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><i data-lucide="activity"></i></div><div class="bt"><div class="model">Вимірювання · AARRR</div><h2>Метрики й вузьке місце</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> метрика кожної стадії, зараз → мета. Познач найслабшу — це фокус кварталу.</div>
+        <div class="rowhint"><span>Стадія</span><span>Метрика · зараз</span><span>Мета</span></div>
+        <div class="rowfill"><input class="fill short" placeholder="Acquisition"><input class="fill short" placeholder="трафік / CAC"><input class="fill short" placeholder="..."></div>
+        <div class="rowfill"><input class="fill short" placeholder="Activation"><input class="fill short" placeholder="ATC / CR"><input class="fill short" placeholder="..."></div>
+        <div class="rowfill"><input class="fill short" placeholder="Retention"><input class="fill short" placeholder="repeat rate"><input class="fill short" placeholder="..."></div>
+        <div class="rowfill"><input class="fill short" placeholder="Referral"><input class="fill short" placeholder="частка"><input class="fill short" placeholder="..."></div>
+        <div class="rowfill"><input class="fill short" placeholder="Revenue"><input class="fill short" placeholder="оборот / LTV:CAC"><input class="fill short" placeholder="..."></div>
+        <div class="flabel"><i data-lucide="crosshair"></i>Вузьке місце (найслабша стадія)</div>
+        <textarea class="fill short" placeholder="Найслабша стадія — ... Туди фокус."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ICE -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><i data-lucide="list-ordered"></i></div><div class="bt"><div class="model">Пріоритезація · ICE</div><h2>Що робимо першим</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> ініціативи під вузьке місце, бали 1–10 за Impact × Confidence × Ease. Score = I×C×E. Сортуй від більшого.</div>
+        <div class="rowhint" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr"><span>Ініціатива</span><span>I</span><span>C</span><span>E</span><span>Score</span></div>
+        <div id="iceRows">
+          <div class="rowfill" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr"><input class="fill short" placeholder="..."><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="="></div>
+          <div class="rowfill" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr"><input class="fill short" placeholder="..."><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="="></div>
+          <div class="rowfill" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr"><input class="fill short" placeholder="..."><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="="></div>
+        </div>
+        <button class="addbtn" id="addIce"><i data-lucide="plus"></i>Додати рядок</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTION -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><span class="lt">A</span></div><div class="bt"><div class="model">SOSTAC · 5</div><h2>Action — хто й коли</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> роадмеп по місяцях. Послідовність — за пріоритетом ICE.</div>
+        <div class="flabel"><i data-lucide="calendar"></i>Місяць 1</div><textarea class="fill short" placeholder="• ..."></textarea>
+        <div class="flabel"><i data-lucide="calendar"></i>Місяць 2</div><textarea class="fill short" placeholder="• ..."></textarea>
+        <div class="flabel"><i data-lucide="calendar"></i>Місяць 3</div><textarea class="fill short" placeholder="• ..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTROL -->
+  <section>
+    <div class="block">
+      <div class="blockhead"><div class="bi"><span class="lt">C</span></div><div class="bt"><div class="model">SOSTAC · 6</div><h2>Control — як міряємо й коригуємо</h2></div></div>
+      <div class="blockbody">
+        <div class="prompt"><b>Що писати:</b> як часто дивимось дашборд, формат зустрічі, головна метрика, як перевіряємо гіпотези.</div>
+        <textarea class="fill" placeholder="Дашборд AARRR — щотижня. Зустріч 3F5T. Головна метрика кварталу — ... Кожна ініціатива = гіпотеза з метрикою. Наприкінці кварталу — підсумок і новий цикл."></textarea>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Шаблон стратегії · ceo@magicecom.agency</span></div></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+$("#printBtn").onclick=()=>window.print();
+$("#exampleBtn").onclick=()=>window.open("strategy-rytual-example.html","_blank");
+$("#addIce").onclick=()=>{
+  const r=document.createElement("div");
+  r.className="rowfill"; r.style.gridTemplateColumns="2fr 1fr 1fr 1fr 1fr";
+  r.innerHTML='<input class="fill short" placeholder="..."><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="0"><input class="fill short" placeholder="=">';
+  $("#iceRows").appendChild(r);
+};
+lucide.createIcons();
+</script>
+</body>
+</html>

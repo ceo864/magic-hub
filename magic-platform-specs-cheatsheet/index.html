@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform Specs — Шпаргалка</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #0f1729;
+    --accent: #38A0FF;
+    --accent2: #AA7AFF;
+    --bg: #f7f8fb;
+    --card: #FFF;
+    --text: #1a2340;
+    --muted: #7580a0;
+    --border: #e4e7ef;
+    --meta: #38A0FF;
+    --tiktok: #010101;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { -webkit-font-smoothing:antialiased; font-family:'Onest',sans-serif; background:var(--bg); color:var(--text); }
+  .header { background:var(--dark); color:white; padding:36px 40px 28px; }
+  .header h1 { font-family:'Onest',sans-serif; font-size:24px; margin-bottom:4px; }
+  .header p { opacity:.6; font-size:13px; }
+  .container { max-width:1000px; margin:0 auto; padding:28px 20px 60px; }
+
+  .platform-tabs { display:flex; gap:8px; margin-bottom:24px; }
+  .platform-tabs button {
+    padding:10px 28px; border:2px solid var(--border); border-radius:10px;
+    background:var(--card); font-family:'Onest',sans-serif; font-size:14px;
+    font-weight:600; cursor:pointer; transition:all .15s;
+  }
+  .platform-tabs button:hover { border-color:var(--accent); }
+  .platform-tabs button.active-meta { background:var(--meta); border-color:var(--meta); color:white; }
+  .platform-tabs button.active-tiktok { background:var(--tiktok); border-color:var(--tiktok); color:white; }
+
+  .platform-section { display:none; }
+  .platform-section.active { display:block; }
+
+  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; margin-bottom:28px; }
+
+  .spec-card {
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:20px; position:relative; overflow:hidden;
+  }
+  .spec-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  }
+  .meta-card::before { background:var(--meta); }
+  .tiktok-card::before { background:var(--tiktok); }
+
+  .spec-card h3 { font-size:15px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .spec-card h3 .icon { font-size:20px; }
+
+  .spec-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .spec-row:last-child { border-bottom:none; }
+  .spec-label { color:var(--muted); }
+  .spec-value { font-weight:600; text-align:right; max-width:55%; }
+
+  .safe-zone {
+    background:var(--bg); border-radius:10px; padding:16px; margin-top:12px;
+    border:1px dashed var(--border);
+  }
+  .safe-zone h4 { font-size:12px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:8px; }
+  .safe-zone p { font-size:13px; line-height:1.6; }
+
+  .tip-box {
+    background:#FFF6EB; border-left:3px solid #FFB020; border-radius:0 8px 8px 0;
+    padding:12px 16px; font-size:13px; color:#7A6A3A; margin:16px 0;
+  }
+
+  .section-title {
+    font-family:'Onest',sans-serif; font-size:18px; font-weight:700;
+    margin:28px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--accent);
+    display:inline-block;
+  }
+
+  table.copy-table {
+    width:100%; border-collapse:collapse; background:var(--card);
+    border-radius:14px; overflow:hidden; margin-bottom:20px; font-size:13px;
+  }
+  table.copy-table th {
+    background:var(--dark); color:white; padding:10px 14px; text-align:left;
+    font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px;
+  }
+  table.copy-table td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.copy-table tr:nth-child(even) td { background:var(--bg); }
+
+  .best-tag {
+    display:inline-block; padding:2px 8px; border-radius:4px;
+    font-size:11px; font-weight:700; background:#E8F8F0; color:#2EC28A;
+  }
+
+  @media(max-width:640px) {
+    .spec-grid { grid-template-columns:1fr; }
+    .header { padding:24px 16px; }
+  }
+  @media print {
+    .platform-tabs { display:none; }
+    .platform-section { display:block !important; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div style="font-weight:900;font-size:16px;opacity:.35;margin-bottom:16px">magic</div><h1>ПЛАТФОРМНІ СПЕЦИФІКАЦІЇ</h1>
+  <p>Шпаргалка розмірів, форматів і вимог для Meta & TikTok | E-commerce</p>
+</div>
+
+<div class="container">
+
+  <div class="platform-tabs">
+    <button class="active-meta" onclick="showPlatform('meta',this)">Meta (FB / IG)</button>
+    <button onclick="showPlatform('tiktok',this)">TikTok</button>
+  </div>
+
+  <!-- =================== META =================== -->
+  <div id="meta" class="platform-section active">
+
+    <div class="section-title">Формати зображень</div>
+    <div class="spec-grid">
+      <div class="spec-card meta-card">
+        <h3><span class="icon"></span> Feed (1:1)</h3>
+        <div class="spec-row"><span class="spec-label">Розмір</span><span class="spec-value">1080 × 1080 px</span></div>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">1:1</span></div>
+        <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">JPG, PNG</span></div>
+        <div class="spec-row"><span class="spec-label">Макс. розмір</span><span class="spec-value">30 MB</span></div>
+        <div class="spec-row"><span class="spec-label">Текст на зображенні</span><span class="spec-value">&lt;20% площі</span></div>
+        <div class="spec-row"><span class="spec-label">Для чого</span><span class="spec-value">Класичні пости, каталог</span></div>
+      </div>
+      <div class="spec-card meta-card">
+        <h3><span class="icon"></span> Feed (4:5) <span class="best-tag">РЕКОМЕНДОВАНО</span></h3>
+        <div class="spec-row"><span class="spec-label">Розмір</span><span class="spec-value">1080 × 1350 px</span></div>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">4:5</span></div>
+        <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">JPG, PNG</span></div>
+        <div class="spec-row"><span class="spec-label">Макс. розмір</span><span class="spec-value">30 MB</span></div>
+        <div class="spec-row"><span class="spec-label">Для чого</span><span class="spec-value">Найбільше місця у стрічці</span></div>
+      </div>
+      <div class="spec-card meta-card">
+        <h3><span class="icon"></span> Stories / Reels (9:16)</h3>
+        <div class="spec-row"><span class="spec-label">Розмір</span><span class="spec-value">1080 × 1920 px</span></div>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">9:16</span></div>
+        <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">JPG, PNG</span></div>
+        <div class="spec-row"><span class="spec-label">Safe zone</span><span class="spec-value">Верх 250px, низ 340px</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">Формати відео</div>
+    <div class="spec-grid">
+      <div class="spec-card meta-card">
+        <h3><span class="icon"></span> Feed Video</h3>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">1:1, 4:5, 16:9</span></div>
+        <div class="spec-row"><span class="spec-label">Роздільність</span><span class="spec-value">Мін. 1080 × 1080</span></div>
+        <div class="spec-row"><span class="spec-label">Тривалість</span><span class="spec-value">1с — 241 хв</span></div>
+        <div class="spec-row"><span class="spec-label">Рекомендована</span><span class="spec-value">15 — 60 секунд</span></div>
+        <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">MP4, MOV</span></div>
+        <div class="spec-row"><span class="spec-label">Макс. розмір</span><span class="spec-value">4 GB</span></div>
+        <div class="spec-row"><span class="spec-label">Кодек</span><span class="spec-value">H.264, H.265</span></div>
+      </div>
+      <div class="spec-card meta-card">
+        <h3><span class="icon"></span> Reels</h3>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">9:16</span></div>
+        <div class="spec-row"><span class="spec-label">Роздільність</span><span class="spec-value">1080 × 1920 px</span></div>
+        <div class="spec-row"><span class="spec-label">Тривалість</span><span class="spec-value">3 — 90 секунд</span></div>
+        <div class="spec-row"><span class="spec-label">Рекомендована</span><span class="spec-value">15 — 30 секунд</span></div>
+        <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">MP4, MOV</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">Карусель</div>
+    <div class="spec-card meta-card" style="max-width:400px;">
+      <h3><span class="icon"></span> Carousel</h3>
+      <div class="spec-row"><span class="spec-label">Кількість карток</span><span class="spec-value">2 — 10</span></div>
+      <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">1:1 (рекомендовано)</span></div>
+      <div class="spec-row"><span class="spec-label">Розмір картки</span><span class="spec-value">1080 × 1080 px</span></div>
+      <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">JPG, PNG, MP4</span></div>
+      <div class="spec-row"><span class="spec-label">Відео на картці</span><span class="spec-value">До 240 хв</span></div>
+    </div>
+
+    <div class="section-title">Ліміти тексту</div>
+    <table class="copy-table">
+      <thead><tr><th>Елемент</th><th>Символів (макс)</th><th>Рекомендація</th></tr></thead>
+      <tbody>
+        <tr><td>Primary Text</td><td>125 (до обрізки)</td><td>Головний меседж у перших 2 рядках. Після "...ще" майже ніхто не читає.</td></tr>
+        <tr><td>Headline</td><td>40 символів</td><td>Короткий і чіткий. CTA або ключова перевага.</td></tr>
+        <tr><td>Description</td><td>30 символів</td><td>Додатковий оффер або деталь.</td></tr>
+        <tr><td>CTA Button</td><td>Стандартні опції</td><td>Shop Now / Learn More / Get Offer — найчастіші для e-commerce.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="safe-zone">
+      <h4>Safe Zones — Meta</h4>
+      <p><strong>Stories/Reels 9:16:</strong> Верхні ~14% (250px) зайняті аватаром і ім'ям. Нижні ~18% (340px) зайняті CTA-кнопкою і свайпом. Тримайте ключовий контент і текст у центральних 68% екрану.</p>
+      <p style="margin-top:8px"><strong>Feed 4:5:</strong> Нижні 10% можуть перекриватися CTA-кнопкою в деяких плейсментах. Не ставте CTA-текст на самий низ креативу.</p>
+    </div>
+  </div>
+
+  <!-- =================== TIKTOK =================== -->
+  <div id="tiktok" class="platform-section">
+
+    <div class="section-title">Формати відео</div>
+    <div class="spec-grid">
+      <div class="spec-card tiktok-card">
+        <h3><span class="icon"></span> In-Feed Video <span class="best-tag">ОСНОВНИЙ</span></h3>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">9:16 (обов'язково)</span></div>
+        <div class="spec-row"><span class="spec-label">Роздільність</span><span class="spec-value">1080 × 1920 px</span></div>
+        <div class="spec-row"><span class="spec-label">Тривалість</span><span class="spec-value">5 — 60 секунд</span></div>
+        <div class="spec-row"><span class="spec-label">Рекомендована</span><span class="spec-value">15 — 30 секунд</span></div>
+        <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">MP4, MOV, AVI</span></div>
+        <div class="spec-row"><span class="spec-label">Макс. розмір</span><span class="spec-value">500 MB</span></div>
+        <div class="spec-row"><span class="spec-label">Бітрейт</span><span class="spec-value">≥516 kbps</span></div>
+        <div class="spec-row"><span class="spec-label">FPS</span><span class="spec-value">≥25 fps (рек. 30)</span></div>
+      </div>
+      <div class="spec-card tiktok-card">
+        <h3><span class="icon"></span> Spark Ads</h3>
+        <div class="spec-row"><span class="spec-label">Що це</span><span class="spec-value">Буст органічного поста</span></div>
+        <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">9:16</span></div>
+        <div class="spec-row"><span class="spec-label">Вимоги</span><span class="spec-value">Як у In-Feed</span></div>
+        <div class="spec-row"><span class="spec-label">Особливість</span><span class="spec-value">Зберігає лайки/коменти</span></div>
+        <div class="spec-row"><span class="spec-label">Коли юзати</span><span class="spec-value">Коли органіка працює</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">Формати зображень</div>
+    <div class="spec-card tiktok-card" style="max-width:400px;">
+      <h3><span class="icon"></span> Image Ads</h3>
+      <div class="spec-row"><span class="spec-label">Ratio</span><span class="spec-value">9:16</span></div>
+      <div class="spec-row"><span class="spec-label">Розмір</span><span class="spec-value">1200 × 628 px (мін.)</span></div>
+      <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">JPG, PNG</span></div>
+      <div class="spec-row"><span class="spec-label">Макс. розмір</span><span class="spec-value">100 KB — 500 KB</span></div>
+      <div class="spec-row"><span class="spec-label">Примітка</span><span class="spec-value">Відео завжди працює краще</span></div>
+    </div>
+
+    <div class="section-title">Карусель</div>
+    <div class="spec-card tiktok-card" style="max-width:400px;">
+      <h3><span class="icon"></span> Carousel Ads</h3>
+      <div class="spec-row"><span class="spec-label">Кількість карток</span><span class="spec-value">2 — 35</span></div>
+      <div class="spec-row"><span class="spec-label">Розмір картки</span><span class="spec-value">1080 × 1920 px</span></div>
+      <div class="spec-row"><span class="spec-label">Формат</span><span class="spec-value">JPG, PNG</span></div>
+      <div class="spec-row"><span class="spec-label">Макс. розмір</span><span class="spec-value">100 KB кожна</span></div>
+    </div>
+
+    <div class="section-title">Ліміти тексту</div>
+    <table class="copy-table">
+      <thead><tr><th>Елемент</th><th>Символів</th><th>Рекомендація</th></tr></thead>
+      <tbody>
+        <tr><td>Ad Text (Display Name)</td><td>Бренд або APP Name (4-40)</td><td>Коротко і впізнавано.</td></tr>
+        <tr><td>Ad Description</td><td>1 — 100 символів</td><td>Стислий оффер або хук. Перші 30 символів — найважливіші.</td></tr>
+        <tr><td>CTA Button</td><td>Стандартні опції</td><td>Shop Now / Learn More / Buy Now — найчастіші для e-commerce.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="safe-zone">
+      <h4>Safe Zones — TikTok</h4>
+      <p><strong>Верх:</strong> ~150px зайняті пошуком і іконками. Не ставте критичний текст.</p>
+      <p style="margin-top:4px"><strong>Низ:</strong> ~400px зайняті описом, музикою, CTA. Тримайте текстовий оверлей вище.</p>
+      <p style="margin-top:4px"><strong>Право:</strong> ~100px зайняті іконками (лайк, камент, шер). Не ставте текст по правому краю.</p>
+      <p style="margin-top:8px"><strong>Безпечна зона:</strong> Центральні 720 × 1080 px (приблизно 60% екрану).</p>
+    </div>
+
+    <div class="tip-box"><strong>TikTok Best Practice:</strong> Перші 2 секунди вирішують все. Вертикальне відео 9:16 обов'язково (горизонтальне = -30% до performance). Субтитри бажано, але TikTok менш "мьютований" ніж Meta. Використовуйте трендовий звук коли можливо.</div>
+  </div>
+
+  <!-- =================== COMMON =================== -->
+  <div style="margin-top:32px;">
+    <div class="section-title">Загальні правила для обох платформ</div>
+    <table class="copy-table">
+      <thead><tr><th>Правило</th><th>Деталі</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Субтитри</strong></td><td>Обов'язково для Meta (85% без звуку). Бажано для TikTok. Контрастний колір, розмір мін. 40px.</td></tr>
+        <tr><td><strong>Перші 3 секунди</strong></td><td>Найважливіший елемент. Рух, контраст, текст або обличчя — щось має зачепити. Ніколи не починайте з логотипу.</td></tr>
+        <tr><td><strong>Текст на відео</strong></td><td>Мін. розмір шрифту: 24px. Контрастний фон або обводка. Не більше 2 рядків одночасно.</td></tr>
+        <tr><td><strong>CTA у відео</strong></td><td>Останні 3-5 секунд. Текст + голос. Чіткий і конкретний ("Замовляй зі знижкою -30%").</td></tr>
+        <tr><td><strong>Логотип / Бренд</strong></td><td>Дрібний watermark або наприкінці. НЕ на початку — вбиває hook rate.</td></tr>
+        <tr><td><strong>Музика / Звук</strong></td><td>Використовуйте royalty-free або ліцензовану музику. TikTok: трендові звуки. Meta: фонова музика або VO.</td></tr>
+        <tr><td><strong>Експорт</strong></td><td>Завжди MP4/H.264. Бітрейт мін. 5 Mbps для HD. Стискайте без втрати якості (Handbrake, FFmpeg).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+function showPlatform(id, btn) {
+  document.querySelectorAll('.platform-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.platform-tabs button').forEach(b => { b.className = ''; });
+  btn.className = id === 'meta' ? 'active-meta' : 'active-tiktok';
+}
+</script>
+
+<div style="text-align:center;padding:32px 0 16px;font-size:12px;color:#7580a0;font-weight:300"><span style="font-weight:900;background:linear-gradient(135deg,#38A0FF,#AA7AFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent">magic</span><div style="margin-top:4px">advertise for e-commerce</div></div>
+</body>
+</html>

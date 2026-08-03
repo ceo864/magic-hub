@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Production SOP — від гіпотези до висновку</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
+    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
+    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
+    --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  
+  .header{background:var(--dark);color:white;padding:48px 40px 36px;position:relative;overflow:hidden}
+  .header::after{content:"";position:absolute;top:0;right:0;width:400px;height:100%;background:var(--gradient);opacity:.15;border-radius:50%;filter:blur(80px)}
+  .header-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .header-left{flex:1}
+  .header-left .brand{font-weight:900;font-size:14px;opacity:.4;margin-bottom:18px;letter-spacing:.5px}
+  .header h1{font-size:32px;margin-bottom:8px;font-weight:700;line-height:1.15}
+  .header p{opacity:.6;font-size:15px;max-width:600px}
+  .header button{padding:10px 22px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
+  
+  .container{max-width:980px;margin:0 auto;padding:40px 24px 80px}
+  
+  .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+  .intro h2{font-size:18px;font-weight:700;margin-bottom:14px;color:var(--dark)}
+  .intro p{color:var(--text);font-size:14px;margin-bottom:10px;line-height:1.6}
+  .intro p:last-child{margin-bottom:0}
+  
+  .timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:36px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+  .tl-step{padding:14px 12px;border-radius:10px;background:#fafbfd;border:1px solid var(--border);text-align:center}
+  .tl-step .num{display:inline-block;width:26px;height:26px;line-height:26px;background:var(--gradient);color:white;font-weight:700;font-size:12px;border-radius:50%;margin-bottom:8px}
+  .tl-step .name{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px}
+  .tl-step .duration{font-size:10px;color:var(--muted);font-weight:500}
+  
+  .step-section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden}
+  .step-head{padding:24px 28px;background:var(--dark);color:white;display:flex;align-items:center;gap:16px}
+  .step-head .step-num{width:48px;height:48px;background:var(--gradient);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;flex-shrink:0}
+  .step-head .step-info{flex:1}
+  .step-head h2{font-size:22px;font-weight:700;margin-bottom:4px}
+  .step-head .step-meta{font-size:13px;opacity:.7}
+  .step-body{padding:28px}
+  
+  .step-lead{font-size:14px;color:var(--text);margin-bottom:20px;line-height:1.65}
+  
+  .h3{font-size:13px;font-weight:700;color:var(--dark);margin:20px 0 12px;text-transform:uppercase;letter-spacing:.6px}
+  
+  .checklist{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:18px}
+  .checklist ul{list-style:none;padding:0}
+  .checklist li{padding:8px 0;font-size:13px;color:var(--text);display:flex;gap:10px;line-height:1.5;border-bottom:1px dashed var(--border)}
+  .checklist li:last-child{border-bottom:none}
+  .checklist li::before{content:"☐";color:var(--accent);font-weight:700;font-size:14px;flex-shrink:0}
+  
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+  .info-card{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:16px}
+  .info-card h4{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px}
+  .info-card p{font-size:12px;color:var(--text);line-height:1.5;margin-bottom:6px}
+  .info-card ul{list-style:none;padding:0;margin-top:8px}
+  .info-card li{padding:3px 0;font-size:12px;display:flex;gap:8px;line-height:1.45}
+  .info-card li::before{content:"•";color:var(--accent);flex-shrink:0}
+  
+  .hint{background:linear-gradient(135deg,#EBF4FF,#F3EEFF);border-radius:12px;padding:16px 18px;margin:14px 0;display:flex;gap:12px;align-items:flex-start}
+  .hint-icon{font-size:18px;flex-shrink:0}
+  .hint-text{font-size:13px;color:var(--text);line-height:1.55}
+  .hint-text strong{font-weight:700}
+  
+  .warn{background:#FFF4F5;border:1px solid #F5BCC0;border-radius:12px;padding:16px 18px;margin:14px 0;display:flex;gap:12px;align-items:flex-start}
+  .warn-icon{font-size:18px;flex-shrink:0;color:var(--danger)}
+  .warn-text{font-size:13px;color:var(--text);line-height:1.55}
+  .warn-text strong{font-weight:700;color:var(--danger)}
+  
+  .example{background:#0f1729;color:white;border-radius:12px;padding:18px;margin:14px 0;font-family:'Onest',sans-serif}
+  .example h5{color:var(--accent);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  .example p{font-size:13px;opacity:.9;line-height:1.55;margin-bottom:6px}
+  .example p:last-child{margin-bottom:0}
+  .example strong{color:white;opacity:1}
+  
+  .tab-ref{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:#EBF4FF;color:var(--blue);font-size:11px;font-weight:600;border-radius:12px}
+  
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+  .metric{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+  .metric .m-name{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+  .metric .m-target{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px}
+  .metric .m-action{font-size:10px;color:var(--text);line-height:1.4}
+  
+  .decision-row{display:grid;grid-template-columns:160px 1fr 1fr;border-bottom:1px solid var(--border);font-size:12px}
+  .decision-row:last-child{border-bottom:none}
+  .decision-row.head{background:var(--dark);color:white;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px}
+  .decision-row.head > div{padding:10px 14px}
+  .decision-row > div{padding:14px;line-height:1.5}
+  .decision-row .sig{background:#fafbfd;font-weight:600}
+  .decision-row .act-good{background:#EBFFF6;color:var(--green);font-weight:600}
+  .decision-row .act-bad{background:#FFEFF0;color:var(--danger);font-weight:600}
+  .decision-row .act-neutral{background:#FFF6EB;color:var(--orange);font-weight:600}
+  .decision-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:14px 0}
+  
+  .principles{background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%);color:white;border-radius:16px;padding:28px;margin-top:36px}
+  .principles h2{font-size:18px;font-weight:700;margin-bottom:18px;color:white}
+  .principles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .principle{padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px}
+  .principle h4{font-size:13px;font-weight:700;margin-bottom:6px;color:white}
+  .principle p{font-size:12px;opacity:.75;line-height:1.5}
+  
+  @media(max-width:768px){
+    .container{padding:24px 16px 60px}
+    .timeline,.metric-grid,.info-grid,.principles-grid{grid-template-columns:1fr}
+    .header{padding:32px 20px}
+    .header h1{font-size:24px}
+    .decision-row{grid-template-columns:1fr}
+    .step-head{flex-wrap:wrap}
+  }
+  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.step-section,.intro,.principles,.timeline,.example{break-inside:avoid;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <div class="brand">magic</div>
+      <h1>CREATIVE PRODUCTION SOP</h1>
+      <p>6 кроків від гіпотези до висновку. Стандарт виробництва креативу для всіх стратегів агенції.</p>
+    </div>
+    <button onclick="window.print()">Друк / PDF</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Контекст SOP</h2>
+    <p>Цей документ описує життєвий цикл одного креативу — від моменту коли в тебе виникла гіпотеза до моменту коли ти зробив висновок у Архіві тестів.</p>
+    <p><strong>Чому потрібен SOP:</strong> щоб усі стратеги робили однаково. Щоб новий стратег за тиждень увійшов у роботу. Щоб патерни накопичувались системно — а не "у Каті виходить, у Олі ні".</p>
+    <p><strong>Контекст роботи:</strong> один файл — один клієнт. Всі креативи в одному ад-сеті. Аудиторії широкі (без LAL/Custom). Дані тягнуться з PMA автоматично.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="num">1</div>
+      <div class="name">Гіпотеза</div>
+      <div class="duration">1 день</div>
+    </div>
+    <div class="tl-step">
+      <div class="num">2</div>
+      <div class="name">Бриф</div>
+      <div class="duration">1 день</div>
+    </div>
+    <div class="tl-step">
+      <div class="num">3</div>
+      <div class="name">Продакшн</div>
+      <div class="duration">3-7 днів</div>
+    </div>
+    <div class="tl-step">
+      <div class="num">4</div>
+      <div class="name">Pre-launch</div>
+      <div class="duration">1 день</div>
+    </div>
+    <div class="tl-step">
+      <div class="num">5</div>
+      <div class="name">Моніторинг</div>
+      <div class="duration">1-2 тижні</div>
+    </div>
+    <div class="tl-step">
+      <div class="num">6</div>
+      <div class="name">Висновок</div>
+      <div class="duration">30 хв</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <section class="step-section">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-info">
+        <h2>Гіпотеза</h2>
+        <div class="step-meta">Формулювання тестового твердження · ~1 день · перед заповненням брифа</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p class="step-lead">Кожен креатив починається з гіпотези. Не "зробимо щось красиве" — а "тестуємо чи спрацює X для Y у форматі Z".</p>
+
+      <h3 class="h3">Формула гіпотези</h3>
+      <div class="example">
+        <h5>Структура</h5>
+        <p><strong>Якщо</strong> я покажу [аудиторія на сходинці N] креатив з [кут] у форматі [концепт + формат], <strong>то</strong> очікую [метрика] на рівні [число], <strong>бо</strong> [обґрунтування].</p>
+      </div>
+
+      <div class="example" style="background:#1a2340">
+        <h5>Приклад для клієнта Magic Cosmetics</h5>
+        <p><strong>Якщо</strong> я покажу жінкам 25-45 які шукають догляд за шкірою (сходинка 2 — шукає рішення) креатив з кутом "Pain Point" у форматі "Talking Head" відео, <strong>то</strong> очікую CTR на рівні 1.5%+ і ROAS 2.5+, <strong>бо</strong> Talking Head з реальною людиною дав найкращі результати у конкурента Х і у нас у 2 з 3 попередніх клієнтів схожої ніші.</p>
+      </div>
+
+      <h3 class="h3">Звідки беремо ідеї для гіпотез</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>З Дашборду Бібліотека</h4>
+          <p>Дивишся які кути / концепти / формати / сходинки дають winners у цього клієнта. Тиражуєш патерни що працюють.</p>
+        </div>
+        <div class="info-card">
+          <h4>З Patterns Log агенції</h4>
+          <p>Спільний документ команди — підтверджені патерни що працюють у 3+ клієнтів. Для нового клієнта без даних — це твоя точка входу.</p>
+        </div>
+        <div class="info-card">
+          <h4>З Архіву тестів</h4>
+          <p>Дивишся попередні висновки. Тести які не закрилися — продовжуєш. Тести які підтвердились — масштабуєш.</p>
+        </div>
+        <div class="info-card">
+          <h4>З інспірації конкурентів</h4>
+          <p>Ad Library, TikTok For You, YouTube — креативи що довго крутяться у конкурентів. Кросс-нішевий перенос.</p>
+        </div>
+        <div class="info-card">
+          <h4>З Weekly Creative Review</h4>
+          <p>Команда ділиться інсайтами по своїх клієнтах. Те що працює у Олі — може спрацювати у тебе.</p>
+        </div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">💡</div>
+        <div class="hint-text"><strong>Перевірка гіпотези:</strong> якщо не можеш сформулювати її в одне речення з "Якщо... то... бо..." — гіпотеза слабка. Поверни до Дашборду Бібліотеки, шукай патерн чіткіше.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step-section">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-info">
+        <h2>Бриф</h2>
+        <div class="step-meta">Заповнення рядка у вкладці "Бриф" · ~1 день · передача дизайнеру/копірайтеру</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p class="step-lead">Відкриваєш вкладку <span class="tab-ref">Бриф</span> у файлі клієнта. Створюєш новий рядок. Заповнюєш всі 21 колонок (крім #, який авто).</p>
+
+      <h3 class="h3">Що заповнюєш</h3>
+      <div class="checklist">
+        <ul>
+          <li><strong>Дата</strong> — коли бриф створений</li>
+          <li><strong>Назва креативу (planned)</strong> — за конвенцією ДДММРР_Формат_Кут_Концепт_v1 (приклад: 100526_Video_PainPoint_TalkingHead_v1)</li>
+          <li><strong>Платформа</strong> — Meta / TikTok / Both</li>
+          <li><strong>Формат</strong> — Video / Static / Carousel / GIF</li>
+          <li><strong>Кут, Концепт, Сходинка</strong> — стратегічні параметри з твоєї гіпотези</li>
+          <li><strong>JTBD</strong> — формат "Коли [ситуація], хочу [результат], щоб [цінність]". Конкретна "робота" яку креатив виконує для глядача. <strong>Обов'язкове поле</strong></li>
+          <li><strong>Тип Job</strong> — Функціональна / Емоційна / Соціальна</li>
+          <li><strong>Pain Point</strong> — конкретний біль аудиторії, який креатив адресує (1-2 речення)</li>
+          <li><strong>Desire</strong> — бажаний результат для аудиторії (1-2 речення)</li>
+          <li><strong>Тип хуку</strong> — Питання / Bold claim / Цифра / Шок-факт / Pattern interrupt тощо</li>
+          <li><strong>Хук (текст)</strong> — конкретний текст перших 3 секунд</li>
+          <li><strong>Body / Сценарій</strong> — структура ролика або тексту креативу</li>
+          <li><strong>CTA</strong> — Замовити / Купити / Дізнатись більше / Спробувати</li>
+          <li><strong>Тон</strong> — Дружній / Авторитетний / Емоційний / Раціональний</li>
+          <li><strong>Аудиторія</strong> — короткий опис ЦА (для контексту дизайнера)</li>
+          <li><strong>Референси</strong> — лінки на 2-3 креативи для натхнення</li>
+          <li><strong>Дедлайн</strong> — коли потрібен готовий креатив</li>
+          <li><strong>Статус</strong> — Чернетка → В роботі → Готово → Запущено</li>
+          <li><strong>Стратег</strong> — твоє ім'я (хто відповідальний)</li>
+          <li><strong>Що тестуємо й чому впевнені, що це покращить ефективність</strong> — розгорнутий запис гіпотези. Чому ця комбінація має спрацювати — посилання на дані Бібліотеки або Patterns Log. <strong>Обов'язкове поле</strong></li>
+        </ul>
+      </div>
+
+      <div class="warn" style="background:#EBF4FF;border-color:var(--blue);">
+        <div class="warn-icon" style="color:var(--blue);">💡</div>
+        <div class="warn-text"><strong>JTBD і Гіпотеза тесту — два обов'язкові поля</strong> які виділені зеленим у файлі. Без них бриф не передається в продакшн. Це не формальність — слабка гіпотеза = слабкий креатив на виході.</div>
+      </div>
+
+      <h3 class="h3">Як передати дизайнеру/відеографу</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Через Notion / Trello</h4>
+          <p>Створюєш картку з посиланням на рядок брифа в Google Sheets. Додаєш референси як вкладення. Ставиш дедлайн і відповідального.</p>
+        </div>
+        <div class="info-card">
+          <h4>Через короткий sync</h4>
+          <p>15-хвилинна розмова з продакшеном де ти пояснюєш гіпотезу, чому саме цей кут, що очікуєш від креативу. Це особливо важливо для нових креативів складних форматів.</p>
+        </div>
+      </div>
+
+      <div class="warn">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><strong>Не залишай пусті поля:</strong> якщо не знаєш Pain Point — ти не готовий писати бриф. Поверни до Етапу 1, доформулюй гіпотезу. Слабкий бриф = слабкий креатив.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step-section">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-info">
+        <h2>Продакшн</h2>
+        <div class="step-meta">Виробництво креативу · 3-7 днів · контроль як стратега</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p class="step-lead">Продакшн робить дизайнер / відеограф / копірайтер. Стратег не виробляє — стратег <strong>контролює відповідність до брифа</strong>.</p>
+
+      <h3 class="h3">Точки контролю стратега</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Перший draft (30-50%)</h4>
+          <p>Перевіряєш напрямок: чи хук відповідає брифу, чи кут читається. Не вилизуєш — даєш фідбек по структурі.</p>
+        </div>
+        <div class="info-card">
+          <h4>Pre-final (80-90%)</h4>
+          <p>Перевіряєш деталі: текст, CTA, тон, технічні параметри (формат, тривалість). Останні правки.</p>
+        </div>
+      </div>
+
+      <h3 class="h3">Що стратег НЕ робить на цьому етапі</h3>
+      <div class="checklist">
+        <ul>
+          <li>Не змінює гіпотезу посеред продакшена. Тестуємо те що в брифі.</li>
+          <li>Не додає 10 варіантів "а ще можна так". Брифом погодились — робимо.</li>
+          <li>Не редагує сам монтаж / дизайн. Це робота продакшена.</li>
+          <li>Не дає вільну форму. Дизайнер не повинен здогадуватись що ти мав на увазі.</li>
+        </ul>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">💡</div>
+        <div class="hint-text"><strong>Якщо в продакшені виникає питання:</strong> "А давайте зробимо X замість Y" — це не помилка, це сигнал. Якщо ідея краща за початкову — допиши гіпотезу в Notion. Тестувати будеш потім окремо. На поточному креативі — тільки те що в брифі.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step-section">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="step-info">
+        <h2>Pre-launch чеклист</h2>
+        <div class="step-meta">Перевірка перед запуском · ~30 хв · перед заливом в Ads Manager</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p class="step-lead">Перед тим як креатив піде в кабінет — швидка перевірка що все ок. Це економить час на технічних косяках.</p>
+
+      <h3 class="h3">Технічна перевірка</h3>
+      <div class="checklist">
+        <ul>
+          <li>Формат відповідає платформі (для Meta: 9:16 для Reels/Stories, 1:1 для Feed; для TikTok: 9:16 обов'язково)</li>
+          <li>Тривалість відео в межах вимог (Meta: до 60 сек оптимально; TikTok: 9-60 сек)</li>
+          <li>Розмір файлу не перевищує ліміт платформи</li>
+          <li>Звук читається без навушників (важливо для Meta)</li>
+          <li>Текст на креативі читається на мобільному (мінімум 14pt екв.)</li>
+          <li>UTM-мітки на лінку (для трекінгу)</li>
+          <li>Пікселі і події налаштовані (перевірка з UAM)</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Контентна перевірка</h3>
+      <div class="checklist">
+        <ul>
+          <li>Хук протестовано без звуку — чи зчитується сенс</li>
+          <li>CTA чіткий і одиничний (один заклик, не три)</li>
+          <li>Немає заборонених елементів (зброя, шок-контент, BeforeAfter в категоріях де модерація це не любить)</li>
+          <li>Назва файлу за конвенцією ДДММРР_Формат_Кут_Концепт_v1</li>
+          <li>В назві креативу в Ads Manager — точно така ж назва (інакше PMA не зв'яже)</li>
+        </ul>
+      </div>
+
+      <div class="warn">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><strong>Найважливіший пункт:</strong> назва креативу в Ads Manager має бути ідентична назві в Бібліотеці і Брифі. Якщо в Manager "v1_PainPoint" а в Бібліотеці "010526_Video_PainPoint_TH_v1" — PMA не зв'яже їх, дані не підтягнуться у Звіт.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="step-section">
+    <div class="step-head">
+      <div class="step-num">5</div>
+      <div class="step-info">
+        <h2>Запуск + Моніторинг (перші 1-2 тижні)</h2>
+        <div class="step-meta">Запуск в Ads Manager + спостереження · 7-14 днів</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p class="step-lead">UAM запускає креатив в Ads Manager. Стратег не торкається кабінета — спостерігає через файл.</p>
+
+      <h3 class="h3">Етапи моніторингу</h3>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>День 1-3 (Learning Phase)</h4>
+          <p>Креатив у learning phase. Дані ненадійні. <strong>Не робимо ніяких висновків.</strong> Якщо CTR катастрофічний (&lt;0.5%) — можемо обговорити з UAM, але це винятки.</p>
+        </div>
+        <div class="info-card">
+          <h4>День 4-7 (Перший тиждень)</h4>
+          <p>Креатив вийшов з learning phase. Дивимось у Звіт Meta/TikTok — з'явилось перше осмислене значення CTR, Hook Rate, Hold Rate.</p>
+        </div>
+        <div class="info-card">
+          <h4>День 8-14 (Другий тиждень)</h4>
+          <p>Тут вже видно тренд. Креатив або працює, або ні. ROAS стабілізується, рекомендація у колонці X стає надійною.</p>
+        </div>
+        <div class="info-card">
+          <h4>День 14+ (далі)</h4>
+          <p>Тижневий ритуал: понеділок дивишся <span class="tab-ref">Дашборд тиждень</span>, виконуєш дії зі списку. Або скейлиш ідею через нові креативи, або готуєш рефреш.</p>
+        </div>
+      </div>
+
+      <h3 class="h3">Ключові метрики які моніториш</h3>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="m-name">CTR</div>
+          <div class="m-target">1.0%+</div>
+          <div class="m-action">Чи чіпляє креатив</div>
+        </div>
+        <div class="metric">
+          <div class="m-name">Hook Rate</div>
+          <div class="m-target">25%+</div>
+          <div class="m-action">Чи зупиняють перші 3 сек</div>
+        </div>
+        <div class="metric">
+          <div class="m-name">Hold Rate</div>
+          <div class="m-target">35%+</div>
+          <div class="m-action">Чи тримають увагу</div>
+        </div>
+        <div class="metric">
+          <div class="m-name">Frequency</div>
+          <div class="m-target">&lt;3.5</div>
+          <div class="m-action">Сигнал втоми</div>
+        </div>
+      </div>
+
+      <h3 class="h3">Як читати сигнали в Звіті</h3>
+      <div class="decision-table">
+        <div class="decision-row head">
+          <div>Що бачу</div>
+          <div>Що це означає</div>
+          <div>Що роблю</div>
+        </div>
+        <div class="decision-row">
+          <div class="sig">CTR високий<br/>Hook високий<br/>ROAS &gt; target</div>
+          <div>Гіпотеза підтверджена. Креатив-домінант, алгоритм дає йому більше показів.</div>
+          <div class="act-good">Брифую схожі (нові кути теж тестуй). Через 3 тижні — Winner у Бібліотеці.</div>
+        </div>
+        <div class="decision-row">
+          <div class="sig">CTR ок<br/>Hold низький</div>
+          <div>Хук чіпляє, але тіло ролика не виконує обіцянки. Люди тікають на 5-10 сек.</div>
+          <div class="act-neutral">Залишаю хук, переробляю середину/кінцівку. Бриф v2.</div>
+        </div>
+        <div class="decision-row">
+          <div class="sig">Hook низький<br/>Hold високий</div>
+          <div>Перші 3 сек слабкі, мало хто залишається. Але хто залишився — досидіти.</div>
+          <div class="act-neutral">Переробляю хук, залишаю тіло. Бриф v2.</div>
+        </div>
+        <div class="decision-row">
+          <div class="sig">Frequency &gt;3.5<br/>CTR починає падати</div>
+          <div>Креативна втома. Алгоритм показує одним і тим самим повторно.</div>
+          <div class="act-neutral">Терміновий рефреш. Бриф нового на наступний тиждень.</div>
+        </div>
+        <div class="decision-row">
+          <div class="sig">ROAS &lt; target<br/>CPA &gt; target</div>
+          <div>Креатив горить гроші. Гіпотеза не спрацювала.</div>
+          <div class="act-bad">Зупиняю в Ads Manager. Пишу висновок чому не спрацювала гіпотеза.</div>
+        </div>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">📊</div>
+        <div class="hint-text"><strong>Пам'ятай про один-ад-сет workflow:</strong> ти не можеш скейлити бюджет конкретного креативу. Алгоритм сам віддає більше показів кращому. Твоя дія "скейлити" = "брифувати схожі ідеї нових креативів". Твоя дія "знизити бюджет" = "готувати рефреш".</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 6 -->
+  <section class="step-section">
+    <div class="step-head">
+      <div class="step-num">6</div>
+      <div class="step-info">
+        <h2>Висновок + Архів тестів</h2>
+        <div class="step-meta">Закриття тесту · 30 хв · коли креатив остаточно зупинений</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p class="step-lead">Коли креатив остаточно зупинено в Ads Manager (winner масштабувався і вмер від втоми / loser згасив) — час робити висновок.</p>
+
+      <h3 class="h3">Що робиш у Бібліотеці</h3>
+      <div class="checklist">
+        <ul>
+          <li>Відкриваєш <span class="tab-ref">Бібліотека Meta</span> або <span class="tab-ref">Бібліотека TikTok</span></li>
+          <li>Знаходиш рядок цього креативу</li>
+          <li>У колонці <strong>P "Досягнення"</strong> ставиш Winner або Loser</li>
+          <li><strong>Winner:</strong> крутився ≥3 тижні з ROAS вище таргета. Стабільні CTR і Hook Rate. Не "просто був гарним один тиждень".</li>
+          <li><strong>Loser:</strong> крутився ≥2 тижні. ROAS &lt; 1. Гіпотеза точно не спрацювала.</li>
+          <li>Якщо креатив "ні те ні се" — залишай Досягнення пусте. Не кожен креатив має бути Winner або Loser.</li>
+        </ul>
+      </div>
+
+      <h3 class="h3">Що пишеш у Архів тестів</h3>
+      <div class="checklist">
+        <ul>
+          <li>Відкриваєш <span class="tab-ref">Архів тестів</span></li>
+          <li>Створюєш новий рядок (або групу рядків якщо це Creative Battle з кількох креативів)</li>
+          <li>Заповнюєш: гіпотеза, тип тесту, дата запуску, дата закриття</li>
+          <li>Фінальні метрики (CTR, Hook, Hold, ROAS, Spend, Revenue)</li>
+          <li><strong>Висновок одним реченням:</strong> "UGC + Pain Point на сходинці 2 дав ROAS 5.0 за 4 тижні. Гіпотеза підтверджена. Тиражуємо у схожих клієнтів."</li>
+          <li>Що далі: масштабуємо / закриваємо / тестуємо варіацію</li>
+        </ul>
+      </div>
+
+      <div class="example">
+        <h5>Приклад висновку (Winner)</h5>
+        <p><strong>Гіпотеза:</strong> Pain Point + Talking Head на сходинці 2 для жінок 25-45 → ROAS 2.5+</p>
+        <p><strong>Результат:</strong> 4 тижні роботи, ROAS lifetime 5.0, CTR 2.2%, Hook Rate 38%, Spend $4 676, Revenue $23 380</p>
+        <p><strong>Висновок:</strong> Гіпотеза підтверджена. Talking Head з реальною жінкою-користувачкою у поєднанні з Pain Point — найсильніша комбінація для цього клієнта. <strong>Дія:</strong> брифую ще 3 варіації (інші користувачки, інші Pain Points). Тиражую підхід.</p>
+      </div>
+
+      <div class="example" style="background:#1a2340">
+        <h5>Приклад висновку (Loser)</h5>
+        <p><strong>Гіпотеза:</strong> FOMO + Карусель на сходинці 4 → CTR 1.2%+ та ROAS 2.0+</p>
+        <p><strong>Результат:</strong> 2 тижні роботи, ROAS lifetime 0.4, CTR 0.6%, Hook Rate 12%, Spend $1 369, Revenue $1 791</p>
+        <p><strong>Висновок:</strong> Гіпотеза не спрацювала. FOMO на цій сходинці працює погано — користувачі вже знають про продукт, FOMO сприймається як спам. <strong>Дія:</strong> не повторюємо FOMO для сходинки 4. На сходинці 4 пробуємо Social Proof або Оффер/Ціна.</p>
+      </div>
+
+      <div class="hint">
+        <div class="hint-icon">📚</div>
+        <div class="hint-text"><strong>Чому Архів тестів важливий:</strong> через рік це твоя база знань. 20-30 закритих тестів з висновками = карта території. Кожен новий бриф починаєш з: "А що в Архіві про схожий тест?" Не повторюєш помилок, тиражуєш успіхи.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <div class="principles">
+    <h2>Принципи виробництва креативу</h2>
+    <div class="principles-grid">
+      <div class="principle">
+        <h4>Один креатив = одна гіпотеза</h4>
+        <p>Не пиши бриф "тестуємо все одразу". Один кут, один концепт, одна сходинка. Інакше не зрозумієш що саме спрацювало або провалилось.</p>
+      </div>
+      <div class="principle">
+        <h4>Без гіпотези — не пишемо бриф</h4>
+        <p>Якщо не можеш сформулювати "Якщо... то... бо..." — поверни до Дашборду Бібліотеки. Шукай патерн чіткіше.</p>
+      </div>
+      <div class="principle">
+        <h4>Дані рулять, не інтуїція</h4>
+        <p>Гіпотеза має бути на патернах з Бібліотеки. "Я думаю так буде краще" без даних — слабкий аргумент.</p>
+      </div>
+      <div class="principle">
+        <h4>Один-ад-сет — це не баг</h4>
+        <p>Це наш підхід. Не намагайся обхитрити алгоритм. Алгоритм сам віддасть більше показів кращому. Твоя робота — брифувати кращі ідеї.</p>
+      </div>
+      <div class="principle">
+        <h4>2 тижні до висновку</h4>
+        <p>Не закривай тест раніше. Учасники learning phase + перші дні нестабільні. Тільки після 14 днів дані надійні.</p>
+      </div>
+      <div class="principle">
+        <h4>Висновки → Архів → база знань</h4>
+        <p>Тест без висновку = марна робота. Архів тестів — це твоя пам'ять і пам'ять команди.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

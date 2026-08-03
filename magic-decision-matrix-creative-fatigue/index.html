@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Матриця прийняття рішень: вигорання — magic</title>
+<style>
+@font-face { font-family: 'Onest'; font-weight: 900; src: url('file:///usr/local/share/fonts/onest/OnestBlack.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 700; src: url('file:///usr/local/share/fonts/onest/OnestBold.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 500; src: url('file:///usr/local/share/fonts/onest/OnestMedium.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 400; src: url('file:///usr/local/share/fonts/onest/OnestRegular.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 300; src: url('file:///usr/local/share/fonts/onest/OnestLight.ttf') format('truetype'); }
+:root{--blue:#38A0FF;--purple:#AA7AFF;--gradient:linear-gradient(135deg,#38A0FF,#AA7AFF);--ink-900:#0f1729;--ink-700:#2a3558;--ink-500:#556085;--ink-400:#7580a0;--ink-200:#c4c9d8;--ink-100:#e4e7ef;--ink-50:#f4f5f9;--success:#2EC28A;--warning:#FFB020;--danger:#F5525C;--bg:#f7f8fb;--card:#fff;--border:#e4e7ef;--r-md:14px;--r-lg:20px;--r-xl:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Onest',sans-serif;font-weight:300;background:var(--bg);color:var(--ink-900);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+
+.hero{background:var(--ink-900);color:#fff;padding:56px 48px 48px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-40px;width:360px;height:360px;background:var(--gradient);border-radius:50%;opacity:.1;filter:blur(80px)}
+.hero-inner{position:relative;z-index:1;max-width:960px;margin:0 auto}
+.hero-logo{font-weight:900;font-size:16px;opacity:.35;margin-bottom:24px}
+.hero h1{font-weight:900;font-size:36px;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px}
+.hero h1 .gt{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-weight:300;font-size:15px;opacity:.5;max-width:520px}
+.container{max-width:960px;margin:0 auto;padding:40px 24px 80px}
+
+/* Signal chain */
+.chain{display:flex;gap:0;margin-bottom:40px;position:relative}
+.chain::before{content:'';position:absolute;top:34px;left:60px;right:60px;height:3px;background:linear-gradient(90deg,var(--warning),var(--danger));border-radius:2px;z-index:0}
+.chain-step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+.chain-dot{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#fff;margin-bottom:10px;border:4px solid var(--bg)}
+.cd-1{background:var(--warning)}.cd-2{background:#F09030}.cd-3{background:#E06040}.cd-4{background:var(--danger)}
+.chain-label{font-weight:700;font-size:13px;color:var(--ink-900);margin-bottom:2px}
+.chain-metric{font-weight:500;font-size:12px;color:var(--ink-400)}
+.chain-threshold{font-weight:700;font-size:11px;color:var(--danger);margin-top:4px;background:rgba(245,82,92,.08);padding:2px 10px;border-radius:999px}
+
+/* Section */
+.section{margin-bottom:44px}
+.section-label{font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;padding:4px 14px;border-radius:999px;display:inline-block;color:#fff}
+.sl-blue{background:var(--blue)}.sl-purple{background:var(--purple)}.sl-ink{background:var(--ink-900)}.sl-green{background:var(--success)}.sl-orange{background:var(--warning)}.sl-red{background:var(--danger)}
+.section h2{font-weight:900;font-size:22px;letter-spacing:-.02em;margin-bottom:6px;margin-top:8px}
+.section-desc{font-weight:300;color:var(--ink-500);font-size:14px;margin-bottom:20px}
+
+/* Decision matrix */
+.matrix{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);margin-bottom:24px;font-size:13px;background:var(--card)}
+.matrix th{background:var(--ink-900);color:#fff;padding:14px 16px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.matrix td{padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:top;font-weight:300;line-height:1.5}
+.matrix tr:last-child td{border-bottom:none}
+.matrix tr:nth-child(even) td{background:var(--ink-50)}
+.matrix td:first-child{font-weight:700;white-space:nowrap}
+
+/* Diagnostic cards */
+.diag{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+.diag-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;position:relative;overflow:hidden}
+.diag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.dc-creative::before{background:var(--warning)}.dc-product::before{background:var(--danger)}.dc-external::before{background:var(--ink-400)}
+.diag-card h3{font-weight:900;font-size:16px;margin-bottom:10px;letter-spacing:-.01em}
+.diag-card .signal{font-size:12px;color:var(--ink-500);margin-bottom:12px;line-height:1.6}
+.diag-card .action{font-size:13px;font-weight:500;color:var(--ink-900);background:var(--ink-50);border-radius:10px;padding:12px 14px;line-height:1.5}
+.diag-card .action strong{color:var(--blue);font-weight:700}
+
+/* Action flowchart */
+.flow{background:var(--ink-900);color:#fff;border-radius:var(--r-xl);padding:32px;margin-bottom:28px;position:relative;overflow:hidden}
+.flow::before{content:'';position:absolute;top:-30px;right:-30px;width:180px;height:180px;background:var(--gradient);border-radius:50%;opacity:.08;filter:blur(40px)}
+.flow h3{font-weight:900;font-size:18px;margin-bottom:20px;position:relative;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.flow-row{display:flex;gap:16px;padding:10px 0;position:relative;align-items:flex-start}
+.flow-q{font-weight:700;font-size:14px;min-width:280px;color:#fff;position:relative}
+.flow-arrow{color:var(--ink-400);font-size:14px;flex-shrink:0;padding-top:2px}
+.flow-a{font-weight:300;font-size:13px;opacity:.7;flex:1;line-height:1.5}
+.flow-a strong{font-weight:700;opacity:1}
+.flow-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:6px 0}
+
+/* Threshold table */
+.thresh{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);margin-bottom:24px;font-size:13px;background:var(--card)}
+.thresh th{background:var(--ink-900);color:#fff;padding:12px 16px;text-align:center;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.thresh th:first-child{text-align:left}
+.thresh td{padding:12px 16px;border-bottom:1px solid var(--border);text-align:center;font-weight:400;line-height:1.4}
+.thresh td:first-child{text-align:left;font-weight:500}
+.thresh tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.b-green{background:rgba(46,194,138,.1);color:var(--success)}.b-yellow{background:rgba(255,176,32,.1);color:#c88800}.b-red{background:rgba(245,82,92,.1);color:var(--danger)}
+
+.tip{background:var(--ink-50);border-left:3px solid var(--blue);border-radius:0 var(--r-md) var(--r-md) 0;padding:14px 18px;font-size:13px;color:var(--ink-700);margin:16px 0;line-height:1.6}
+.tip strong{color:var(--ink-900);font-weight:700}
+
+.footer{text-align:center;padding:40px 0 0;font-size:12px;color:var(--ink-400);font-weight:300}
+.footer-g{font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+@media(max-width:768px){.hero{padding:36px 20px 32px}.hero h1{font-size:26px}.chain{flex-direction:column;gap:12px}.chain::before{display:none}.diag{grid-template-columns:1fr}.flow-row{flex-direction:column;gap:4px}.container{padding:28px 16px 60px}}
+@media print{body{background:#fff}.hero,.flow{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
+
+
+<div class="hero"><div class="hero-inner">
+<div class="hero-logo">magic</div>
+<h1>Матриця прийняття рішень<br><span class="gt">Вигорання креативів</span></h1>
+<div class="hero-sub">Як зрозуміти що вигоріло, коли діяти, і що робити. З конкретними порогами метрик.</div>
+</div></div>
+
+<div class="container">
+
+<!-- ===== SIGNAL CHAIN ===== -->
+<div class="section">
+<span class="section-label sl-orange">Ранні сигнали</span>
+<h2>Послідовність вигорання</h2>
+<div class="section-desc">Метрики падають одна за одною. Між першим сигналом і падінням ROAS — вікно 3-7 днів.</div>
+
+<div class="chain">
+<div class="chain-step">
+<div class="chain-dot cd-1">1</div>
+<div class="chain-label">Hook Rate / CTR</div>
+<div class="chain-metric">Перші 3 секунди</div>
+<div class="chain-threshold">-20% за 3 дні</div>
+</div>
+<div class="chain-step">
+<div class="chain-dot cd-2">2</div>
+<div class="chain-label">CPM</div>
+<div class="chain-metric">Вартість показів</div>
+<div class="chain-threshold">+25% за 5 днів</div>
+</div>
+<div class="chain-step">
+<div class="chain-dot cd-3">3</div>
+<div class="chain-label">ATC Rate / CR</div>
+<div class="chain-metric">Конверсія на сайті</div>
+<div class="chain-threshold">-30% від baseline</div>
+</div>
+<div class="chain-step">
+<div class="chain-dot cd-4">4</div>
+<div class="chain-label">ROAS / CPA</div>
+<div class="chain-metric">Вже факт, не сигнал</div>
+<div class="chain-threshold">Пізно реагувати</div>
+</div>
+</div>
+</div>
+
+<!-- ===== THRESHOLDS ===== -->
+<div class="section">
+<span class="section-label sl-red">Пороги</span>
+<h2>Коли метрика — сигнал, а коли — шум</h2>
+<div class="section-desc">Порівнюйте з baseline креативу (перші 7 днів після запуску, коли він працював добре)</div>
+
+<table class="thresh">
+<thead><tr><th>Метрика</th><th>Норма</th><th>Увага</th><th>Критично</th><th>Що це значить</th></tr></thead>
+<tbody>
+<tr><td>Hook Rate (3s views / impressions)</td><td><span class="badge b-green">±10%</span></td><td><span class="badge b-yellow">-15..20%</span></td><td><span class="badge b-red">-25%+</span></td><td style="text-align:left;font-size:12px">Хук перестав чіпляти. Люди скролять мимо.</td></tr>
+<tr><td>CTR (link clicks / impressions)</td><td><span class="badge b-green">±10%</span></td><td><span class="badge b-yellow">-20%</span></td><td><span class="badge b-red">-30%+</span></td><td style="text-align:left;font-size:12px">Меседж не конвертує в клік.</td></tr>
+<tr><td>CPM</td><td><span class="badge b-green">±15%</span></td><td><span class="badge b-yellow">+25%</span></td><td><span class="badge b-red">+40%+</span></td><td style="text-align:left;font-size:12px">Алгоритм важче знаходить аудиторію.</td></tr>
+<tr><td>ATC Rate</td><td><span class="badge b-green">±10%</span></td><td><span class="badge b-yellow">-20%</span></td><td><span class="badge b-red">-30%+</span></td><td style="text-align:left;font-size:12px">Трафік менш якісний або лендінг не мечить.</td></tr>
+<tr><td>CR (purchase / clicks)</td><td><span class="badge b-green">±15%</span></td><td><span class="badge b-yellow">-25%</span></td><td><span class="badge b-red">-35%+</span></td><td style="text-align:left;font-size:12px">Алгоритм показує нерелевантним людям.</td></tr>
+<tr><td>CPA</td><td><span class="badge b-green">±15%</span></td><td><span class="badge b-yellow">+30%</span></td><td><span class="badge b-red">+50%+</span></td><td style="text-align:left;font-size:12px">Кожна конверсія коштує занадто дорого.</td></tr>
+<tr><td>Spend (щоденний)</td><td><span class="badge b-green">стабільний</span></td><td><span class="badge b-yellow">-30%</span></td><td><span class="badge b-red">-50%+</span></td><td style="text-align:left;font-size:12px">Алгоритм сам зупиняє витрату — нікому показувати.</td></tr>
+</tbody>
+</table>
+
+<div class="tip"><strong>Як рахувати baseline:</strong> середнє значення метрики за перші 7 днів після запуску (або перші 5 днів після завершення learning phase). Це ваш "здоровий" показник, від якого рахуєте відхилення.</div>
+</div>
+
+<!-- ===== DIAGNOSTICS ===== -->
+<div class="section">
+<span class="section-label sl-purple">Діагностика</span>
+<h2>Що саме вигоріло?</h2>
+<div class="section-desc">Три сценарії з різними сигналами і різними діями</div>
+
+<div class="diag">
+<div class="diag-card dc-creative">
+<h3>Вигорів креатив</h3>
+<div class="signal">
+Один конкретний креатив просів<br>
+Інші по тому ж продукту тримаються<br>
+Hook Rate впав першим<br>
+Spend по цьому креативу падає
+</div>
+<div class="action">
+<strong>Що робити:</strong><br>
+Новий хук (3 варіації)<br>
+Інший кут або сходинка Ханта<br>
+Рефреш візуалу (колір, темп, першi кадри)
+</div>
+</div>
+
+<div class="diag-card dc-product">
+<h3>Вигорів продукт / оффер</h3>
+<div class="signal">
+Всі креативи по одному продукту просіли одночасно<br>
+CTR тримається, але CR впав<br>
+CPM не ріс — значить аудиторія є, але не купує
+</div>
+<div class="action">
+<strong>Що робити:</strong><br>
+Новий оффер або бандл<br>
+Інший продукт на перший план<br>
+Перевірити конкурентів (чи не знизили ціну)
+</div>
+</div>
+
+<div class="diag-card dc-external">
+<h3>Зовнішній фактор</h3>
+<div class="signal">
+Всі креативи по всіх продуктах просіли<br>
+CPM різко виріс по всьому акаунту<br>
+Те саме у інших клієнтів / колег
+</div>
+<div class="action">
+<strong>Що робити:</strong><br>
+Перечекати 3-5 днів<br>
+Перевірити сезонність і свята<br>
+Зменшити бюджет, не вимикати
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== CLUSTER BURNOUT ===== -->
+<div class="section">
+<span class="section-label sl-ink">Широкі аудиторії</span>
+<h2>Вигорання кластеру комунікації</h2>
+<div class="section-desc">При широких аудиторіях вигорає не аудиторія, а група людей які реагують на конкретний меседж</div>
+
+<table class="matrix">
+<thead><tr><th>Що сталось</th><th>Як виглядає в метриках</th><th>Що це значить</th><th>Що робити</th></tr></thead>
+<tbody>
+<tr>
+<td>Кластер вичерпаний</td>
+<td>Hook Rate падає, CPM росте, Spend падає. Алгоритм не може знайти нових людей для цього меседжу.</td>
+<td>Алгоритм вже показав цей креатив усім, хто б відреагував. Pool вичерпаний.</td>
+<td>Інший кут для іншого кластеру людей. Не рефреш — а новий меседж.</td>
+</tr>
+<tr>
+<td>Кластер втомився</td>
+<td>Hook Rate тримається, CTR падає. Люди бачать, але вже не клікають.</td>
+<td>Бачили цей меседж занадто багато разів. Frequency > 3-4.</td>
+<td>Рефреш хуку: нова перша секунда, інший візуал, той самий меседж.</td>
+</tr>
+<tr>
+<td>Кластер не конвертує</td>
+<td>CTR тримається, але CR впав. Люди клікають, але не купують.</td>
+<td>Алгоритм розширив покази на менш релевантних людей або лендінг не відповідає.</td>
+<td>Перевірити message match (креатив ↔ лендінг). Або зменшити бюджет щоб алгоритм звузив.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== DECISION FLOW ===== -->
+<div class="flow">
+<h3>Алгоритм дій: 5 питань</h3>
+
+<div class="flow-row">
+<div class="flow-q">1. Hook Rate впав > 20%?</div>
+<div class="flow-arrow">→</div>
+<div class="flow-a"><strong>Так:</strong> хук більше не чіпляє. Новий хук або новий кут. <strong>Ні:</strong> йдемо далі.</div>
+</div>
+<hr class="flow-divider">
+
+<div class="flow-row">
+<div class="flow-q">2. CPM виріс > 25%?</div>
+<div class="flow-arrow">→</div>
+<div class="flow-a"><strong>Так:</strong> кластер вичерпується. Якщо тільки по одному креативу — замінити. Якщо по всіх — зовнішній фактор, перечекати.</div>
+</div>
+<hr class="flow-divider">
+
+<div class="flow-row">
+<div class="flow-q">3. Це один креатив чи всі?</div>
+<div class="flow-arrow">→</div>
+<div class="flow-a"><strong>Один:</strong> вигорів креатив (новий кут). <strong>Всі по продукту:</strong> вигорів оффер (новий оффер). <strong>Все скрізь:</strong> зовнішній фактор.</div>
+</div>
+<hr class="flow-divider">
+
+<div class="flow-row">
+<div class="flow-q">4. CTR тримається, CR впав?</div>
+<div class="flow-arrow">→</div>
+<div class="flow-a"><strong>Так:</strong> проблема не в креативі, а в лендінгу або алгоритм розширив аудиторію. Перевірити message match. Зменшити бюджет на 20%.</div>
+</div>
+<hr class="flow-divider">
+
+<div class="flow-row">
+<div class="flow-q">5. Spend різко впав (>30%)?</div>
+<div class="flow-arrow">→</div>
+<div class="flow-a"><strong>Так:</strong> алгоритм зупинив сам — кластер повністю вичерпаний. Не намагайтеся "реанімувати". Запускайте новий креатив з іншим кутом.</div>
+</div>
+</div>
+
+<!-- ===== ACTION MATRIX ===== -->
+<div class="section">
+<span class="section-label sl-green">Дії</span>
+<h2>Що робити в кожному випадку</h2>
+
+<table class="matrix">
+<thead><tr><th>Ситуація</th><th>Терміновість</th><th>Дія</th><th>Очікуваний результат</th></tr></thead>
+<tbody>
+<tr>
+<td>Hook Rate -20%</td>
+<td><span class="badge b-yellow">24-48 год</span></td>
+<td>Підготувати 2-3 нових хуки. Запустити A/B тест хуків при тому ж body + CTA.</td>
+<td>Відновлення Hook Rate протягом 2-3 днів</td>
+</tr>
+<tr>
+<td>CPM +25%, один креатив</td>
+<td><span class="badge b-yellow">48 год</span></td>
+<td>Зменшити бюджет на цей креатив на 30%. Запустити новий кут на заміну.</td>
+<td>CPM нормалізується або переливається на новий креатив</td>
+</tr>
+<tr>
+<td>CPM +25%, всі креативи</td>
+<td><span class="badge b-green">3-5 днів</span></td>
+<td>Перечекати. Перевірити чи це сезон або аукціон. Не вимикати, зменшити бюджет на 20%.</td>
+<td>Повернення до норми через 3-7 днів якщо зовнішній фактор</td>
+</tr>
+<tr>
+<td>CR впав, CTR тримається</td>
+<td><span class="badge b-yellow">24 год</span></td>
+<td>Перевірити лендінг: message match, швидкість, ціни. Зменшити бюджет на 20%.</td>
+<td>Якщо лендінг ок — алгоритм перенавчиться за 2-3 дні</td>
+</tr>
+<tr>
+<td>Spend впав >30%</td>
+<td><span class="badge b-red">зараз</span></td>
+<td>Не реанімувати. Запускати новий креатив з іншим кутом і сходинкою Ханта.</td>
+<td>Новий креатив підхоплює витрату через 1-3 дні</td>
+</tr>
+<tr>
+<td>Всі метрики просіли по продукту</td>
+<td><span class="badge b-red">зараз</span></td>
+<td>Новий оффер або бандл. Перевірити конкурентів. Можливо змінити продукт на першому плані.</td>
+<td>Перезапуск воронки з новим оффером</td>
+</tr>
+<tr>
+<td>Frequency > 3.5</td>
+<td><span class="badge b-yellow">48 год</span></td>
+<td>Рефреш: нова перша секунда, інший колір/темп/музика. Той самий меседж, інша оболонка.</td>
+<td>Скидання Frequency, відновлення Hook Rate</td>
+</tr>
+<tr>
+<td>Winner > 30 днів, ще працює</td>
+<td><span class="badge b-green">планово</span></td>
+<td>Почати готувати заміну зараз. Не чекати поки впаде. Мати 2-3 готових кути в резерві.</td>
+<td>Безшовна заміна без провалу в обороті</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip"><strong>Головне правило:</strong> не реагуйте на одноденні коливання. Дивіться тренд 3 дні. Якщо метрика падає 3 дні підряд — це сигнал. Один поганий день — це шум.</div>
+
+<div class="footer"><div class="footer-g">magic</div><div style="margin-top:4px">advertise for e-commerce</div></div>
+
+</div>
+</body>
+</html>
