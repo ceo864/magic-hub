@@ -99,6 +99,16 @@ a{text-decoration:none;color:inherit}
   transform:translateX(-4px);transition:.18s}
 .card:hover .arrow{opacity:1;transform:translateX(0);color:var(--blue)}
 .empty{display:none;text-align:center;color:var(--ink-500);padding:60px 0;font-size:16px}
+.card.flagship{background:var(--grad);box-shadow:var(--glow-brand)}
+.card.flagship .tile{background:rgba(255,255,255,.2);color:#fff}
+.card.flagship .body h3,.card.flagship .arrow{color:#fff}
+.card.flagship .body p{color:rgba(255,255,255,.85)}
+.card.flagship:hover .tile{background:rgba(255,255,255,.3);color:#fff}
+.card.archived{opacity:.55}
+.card.archived:hover{opacity:.85}
+.badge-archive{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;padding:2px 8px;border-radius:var(--r-pill);
+  background:var(--ink-100);color:var(--ink-500);margin-left:7px;vertical-align:1px}
 
 /* FOOTER */
 footer{border-top:1px solid var(--ink-200);margin-top:72px;padding:40px 0 56px}
@@ -122,9 +132,7 @@ footer{border-top:1px solid var(--ink-200);margin-top:72px;padding:40px 0 56px}
       <span class="tag">база знань</span>
     </div>
     <div class="nav-links">
-      <a href="#onboarding">Онбординг</a>
-      <a href="#sop">SOP</a>
-      <a href="#playbooks">Плейбуки</a>
+      <a href="#growth-marketer">Growth Marketer</a>
       <a href="#meetings">Зустрічі</a>
       <a href="#reports">Звіти</a>
       <a class="nav-cta" href="https://github.com/ceo864" target="_blank" rel="noopener">GitHub</a>
@@ -167,19 +175,15 @@ footer{border-top:1px solid var(--ink-200);margin-top:72px;padding:40px 0 56px}
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
 const DATA = [
-  {cat:"onboarding", ico:"door-open", title:"Онбординг: адаптація", repos:[
+  {cat:"growth-marketer", ico:"compass", title:"Growth Marketer: адаптація й інструменти", repos:[
+    {t:"Growth Marketer — регламент ролі (v3)", d:"Посадова інструкція, взаємодія, звітність 5F3T", r:"growth-marketer", i:"sparkles", flagship:true},
     {t:"Онбординг Creative", d:"Адаптація креативної команди", r:"magic-creative-onboarding", i:"palette"},
     {t:"Онбординг UAM", d:"Адаптація User Acquisition", r:"magic-uam-onboarding", i:"user-plus"},
-  ]},
-  {cat:"sop", ico:"list-checks", title:"SOP та процеси", repos:[
     {t:"SOP: продакшн креативів", d:"Стандарт виробництва креативів", r:"magic-creative-production-sop", i:"clapperboard"},
     {t:"Воркфлоу креативів", d:"Наскрізний процес роботи", r:"magic-creative-workflow", i:"workflow"},
     {t:"SOP: тестування креативів", d:"Як тестуємо гіпотези", r:"magic-sop-creative-testing", i:"flask-conical"},
     {t:"SOP: фреймворк UAM", d:"Процеси User Acquisition", r:"magic-sop-framework-uam", i:"target"},
-    {t:"SOP: партнерства", d:"Робота з партнерами", r:"magic-partnership-sop", i:"handshake"},
-    {t:"Взаємодія Creative × UAM", d:"Комунікація між командами", r:"magic-creative-uam-interaction", i:"git-merge"},
-  ]},
-  {cat:"playbooks", ico:"book-open", title:"Плейбуки та фреймворки", repos:[
+    {t:"SOP: партнерства", d:"Робота з підрядниками й партнерами (PM-складова ролі)", r:"magic-partnership-sop", i:"handshake"},
     {t:"Плейбук: креативні кути", d:"Бібліотека кутів для креативів", r:"magic-creative-angles-playbook", i:"drafting-compass"},
     {t:"Плейбук: пошук інсайтів", d:"Джерела натхнення й ідей", r:"magic-sop-inspiration-playbook-", i:"lightbulb"},
     {t:"Сходинки усвідомленості", d:"Awareness ladder аудиторії", r:"magic-awareness-ladder", i:"trending-up"},
@@ -187,6 +191,8 @@ const DATA = [
     {t:"Матриця: втома креативів", d:"Коли й що міняти", r:"magic-decision-matrix-creative-fatigue", i:"grid-3x3"},
     {t:"Специфікації платформ", d:"Розміри й формати", r:"magic-platform-specs-cheatsheet", i:"ruler"},
     {t:"Чеклісти креативів", d:"Контроль якості", r:"magic-creative-checklists", i:"clipboard-check"},
+    {t:"Growth-матриця компетенцій", d:"10 напрямків × 3 рівні володіння (PDF, Drive)", ext:"https://drive.google.com/file/d/1KpJs2HwMiD959-yVUXJp5OPhChuLFg0q/view", i:"grid-2x2"},
+    {t:"Взаємодія Creative × UAM", d:"Застаріло — ролі об'єднані в Growth Marketer (v3)", r:"magic-creative-uam-interaction", i:"git-merge", archived:true},
   ]},
   {cat:"meetings", ico:"calendar", title:"Зустрічі та агенди", repos:[
     {t:"Агенда: щотижнева зустріч", d:"Формат weekly", r:"magic-weekly-meeting-agenda", i:"calendar-days"},
@@ -216,12 +222,17 @@ DATA.forEach(sec=>{
       <span class="count">${sec.repos.length}</span>
     </div>
     <div class="grid">
-      ${sec.repos.map(c=>`
-        <a class="card" href="${c.r}/" data-name="${(c.t+' '+c.d).toLowerCase()}">
+      ${sec.repos.map(c=>{
+        const cls = ['card', c.flagship && 'flagship', c.archived && 'archived'].filter(Boolean).join(' ');
+        const href = c.ext ? c.ext : `${c.r}/`;
+        const target = c.ext ? ' target="_blank" rel="noopener"' : '';
+        const badge = c.archived ? '<span class="badge-archive">Архів</span>' : '';
+        return `
+        <a class="${cls}" href="${href}"${target} data-name="${(c.t+' '+c.d).toLowerCase()}">
           <div class="tile"><i data-lucide="${c.i}" style="width:20px;height:20px"></i></div>
-          <div class="body"><h3>${c.t}</h3><p>${c.d}</p></div>
+          <div class="body"><h3>${c.t}${badge}</h3><p>${c.d}</p></div>
           <i class="arrow" data-lucide="arrow-up-right" style="width:18px;height:18px"></i>
-        </a>`).join('')}
+        </a>`;}).join('')}
     </div>`;
   content.appendChild(s);
 });
