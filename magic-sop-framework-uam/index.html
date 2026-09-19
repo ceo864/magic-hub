@@ -3,31 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOP: Magic Framework — User Acquisition</title>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;500;700;900&display=swap" rel="stylesheet">
+<title>Magic Framework · Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --magic-blue: #38A0FF;
-    --magic-purple: #AA7AFF;
-    --magic-gradient: linear-gradient(135deg, #38A0FF, #AA7AFF);
-    --ink-800: #0D0D1A;
-    --ink-700: #1A1A2E;
-    --ink-600: #2A2A40;
-    --ink-500: #3D3D55;
-    --ink-400: #5A5A75;
-    --ink-300: #8080A0;
-    --ink-200: #B0B0C8;
-    --ink-100: #D8D8E8;
-    --ink-50: #F0F0F8;
-    --success: #2EC28A;
-    --warning: #FFB020;
-    --danger: #F5525C;
-    --white: #FFFFFF;
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --radius-xl: 28px;
-    --radius-pill: 9999px;
+  /* ── Magic Hub · канонічні токени (як на головній) ───────── */
+  :root{
+    --blue:#38A0FF; --purple:#AA7AFF;
+    --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+    --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+    --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+    --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+    --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+    --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+    --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+    --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+    --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+    --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+    --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+    --glow-brand:0 16px 40px rgba(120,140,255,.30);
+    --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+    --font:'Onest',system-ui,sans-serif;
+    /* сумісність зі старими іменами змінних цієї сторінки */
+    --magic-blue:var(--blue); --magic-purple:var(--purple); --magic-gradient:var(--grad);
+    --white:var(--ink-0);
+    --radius-sm:10px; --radius-md:var(--r-md); --radius-lg:var(--r-lg);
+    --radius-xl:var(--r-xl); --radius-pill:var(--r-pill);
+    --success:#2EC28A; --warning:#FFB020; --danger:#F5525C;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,107 +42,6 @@
     line-height: 1.7;
     color: var(--ink-700);
     background: var(--ink-50);
-  }
-
-  /* Header */
-  .hero {
-    background: var(--ink-700);
-    padding: 80px 48px 60px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(56,160,255,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    left: -5%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(170,122,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(56,160,255,0.15);
-    color: var(--magic-blue);
-    font-weight: 500;
-    font-size: 13px;
-    letter-spacing: 0.05em;
-    padding: 6px 16px;
-    border-radius: var(--radius-pill);
-    margin-bottom: 24px;
-    position: relative;
-  }
-  .hero h1 {
-    font-size: 52px;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    background: var(--magic-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-    position: relative;
-  }
-  .hero .subtitle {
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--ink-200);
-    max-width: 640px;
-    position: relative;
-  }
-  .hero .meta {
-    margin-top: 32px;
-    display: flex;
-    gap: 24px;
-    position: relative;
-  }
-  .hero .meta-item {
-    font-size: 13px;
-    color: var(--ink-300);
-    font-weight: 500;
-  }
-  .hero .meta-item span {
-    color: var(--ink-100);
-  }
-
-  /* Navigation */
-  .toc {
-    background: var(--white);
-    border-bottom: 1px solid var(--ink-100);
-    padding: 24px 48px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .toc a {
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: var(--radius-pill);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-500);
-    text-decoration: none;
-    background: var(--ink-50);
-    transition: all 0.2s;
-  }
-  .toc a:hover {
-    background: var(--magic-gradient);
-    color: var(--white);
   }
 
   /* Content */
@@ -463,71 +365,110 @@
     margin: 0;
   }
 
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 48px;
-    color: var(--ink-300);
-    font-size: 14px;
-  }
-  .footer .logo {
-    font-weight: 900;
-    font-size: 20px;
-    background: var(--magic-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 4px;
-  }
-
   /* Print */
   @media print {
-    .toc { display: none; }
-    .hero { padding: 40px; }
+    .nav { display: none; }
     .content { padding: 24px; }
     .card, .table-wrap, .pillar-card, .flow-step { break-inside: avoid; }
   }
 
   @media (max-width: 768px) {
-    .hero { padding: 40px 24px; }
-    .hero h1 { font-size: 36px; }
-    .toc { padding: 16px 24px; }
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .flow { flex-direction: column; }
     .flow-arrow { transform: rotate(90deg); justify-content: center; }
   }
+
+/* ── Magic Hub · канонічна оболонка: nav + hero + footer ───────── */
+a{text-decoration:none;color:inherit}
+html{scroll-behavior:smooth}
+body{font-family:'Onest',system-ui,sans-serif;font-weight:300;color:var(--ink-900);
+  background:var(--ink-50);-webkit-font-smoothing:antialiased;line-height:1.55}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;padding:72px 0 64px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:24px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+.section{scroll-margin-top:84px}
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px}
+}
 </style>
 </head>
 <body>
-<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
-
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#philosophy">Філософія</a>
+      <a href="#framework">4 стовпи</a>
+      <a href="#workflow">Робочий цикл</a>
+      <a href="#tools">Інструменти</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">INTERNAL SOP</div>
-  <h1>Magic Framework<br>User Acquisition</h1>
-  <div class="subtitle">Стандартна операційна процедура для відділу user acquisition. Як працювати по Magic Framework — від запуску першої кампанії до масштабування.</div>
-  <div class="meta">
-    <div class="meta-item">Версія <span>1.0</span></div>
-    <div class="meta-item">Оновлено <span>Квітень 2026</span></div>
-    <div class="meta-item">Відділ <span>User Acquisition</span></div>
-    <div class="meta-item">Автор <span>Magic</span></div>
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Magic Framework · методологія агенції</span>
+    <h1>Magic Framework</h1>
+    <p class="sub">Стандартна операційна процедура для відділу user acquisition. Як працювати по Magic Framework — від запуску першої кампанії до масштабування.</p>
+    <div class="meta">
+      <span class="chip">Версія: 1.0</span>
+      <span class="chip">Оновлено: Квітень 2026</span>
+      
+      <span class="chip draft">Автор: Magic</span>
+    </div>
   </div>
-</div>
-
-<!-- TOC -->
-<nav class="toc">
-  <a href="#philosophy">Філософія</a>
-  <a href="#structure">Структура відділу</a>
-  <a href="#framework">4 стовпи Framework</a>
-  <a href="#workflow">Робочий цикл</a>
-  <a href="#campaign-launch">Запуск кампаній</a>
-  <a href="#optimization">Оптимізація</a>
-  <a href="#testing">Тестування</a>
-  <a href="#reporting">Звітність</a>
-  <a href="#escalation">Ескалація</a>
-  <a href="#tools">Інструменти</a>
-</nav>
+</header>
 
 <!-- CONTENT -->
 <div class="content">
@@ -558,7 +499,7 @@
       </div>
     </div>
 
-    <h3>Три правила UA-спеціаліста Magic</h3>
+    <h3>Три правила Growth Marketer у Magic</h3>
     <div class="grid-3">
       <div class="card blue">
         <h4>Дані, не інтуїція</h4>
@@ -576,81 +517,8 @@
   </div>
 
   <!-- 02 STRUCTURE -->
-  <div class="section" id="structure">
-    <div class="section-number">02</div>
-    <h2>Структура відділу</h2>
-    <p class="section-desc">Ролі, зони відповідальності та ланцюг комунікації всередині UA-команди.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Роль</th>
-            <th>Зона відповідальності</th>
-            <th>Звітує</th>
-            <th>Ключові метрики</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Growth Marketer</strong></td>
-            <td>Загальне масштабування клієнта, виконання поставлених цілей, дашборд, координація команди, зв'язок з клієнтом</td>
-            <td>CEO</td>
-            <td>Брудний прибуток / Прибуток, Revenue, ROAS, CPA, LTV</td>
-          </tr>
-          <tr>
-            <td><strong>Тімлід трафіку</strong></td>
-            <td>Побудова процесів, навчання UA Managerів, відповідальність за кінцевий результат KPI відділу, контроль якості</td>
-            <td>Growth Marketer</td>
-            <td>Прибуток, ROAS по каналах, CPA, Revenue, витрати</td>
-          </tr>
-          <tr>
-            <td><strong>UA Manager</strong></td>
-            <td>Управління рекламними кабінетами, оптимізація кампаній, бюджетування, щоденний моніторинг, відповідальність за KPI своїх проєктів</td>
-            <td>Тімлід трафіку</td>
-            <td>Прибуток, Revenue, ROAS, CPA, CR, витрати по проєктах</td>
-          </tr>
-          <tr>
-            <td><strong>Креативний стратег</strong></td>
-            <td>Креативна стратегія, сценарії, аналіз ефективності креативів</td>
-            <td>Growth Marketer</td>
-            <td>CTR, Hook Rate, Thumb Stop, креативний скоркард</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Ланцюг комунікації</h3>
-    <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <h5>UA Manager</h5>
-        <p>Управління кабінетами, оптимізація, моніторинг, відповідальність за KPI проєктів</p>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <h5>Тімлід трафіку</h5>
-        <p>Загальне прийняття рішень, контроль якості, навчання UAM, KPI відділу</p>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <h5>Growth Marketer</h5>
-        <p>Масштабування клієнта, виконання поставлених цілей, комунікація з клієнтом</p>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <h5>CEO</h5>
-        <p>Ескалація, фінальні рішення, відносини з клієнтом</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 03 FRAMEWORK -->
   <div class="section" id="framework">
-    <div class="section-number">03</div>
+    <div class="section-number">02</div>
     <h2>4 стовпи Magic Framework</h2>
     <p class="section-desc">Кожен стовп — це не окремий процес, а частина єдиної системи. UA-відділ працює на перетині всіх чотирьох.</p>
 
@@ -695,7 +563,7 @@
     </div>
 
     <h3>Принципи заведення кампаній</h3>
-    <p>Рекламні кампанії заводяться так, щоб на 90% довірити оптимізацію алгоритмам платформи. UA-спеціаліст фокусується на:</p>
+    <p>Рекламні кампанії заводяться так, щоб на 90% довірити оптимізацію алгоритмам платформи. Growth Marketer фокусується на:</p>
     <div class="grid-2">
       <div class="card">
         <h4>Що контролює спеціаліст (10%)</h4>
@@ -710,11 +578,11 @@
 
   <!-- 04 WORKFLOW -->
   <div class="section" id="workflow">
-    <div class="section-number">04</div>
+    <div class="section-number">03</div>
     <h2>Робочий цикл</h2>
     <p class="section-desc">Щоденні, щотижневі та щомісячні ритуали UA-відділу. Кожна дія прив'язана до метрик і результату.</p>
 
-    <h3>Щоденний цикл UA Manager</h3>
+    <h3>Щоденний цикл Growth Marketer</h3>
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-time">09:00 — 09:30</div>
@@ -729,12 +597,12 @@
       <div class="timeline-item">
         <div class="timeline-time">10:00 — 10:15</div>
         <h5>Дейлік з тімлідом</h5>
-        <p>Короткий стендап (10-15 хв) після звітів. Обговорення ключових питань, блокерів, пріоритетів на день. Якщо UAM не може впоратись з проблемою самостійно — тімлід підключається.</p>
+        <p>Короткий стендап (10-15 хв) після звітів. Обговорення ключових питань, блокерів, пріоритетів на день. Якщо Growth Marketer не може впоратись з проблемою самостійно — тімлід підключається.</p>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">10:15 — 12:00</div>
         <h5>Оптимізація кампаній</h5>
-        <p>UAM самостійно приймає рішення та вносить зміни: коригування бюджетів, зупинка неефективних адсетів, завантаження нових креативів, зміна цілей. За потреби — затверджує рішення з тімлідом. Тімлід підключається лише коли UAM не знає, що робити.</p>
+        <p>Growth Marketer самостійно приймає рішення та вносить зміни: коригування бюджетів, зупинка неефективних адсетів, завантаження нових креативів, зміна цілей. За потреби — затверджує рішення з тімлідом. Тімлід підключається лише коли Growth Marketer не знає, що робити.</p>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">14:00 — 15:00</div>
@@ -749,7 +617,7 @@
     </div>
 
     <h3>Робота на вихідних</h3>
-    <p>Вихідні — це вихідні. Але реклама не зупиняється, тому UAM проводить короткий моніторинг двічі на день.</p>
+    <p>Вихідні — це вихідні. Але реклама не зупиняється, тому Growth Marketer проводить короткий моніторинг двічі на день.</p>
 
     <div class="grid-2">
       <div class="card blue">
@@ -816,27 +684,27 @@
           <tr>
             <td><strong>Понеділок</strong></td>
             <td>Аналіз результатів за минулий тиждень. Тижневий звіт по кампаніях. Планерка UA-відділу: обговорення результатів, планування оптимізацій і пріоритетів на тиждень.</td>
-            <td>UA Manager + Тімлід</td>
+            <td>Growth Marketer + Тімлід</td>
           </tr>
           <tr>
             <td><strong>Вівторок</strong></td>
             <td>Зустріч UA-відділу з креативним стратегом: запити на нові креативи, аналіз ефективності поточних, обговорення angles та форматів.</td>
-            <td>UAM + Креативний стратег</td>
+            <td>Growth Marketer</td>
           </tr>
           <tr>
             <td><strong>Середа</strong></td>
             <td>Виконання плану оптимізацій. Запуск нових тестів.</td>
-            <td>UAM</td>
+            <td>Growth Marketer</td>
           </tr>
           <tr>
             <td><strong>Четвер</strong></td>
             <td>Виконання оптимізацій та action items.</td>
-            <td>UAM</td>
+            <td>Growth Marketer</td>
           </tr>
           <tr>
             <td><strong>П'ятниця</strong></td>
             <td>Планерка UA-відділу: підсумки тижня, що зроблено, що ні, пріоритети на наступний тиждень. Підготовка креативних запитів.</td>
-            <td>UA Manager + Тімлід</td>
+            <td>Growth Marketer + Тімлід</td>
           </tr>
         </tbody>
       </table>
@@ -884,517 +752,8 @@
   </div>
 
   <!-- 05 CAMPAIGN LAUNCH -->
-  <div class="section" id="campaign-launch">
-    <div class="section-number">05</div>
-    <h2>Запуск кампаній</h2>
-    <p class="section-desc">Покрокова процедура запуску рекламних кампаній по Magic Framework. Від підготовки до першого дня.</p>
-
-    <h3>Передпольотна перевірка (Pre-Launch Checklist)</h3>
-    <div class="card blue">
-      <div class="card-label blue">АНАЛІТИКА</div>
-      <ul class="checklist">
-        <li>Pixel/CAPI встановлений і передає всі події (ViewContent, ATC, Purchase)</li>
-        <li>Google Analytics 4 налаштований, цілі створені</li>
-        <li>GTM працює коректно, всі теги активні</li>
-        <li>UTM-розмітка узгоджена і задокументована</li>
-        <li>Конверсії тестовані: зроблена тестова покупка по кожному каналу</li>
-      </ul>
-    </div>
-
-    <div class="card purple">
-      <div class="card-label purple">СТРУКТУРА КАБІНЕТІВ</div>
-      <ul class="checklist">
-        <li>Нейминг кампаній відповідає конвенції Magic (див. розділ Інструменти)</li>
-        <li>Структура: Campaign → Ad Set → Ad — кожен рівень має чітку ціль</li>
-        <li>Бюджет розподілений згідно плану (Meta/Google/TikTok split)</li>
-        <li>Гео, мова, вік, виключення налаштовані</li>
-        <li>Оптимізаційна ціль — Purchase (не трафік, не ATC, якщо немає окремого обгрунтування)</li>
-      </ul>
-    </div>
-
-    <div class="card green">
-      <div class="card-label green">КРЕАТИВИ</div>
-      <ul class="checklist">
-        <li>Мінімум 3-5 креативів на кампанію при запуску</li>
-        <li>Різні формати: відео + статика + карусель</li>
-        <li>Різні кути (angles): pain point, UGC, розпаковка, результат</li>
-        <li>Всі креативи затверджені креативним стратегом</li>
-        <li>Текст оголошень написаний (primary text, headline, description)</li>
-      </ul>
-    </div>
-
-    <div class="card yellow">
-      <div class="card-label yellow">LANDING / САЙТ</div>
-      <ul class="checklist">
-        <li>Цільова сторінка відповідає оферу в рекламі</li>
-        <li>Швидкість завантаження перевірена (мобільна версія)</li>
-        <li>Кнопка "Купити" / "Додати в кошик" видима без скролу</li>
-        <li>Ціна, наявність, умови доставки — актуальні</li>
-      </ul>
-    </div>
-
-    <h3>Нейминг-конвенція</h3>
-    <p>Єдина система найменування кампаній для всіх кабінетів та клієнтів:</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Рівень</th>
-            <th>Шаблон</th>
-            <th>Приклад</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Campaign</strong></td>
-            <td>[Канал]_[Тип]_[Ціль]_[Гео]_[Дата]</td>
-            <td>META_CONV_PURCHASE_UA_2026-04</td>
-          </tr>
-          <tr>
-            <td><strong>Ad Set</strong></td>
-            <td>[Аудиторія]_[Таргетинг]_[Бюджет]</td>
-            <td>BROAD_F25-45_CBO</td>
-          </tr>
-          <tr>
-            <td><strong>Ad</strong></td>
-            <td>[Формат]_[Angle]_[Версія]</td>
-            <td>VIDEO_UNBOXING_V1</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Процедура запуску по каналах</h3>
-
-    <h4>Meta Ads</h4>
-    <div class="card">
-      <p><strong>Структура:</strong> Залежить від бюджету, кількості продуктів та наявної інформації. Кожна група оголошень має 3-5 креативів обов'язково.</p>
-      <p><strong>Варіанти структури:</strong></p>
-      <p>1 Campaign → 1 Ad Group → 3-5 Ads (малий бюджет, початковий етап)<br>
-         1 Campaign → 2-3 Ad Groups → 3-5 Ads (середній бюджет, тестування кутів/сходинок)<br>
-         1 Campaign → до 10 Ad Groups → 3-5 Ads (великий бюджет, повне тестування)</p>
-      <p><strong>Логіка розміщення продуктів по рівнях:</strong></p>
-    </div>
-
-    <div class="card blue">
-      <div class="card-label blue">ЕТАП 1 — ПОШУК ТОВАРІВ-ПЕРЕМОЖЦІВ</div>
-      <p>Якщо немає відомих товарів-локомотивів — кидаємо продукти на рівень оголошення (Ad), система сама визначить найкращий. Важливо: однакові концепти та однакова цінова категорія в одній групі (якщо велика розбіжність в ціні — гроші підуть на найдешевший продукт).</p>
-    </div>
-    <div class="card purple">
-      <div class="card-label purple">ЕТАП 2 — ТОВАРИ ВИЗНАЧЕНІ</div>
-      <p>Коли виявлено товари-переможці — переносимо їх на рівень групи оголошень (Ad Group) або кампанії (Campaign) для зручності управління. Якщо в категорії багато товарів — краще рівень Ad Group.</p>
-    </div>
-    <div class="card green">
-      <div class="card-label green">ЕТАП 3 — КРЕАТИВНА СТРАТЕГІЯ</div>
-      <p>Працюємо з креативною стратегією в повній мірі. Два варіанти залежно від бюджету:</p>
-      <p><strong>Бюджет до ~$50K/міс на кампанію</strong> — тестуємо всі кути / сходинки на рівні креативу (Ad). Недостатньо бюджету, щоб розбивати на групи.</p>
-      <p><strong>Бюджет від ~$50K/міс</strong> — тестуємо кути / сходинки на рівні груп оголошень (Ad Group). Продукт виноситься на рівень кампанії.</p>
-    </div>
-
-    <div class="card">
-      <p><strong>Оптимізація:</strong> Purchase. Використовуємо Advantage+ аудиторії. Не обмежуємо детальний таргетинг без причини.</p>
-      <p><strong>Бюджет:</strong> Стартовий — мінімум 3x CPA на Ad Group на день. Якщо CBO — мінімум 3x CPA на всю кампанію.</p>
-      <p><strong>Learning phase:</strong> 50 конверсій за 7 днів = вихід з навчання. Не вносити зміни до завершення learning phase.</p>
-    </div>
-
-    <h4>Google Ads</h4>
-    <div class="card">
-      <p><strong>Структура:</strong> Search (brand + non-brand) + Shopping / PMax.</p>
-      <p><strong>Оптимізація:</strong> Target ROAS або Maximize Conversion Value. Не використовуємо Manual CPC без обгрунтування.</p>
-      <p><strong>Бюджет:</strong> Розподіл: 60-70% Shopping/PMax, 20-30% Search, 10% Brand.</p>
-      <p><strong>Обов'язково:</strong> Merchant Center налаштований, фід актуальний, негативні ключові слова додані.</p>
-    </div>
-
-    <h4>TikTok Ads</h4>
-    <div class="card">
-      <p><strong>Структура:</strong> Аналогічна логіка до Meta Ads. Кожна група має 3-5 креативів обов'язково.</p>
-      <p>1 Campaign → 1 Ad Group → 3-5 Ads (малий бюджет)<br>
-         1 Campaign → 2-3 Ad Groups → 3-5 Ads (середній бюджет)<br>
-         1 Campaign → до 10 Ad Groups → 3-5 Ads (великий бюджет)</p>
-      <p><strong>Логіка розміщення продуктів по рівнях:</strong> та сама, що і для Meta — пошук товарів-переможців на рівні Ad → перенос на рівень Ad Group/Campaign → тестування кутів залежно від бюджету.</p>
-      <p><strong>Оптимізація:</strong> Complete Payment. Мінімальний бюджет — 50$ на Ad Group на день.</p>
-      <p><strong>Креативи:</strong> Тільки вертикальне відео. UGC формат працює найкраще. Hook у перші 1-2 секунди обов'язковий.</p>
-      <p><strong>Learning phase:</strong> 50 конверсій за 7 днів. Не менше 7 днів на тест.</p>
-    </div>
-  </div>
-
-  <!-- 06 OPTIMIZATION -->
-  <div class="section" id="optimization">
-    <div class="section-number">06</div>
-    <h2>Оптимізація</h2>
-    <p class="section-desc">Процедура щоденної та щотижневої оптимізації кампаній. Коли скейлити, коли зупиняти, коли чекати.</p>
-
-    <h3>Матриця рішень</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Сигнал</th>
-            <th>Дія</th>
-            <th>Хто приймає рішення</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="badge badge-green">ROAS > target</span> + CPA в нормі</td>
-            <td>Скейл бюджету +20% (можна хоч щодня, але краще не частіше ніж раз на 48 годин)</td>
-            <td>UAM (самостійно)</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-green">CTR висока</span> + <span class="badge badge-red">CPA високий</span></td>
-            <td>Ймовірна проблема на сайті (CR). Одразу сигналізуємо GM. Паралельно вивчаємо через Clarity (heatmaps, session recordings). Передаємо GM готове дослідження з висновками.</td>
-            <td>UAM (сигнал GM негайно) → аналіз → GM</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-red">ROAS < target</span> 3+ дні</td>
-            <td>Зменшити бюджет на 20%. Якщо 7+ днів — зупинити Ad Set.</td>
-            <td>UAM (самостійно, інформує Тімліда)</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-yellow">CPA > 1.5x target</span></td>
-            <td>Зупинити Ad Set. Перевірити креативи, landing.</td>
-            <td>UAM (негайно). Якщо не знає що робити — Тімлід</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-red">Learning limited</span></td>
-            <td>Збільшити бюджет. Якщо є товари схожої цінової категорії — об'єднати в одну групу або перевести на CBO. Ніколи не переходити на оптимізацію нижче Purchase.</td>
-            <td>UAM (самостійно, затвердити з Тімлідом)</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-yellow">Creative fatigue</span> (частота > 3, CTR падає)</td>
-            <td>Рефреш креативів. Запит до креативного стратега.</td>
-            <td>UAM → Креативний стратег</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Способи масштабування</h3>
-
-    <div class="callout">
-      <div class="callout-title">Горизонтальний скейл = auction overlap</div>
-      <p>Ми ніколи не дублюємо кампанії чи Ad Sets з тими самими креативами. Це створює auction overlap — ви конкуруєте самі з собою та піднімаєте собі ціну. Масштабування відбувається тільки через чотири реальні способи.</p>
-    </div>
-
-    <div class="grid-2">
-      <div class="card green">
-        <div class="card-label green">01</div>
-        <h4>Масштабування бюджету</h4>
-        <p>Найчастіший спосіб. Збільшення бюджету на +20% за раз. Мінімум 48 годин між змінами. Не скейлити в learning phase. Відстежувати CPA та ROAS протягом 48 годин після зміни.</p>
-      </div>
-      <div class="card blue">
-        <div class="card-label blue">02</div>
-        <h4>Запуск нових продуктів</h4>
-        <p>Додаємо нові товари / категорії в рекламу. Нові кампанії під нові продукти з окремим бюджетом та креативами.</p>
-      </div>
-      <div class="card purple">
-        <div class="card-label purple">03</div>
-        <h4>Вихід на нові ринки</h4>
-        <p>Запуск реклами на нові країни / регіони. Окрема структура кампаній під кожен ринок з адаптованими креативами та оферами.</p>
-      </div>
-      <div class="card green">
-        <div class="card-label green">04</div>
-        <h4>Нові джерела трафіку</h4>
-        <p>Запуск нового рекламного каналу. Наприклад, додавання TikTok до Meta + Google, або Pinterest коли стане доступний.</p>
-      </div>
-    </div>
-
-    <div class="callout">
-      <div class="callout-title">Золоте правило оптимізації</div>
-      <p>Один крок за раз. Якщо змінюєш бюджет — не чіпай креативи. Якщо змінюєш креативи — не чіпай бюджет. Одна змінна за ітерацію — інакше неможливо визначити, що спрацювало.</p>
-    </div>
-  </div>
-
-  <!-- 07 TESTING -->
-  <div class="section" id="testing">
-    <div class="section-number">07</div>
-    <h2>Тестування</h2>
-    <p class="section-desc">Структурований підхід до тестів: креативи, офери, продукти, канали. Без хаотичних експериментів.</p>
-
-    <div class="callout">
-      <div class="callout-title">Куди ведемо трафік</div>
-      <p>Завжди ведемо виключно на картку товару. У рідкісних випадках — на сторінку категорії (якщо тестуємо категорію або немає конкретного товару-лідера). Ніколи не ведемо на головну сторінку чи кастомні лендинги без конкретного обгрунтування.</p>
-    </div>
-
-    <h3>Типи тестів</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Тип тесту</th>
-            <th>Що тестуємо</th>
-            <th>Мін. бюджет</th>
-            <th>Мін. тривалість</th>
-            <th>Метрика успіху</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Creative test</strong></td>
-            <td>Різні креативи / angles / формати / сходинки</td>
-            <td>3x CPA на креатив</td>
-            <td>7 днів або 50 конверсій</td>
-            <td>CTR, CPA, ROAS, CR</td>
-          </tr>
-          <tr>
-            <td><strong>Product test</strong></td>
-            <td>Різні товари / категорії для пошуку переможців</td>
-            <td>3x CPA на продукт</td>
-            <td>7 днів</td>
-            <td>ROAS, Revenue, CPA, CR</td>
-          </tr>
-          <tr>
-            <td><strong>Offer test</strong></td>
-            <td>Різні офери / знижки / бандли</td>
-            <td>5x CPA на варіант</td>
-            <td>14 днів</td>
-            <td>CR, AOV, ROAS</td>
-          </tr>
-          <tr>
-            <td><strong>Channel test</strong></td>
-            <td>Новий рекламний канал</td>
-            <td>10x CPA</td>
-            <td>30 днів</td>
-            <td>CPA, ROAS, Revenue</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card red">
-      <div class="card-label red">ЧОГО МИ НЕ ТЕСТУЄМО</div>
-      <h4>Аудиторії</h4>
-      <p>Ми не тестуємо аудиторії. Advantage+ та алгоритми платформ знаходять потрібну аудиторію краще за ручне налаштування. Ми довіряємо системі 90% оптимізації — аудиторії входять у ці 90%.</p>
-    </div>
-
-    <h3>Процедура тестування</h3>
-    <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <h5>Гіпотеза</h5>
-        <p>Сформулювати: що тестуємо, чому, що очікуємо</p>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <h5>Налаштування</h5>
-        <p>Одна змінна. Все інше — однакове</p>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <h5>Збір даних</h5>
-        <p>Чекати до статистичної значущості</p>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <h5>Висновок</h5>
-        <p>Зафіксувати результат. Скейл або стоп.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 08 REPORTING -->
-  <div class="section" id="reporting">
-    <div class="section-number">08</div>
-    <h2>Звітність UA Manager</h2>
-    <p class="section-desc">Два типи звітів: звіти по проєктах (автоматичні + коментарі UAM) та звіти тімліду про загальний стан справ.</p>
-
-    <h3>Звіти по проєктах</h3>
-
-    <div class="card blue">
-      <div class="card-label blue">ЩОДЕННИЙ ЗВІТ ПО ПРОЄКТУ</div>
-      <h4>Формат 3F5T — повідомлення у робочий чат до 10:00</h4>
-      <p>На 90% автоматичний (генерується з дашборду). UAM дописує коментарі.</p>
-      <div style="background: var(--ink-700); color: var(--ink-100); border-radius: var(--radius-md); padding: 20px 24px; margin-top: 16px; font-family: monospace; font-size: 13px; line-height: 1.8; white-space: pre-wrap;">&#x1F4CA; ЩОДЕННИЙ ЗВІТ: 28.04.2026
-Фреймворк 3F5T
-
-&#x2728; РЕЗУЛЬТАТ ЗА ВЧОРА:
-&#x2022; Оборот: 72,400 грн
-&#x2022; Інвестовано: 2,397 грн
-&#x2022; ROAS: 30.21 (+13.85)
-
-&#x1F4B0; ЦІЛЬ: ОБОРОТ (План: 2,500,000 грн)
-&#x2022; Факт місяця: 1,777,565 грн
-&#x2022; Виконання: 71.1% &#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x2B1C;&#x2B1C;&#x2B1C;
-&#x2022; Прогноз: 1,904,533 грн
-&#x2022; Прогноз виконання: 76.2%
-
-&#x1F4B8; ЦІЛЬ: ІНВЕСТИЦІЇ (План: 312,500 грн)
-&#x2022; Факт місяця: 266,599 грн
-&#x2022; Виконання: 85.3% &#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x2B1C;&#x2B1C;
-&#x2022; Прогноз: 285,642 грн
-&#x2022; Прогноз виконання: 91.4%
-
-&#x1F4C8; ЦІЛЬ: ROAS (План: 8)
-&#x2022; Факт місяця: 6.67
-&#x2022; Відсоток цілі: 83.3% &#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x1F7E9;&#x2B1C;&#x2B1C;
-
-&#x1F680; МАСШТАБУВАННЯ: &#x2705; Так, масштабуємо</div>
-    </div>
-
-    <div class="card purple" style="margin-top: 16px;">
-      <div class="card-label purple">ЩО ДОПИСУЄ UAM</div>
-      <h4>Коментарі до щоденного звіту</h4>
-      <div class="table-wrap" style="margin-top: 12px;">
-        <table>
-          <thead>
-            <tr><th>Блок</th><th>Опис</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>3 ключові речі</strong></td>
-              <td>Три речі, які UAM вважає ключовими та які вплинули на результат. Конкретно: що саме спрацювало або не спрацювало.</td>
-            </tr>
-            <tr>
-              <td><strong>Аномалії та пропозиції</strong></td>
-              <td>Тільки якщо є що сказати. Ми не пишемо звіт заради звіту. Якщо все в нормі — цей блок пропускаємо.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card green" style="margin-top: 24px;">
-      <div class="card-label green">ЩОТИЖНЕВИЙ ЗВІТ ПО ПРОЄКТУ</div>
-      <h4>Формат: повідомлення з дашборд-скріншотом — до понеділка</h4>
-      <div class="table-wrap" style="margin-top: 12px;">
-        <table>
-          <thead>
-            <tr><th>Блок</th><th>Що включає</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Скріншот дашборду</strong></td>
-              <td>Зведені метрики за тиждень: Revenue, витрати, ROAS, CPA, прибуток</td>
-            </tr>
-            <tr>
-              <td><strong>3 головні дії</strong></td>
-              <td>Три конкретні дії UAM за тиждень, які привели до цього результату</td>
-            </tr>
-            <tr>
-              <td><strong>Висновки / спостереження</strong></td>
-              <td>Що ми зрозуміли за тиждень. Які патерни побачили. Що працює, що ні.</td>
-            </tr>
-            <tr>
-              <td><strong>Плани</strong></td>
-              <td>Конкретний план дій на поточний тиждень: що збираємось робити і чому</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <h3>Як UAM звітує тімліду на дейліку</h3>
-
-    <div class="card blue">
-      <div class="card-label blue">ДЕЙЛІК — ФОРМАТ ЗВІТУВАННЯ</div>
-      <h4>Короткий прохід по всіх проєктах (10-15 хв)</h4>
-      <p>UAM відкриває дашборд з усіма проєктами і коротко проходиться по кожному. Без занурення в деталі — тільки статус, проблеми, рішення.</p>
-      <div class="table-wrap" style="margin-top: 12px;">
-        <table>
-          <thead>
-            <tr><th>Статус проєкту</th><th>Що говоримо</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-red">Нижче KPI</span></td>
-              <td>Чому нижче? Які рішення вже прийняті або плануються? Які блокери? Чи потрібна допомога?</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-green">KPI в нормі</span></td>
-              <td>Чи можемо масштабувати? Якщо так — на скільки і що для цього потрібно? Рахуємось з тімлідом.</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-yellow">Є питання / блокер</span></td>
-              <td>Коротко описати проблему. Якщо потрібно глибше обговорення — виноситься на окрему зустріч.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="callout">
-      <div class="callout-title">Правило дейліку</div>
-      <p>Дейлік — це не детальний розбір кожного проєкту. Це швидкий скан: де все ок, де проблеми, що потребує уваги. Деталі виносяться на окрему зустріч або планерку.</p>
-    </div>
-
-    <div class="card">
-      <h4>Щотижневий звіт тімліду</h4>
-      <p>Той самий тижневий звіт по проєкту плюс обговорення на планерці (понеділок). Якщо є проблеми, які UAM не може вирішити самостійно — виносить з конкретним описом: проблема + що вже спробував + що пропонує.</p>
-    </div>
-
-    <div class="callout">
-      <div class="callout-title">Принцип звітності</div>
-      <p>Звіт — це інструмент прийняття рішень, а не бюрократія. Ми не пишемо заради писання. Якщо нема що сказати — не вигадуємо. Факти, цифри, дії.</p>
-    </div>
-  </div>
-
-  <!-- 09 ESCALATION -->
-  <div class="section" id="escalation">
-    <div class="section-number">09</div>
-    <h2>Ескалація</h2>
-    <p class="section-desc">Коли проблема виходить за межі компетенції — ескалюємо. Не замовчуємо, не відкладаємо.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Ситуація</th>
-            <th>Ескалація</th>
-            <th>Терміновість</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CPA > 2x target протягом 3 днів</td>
-            <td>UAM → Тімлід</td>
-            <td><span class="badge badge-yellow">До кінця дня</span></td>
-          </tr>
-          <tr>
-            <td>ROAS по клієнту нижче target 2+ тижні</td>
-            <td>Тімлід → Growth Marketer</td>
-            <td><span class="badge badge-red">Негайно</span></td>
-          </tr>
-          <tr>
-            <td>Блокування рекламного кабінету</td>
-            <td>UAM → Тімлід → Growth Marketer</td>
-            <td><span class="badge badge-red">Негайно</span></td>
-          </tr>
-          <tr>
-            <td>Клієнт просить зміну стратегії / бюджету</td>
-            <td>Growth Marketer → CEO</td>
-            <td><span class="badge badge-yellow">До кінця дня</span></td>
-          </tr>
-          <tr>
-            <td>Проблема з трекінгом / аналітикою</td>
-            <td>UAM → Тімлід → Growth Marketer</td>
-            <td><span class="badge badge-red">Негайно</span></td>
-          </tr>
-          <tr>
-            <td>Потрібні нові креативи (creative fatigue)</td>
-            <td>UAM → Креативний стратег</td>
-            <td><span class="badge badge-blue">До кінця тижня</span></td>
-          </tr>
-          <tr>
-            <td>Проблема на сайті клієнта (CR падає)</td>
-            <td>UAM сигналізує GM негайно → аналізує через Clarity → передає дослідження GM</td>
-            <td><span class="badge badge-red">Негайно (сигнал)</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="callout">
-      <div class="callout-title">Правило ескалації</div>
-      <p>Ескалація — це не "скарга". Це нормальний робочий процес. Краще ескалювати раніше, ніж пізніше. Формат ескалації: проблема + що вже зроблено + що пропонуєш + що потрібно від тебе.</p>
-    </div>
-  </div>
-
-  <!-- 10 TOOLS -->
   <div class="section" id="tools">
-    <div class="section-number">10</div>
+    <div class="section-number">04</div>
     <h2>Інструменти та бенчмарки</h2>
     <p class="section-desc">Технічний стек UA-відділу та орієнтири для оцінки результатів.</p>
 
@@ -1493,11 +852,15 @@
 </div>
 
 <!-- FOOTER -->
-<div class="footer">
-  <div class="logo">magic</div>
-  <div>advertise for e-commerce</div>
-  <div style="margin-top: 8px; font-size: 12px;">Внутрішній документ. Не для розповсюдження.</div>
-</div>
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>«Magic Framework» · внутрішній документ. Не для розповсюдження.</p>
+  </div>
+</footer>
 
 </body>
 </html>
