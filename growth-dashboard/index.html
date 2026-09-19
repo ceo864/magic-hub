@@ -36,6 +36,17 @@
     --shadow-md: 0 8px 20px rgba(20,30,60,.08), 0 2px 4px rgba(20,30,60,.04);
     --shadow-lg: 0 18px 44px rgba(20,30,60,.10), 0 4px 10px rgba(20,30,60,.05);
     --shadow-glow: 0 14px 40px rgba(122,140,255,.28);
+
+    /* ── канонічні токени Magic Hub (як на головній) ─────────── */
+    --blue: #38A0FF; --purple: #AA7AFF;
+    --grad: linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+    --grad-h: linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+    --grad-soft: linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+    --purple-ink: #5E30C4; --purple-50: #F2EBFF;
+    --glow-brand: 0 16px 40px rgba(120,140,255,.30);
+    --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-2xl: 36px; --r-pill: 999px;
+    --font: 'Onest', ui-sans-serif, system-ui, sans-serif;
+    --nav-bg: rgba(247,248,251,.75);
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -48,6 +59,7 @@
       --shadow-md: 0 8px 20px rgba(0,0,0,.45);
       --shadow-lg: 0 18px 44px rgba(0,0,0,.5);
       --shadow-glow: 0 14px 40px rgba(122,140,255,.22);
+      --nav-bg: rgba(12,14,20,.78);
     }
   }
   :root[data-theme="dark"] {
@@ -60,6 +72,7 @@
     --shadow-md: 0 8px 20px rgba(0,0,0,.45);
     --shadow-lg: 0 18px 44px rgba(0,0,0,.5);
     --shadow-glow: 0 14px 40px rgba(122,140,255,.22);
+    --nav-bg: rgba(12,14,20,.78);
   }
   :root[data-theme="light"] {
     --bg: #F7F8FB; --surface: #FFFFFF; --surface-2: #EEF1F6;
@@ -67,51 +80,85 @@
     --tint-blue: rgba(56,160,255,.10); --tint-purple: rgba(170,122,255,.12);
     --amber: #B4741A; --amber-bg: rgba(255,176,32,.12);
     --danger: #C4444E; --danger-bg: rgba(245,82,92,.10);
+    --nav-bg: rgba(247,248,251,.75);
   }
 
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
+    margin: 0;
     background: var(--bg); color: var(--fg);
-    font-family: Onest, ui-sans-serif, system-ui, sans-serif;
-    font-weight: 300; font-size: 16.5px; line-height: 1.7;
+    font-family: var(--font);
+    font-weight: 300; font-size: 16.5px; line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px 110px; }
   @media (min-width: 1000px) { .wrap { padding: 0 60px 130px; } }
+  .nav .wrap, .hero .wrap, footer .wrap { padding-bottom: 0; }
 
-  /* ── hero ─────────────────────────────────────────────────── */
+  /* ── канонічна шапка (nav) ────────────────────────────────── */
+  .nav { position: sticky; top: 0; z-index: 50; background: var(--nav-bg);
+    backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav-in { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 12px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; flex: none; text-decoration: none; }
+  .brand .logo { font-weight: 900; font-size: 26px; letter-spacing: -.03em;
+    background: var(--grad-h); -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; }
+  .brand .tag { display: inline; background: none; padding: 0; margin: 0; border-radius: 0;
+    vertical-align: baseline; font-size: 12px; color: var(--fg-subtle);
+    font-weight: 400; letter-spacing: .02em; }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
+  .nav-links a { font-size: 14px; color: var(--fg-muted); padding: 8px 14px;
+    border-radius: var(--r-pill); font-weight: 500; text-decoration: none;
+    transition: background .15s, color .15s; white-space: nowrap; }
+  .nav-links a:hover { background: var(--surface-2); color: var(--fg); }
+  .nav-cta { background: var(--grad); color: #fff !important; box-shadow: var(--shadow-sm); }
+  .nav-cta:hover { filter: brightness(1.07); background: var(--grad) !important; }
+
+  /* ── канонічний hero ──────────────────────────────────────── */
   .hero {
-    background: var(--magic-gradient); border-radius: var(--radius-2xl);
-    padding: 54px 44px 48px; margin: 32px 0 56px; color: #fff;
-    box-shadow: var(--shadow-glow); position: relative; overflow: hidden;
+    position: relative; overflow: hidden; background: var(--grad);
+    border-radius: 0 0 var(--r-2xl) var(--r-2xl); color: #fff;
+    padding: 72px 0 64px; margin: 0 0 56px;
   }
-  .hero::after {
-    content: ""; position: absolute; right: -110px; top: -140px;
-    width: 420px; height: 420px; border-radius: 50%;
-    background: rgba(255,255,255,.10);
-  }
-  .hero > * { position: relative; }
-  .logo { height: 30px; width: auto; display: block; margin-bottom: 34px; }
+  .hero .blob { position: absolute; border-radius: 50%; filter: blur(8px); }
+  .hero .b1 { width: 420px; height: 420px; background: #fff; top: -160px; right: -80px; opacity: .12; }
+  .hero .b2 { width: 300px; height: 300px; background: #7ABCFF; bottom: -140px; left: -60px; opacity: .35; }
+  .hero .b3 { width: 180px; height: 180px; background: #CBB0FF; top: 40px; left: 40%; opacity: .30; }
+  .hero-in { position: relative; z-index: 2; max-width: 820px; }
+  .backlink { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 500;
+    color: rgba(255,255,255,.85); margin-bottom: 18px; padding: 6px 14px; border-radius: var(--r-pill);
+    background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.26);
+    text-decoration: none; transition: .15s; }
+  .backlink:hover { background: rgba(255,255,255,.28); color: #fff; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.28); padding: 7px 16px; border-radius: var(--r-pill);
+    font-size: 13px; font-weight: 500; letter-spacing: .02em; margin-bottom: 22px; }
   .hero h1 {
-    font-weight: 900; letter-spacing: -.035em; line-height: 1.02;
-    font-size: clamp(32px, 5.4vw, 58px); text-wrap: balance; margin-bottom: 18px;
+    font-weight: 900; letter-spacing: -.03em; line-height: 1.05;
+    font-size: clamp(32px, 5.2vw, 56px); text-wrap: balance; margin: 0 0 18px;
   }
-  .hero p {
-    font-weight: 300; font-size: clamp(16px, 2vw, 19px); line-height: 1.6;
-    max-width: 58ch; color: rgba(255,255,255,.94);
+  .hero p.sub {
+    font-weight: 300; font-size: clamp(15px, 2vw, 19px); line-height: 1.6;
+    max-width: 640px; color: rgba(255,255,255,.92); margin: 0;
   }
-  .hero-meta {
-    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
-  }
-  .chip {
-    background: rgba(255,255,255,.17); border-radius: 999px;
-    padding: 7px 17px; font-size: 13.5px; font-weight: 600; color: #fff;
+  .meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+  .meta .chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px;
+    font-weight: 500; color: #fff; background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.28); padding: 6px 14px;
+    border-radius: var(--r-pill); text-decoration: none; }
+  .meta .chip.draft { background: rgba(255,255,255,.30); font-weight: 700; }
+  .meta a.chip:hover { background: rgba(255,255,255,.32); }
+  @media (max-width: 640px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding: 56px 0 52px; margin-bottom: 40px; }
   }
 
   /* ── layout ───────────────────────────────────────────────── */
   .cols { display: grid; grid-template-columns: 232px 1fr; gap: 56px; align-items: start; }
   @media (max-width: 940px) { .cols { grid-template-columns: 1fr; gap: 8px; } }
 
-  nav.toc { position: sticky; top: 30px; }
+  nav.toc { position: sticky; top: 92px; }
   @media (max-width: 940px) { nav.toc { position: static; margin-bottom: 34px; } }
   .toc-h {
     font-size: 11.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
@@ -127,7 +174,7 @@
   .toc svg { width: 17px; height: 17px; flex: 0 0 auto; opacity: .75; }
 
   main { min-width: 0; }
-  section { margin-bottom: 68px; scroll-margin-top: 26px; }
+  section { margin-bottom: 68px; scroll-margin-top: 92px; }
   .sec-head { display: flex; align-items: center; gap: 15px; margin-bottom: 24px; }
   .sec-icon {
     width: 46px; height: 46px; border-radius: var(--radius-md); flex: 0 0 auto;
@@ -222,30 +269,50 @@
     color: #fff; font-size: 13.5px; font-weight: 700; display: grid; place-items: center;
   }
 
-  footer {
-    margin-top: 20px; padding: 30px 32px; border-radius: var(--radius-xl);
-    background: var(--surface); box-shadow: var(--shadow-sm);
-    font-size: 15px; color: var(--fg-muted);
-  }
-  footer b { color: var(--fg); }
+  /* ── канонічний футер ─────────────────────────────────────── */
+  footer { border-top: 1px solid var(--line); margin-top: 0; padding: 40px 0 56px; }
+  .foot-in { display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; }
+  .foot-in .logo { font-weight: 900; font-size: 22px; letter-spacing: -.03em;
+    background: var(--grad-h); -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; }
+  .foot-in p { font-size: 13px; color: var(--fg-subtle); font-weight: 400;
+    max-width: none; margin: 0; }
 </style>
 
-<div class="wrap">
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#sources">Звідки дані</a>
+      <a href="#tabs">Вкладки борду</a>
+      <a href="#formulas">Формули</a>
+      <a href="#mismatch">Чому не збігається</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
 
-
-<a href="../" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--fg-muted);text-decoration:none;margin-bottom:14px">← Magic Hub</a>
-
-  <header class="hero">
-    <svg class="logo" viewBox="-30 -30 2909 1082" fill="#fff" aria-label="magic"><use href="#wm"/></svg>
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Growth Dashboard · довідник до борду</span>
     <h1>Growth Dashboard: як що і де рахується</h1>
-    <p>Довідник до борду. Звідки береться кожне число, за якою формулою рахується
+    <p class="sub">Довідник до борду. Звідки береться кожне число, за якою формулою рахується
       і чому воно може не збігтися з рекламним кабінетом, GA4 чи адмінкою магазину.</p>
-    <div class="hero-meta">
+    <div class="meta">
       <span class="chip">Для клієнтів і команди</span>
       <span class="chip">Оновлено 04.08.2026</span>
-      <a class="chip" href="navchalne-video-gud.mp4" style="text-decoration:none">▶ Навчальне відео по борду (19 слайдів, 18 хв)</a>
+      <a class="chip" href="navchalne-video-gud.mp4">▶ Навчальне відео по борду (19 слайдів, 18 хв)</a>
     </div>
-  </header>
+  </div>
+</header>
+
+<div class="wrap">
 
   <div class="cols">
     <nav class="toc">
@@ -750,14 +817,24 @@
         </div>
       </section>
 
-      <footer>
-        Питань, яких тут немає, — пишіть команді Magic. Якщо якесь число виглядає дивним,
+      <div class="note">
+        <p>Питань, яких тут немає, — пишіть команді Magic. Якщо якесь число виглядає дивним,
         найшвидший шлях такий: натисніть оновлення, а потім спитайте ШІ-асистента <b>чому</b> —
-        він покаже, що саме перевірив.
-      </footer>
+        він покаже, що саме перевірив.</p>
+      </div>
 
     </main>
   </div>
 </div>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>«Growth Dashboard: як що і де рахується» · внутрішній документ</p>
+  </div>
+</footer>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="wm"><path transform="translate(0.0,773.0) scale(1,-1)" d="M47 0V527H203L219 471Q242 502 268.5 516.0Q295 530 319.0 533.5Q343 537 357 537Q399 537 436.5 522.5Q474 508 499 466Q522 496 548.5 511.0Q575 526 601.5 531.5Q628 537 652 537Q716 537 755.0 511.0Q794 485 812.5 438.0Q831 391 831 327V0H654V294Q654 306 652.5 320.0Q651 334 645.0 346.5Q639 359 628.0 367.5Q617 376 597 376Q576 376 563.0 368.0Q550 360 542.5 347.0Q535 334 532.0 317.5Q529 301 529 284V0H352V295Q352 306 350.0 319.5Q348 333 342.0 346.0Q336 359 323.5 367.5Q311 376 289 376Q258 376 244.0 359.0Q230 342 227.0 319.0Q224 296 224 279V0Z" fill="#FFFFFF"/><path transform="translate(854.0,773.0) scale(1,-1)" d="M213 -8Q176 -8 143.0 2.0Q110 12 84.5 32.0Q59 52 44.0 82.0Q29 112 29 153Q29 213 54.5 247.0Q80 281 123.5 297.0Q167 313 222.5 317.5Q278 322 338 322H362Q362 341 353.0 356.0Q344 371 327.5 380.0Q311 389 287 389Q270 389 254.0 384.0Q238 379 227.5 370.5Q217 362 215 350H39Q45 399 68.0 434.5Q91 470 126.0 492.5Q161 515 204.5 526.0Q248 537 295 537Q411 537 470.5 472.5Q530 408 530 283V0H367V69Q341 30 308.5 14.0Q276 -2 249.5 -5.0Q223 -8 213 -8ZM261 127Q286 127 309.5 139.5Q333 152 348.5 171.0Q364 190 364 209V213H265Q253 213 242.0 210.5Q231 208 222.5 203.0Q214 198 209.0 190.0Q204 182 204 170Q204 156 211.5 146.5Q219 137 232.0 132.0Q245 127 261 127Z" fill="#FFFFFF"/><path transform="translate(1410.0,773.0) scale(1,-1)" d="M317 -249Q251 -249 194.5 -227.5Q138 -206 99.5 -159.5Q61 -113 47 -39H227Q232 -53 243.5 -63.5Q255 -74 273.0 -80.0Q291 -86 314 -86Q356 -86 377.0 -67.5Q398 -49 405.0 -19.5Q412 10 412 42V56Q393 28 366.5 15.0Q340 2 313.0 -2.5Q286 -7 264 -7Q179 -7 126.5 30.5Q74 68 50.5 128.5Q27 189 27 256Q27 333 55.5 397.0Q84 461 139.5 499.0Q195 537 276 537Q326 537 358.5 522.0Q391 507 416 482L432 527H592V109Q592 -2 568.0 -82.0Q544 -162 484.0 -205.5Q424 -249 317 -249ZM308 152Q346 152 369.5 167.5Q393 183 404.0 209.0Q415 235 415 265Q415 296 404.0 321.5Q393 347 370.5 362.5Q348 378 311 378Q269 378 245.5 358.5Q222 339 212.5 312.0Q203 285 203 260Q203 234 213.0 209.0Q223 184 246.0 168.0Q269 152 308 152Z" fill="#FFFFFF"/><path transform="translate(2029.0,773.0) scale(1,-1)" d="M47 0V527H224V0ZM136 563Q88 563 58.5 591.5Q29 620 29 666Q29 713 60.0 743.0Q91 773 137 773Q181 773 212.0 744.5Q243 716 243 667Q243 620 213.5 591.5Q184 563 136 563Z" fill="#FFFFFF"/><path transform="translate(2281.0,773.0) scale(1,-1)" d="M290 -8Q210 -8 151.0 24.0Q92 56 59.5 116.5Q27 177 27 262Q27 350 60.5 411.5Q94 473 154.0 505.5Q214 538 293 538Q364 538 419.0 512.0Q474 486 506.0 437.0Q538 388 540 317H370Q364 346 343.5 361.0Q323 376 294 376Q258 376 238.0 357.5Q218 339 210.0 312.5Q202 286 202 262Q202 235 211.0 210.0Q220 185 240.0 169.0Q260 153 293 153Q325 153 345.0 168.5Q365 184 370 211H546Q544 139 509.0 90.5Q474 42 417.0 17.0Q360 -8 290 -8Z" fill="#FFFFFF"/></g></defs></svg>

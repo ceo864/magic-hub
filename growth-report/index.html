@@ -2,6 +2,7 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Growth Report — регламент зустрічі</title>
 <style>
 
@@ -46,40 +47,99 @@
   --radius-pill: 999px;
   --shadow-md: 0 8px 20px rgba(20, 30, 60, 0.08), 0 2px 4px rgba(20, 30, 60, 0.04);
   --shadow-glow-brand: 0 16px 40px rgba(120, 140, 255, 0.18);
+
+  /* ── канонічні токени Magic Hub (як на головній) ───────────── */
+  --blue: #38A0FF; --purple: #AA7AFF;
+  --grad: linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h: linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft: linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0: #FFFFFF; --ink-400: #9AA2B2; --ink-800: #1A1D26;
+  --purple-ink: #5E30C4; --purple-50: #F2EBFF;
+  --shadow-sm: 0 2px 6px rgba(20,30,60,.06), 0 1px 2px rgba(20,30,60,.04);
+  --glow-brand: 0 16px 40px rgba(120,140,255,.30);
+  --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-2xl: 36px; --r-pill: 999px;
+  --font: 'Onest', system-ui, sans-serif;
+  --nav-bg: rgba(247,248,251,.75);
+
+  /* старі імена сторінки → канонічні значення */
+  --fg: var(--ink-900); --fg-muted: var(--ink-600); --fg-subtle: var(--ink-500);
+  --surface: #fff; --surface-2: var(--ink-100); --line: var(--ink-200);
 }
 
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: 'Onest', system-ui, sans-serif;
+  font-family: var(--font);
   font-weight: 300;
   color: var(--ink-900);
   background: var(--ink-50);
+  -webkit-font-smoothing: antialiased;
   line-height: 1.55;
 }
 
-.wrap { max-width: 880px; margin: 0 auto; padding: 56px 32px 100px; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 32px 100px; }
+.nav .wrap, .hero .wrap, footer .wrap { padding-bottom: 0; }
 
-.brand-logo { width: 132px; height: auto; display: block; margin-bottom: 40px; }
+/* ── канонічна шапка (nav) ──────────────────────────────────── */
+.nav { position: sticky; top: 0; z-index: 50; background: var(--nav-bg);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 12px; }
+.brand { display: flex; align-items: baseline; gap: 10px; flex: none; text-decoration: none; }
+.brand .logo { font-weight: 900; font-size: 26px; letter-spacing: -.03em;
+  background: var(--grad-h); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; }
+.brand .tag { font-size: 12px; color: var(--ink-500); font-weight: 400; letter-spacing: .02em; }
+.nav-links { display: flex; gap: 8px; align-items: center; }
+.nav-links a { font-size: 14px; color: var(--ink-600); padding: 8px 14px;
+  border-radius: var(--r-pill); font-weight: 500; text-decoration: none;
+  transition: background .15s, color .15s; white-space: nowrap; }
+.nav-links a:hover { background: var(--ink-100); color: var(--ink-900); }
+.nav-cta { background: var(--grad); color: #fff !important; box-shadow: var(--shadow-sm); }
+.nav-cta:hover { filter: brightness(1.07); background: var(--grad) !important; }
 
+/* ── канонічний hero ────────────────────────────────────────── */
 .hero {
-  background: var(--magic-gradient);
-  border-radius: var(--radius-xl);
-  padding: 44px 40px;
-  color: white;
-  box-shadow: var(--shadow-glow-brand);
-  margin-bottom: 32px;
+  position: relative; overflow: hidden;
+  background: var(--grad);
+  border-radius: 0 0 var(--r-2xl) var(--r-2xl);
+  padding: 72px 0 64px;
+  color: #fff;
+  margin: 0 0 48px;
 }
-.hero .eyebrow {
-  font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  opacity: 0.85; margin-bottom: 10px;
-}
+.hero .blob { position: absolute; border-radius: 50%; filter: blur(8px); }
+.hero .b1 { width: 420px; height: 420px; background: #fff; top: -160px; right: -80px; opacity: .12; }
+.hero .b2 { width: 300px; height: 300px; background: #7ABCFF; bottom: -140px; left: -60px; opacity: .35; }
+.hero .b3 { width: 180px; height: 180px; background: #CBB0FF; top: 40px; left: 40%; opacity: .30; }
+.hero-in { position: relative; z-index: 2; max-width: 820px; }
+.backlink { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 500;
+  color: rgba(255,255,255,.85); margin-bottom: 18px; padding: 6px 14px; border-radius: var(--r-pill);
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.26);
+  text-decoration: none; transition: .15s; }
+.backlink:hover { background: rgba(255,255,255,.28); color: #fff; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.28); padding: 7px 16px; border-radius: var(--r-pill);
+  font-size: 13px; font-weight: 500; letter-spacing: .02em; margin-bottom: 22px;
+  text-transform: none; opacity: 1; }
 .hero h1 {
-  font-family: 'Onest', sans-serif; font-weight: 900; font-size: 44px; line-height: 1.05;
-  letter-spacing: -0.02em; margin: 0 0 10px;
+  font-weight: 900; letter-spacing: -.03em; line-height: 1.05;
+  font-size: clamp(32px, 5.2vw, 56px); margin: 0 0 18px;
 }
-.hero p { font-weight: 300; font-size: 17px; opacity: 0.92; margin: 0; max-width: 60ch; }
+.hero p.sub {
+  font-weight: 300; font-size: clamp(15px, 2vw, 19px); color: rgba(255,255,255,.92);
+  max-width: 640px; margin: 0;
+}
+.meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+.meta .chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px;
+  font-weight: 500; color: #fff; background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.28); padding: 6px 14px;
+  border-radius: var(--r-pill); text-decoration: none; }
+.meta .chip.draft { background: rgba(255,255,255,.30); font-weight: 700; }
+@media (max-width: 640px) {
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 56px 0 52px; margin-bottom: 36px; }
+}
 
 .stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
 .stat-chip {
@@ -91,7 +151,7 @@ body {
 
 .card {
   background: white; border-radius: var(--radius-xl); padding: 32px 36px; margin-bottom: 24px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md); scroll-margin-top: 92px;
 }
 .card h2 {
   font-family: 'Onest', sans-serif; font-weight: 800; font-size: 24px; color: var(--ink-900);
@@ -147,20 +207,51 @@ table tr:last-child td { border-bottom: none; }
 table td:first-child { font-weight: 600; color: var(--ink-900); width: 30%; }
 
 .footer-note { text-align: center; color: var(--ink-500); font-size: 13px; margin-top: 40px; }
+
+/* ── канонічний футер ───────────────────────────────────────── */
+footer { border-top: 1px solid var(--line); margin-top: 0; padding: 40px 0 56px; }
+.foot-in { display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px; }
+.foot-in .logo { font-weight: 900; font-size: 22px; letter-spacing: -.03em;
+  background: var(--grad-h); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; }
+.foot-in p { font-size: 13px; color: var(--ink-500); font-weight: 400; margin: 0; }
 </style>
 </head>
 <body>
-<a href="../" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--fg-muted,#4B5160);text-decoration:none;margin-bottom:14px">← Magic Hub</a>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#prep">Підготовка</a>
+      <a href="#structure">Структура зустрічі</a>
+      <a href="#rules">Правила</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Регламент зустрічі · Growth</span>
+    <h1>Growth Report</h1>
+    <p class="sub">Спільна звітна зустріч Growth Marketers з CEO. Одна зустріч на весь тиждень — усі Growth Marketers одночасно, проходимось по всіх проєктах підряд.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Для команди Magic</span>
+      <span class="chip">Щотижня</span>
+    </div>
+  </div>
+</header>
 
 <div class="wrap">
 
-  <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="-30.0 -30.0 2909.0 1082.0"><defs><linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38A0FF"/><stop offset="100%" stop-color="#AA7AFF"/></linearGradient></defs><path transform="translate(0.0,773.0) scale(1,-1)" d="M47 0V527H203L219 471Q242 502 268.5 516.0Q295 530 319.0 533.5Q343 537 357 537Q399 537 436.5 522.5Q474 508 499 466Q522 496 548.5 511.0Q575 526 601.5 531.5Q628 537 652 537Q716 537 755.0 511.0Q794 485 812.5 438.0Q831 391 831 327V0H654V294Q654 306 652.5 320.0Q651 334 645.0 346.5Q639 359 628.0 367.5Q617 376 597 376Q576 376 563.0 368.0Q550 360 542.5 347.0Q535 334 532.0 317.5Q529 301 529 284V0H352V295Q352 306 350.0 319.5Q348 333 342.0 346.0Q336 359 323.5 367.5Q311 376 289 376Q258 376 244.0 359.0Q230 342 227.0 319.0Q224 296 224 279V0Z" fill="url(#mg)"/><path transform="translate(854.0,773.0) scale(1,-1)" d="M213 -8Q176 -8 143.0 2.0Q110 12 84.5 32.0Q59 52 44.0 82.0Q29 112 29 153Q29 213 54.5 247.0Q80 281 123.5 297.0Q167 313 222.5 317.5Q278 322 338 322H362Q362 341 353.0 356.0Q344 371 327.5 380.0Q311 389 287 389Q270 389 254.0 384.0Q238 379 227.5 370.5Q217 362 215 350H39Q45 399 68.0 434.5Q91 470 126.0 492.5Q161 515 204.5 526.0Q248 537 295 537Q411 537 470.5 472.5Q530 408 530 283V0H367V69Q341 30 308.5 14.0Q276 -2 249.5 -5.0Q223 -8 213 -8ZM261 127Q286 127 309.5 139.5Q333 152 348.5 171.0Q364 190 364 209V213H265Q253 213 242.0 210.5Q231 208 222.5 203.0Q214 198 209.0 190.0Q204 182 204 170Q204 156 211.5 146.5Q219 137 232.0 132.0Q245 127 261 127Z" fill="url(#mg)"/><path transform="translate(1410.0,773.0) scale(1,-1)" d="M317 -249Q251 -249 194.5 -227.5Q138 -206 99.5 -159.5Q61 -113 47 -39H227Q232 -53 243.5 -63.5Q255 -74 273.0 -80.0Q291 -86 314 -86Q356 -86 377.0 -67.5Q398 -49 405.0 -19.5Q412 10 412 42V56Q393 28 366.5 15.0Q340 2 313.0 -2.5Q286 -7 264 -7Q179 -7 126.5 30.5Q74 68 50.5 128.5Q27 189 27 256Q27 333 55.5 397.0Q84 461 139.5 499.0Q195 537 276 537Q326 537 358.5 522.0Q391 507 416 482L432 527H592V109Q592 -2 568.0 -82.0Q544 -162 484.0 -205.5Q424 -249 317 -249ZM308 152Q346 152 369.5 167.5Q393 183 404.0 209.0Q415 235 415 265Q415 296 404.0 321.5Q393 347 370.5 362.5Q348 378 311 378Q269 378 245.5 358.5Q222 339 212.5 312.0Q203 285 203 260Q203 234 213.0 209.0Q223 184 246.0 168.0Q269 152 308 152Z" fill="url(#mg)"/><path transform="translate(2029.0,773.0) scale(1,-1)" d="M47 0V527H224V0ZM136 563Q88 563 58.5 591.5Q29 620 29 666Q29 713 60.0 743.0Q91 773 137 773Q181 773 212.0 744.5Q243 716 243 667Q243 620 213.5 591.5Q184 563 136 563Z" fill="url(#mg)"/><path transform="translate(2281.0,773.0) scale(1,-1)" d="M290 -8Q210 -8 151.0 24.0Q92 56 59.5 116.5Q27 177 27 262Q27 350 60.5 411.5Q94 473 154.0 505.5Q214 538 293 538Q364 538 419.0 512.0Q474 486 506.0 437.0Q538 388 540 317H370Q364 346 343.5 361.0Q323 376 294 376Q258 376 238.0 357.5Q218 339 210.0 312.5Q202 286 202 262Q202 235 211.0 210.0Q220 185 240.0 169.0Q260 153 293 153Q325 153 345.0 168.5Q365 184 370 211H546Q544 139 509.0 90.5Q474 42 417.0 17.0Q360 -8 290 -8Z" fill="url(#mg)"/></svg>
-
-  <div class="hero">
-    <div class="eyebrow">Регламент зустрічі · Growth</div>
-    <h1>Growth Report</h1>
-    <p>Спільна звітна зустріч Growth Marketers з CEO. Одна зустріч на весь тиждень — усі Growth Marketers одночасно, проходимось по всіх проєктах підряд.</p>
-  </div>
 
   <div class="stat-row">
     <div class="stat-chip"><div class="label">Учасники</div><div class="value">CEO + усі Growth Marketers разом</div></div>
@@ -168,7 +259,7 @@ table td:first-child { font-weight: 600; color: var(--ink-900); width: 30%; }
     <div class="stat-chip"><div class="label">Тривалість</div><div class="value">40–80 хв залежно від кількості проєктів</div></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="prep">
     <h2>Підготовка до зустрічі</h2>
     <p>Світлофор проєкту оновлюється автоматично за метриками до зустрічі. Звіт 5F3T по кожному проєкту формується автоматично в дашборді на основі даних проєкту.</p>
     <p style="font-weight:600; color:var(--ink-900);">Що GM робить вручну до зустрічі:</p>
@@ -179,13 +270,13 @@ table td:first-child { font-weight: 600; color: var(--ink-900); width: 30%; }
     </ul>
   </div>
 
-  <div class="card">
+  <div class="card" id="personal">
     <h2>Другий шар звітності: особисті цілі GM</h2>
     <p>Окремо від проєктних цілей клієнтів, CEO ставить кожному GM особисті цілі (індивідуальні — не по конкретному проєкту, а по самому GM). По них GM звітує за тією ж моделлю 5F3T, але це окремий, короткий звіт — не плутати з проєктними звітами.</p>
     <p class="note">Конкретний перелік особистих цілей для кожного GM CEO наразі вичитує і корегує окремо — тут фіксується тільки формат і місце цього звіту в зустрічі (Блок 1). Зміст буде додано, щойно цілі затверджено.</p>
   </div>
 
-  <div class="card">
+  <div class="card" id="structure">
     <h2>Структура самої зустрічі</h2>
 
     <div class="block">
@@ -225,7 +316,7 @@ table td:first-child { font-weight: 600; color: var(--ink-900); width: 30%; }
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" id="rules">
     <h2>Правила</h2>
     <ul>
       <li>Дискусії довші за 2–3 хв на пункт — у «парковку»; говоримо цифрами.</li>
@@ -234,8 +325,17 @@ table td:first-child { font-weight: 600; color: var(--ink-900); width: 30%; }
     </ul>
   </div>
 
-  <div class="footer-note">Magic · Growth · регламент зустрічі</div>
-
 </div>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>«Growth Report — регламент зустрічі» · внутрішній документ</p>
+  </div>
+</footer>
+
 </body>
 </html>

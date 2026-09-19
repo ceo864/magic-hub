@@ -4,26 +4,93 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Creative Checklists — 3 чеклісти креативного стратега</title>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
-    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
-    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
-    --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
+/* ── Magic Hub · канонічні токени (як на головній) ───────── */
+  :root{
+    --blue:#38A0FF; --purple:#AA7AFF;
+    --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+    --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+    --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+    --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+    --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+    --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+    --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+    --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+    --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+    --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+    --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+    --glow-brand:0 16px 40px rgba(120,140,255,.30);
+    --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+    --font:'Onest',system-ui,sans-serif;
+    /* старі імена змінних цієї сторінки → канонічні значення */
+    --dark:var(--ink-900); --accent:var(--blue); --accent2:var(--purple);
+    --bg:var(--ink-50); --card:var(--ink-0); --text:var(--ink-900);
+    --muted:var(--ink-500); --border:var(--ink-200); --gradient:var(--grad);
+    --green:#2EC28A; --orange:#FFB020; --danger:#F5525C;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-  
-  .header{background:var(--dark);color:white;padding:48px 40px 36px;position:relative;overflow:hidden}
-  .header::after{content:"";position:absolute;top:0;right:0;width:400px;height:100%;background:var(--gradient);opacity:.15;border-radius:50%;filter:blur(80px)}
-  .header-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
-  .header-left{flex:1}
-  .header-left .brand{font-weight:900;font-size:14px;opacity:.4;margin-bottom:18px;letter-spacing:.5px}
-  .header h1{font-size:32px;margin-bottom:8px;font-weight:700;line-height:1.15}
-  .header p{opacity:.6;font-size:15px;max-width:600px}
-  .header button{padding:10px 22px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
-  
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+    -webkit-font-smoothing:antialiased;line-height:1.55}
+  a{text-decoration:none;color:inherit}
+  :target{scroll-margin-top:84px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+
+  /* ── канонічна оболонка: nav ───────── */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+  .brand{display:flex;align-items:baseline;gap:10px;flex:none}
+  .brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+    background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent}
+  .brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+  .nav-links{display:flex;gap:8px;align-items:center}
+  .nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+    font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+  .nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+  .nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+  .nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+  /* ── канонічна оболонка: hero ───────── */
+  .hero{position:relative;overflow:hidden;background:var(--grad);
+    border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+    padding:72px 0 64px;margin-bottom:0}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+  .hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+  .hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+  .hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+  .hero-in{position:relative;z-index:2;max-width:820px}
+  .backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+    color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+  .backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+    font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+  .hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+    font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+  .hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+  .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;align-items:center}
+  .meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+    color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+    padding:6px 14px;border-radius:var(--r-pill)}
+  .meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+  .printbtn{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12.5px;
+    font-weight:600;color:#fff;background:rgba(255,255,255,.18);cursor:pointer;
+    border:1px solid rgba(255,255,255,.28);padding:6px 14px;border-radius:var(--r-pill);transition:.15s}
+  .printbtn:hover{background:rgba(255,255,255,.30)}
+
+  /* ── канонічна оболонка: footer ───────── */
+  footer{border-top:1px solid var(--ink-200);margin-top:0;padding:40px 0 56px}
+  .foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+    background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
   .container{max-width:980px;margin:0 auto;padding:40px 24px 80px}
   
   .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
@@ -80,28 +147,47 @@
   @media(max-width:768px){
     .container{padding:24px 16px 60px}
     .checklist-overview{grid-template-columns:1fr}
-    .header{padding:32px 20px}
-    .header h1{font-size:24px}
     .cl-head{flex-wrap:wrap}
     .quick-ref-grid{grid-template-columns:1fr}
   }
-  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.checklist-section,.intro,.check-block,.hint,.warn,.quick-ref{break-inside:avoid;page-break-inside:avoid}}
+  @media(max-width:640px){
+    .nav-links a:not(.nav-cta){display:none}
+    .hero{padding:56px 0 52px}
+  }
+  @media print{body{background:white}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.nav,.printbtn{display:none}.checklist-section,.intro,.check-block,.hint,.warn,.quick-ref{break-inside:avoid;page-break-inside:avoid}}
 </style>
 </head>
 <body>
-<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
-
-
-<div class="header">
-  <div class="header-content">
-    <div class="header-left">
-      <div class="brand">magic</div>
-      <h1>CREATIVE CHECKLISTS</h1>
-      <p>3 чеклісти креативного стратега: Бриф, Pre-launch, Post-launch аналіз. Друкуй і тримай під рукою.</p>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#brief">Бриф</a>
+      <a href="#prelaunch">Pre-launch</a>
+      <a href="#postlaunch">Post-launch</a>
+      <a class="nav-cta" href="../">Усі документи</a>
     </div>
-    <button onclick="window.print()">Друк / PDF</button>
   </div>
-</div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Креатив · для креативного стратега</span>
+    <h1>CREATIVE CHECKLISTS</h1>
+    <p class="sub">3 чеклісти креативного стратега: Бриф, Pre-launch, Post-launch аналіз. Друкуй і тримай під рукою.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 19.09.2026</span>
+      <span class="chip draft">Статус: чинний</span>
+      <button class="printbtn" onclick="window.print()">Друк / PDF</button>
+    </div>
+  </div>
+</header>
 
 <div class="container">
 
@@ -130,7 +216,7 @@
   </div>
 
   <!-- CHECKLIST 1: BRIEF -->
-  <section class="checklist-section">
+  <section class="checklist-section" id="brief">
     <div class="cl-head">
       <div class="cl-num">1</div>
       <div class="cl-info">
@@ -228,7 +314,7 @@
   </section>
 
   <!-- CHECKLIST 2: PRE-LAUNCH -->
-  <section class="checklist-section">
+  <section class="checklist-section" id="prelaunch">
     <div class="cl-head" style="background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%)">
       <div class="cl-num" style="background:linear-gradient(135deg,var(--orange),#FF8C42)">2</div>
       <div class="cl-info">
@@ -382,7 +468,7 @@
   </section>
 
   <!-- CHECKLIST 3: POST-LAUNCH -->
-  <section class="checklist-section">
+  <section class="checklist-section" id="postlaunch">
     <div class="cl-head" style="background:linear-gradient(135deg,#1a2340 0%,#0f1729 100%)">
       <div class="cl-num" style="background:linear-gradient(135deg,var(--green),#1FA070)">3</div>
       <div class="cl-info">
@@ -537,6 +623,16 @@
   </div>
 
 </div>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>«Creative Checklists» · внутрішній документ</p>
+  </div>
+</footer>
 
 </body>
 </html>

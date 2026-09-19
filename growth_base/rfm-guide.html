@@ -9,49 +9,83 @@
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
+/* ── Magic Hub · канонічні токени (як на головній) ───────── */
 :root{
-  --magic-blue:#38A0FF; --magic-purple:#AA7AFF;
-  --magic-gradient:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
-  --magic-gradient-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
-  --magic-gradient-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
-  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-50:#F2EBFF; --purple-100:#E4D6FF;
-  --ink-0:#FFFFFF; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
   --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
   --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
-  --success:#2EC28A; --success-bg:#E4F8EF; --warning:#FFB020; --warning-bg:#FFF3DC;
-  --danger:#F5525C; --danger-bg:#FFE6E8; --info:#38A0FF; --info-bg:#EAF5FF;
-  --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-2xl:36px;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
   --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
   --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
   --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
-  --shadow-glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
   --font:'Onest',system-ui,sans-serif;
+  /* сумісність зі старими іменами цієї сторінки */
+  --magic-blue:var(--blue); --magic-purple:var(--purple);
+  --magic-gradient:var(--grad); --magic-gradient-h:var(--grad-h);
+  --magic-gradient-soft:var(--grad-soft);
+  --blue-50:#EAF5FF; --blue-100:#D1E8FF; --purple-100:#E4D6FF;
+  --success:#2EC28A; --success-bg:#E4F8EF; --warning:var(--amber); --warning-bg:#FFF3DC;
+  --danger:#F5525C; --danger-bg:#FFE6E8; --info:var(--blue); --info-bg:#EAF5FF;
+  --radius-md:var(--r-md); --radius-lg:var(--r-lg); --radius-xl:var(--r-xl); --radius-2xl:var(--r-2xl);
+  --shadow-glow-brand:var(--glow-brand);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
 .wrap{max-width:920px;margin:0 auto;padding:0 22px}
 button{font-family:var(--font);cursor:pointer}
 
-.topbar{background:var(--ink-900);color:#fff;padding:14px 0;position:sticky;top:0;z-index:40}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand-word{font-weight:900;font-size:20px;letter-spacing:-.03em}
-.topbar nav{display:flex;gap:6px;flex-wrap:wrap}
-.topbar nav a{color:rgba(255,255,255,.7);font-size:13px;font-weight:600;text-decoration:none;padding:6px 11px;border-radius:999px;transition:.15s}
-.topbar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
 
-.hero{background:var(--ink-900);color:#fff;padding:52px 0 60px;position:relative;overflow:hidden}
-.hero .blob{position:absolute;border-radius:999px;filter:blur(60px);opacity:.42;pointer-events:none}
-.hero .b1{width:340px;height:340px;background:#AA7AFF;top:-130px;right:-50px}
-.hero .b2{width:260px;height:260px;background:#38A0FF;bottom:-140px;left:-30px}
-.hero .wrap{position:relative;z-index:1}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin-bottom:18px}
-.eyebrow i{width:14px;height:14px}
-h1{font-weight:900;font-size:clamp(34px,6vw,56px);line-height:1.03;letter-spacing:-.03em}
-h1 .g{background:var(--magic-gradient-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hero p.sub{font-size:18px;color:rgba(255,255,255,.82);max-width:640px;margin-top:16px}
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);
+  max-width:640px;margin-bottom:0}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
 
 section{padding:52px 0 0}
+section:first-of-type{padding-top:0}
 .sec-label{display:flex;align-items:center;gap:11px;margin-bottom:10px}
 .sec-label .n{font-weight:800;font-size:13px;color:var(--magic-purple)}
 .sec-label h2{font-weight:900;font-size:30px;letter-spacing:-.02em}
@@ -140,8 +174,11 @@ td.num{font-weight:700;font-variant-numeric:tabular-nums}
 .tool .tb .lvl.diy{background:var(--blue-50);color:#1566B8}
 .tool .tb p{font-size:14px;color:var(--ink-600);margin-bottom:0;line-height:1.5}
 
-footer{background:var(--ink-900);color:rgba(255,255,255,.6);padding:28px 0;margin-top:56px;font-size:13px}
-footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400;margin-bottom:0}
 
 /* SEGMENTER widget */
 .seg-tool{background:#fff;border-radius:var(--radius-2xl);padding:30px;box-shadow:var(--shadow-md)}
@@ -163,42 +200,52 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
 
 @media(max-width:760px){
   .lettersrow,.segs,.seg-controls{grid-template-columns:1fr}
-  .topbar nav{display:none}
+}
+@media(max-width:860px){ .nav-links a:not(.nav-cta){display:none} }
+@media(max-width:640px){
+  .hero{padding:56px 0 52px;margin-bottom:40px}
 }
 @media print{
-  .topbar,footer{display:none!important}
+  .nav,footer{display:none!important}
   body{background:#fff}
   .hero,.why{background:#fff;color:#000;border:1px solid #ddd}
   .hero .blob,.why .blob{display:none}
-  h1 .g,.letter .big{color:#000!important;-webkit-text-fill-color:#000!important}
+  .hero h1,.hero p.sub,.backlink,.eyebrow,.meta .chip{color:#000!important}
+  .letter .big{color:#000!important;-webkit-text-fill-color:#000!important}
   .segcard,.step,.tool,.seg-tool,.tablewrap{break-inside:avoid}
 }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="wrap">
-    <span class="brand-word">magic</span>
-    <nav>
-      <a href="#why">Навіщо</a>
-      <a href="#what">R-F-M</a>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Growth-бібліотека</a>
       <a href="#scoring">Скоринг</a>
       <a href="#segments">Сегменти</a>
-      <a href="#diy">Зробити самому</a>
-      <a href="#tools">Сервіси</a>
-      <a href="#mistakes">Помилки</a>
       <a href="#widget">Тренажер</a>
-    </nav>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
   </div>
-</div>
+</nav>
 
 <header class="hero">
-  <div class="blob b1"></div><div class="blob b2"></div>
-  <div class="wrap">
-    <div class="eyebrow"><i data-lucide="users"></i>Навчальний матеріал · Retention</div>
-    <h1>RFM-аналіз:<br><span class="g">сегментація клієнтів за поведінкою</span></h1>
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Growth-бібліотека</a>
+    <span class="eyebrow">Навчальний матеріал · Retention</span>
+    <h1>RFM-аналіз: сегментація клієнтів за поведінкою</h1>
     <p class="sub">Як поділити базу на групи за тим, коли, як часто й на скільки люди купують — і дати кожній групі своє повідомлення. Механіка, сегменти з діями, як зробити самому й якими сервісами.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 19.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
   </div>
 </header>
 
@@ -461,7 +508,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
   </div>
 </section>
 
-<footer><div class="wrap"><span>magic · advertise for e-commerce</span><span>Навчальний матеріал · ceo@magicecom.agency</span></div></footer>
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>«RFM-аналіз — сегментація клієнтів за поведінкою» · внутрішній документ</p>
+  </div>
+</footer>
 
 <script>
 const $=s=>document.querySelector(s);

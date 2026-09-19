@@ -3,28 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creative Production SOP — від гіпотези до висновку</title>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<title>SOP: продакшн креативів · Magic</title>
+<meta name="description" content="Шість кроків від гіпотези до висновку — стандарт виробництва креативу для стратегів агенції.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --dark:#0f1729; --accent:#38A0FF; --accent2:#AA7AFF;
-    --bg:#f7f8fb; --card:#FFF; --text:#1a2340; --muted:#7580a0; --border:#e4e7ef;
-    --green:#2EC28A; --blue:#38A0FF; --orange:#FFB020; --purple:#AA7AFF; --danger:#F5525C;
-    --gradient: linear-gradient(135deg, #38A0FF 0%, #AA7AFF 100%);
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{-webkit-font-smoothing:antialiased;font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-  
-  .header{background:var(--dark);color:white;padding:48px 40px 36px;position:relative;overflow:hidden}
-  .header::after{content:"";position:absolute;top:0;right:0;width:400px;height:100%;background:var(--gradient);opacity:.15;border-radius:50%;filter:blur(80px)}
-  .header-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
-  .header-left{flex:1}
-  .header-left .brand{font-weight:900;font-size:14px;opacity:.4;margin-bottom:18px;letter-spacing:.5px}
-  .header h1{font-size:32px;margin-bottom:8px;font-weight:700;line-height:1.15}
-  .header p{opacity:.6;font-size:15px;max-width:600px}
-  .header button{padding:10px 22px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:white}
-  
-  .container{max-width:980px;margin:0 auto;padding:40px 24px 80px}
+/* ── Magic Hub · канонічні токени й оболонка (як на головній) ───── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+  /* сумісність зі старими іменами цієї сторінки */
+  --dark:var(--ink-900); --accent:var(--blue); --accent2:var(--purple);
+  --bg:var(--ink-50); --card:var(--ink-0); --text:var(--ink-900);
+  --muted:var(--ink-500); --border:var(--ink-200);
+  --green:#2EC28A; --orange:var(--amber); --danger:#F5525C;
+  --gradient:var(--grad);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Onest',system-ui,sans-serif;font-weight:300;color:var(--ink-900);
+  background:var(--ink-50);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:0}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;align-items:center}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+.meta button.chip{cursor:pointer;font-family:inherit;transition:.15s}
+.meta button.chip:hover{background:rgba(255,255,255,.34)}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+/* ── контент сторінки ──────────────────────────────────────────── */
+  .container{max-width:980px;margin:0 auto;padding:56px 24px 0}
+  .step-section,.intro,.principles{scroll-margin-top:84px}
   
   .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
   .intro h2{font-size:18px;font-weight:700;margin-bottom:14px;color:var(--dark)}
@@ -32,7 +97,7 @@
   .intro p:last-child{margin-bottom:0}
   
   .timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:36px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
-  .tl-step{padding:14px 12px;border-radius:10px;background:#fafbfd;border:1px solid var(--border);text-align:center}
+  .tl-step{padding:14px 12px;border-radius:10px;background:var(--ink-50);border:1px solid var(--border);text-align:center}
   .tl-step .num{display:inline-block;width:26px;height:26px;line-height:26px;background:var(--gradient);color:white;font-weight:700;font-size:12px;border-radius:50%;margin-bottom:8px}
   .tl-step .name{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px}
   .tl-step .duration{font-size:10px;color:var(--muted);font-weight:500}
@@ -49,14 +114,14 @@
   
   .h3{font-size:13px;font-weight:700;color:var(--dark);margin:20px 0 12px;text-transform:uppercase;letter-spacing:.6px}
   
-  .checklist{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:18px}
+  .checklist{background:var(--ink-50);border:1px solid var(--border);border-radius:10px;padding:18px}
   .checklist ul{list-style:none;padding:0}
   .checklist li{padding:8px 0;font-size:13px;color:var(--text);display:flex;gap:10px;line-height:1.5;border-bottom:1px dashed var(--border)}
   .checklist li:last-child{border-bottom:none}
   .checklist li::before{content:"☐";color:var(--accent);font-weight:700;font-size:14px;flex-shrink:0}
   
   .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-  .info-card{background:#fafbfd;border:1px solid var(--border);border-radius:10px;padding:16px}
+  .info-card{background:var(--ink-50);border:1px solid var(--border);border-radius:10px;padding:16px}
   .info-card h4{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px}
   .info-card p{font-size:12px;color:var(--text);line-height:1.5;margin-bottom:6px}
   .info-card ul{list-style:none;padding:0;margin-top:8px}
@@ -73,13 +138,13 @@
   .warn-text{font-size:13px;color:var(--text);line-height:1.55}
   .warn-text strong{font-weight:700;color:var(--danger)}
   
-  .example{background:#0f1729;color:white;border-radius:12px;padding:18px;margin:14px 0;font-family:'Onest',sans-serif}
+  .example{background:var(--ink-900);color:white;border-radius:12px;padding:18px;margin:14px 0;font-family:'Onest',sans-serif}
   .example h5{color:var(--accent);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
   .example p{font-size:13px;opacity:.9;line-height:1.55;margin-bottom:6px}
   .example p:last-child{margin-bottom:0}
   .example strong{color:white;opacity:1}
   
-  .tab-ref{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:#EBF4FF;color:var(--blue);font-size:11px;font-weight:600;border-radius:12px}
+  .tab-ref{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:var(--purple-50);color:var(--purple-ink);font-size:11px;font-weight:600;border-radius:var(--r-pill)}
   
   .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
   .metric{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
@@ -92,13 +157,13 @@
   .decision-row.head{background:var(--dark);color:white;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px}
   .decision-row.head > div{padding:10px 14px}
   .decision-row > div{padding:14px;line-height:1.5}
-  .decision-row .sig{background:#fafbfd;font-weight:600}
+  .decision-row .sig{background:var(--ink-50);font-weight:600}
   .decision-row .act-good{background:#EBFFF6;color:var(--green);font-weight:600}
   .decision-row .act-bad{background:#FFEFF0;color:var(--danger);font-weight:600}
   .decision-row .act-neutral{background:#FFF6EB;color:var(--orange);font-weight:600}
   .decision-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:14px 0}
   
-  .principles{background:linear-gradient(135deg,#0f1729 0%,#1a2340 100%);color:white;border-radius:16px;padding:28px;margin-top:36px}
+  .principles{background:linear-gradient(135deg,var(--ink-900) 0%,var(--ink-800) 100%);color:white;border-radius:16px;padding:28px;margin-top:36px}
   .principles h2{font-size:18px;font-weight:700;margin-bottom:18px;color:white}
   .principles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .principle{padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px}
@@ -113,27 +178,48 @@
     .decision-row{grid-template-columns:1fr}
     .step-head{flex-wrap:wrap}
   }
-  @media print{body{background:white}.header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.header button{display:none}.step-section,.intro,.principles,.timeline,.example{break-inside:avoid;page-break-inside:avoid}}
+  @media(max-width:640px){
+    .nav-links a:not(.nav-cta){display:none}
+    .hero{padding:56px 0 52px}
+  }
+  @media print{body{background:white}.nav{display:none}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.meta button.chip{display:none}.step-section,.intro,.principles,.timeline,.example{break-inside:avoid;page-break-inside:avoid}}
 </style>
 </head>
 <body>
-<a href="../" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#111;color:#fff;font:500 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Magic Hub</a>
-
-
-<div class="header">
-  <div class="header-content">
-    <div class="header-left">
-      <div class="brand">magic</div>
-      <h1>CREATIVE PRODUCTION SOP</h1>
-      <p>6 кроків від гіпотези до висновку. Стандарт виробництва креативу для всіх стратегів агенції.</p>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#intro">Контекст</a>
+      <a href="#step1">6 кроків</a>
+      <a href="#principles">Принципи</a>
+      <a class="nav-cta" href="../">Усі документи</a>
     </div>
-    <button onclick="window.print()">Друк / PDF</button>
   </div>
-</div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Продакшн креативів · SOP</span>
+    <h1>Creative Production SOP</h1>
+    <p class="sub">6 кроків від гіпотези до висновку. Стандарт виробництва креативу для всіх стратегів агенції.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 19.09.2026</span>
+      <span class="chip draft">Статус: чинний</span>
+      <button class="chip" onclick="window.print()">Друк / PDF</button>
+    </div>
+  </div>
+</header>
 
 <div class="container">
 
-  <div class="intro">
+  <div class="intro" id="intro">
     <h2>Контекст SOP</h2>
     <p>Цей документ описує життєвий цикл одного креативу — від моменту коли в тебе виникла гіпотеза до моменту коли ти зробив висновок у Архіві тестів.</p>
     <p><strong>Чому потрібен SOP:</strong> щоб усі стратеги робили однаково. Щоб новий стратег за тиждень увійшов у роботу. Щоб патерни накопичувались системно — а не "у Каті виходить, у Олі ні".</p>
@@ -174,7 +260,7 @@
   </div>
 
   <!-- STEP 1 -->
-  <section class="step-section">
+  <section class="step-section" id="step1">
     <div class="step-head">
       <div class="step-num">1</div>
       <div class="step-info">
@@ -191,7 +277,7 @@
         <p><strong>Якщо</strong> я покажу [аудиторія на сходинці N] креатив з [кут] у форматі [концепт + формат], <strong>то</strong> очікую [метрика] на рівні [число], <strong>бо</strong> [обґрунтування].</p>
       </div>
 
-      <div class="example" style="background:#1a2340">
+      <div class="example" style="background:var(--ink-800)">
         <h5>Приклад для клієнта Magic Cosmetics</h5>
         <p><strong>Якщо</strong> я покажу жінкам 25-45 які шукають догляд за шкірою (сходинка 2 — шукає рішення) креатив з кутом "Pain Point" у форматі "Talking Head" відео, <strong>то</strong> очікую CTR на рівні 1.5%+ і ROAS 2.5+, <strong>бо</strong> Talking Head з реальною людиною дав найкращі результати у конкурента Х і у нас у 2 з 3 попередніх клієнтів схожої ніші.</p>
       </div>
@@ -228,7 +314,7 @@
   </section>
 
   <!-- STEP 2 -->
-  <section class="step-section">
+  <section class="step-section" id="step2">
     <div class="step-head">
       <div class="step-num">2</div>
       <div class="step-info">
@@ -290,7 +376,7 @@
   </section>
 
   <!-- STEP 3 -->
-  <section class="step-section">
+  <section class="step-section" id="step3">
     <div class="step-head">
       <div class="step-num">3</div>
       <div class="step-info">
@@ -331,7 +417,7 @@
   </section>
 
   <!-- STEP 4 -->
-  <section class="step-section">
+  <section class="step-section" id="step4">
     <div class="step-head">
       <div class="step-num">4</div>
       <div class="step-info">
@@ -374,7 +460,7 @@
   </section>
 
   <!-- STEP 5 -->
-  <section class="step-section">
+  <section class="step-section" id="step5">
     <div class="step-head">
       <div class="step-num">5</div>
       <div class="step-info">
@@ -472,7 +558,7 @@
   </section>
 
   <!-- STEP 6 -->
-  <section class="step-section">
+  <section class="step-section" id="step6">
     <div class="step-head">
       <div class="step-num">6</div>
       <div class="step-info">
@@ -514,7 +600,7 @@
         <p><strong>Висновок:</strong> Гіпотеза підтверджена. Talking Head з реальною жінкою-користувачкою у поєднанні з Pain Point — найсильніша комбінація для цього клієнта. <strong>Дія:</strong> брифую ще 3 варіації (інші користувачки, інші Pain Points). Тиражую підхід.</p>
       </div>
 
-      <div class="example" style="background:#1a2340">
+      <div class="example" style="background:var(--ink-800)">
         <h5>Приклад висновку (Loser)</h5>
         <p><strong>Гіпотеза:</strong> FOMO + Карусель на сходинці 4 → CTR 1.2%+ та ROAS 2.0+</p>
         <p><strong>Результат:</strong> 2 тижні роботи, ROAS lifetime 0.4, CTR 0.6%, Hook Rate 12%, Spend $1 369, Revenue $1 791</p>
@@ -529,7 +615,7 @@
   </section>
 
   <!-- PRINCIPLES -->
-  <div class="principles">
+  <div class="principles" id="principles">
     <h2>Принципи виробництва креативу</h2>
     <div class="principles-grid">
       <div class="principle">
@@ -560,6 +646,16 @@
   </div>
 
 </div>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>«Creative Production SOP» · внутрішній документ</p>
+  </div>
+</footer>
 
 </body>
 </html>
