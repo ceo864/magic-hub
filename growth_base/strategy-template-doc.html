@@ -131,7 +131,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
   <div class="wrap">
     <span class="brand-word">magic</span>
     <div class="acts">
-      <button class="tbtn" id="exampleBtn"><i data-lucide="book-open"></i><span class="label">Приклад Rytual</span></button>
       <button class="tbtn" id="printBtn"><i data-lucide="printer"></i><span class="label">Зберегти / PDF</span></button>
     </div>
   </div>
@@ -363,7 +362,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
 <script>
 const $=s=>document.querySelector(s);
 $("#printBtn").onclick=()=>window.print();
-$("#exampleBtn").onclick=()=>window.open("strategy-rytual-example.html","_blank");
 $("#addIce").onclick=()=>{
   const r=document.createElement("div");
   r.className="rowfill"; r.style.gridTemplateColumns="2fr 1fr 1fr 1fr 1fr";
