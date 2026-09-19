@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пак моделей Growth Marketer · Magic</title>
+<meta name="description" content="Моделі, якими думає Growth Marketer: маркетинг, менеджмент, бренди, продажі, психологія, комунікації, пріоритети, вплив.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none}
+.sec-ico svg{color:#7A45EB}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:720px;line-height:1.55}
+
+.principle{background:var(--grad);border-radius:var(--r-xl);padding:34px 32px;color:#fff;
+  box-shadow:var(--glow-brand);margin-bottom:46px;position:relative;overflow:hidden}
+.principle h3{font-weight:900;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;margin-bottom:10px}
+.principle p{font-size:15.5px;color:rgba(255,255,255,.92);font-weight:300;max-width:700px;line-height:1.6}
+.pflow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.pflow .pstep{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  padding:11px 22px;border-radius:var(--r-pill);font-weight:700;font-size:15px}
+.pflow .parr{color:rgba(255,255,255,.8);font-weight:700;font-size:20px;line-height:1}
+
+.model{background:var(--ink-0);border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;border-left:4px solid var(--blue);
+  transition:box-shadow .18s}
+.model:hover{box-shadow:var(--shadow-md)}
+.model-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.model-h h4{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.srcl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--purple-ink);background:var(--purple-50);padding:4px 11px;border-radius:var(--r-pill)}
+.srcl:hover{filter:brightness(.95)}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.field .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:5px}
+.field p{font-size:13.5px;color:var(--ink-600);font-weight:400;line-height:1.5}
+
+.board{background:var(--ink-0);border-radius:var(--r-xl);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.col{background:var(--ink-50);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:14px 12px;text-align:center}
+.col .cn{font-weight:800;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.col .ct{font-weight:700;font-size:14px;color:var(--ink-900)}
+.col.wip{background:var(--grad-soft);border-color:#CBB0FF}
+.col.wip .ct{color:#3a2a66}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.fchip{display:inline-flex;align-items:center;gap:7px;background:var(--ink-100);color:var(--ink-700);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:var(--r-pill)}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+@media(max-width:900px){ .fields{grid-template-columns:1fr} .cols{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .sec-desc{margin-left:0}
+  .cols{grid-template-columns:1fr}
+  .principle{padding:26px 22px}
+  .board{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#marketing">Маркетинг</a>
+      <a href="#management">Менеджмент</a>
+      <a href="#brands">Бренди</a>
+      <a href="#asana">Дошка</a>
+      <a class="nav-cta" href="../growth-development/">Розвиток Growth</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../growth-development/"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Розвиток Growth Marketer</a>
+    <span class="eyebrow">Growth Marketer · пак моделей</span>
+    <h1>Пак моделей Growth Marketer</h1>
+    <p class="sub">Для Growth Marketerів агенції: набір моделей, якими розкладається будь-яка робоча ситуація — щоб рішення спиралось на рамку, а не на відчуття.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 19.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="principle">
+    <h3>Ситуація → модель → дія</h3>
+    <p>Модель не прикраса до звіту. Спочатку називаєш ситуацію, далі свідомо береш модель, яка цю ситуацію розкладає, і тільки тоді ухвалюєш дію. Якщо модель не змінює дію — вона тут зайва.</p>
+    <div class="pflow">
+      <span class="pstep">Ситуація</span><span class="parr">→</span>
+      <span class="pstep">Модель</span><span class="parr">→</span>
+      <span class="pstep">Дія</span>
+    </div>
+  </div>
+
+  <!-- 1. МАРКЕТИНГ -->
+  <section class="section" id="marketing">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+      <h2>Маркетинг</h2><span class="count">7 моделей</span>
+    </div>
+    <p class="sec-desc">Рамки, якими розкладається попит, воронка й повідомлення.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>RACE</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли треба розкласти маркетинг по етапах воронки й побачити, на якому саме етапі провал.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Ділимо активності на Reach, Act, Convert, Engage. Для кожного етапу — свої метрики й своя ціль, щоб не міряти все одним ROAS.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Сходи обізнаності Бена Ханта</h4>
+        <a class="srcl" href="../magic-awareness-ladder/">Повна сторінка на хабі →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли треба підібрати повідомлення під готовність аудиторії купувати, а не говорити з усіма однаково.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Визначаємо щабель — від «не усвідомлює проблеми» до «обирає продавця» — і під кожен щабель даємо свій меседж і свій креатив.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>AIDA</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли пишемо одне конкретне повідомлення: креатив, лист, екран лендингу.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Ведемо читача через увагу, інтерес, бажання і дію. Перевіряємо, що жоден крок не пропущено — найчастіше випадає бажання.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>JTBD — Jobs To Be Done</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли треба зрозуміти, навіщо клієнт «наймає» продукт, а не яка в нього демографія.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Формулюємо роботу клієнта через ситуацію, мотивацію й очікуваний результат. Меседжі будуємо навколо цієї роботи, а не навколо характеристик товару.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>ABC / XYZ</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли в магазині багато SKU і треба вирішити, що тягнути рекламою, а що лишити у фоні.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>ABC — за внеском у показник (виручка чи маржа), XYZ — за стабільністю попиту. Перетин двох осей дає групи, у кожної своя тактика.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>RFM</h4>
+        <a class="srcl" href="../growth_base/rfm-guide.html">Повна сторінка на хабі →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли працюємо з наявною базою клієнтів і питання стоїть про утримання та повторні покупки.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Сегментуємо базу за давністю покупки, частотою і сумою. Під кожен сегмент — своя комунікація й своя мета.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>ICE та PIE</h4>
+        <a class="srcl" href="../growth_base/ice-pie-guide.html">Повна сторінка на хабі →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли гіпотез більше, ніж ресурсу, і треба чесно вибрати порядок, а не братись за найгучніше.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>ICE — Impact, Confidence, Ease. PIE — Potential, Importance, Ease. Рахуємо бал по кожній гіпотезі й сортуємо за спаданням.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+      <div class="t">Як моделі поєднуються між собою в одну систему — у <a href="../growth_base/marketing-models-guide.html">гайді «Маркетингові моделі»</a> на хабі.</div>
+    </div>
+  </section>
+
+  <!-- 2. МЕНЕДЖМЕНТ -->
+  <section class="section" id="management">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
+      <h2>Менеджмент</h2><span class="count">5 моделей</span>
+    </div>
+    <p class="sec-desc">Як організовано власну роботу й роботу над проєктом.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Kanban</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли потік задач безперервний і треба бачити реальне завантаження, а не список побажань.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Візуалізуємо задачі на дошці по колонках, обмежуємо кількість задач у роботі й тягнемо нову лише тоді, коли звільнилось місце.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Scrumban</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли потрібен ритм ітерацій, але жорсткий спринт-беклог заважає реагувати на клієнта.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Беремо дошку й ліміти з Kanban, а планування та ретроспективу — зі Scrum.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Agile</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли вимоги змінюються по ходу і довгий план застаріває швидше, ніж виконується.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Працюємо короткими циклами, показуємо результат рано й коригуємо напрям за зворотним зв'язком.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>OKR</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли треба зв'язати щоденні задачі з цілями кварталу, щоб робота не розсипалась на дрібниці.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Objective — якісна ціль, Key Results — кілька вимірюваних результатів. Прогрес перевіряємо регулярно, а не наприкінці кварталу.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Дошка в Asana</h4>
+        <a class="srcl" href="#asana">Розгорнуто нижче ↓</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Щодня — це робоче місце Growth Marketer, де живуть усі задачі по проєктах.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>П'ять колонок, три обов'язкові поля на задачі й жорсткий ліміт на кількість задач у роботі. Деталі — у блоці нижче.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. БРЕНДИ -->
+  <section class="section" id="brands">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+      <h2>Бренди</h2><span class="count">4 моделі</span>
+    </div>
+    <p class="sec-desc">Рамки, якими пояснюється, чому бренд росте або не росте.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Байрон Шарп</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли вирішуємо, за рахунок чого зростає бренд — через охоплення нових покупців чи через лояльність наявних.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Спираємось на фізичну й ментальну доступність та дистинктивні ассети. Зростання шукаємо через проникнення й охоплення легких покупців, а не через нішеву лояльність.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Котлер</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли треба базова рамка продукту на ринку — з чого взагалі складається маркетинг цього бренду.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Сегментація, таргетинг, позиціонування — і далі комплекс маркетингу: продукт, ціна, місце, просування.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Портер</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли оцінюємо привабливість ніші перед заходом і конкурентне середовище клієнта.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Розбираємо п'ять сил: наявні конкуренти, нові гравці, замінники, сила постачальників і сила покупців. Далі — вибір базової стратегії.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Бінет і Філд</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Коли ділимо бюджет між продажами зараз і брендом на перспективу.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Розділяємо brand building і sales activation як дві різні роботи з різними метриками й різними горизонтами віддачі, і тримаємо між ними баланс.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ПРОДАЖІ -->
+  <section class="section" id="sales">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg></div>
+      <h2>Продажі</h2>
+    </div>
+    <p class="sec-desc">Моделі, якими ведемо перемовини й доводимо клієнта до рішення.</p>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Перелік моделей секції, і для кожної — коли застосовуємо, як застосовуємо, приклад.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ПСИХОЛОГІЯ -->
+  <section class="section" id="psychology">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></div>
+      <h2>Психологія</h2>
+    </div>
+    <p class="sec-desc">Як людина ухвалює рішення й що з цим робити в комунікації.</p>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Перелік моделей секції, і для кожної — коли застосовуємо, як застосовуємо, приклад.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. КОМУНІКАЦІЇ -->
+  <section class="section" id="communication">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+      <h2>Комунікації</h2>
+    </div>
+    <p class="sec-desc">Як говоримо з клієнтом і всередині команди, щоб домовлятись із першого разу.</p>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Перелік моделей секції, і для кожної — коли застосовуємо, як застосовуємо, приклад.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. ПРІОРИТЕТИ І ЧАС -->
+  <section class="section" id="priorities">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <h2>Пріоритети і час</h2><span class="count">щоденна практика</span>
+    </div>
+    <p class="sec-desc">Те, що застосовується не за нагоди, а кожного робочого дня.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Матриця Ейзенхауера</h4>
+        <a class="srcl" href="../growth_base/eisenhower-matrix.html">Повна сторінка на хабі →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Коли застосовуємо</div><p>Щодня на плануванні дня, і щоразу, коли прилітає нова задача й хочеться кинути поточну.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Розкладаємо задачі по двох осях: важливо та терміново. Робочий фокус — на важливому нетерміновому, бо саме воно не горить і саме воно дає результат.</p></div>
+        <div class="field"><div class="fl">Приклад</div><p><span class="todo-in">TODO: заповнює CEO</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. ВПЛИВ -->
+  <section class="section" id="influence">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="m4.9 4.9 2.2 2.2"/><path d="m16.9 16.9 2.2 2.2"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="m4.9 19.1 2.2-2.2"/><path d="m16.9 7.1 2.2-2.2"/></svg></div>
+      <h2>Вплив</h2>
+    </div>
+    <p class="sec-desc">Як доносити позицію й проводити рішення, не маючи формальної влади.</p>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Перелік моделей секції, і для кожної — коли застосовуємо, як застосовуємо, приклад.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASANA -->
+  <section class="section" id="asana">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></div>
+      <h2>Дошка в Asana</h2>
+    </div>
+    <p class="sec-desc">Робоче місце Growth Marketer. Kanban у чистому вигляді: колонки, обов'язкові поля й ліміт на роботу в процесі.</p>
+
+    <div class="board">
+      <h3 style="font-weight:800;font-size:18px;letter-spacing:-.01em">Колонки</h3>
+      <div class="cols">
+        <div class="col"><div class="cn">01</div><div class="ct">Беклог</div></div>
+        <div class="col"><div class="cn">02</div><div class="ct">Цього тижня</div></div>
+        <div class="col wip"><div class="cn">03 · ліміт 3</div><div class="ct">В роботі</div></div>
+        <div class="col"><div class="cn">04</div><div class="ct">На перевірці</div></div>
+        <div class="col"><div class="cn">05</div><div class="ct">Готово</div></div>
+      </div>
+
+      <h3 style="font-weight:800;font-size:18px;letter-spacing:-.01em">Поля на кожній задачі</h3>
+      <div class="chips">
+        <span class="fchip">Квадрант Ейзенхауера</span>
+        <span class="fchip">Оцінка ICE</span>
+        <span class="fchip">Підпроєкт</span>
+      </div>
+
+      <div class="note">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <div class="t"><b>Ліміт: 3 задачі в роботі одночасно.</b> Четверта не заходить у колонку «В роботі», поки одна з трьох не поїхала далі. Це не побажання, а правило дошки — саме воно й робить Kanban Kanban'ом.</div>
+      </div>
+
+      <div class="note">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <div class="t">Поля дошки спираються на дві моделі з цієї сторінки: <a href="../growth_base/eisenhower-matrix.html">матрицю Ейзенхауера</a> для квадранта і <a href="../growth_base/ice-pie-guide.html">ICE</a> для оцінки.</div>
+      </div>
+
+      <div class="todo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        <div class="t">TODO: заповнює CEO
+          <span>Посилання на саму дошку в Asana, правила переходу між колонками й хто перевіряє задачі в колонці «На перевірці».</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Пак моделей Growth Marketer · внутрішній документ</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Онбординг Growth Marketer · Magic</title>
+<meta name="description" content="План навчання Growth Marketer на чотири етапи: тиждень 1, тиждень 2, місяць 1, місяці 2–3.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none;font-weight:900;color:#7A45EB;font-size:15px}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:760px;line-height:1.55}
+
+.stagebar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:44px}
+.stagebar a{background:var(--ink-0);border-radius:var(--r-lg);padding:18px 20px;
+  box-shadow:var(--shadow-sm);transition:.18s;border-top:4px solid var(--blue)}
+.stagebar a:hover{transform:translateY(-3px);box-shadow:var(--glow-brand)}
+.stagebar .en{font-weight:800;font-size:11px;letter-spacing:.08em;color:var(--ink-400);text-transform:uppercase}
+.stagebar .et{font-weight:700;font-size:17px;margin-top:5px;letter-spacing:-.01em}
+
+.tw{overflow-x:auto;background:var(--ink-0);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);margin-bottom:16px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:760px}
+th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);padding:14px 18px;border-bottom:1px solid var(--ink-200);white-space:nowrap}
+td{padding:14px 18px;border-bottom:1px solid var(--ink-100);color:var(--ink-600);
+  vertical-align:top;font-weight:400;line-height:1.5}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink-900);font-weight:600}
+tbody tr:hover{background:var(--ink-50)}
+td a{color:var(--purple-ink);font-weight:600}
+td a:hover{text-decoration:underline}
+.mlist{display:flex;flex-direction:column;gap:5px}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+@media(max-width:900px){ .stagebar{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .stagebar{grid-template-columns:1fr}
+  .sec-desc{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#w1">Тиждень 1</a>
+      <a href="#w2">Тиждень 2</a>
+      <a href="#m1">Місяць 1</a>
+      <a href="#m23">Місяці 2–3</a>
+      <a class="nav-cta" href="../growth-development/">Розвиток Growth</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../growth-development/"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Розвиток Growth Marketer</a>
+    <span class="eyebrow">Growth Marketer · онбординг</span>
+    <h1>Онбординг Growth Marketer</h1>
+    <p class="sub">Для новачка в ролі та його куратора: план перших тижнів і місяців — що вивчити, що зробити своїми руками і що з цього перевіряємо.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 19.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="stagebar">
+    <a href="#w1"><div class="en">Етап 01</div><div class="et">Тиждень 1</div></a>
+    <a href="#w2"><div class="en">Етап 02</div><div class="et">Тиждень 2</div></a>
+    <a href="#m1"><div class="en">Етап 03</div><div class="et">Місяць 1</div></a>
+    <a href="#m23"><div class="en">Етап 04</div><div class="et">Місяці 2–3</div></a>
+  </div>
+
+  <div class="note">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    <div class="t"><b>Як читати таблиці.</b> Колонка «матеріали» вже заповнена посиланнями на наявні сторінки хабу — це те, з чого читати. Решта колонок за кожним етапом заповнює CEO.</div>
+  </div>
+
+  <!-- ТИЖДЕНЬ 1 -->
+  <section class="section" id="w1">
+    <div class="sec-head">
+      <div class="sec-ico">01</div>
+      <h2>Тиждень 1</h2><span class="count">вхід у контекст</span>
+    </div>
+    <p class="sec-desc">Перший тиждень — про те, де ти опинився: що це за роль, як влаштована агенція, звідки беруться цифри.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Тема</th><th>Що вивчити</th><th>Що зробити</th><th>Що перевіряємо</th><th>Матеріали</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Роль і її межі</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth-marketer/">Регламент ролі Growth Marketer</a></div></td>
+          </tr>
+          <tr>
+            <td>Мова агенції</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/glossary.html">Глосарій Growth-маркетолога</a></div></td>
+          </tr>
+          <tr>
+            <td>Цифри клієнта</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth-dashboard/">Growth Dashboard — повний довідник</a></div></td>
+          </tr>
+          <tr>
+            <td>Де що лежить</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../">База знань агенції</a><a href="../growth_base/">Growth-бібліотека</a></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Додаткові теми тижня 1, доступи до систем, хто куратор і формат перевірки наприкінці тижня.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТИЖДЕНЬ 2 -->
+  <section class="section" id="w2">
+    <div class="sec-head">
+      <div class="sec-ico">02</div>
+      <h2>Тиждень 2</h2><span class="count">мислення моделями</span>
+    </div>
+    <p class="sec-desc">Другий тиждень — про рамки. Набираєш пак моделей і вчишся розкладати ситуацію, а не гадати.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Тема</th><th>Що вивчити</th><th>Що зробити</th><th>Що перевіряємо</th><th>Матеріали</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Пак моделей</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth-models/">Пак моделей Growth Marketer</a><a href="../growth_base/marketing-models-guide.html">Маркетингові моделі</a></div></td>
+          </tr>
+          <tr>
+            <td>Аудиторія й меседжі</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../magic-awareness-ladder/">Сходи обізнаності</a></div></td>
+          </tr>
+          <tr>
+            <td>Пріоритезація гіпотез</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/ice-pie-guide.html">ICE та PIE</a></div></td>
+          </tr>
+          <tr>
+            <td>Особиста організація</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/eisenhower-matrix.html">Матриця Ейзенхауера</a><a href="../growth-models/#asana">Дошка в Asana</a></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Додаткові теми тижня 2 і формат перевірки: які моделі новачок має вміти застосувати самостійно.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- МІСЯЦЬ 1 -->
+  <section class="section" id="m1">
+    <div class="sec-head">
+      <div class="sec-ico">03</div>
+      <h2>Місяць 1</h2><span class="count">перший проєкт</span>
+    </div>
+    <p class="sec-desc">Перший місяць — про процес агенції від запуску до тестів, уже на живому проєкті під наглядом куратора.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Тема</th><th>Що вивчити</th><th>Що зробити</th><th>Що перевіряємо</th><th>Матеріали</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Pre-Launch System</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/pre-launch-flow.html">Magic Pre-Launch System — повний flow</a></div></td>
+          </tr>
+          <tr>
+            <td>Структура кампаній</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../magic-sop-framework-uam/">SOP: фреймворк UAM</a><a href="../magic-decision-tree-campaign-structure/">Дерево рішень: структура кампаній</a></div></td>
+          </tr>
+          <tr>
+            <td>Креативи: продакшн і тести</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../magic-creative-production-sop/">SOP: продакшн креативів</a><a href="../magic-sop-creative-testing/">SOP: тестування креативів</a><a href="../magic-platform-specs-cheatsheet/">Специфікації платформ</a></div></td>
+          </tr>
+          <tr>
+            <td>Аудит сайту</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/ecommerce-checklist.html">Чек-лист аудиту e-commerce сайту</a></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>На якому проєкті працює новачок у перший місяць, що робить самостійно, а що — тільки з куратором.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- МІСЯЦІ 2–3 -->
+  <section class="section" id="m23">
+    <div class="sec-head">
+      <div class="sec-ico">04</div>
+      <h2>Місяці 2–3</h2><span class="count">самостійність</span>
+    </div>
+    <p class="sec-desc">Далі — глибина й звітність: утримання, аналітика, висновки і власна позиція перед клієнтом.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Тема</th><th>Що вивчити</th><th>Що зробити</th><th>Що перевіряємо</th><th>Матеріали</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Утримання і база</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/rfm-guide.html">RFM-аналіз</a><a href="../growth_base/dtc-best-practices.html">Найкращі практики DTC</a></div></td>
+          </tr>
+          <tr>
+            <td>Креативні кути й вигорання</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../magic-creative-angles-playbook/">Плейбук: креативні кути</a><a href="../magic-decision-matrix-creative-fatigue/">Матриця: втома креативів</a><a href="../magic-sop-inspiration-playbook-/">Плейбук: пошук інсайтів</a></div></td>
+          </tr>
+          <tr>
+            <td>Звітність і висновки</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../magic-vysnovky-u-zvitakh/">Висновки у звітах</a><a href="../growth-report/">Growth Report</a><a href="../magic-agenda_growth/">Агенда: Growth</a></div></td>
+          </tr>
+          <tr>
+            <td>Стратегія</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/strategy-template-doc.html">Шаблон стратегії</a><a href="../growth_base/strategy-template-presentation.html">Шаблон презентації стратегії</a></div></td>
+          </tr>
+          <tr>
+            <td>Атестація</td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><span class="todo-in">TODO: заповнює CEO</span></td>
+            <td><div class="mlist"><a href="../growth_base/growth-diagnostic.html">Діагностика знань</a><a href="../growth-levels/">Рівні та розвиток</a></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="todo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <div class="t">TODO: заповнює CEO
+        <span>Критерій завершення онбордингу: що новачок має вміти й показати, щоб вважатись самостійним у ролі.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Онбординг Growth Marketer · внутрішній документ</p>
+  </div>
+</footer>
+
+</body>
+</html>
