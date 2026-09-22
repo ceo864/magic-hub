@@ -38,7 +38,7 @@
       '.mhd .mhd-next{background:rgba(255,255,255,.12);overflow:hidden;text-overflow:ellipsis;max-width:260px}' +
       '.mhd .mhd-next:hover{background:rgba(255,255,255,.2)}' +
       '.mhd svg{width:16px;height:16px;flex:none}' +
-      '@media(max-width:560px){.mhd .mhd-next span{display:none}.mhd .mhd-home span{display:none}}' +
+      '@media(max-width:560px){.mhd .mhd-next span{display:none}.mhd .mhd-home span{display:none}.mhd .mhd-edit span{display:none}}' +
       '@media print{.mhd{display:none}}';
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
@@ -64,6 +64,25 @@
       paint();
     });
     paint();
+
+    // Редагування: кнопка з'являється в того, хто хоч раз підключив токен, або за адресою з ?edit
+    var editor = false;
+    try { editor = !!localStorage.getItem('magichub:gh'); } catch (e) {}
+    var wantEdit = /[?&]edit\b/.test(location.search);
+    if (editor || wantEdit) {
+      var eb = document.createElement('button'); eb.className = 'mhd-edit';
+      eb.innerHTML = svg('<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>') + '<span>Редагувати</span>';
+      eb.style.background = 'rgba(255,255,255,.12)';
+      eb.addEventListener('click', openEditor);
+      bar.insertBefore(eb, btn);
+      if (wantEdit) setTimeout(openEditor, 300);
+    }
+    function openEditor() {
+      var go = function () { window.MHEditor.start({ key: key }); };
+      if (window.MHEditor) return go();
+      var es = document.createElement('script'); es.src = base + 'assets/editor.js'; es.onload = go; document.head.appendChild(es);
+    }
+
     document.body.appendChild(bar);
     document.body.style.paddingBottom = Math.max(parseInt(getComputedStyle(document.body).paddingBottom) || 0, 76) + 'px';
   }

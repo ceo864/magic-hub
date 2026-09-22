@@ -54,7 +54,7 @@ window.HUB = (function () {
     'how-to-write/':                         { t: 'Як писати повідомлення', d: 'Клієнту і команді: головне першим рядком, цифри, чітке прохання' },
     'magic-vysnovky-u-zvitakh/':             { t: 'Висновки у звітах', d: 'Як писати висновки, після яких клієнт діє' },
     'how-to-meet/':                          { t: 'Як проводити зустрічі', d: 'Агенда, ролі, рішення і фоллоу-ап' },
-    'tools/':                                { t: 'Софт і доступи', d: 'З якими сервісами працюємо і для чого кожен' },
+    'tools/':                                { t: 'Софт', d: 'Asana, Google Drive, Loom, Zoom, Foreplay, Growth Dashboard і рекламні кабінети' },
     'growth_base/glossary.html':             { t: 'Глосарій', d: 'Усі терміни Growth і e-commerce в одному місці, з пошуком' },
     'ext:competency-pdf':                    { t: 'Матриця компетенцій (PDF)', d: 'Версія для друку в Google Drive', href: 'https://drive.google.com/file/d/1KpJs2HwMiD959-yVUXJp5OPhChuLFg0q/view' }
   };
