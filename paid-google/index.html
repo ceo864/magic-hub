@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Ads · Magic</title>
+<meta name="description" content="Google Ads для Growth Marketer: роль каналу в омніканальній системі Magic, аукціон і конверсії, Search, Shopping, Performance Max, фід товарів, метрики, типові помилки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none}
+.sec-ico svg{color:#7A45EB}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:720px;line-height:1.55}
+
+.principle{background:var(--grad);border-radius:var(--r-xl);padding:34px 32px;color:#fff;
+  box-shadow:var(--glow-brand);margin-bottom:46px;position:relative;overflow:hidden}
+.principle h3{font-weight:900;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;margin-bottom:10px}
+.principle p{font-size:15.5px;color:rgba(255,255,255,.92);font-weight:300;max-width:700px;line-height:1.6}
+.pflow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.pflow .pstep{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  padding:11px 22px;border-radius:var(--r-pill);font-weight:700;font-size:15px}
+.pflow .parr{color:rgba(255,255,255,.8);font-weight:700;font-size:20px;line-height:1}
+
+.model{background:var(--ink-0);border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;border-left:4px solid var(--blue);
+  transition:box-shadow .18s}
+.model:hover{box-shadow:var(--shadow-md)}
+.model-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.model-h h4{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.srcl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--purple-ink);background:var(--purple-50);padding:4px 11px;border-radius:var(--r-pill)}
+.srcl:hover{filter:brightness(.95)}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.field .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:5px}
+.field p{font-size:13.5px;color:var(--ink-600);font-weight:400;line-height:1.5}
+
+.board{background:var(--ink-0);border-radius:var(--r-xl);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.col{background:var(--ink-50);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:14px 12px;text-align:center}
+.col .cn{font-weight:800;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.col .ct{font-weight:700;font-size:14px;color:var(--ink-900)}
+.col.wip{background:var(--grad-soft);border-color:#CBB0FF}
+.col.wip .ct{color:#3a2a66}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.fchip{display:inline-flex;align-items:center;gap:7px;background:var(--ink-100);color:var(--ink-700);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:var(--r-pill)}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+@media(max-width:900px){ .fields{grid-template-columns:1fr} .cols{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .sec-desc{margin-left:0}
+  .cols{grid-template-columns:1fr}
+  .principle{padding:26px 22px}
+  .board{padding:20px 18px}
+}
+/* ── Таблиці (як на growth-development) ── */
+.tw{overflow-x:auto;background:var(--ink-0);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);margin-bottom:18px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);padding:14px 18px;border-bottom:1px solid var(--ink-200);white-space:nowrap}
+td{padding:14px 18px;border-bottom:1px solid var(--ink-100);color:var(--ink-600);
+  vertical-align:top;font-weight:400;line-height:1.5}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink-900);font-weight:600}
+tbody tr:hover{background:var(--ink-50)}
+td a{color:var(--purple-ink);font-weight:600}
+td.good{color:#1F8A60;font-weight:600}
+.fields.f3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){ .fields.f3{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#campaigns">Кампанії</a>
+      <a href="#feed">Фід</a>
+      <a href="#creative">Креативи</a>
+      <a href="#metrics">Метрики</a>
+      <a href="#mistakes">Помилки</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Growth Marketer · платні канали</span>
+    <h1>Google Ads</h1>
+    <p class="sub">Для Growth Marketer, який веде Google в e-commerce проєкті: як канал закриває попит у системі Magic і як вибудувати Search, Shopping, Performance Max і фід товарів.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 22.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="principle">
+    <h3>Google закриває попит, який створили інші канали</h3>
+    <p>У Magic Framework Google Ads — канал закриття попиту і branded search. Людина вже побачила бренд у Meta чи TikTok, або вже шукає товар, — і Google ловить її в момент наміру купити. Тому Google не оцінюємо окремо від системи: зростання бюджету на Meta і TikTok збільшує branded search тут.</p>
+    <div class="pflow">
+      <span class="pstep">Meta + TikTok формують попит</span><span class="parr">→</span>
+      <span class="pstep">Google: Search · Shopping · PMax</span><span class="parr">→</span>
+      <span class="pstep">ROAS · Revenue · CPA · CR</span>
+    </div>
+  </div>
+
+  <section class="section" id="role">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <h2>Роль каналу в системі</h2>
+    </div>
+    <p class="sec-desc">Google працює з гарячим трафіком. Його завдання — не створити попит, а не віддати його конкурентам.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Місце Google в омніканальній системі</h4>
+        <a class="srcl" href="../magic-sop-framework-uam/#framework">Magic Framework →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Роль</div><p>Закриття попиту, сформованого Meta і TikTok, та робота з гарячим трафіком: людина вже шукає товар або бренд.</p></div>
+        <div class="field"><div class="fl">Інструменти</div><p>Search, Shopping, Performance Max. Кожен закриває свою частину попиту — див. розділ про типи кампаній.</p></div>
+        <div class="field"><div class="fl">Як оцінюємо</div><p>Ті самі ключові метрики, що й для всіх каналів: ROAS, Revenue, CPA, CR. Брендовий і небрендовий трафік — окремо, інакше цифри вводять в оману.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <div class="t">Чому брендовий трафік рахуємо окремо: брендові запити майже завжди мають найвищий ROAS, бо попит під них уже створили інші канали. Якщо злити їх з небрендовими, Google виглядає сильнішим, ніж є, а Meta і TikTok — слабшими. Скорочення бюджету на Meta чи TikTok згодом бʼє по брендовому пошуку в Google.</div>
+    </div>
+  </section>
+
+  <section class="section" id="platform">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></div>
+      <h2>Як влаштована платформа</h2>
+    </div>
+    <p class="sec-desc">Google — теж аукціон і алгоритм. Але тут на вході не тільки креатив і подія покупки, а ще запит людини і фід товарів.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Аукціон і Ad Rank</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Як працює</div><p>Позицію і ціну кліку визначає Ad Rank: ставка × якість оголошення (очікуваний CTR, релевантність оголошення запиту, якість посадкової сторінки) з урахуванням контексту запиту і розширень.</p></div>
+        <div class="field"><div class="fl">Що з цього випливає</div><p>Релевантне оголошення і сильна посадка дають вищу позицію за меншу ціну. Ставкою не купиш якість, якої нема.</p></div>
+        <div class="field"><div class="fl">Що робить Growth Marketer</div><p>Групує запити за наміром, пише оголошення під запит, веде на сторінку, яка відповідає запиту, а не на головну.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Автоматичні стратегії ставок</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Як працює</div><p>Стратегії на цінність — максимізація цінності конверсій або цільовий ROAS — ставлять ставку під кожен аукціон за прогнозом покупки і її суми.</p></div>
+        <div class="field"><div class="fl">Що з цього випливає</div><p>Стратегія на ROAS працює лише тоді, коли в Google коректно приходить value покупки. Без цього система оптимізує на кількість, а не на гроші.</p></div>
+        <div class="field"><div class="fl">Що робить Growth Marketer</div><p>Дає кампанії накопичити конверсії, перш ніж ставити цільовий ROAS. Ціль задає реалістично: занадто висока ціль душить покази.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Відстеження конверсій</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Як працює</div><p>Покупка передається в Google Ads тегом конверсії через GTM або імпортом із GA4. Покращені конверсії (enhanced conversions) додають хешовані дані покупця і повертають частину втрачених конверсій.</p></div>
+        <div class="field"><div class="fl">Що з цього випливає</div><p>Лише основні (primary) конверсії йдуть в оптимізацію ставок. Якщо основних кілька — система рахує їх подвійно і вчиться не на тому.</p></div>
+        <div class="field"><div class="fl">Що робить Growth Marketer</div><p>Покупка — єдина основна конверсія, з value і currency. Мікроконверсії — тільки як додаткові, для аналізу.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Перевірка GA4, GTM і передачі подій — перший напрям технічного аудиту Growth Blueprint і перший тиждень Setup Month. Деталі — у <a href="../growth_base/pre-launch-flow.html">повному flow Pre-Launch System</a>.</div>
+    </div>
+  </section>
+
+  <section class="section" id="campaigns">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <h2>Типи кампаній і структура</h2>
+    </div>
+    <p class="sec-desc">Три інструменти Google в e-commerce закривають різний попит. Структура будується від того, який попит закриваємо і як хочемо його бачити у звіті.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Тип</th><th>Що закриває</th><th>На чому працює</th><th>Чим керує Growth Marketer</th></tr></thead>
+        <tbody>
+          <tr><td>Search — бренд</td><td>Людей, які шукають бренд за назвою</td><td>Ключові слова, текстові оголошення</td><td>Захист бренду від конкурентів, окремий бюджет і окремий звіт</td></tr>
+          <tr><td>Search — категорії</td><td>Людей, які шукають тип товару, але ще не обрали бренд</td><td>Ключові слова, текстові оголошення</td><td>Запити, мінус-слова, оголошення під намір, посадкові сторінки категорій</td></tr>
+          <tr><td>Shopping</td><td>Товарні запити: людина порівнює товари й ціни просто у видачі</td><td>Фід товарів із Merchant Center, без ключових слів</td><td>Групи товарів, мінус-слова, пріоритети, ставки по групах</td></tr>
+          <tr><td>Performance Max</td><td>Увесь інвентар Google: пошук, Shopping, YouTube, Discover, Gmail, медійна мережа</td><td>Фід, групи ресурсів (тексти, зображення, відео), сигнали аудиторій</td><td>Фід, ресурси, сигнали, виключення бренду, розподіл товарів між кампаніями</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="model">
+      <div class="model-h"><h4>Логіка структури</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Бренд окремо від небренду</div><p>Брендовий пошук — окрема кампанія. У PMax — виключення бренду, щоб вона не збирала брендові запити і не малювала завищений ROAS.</p></div>
+        <div class="field"><div class="fl">Товари за роллю, а не за каталогом</div><p>Ділимо товари між кампаніями за даними товарного аналізу ABC / XYZ: хіти, маржинальні товари, решта. Кожна група отримує свою ціль і бюджет.</p></div>
+        <div class="field"><div class="fl">Достатньо даних на кампанію</div><p>Не дробимо кабінет на десятки кампаній: автоматичним стратегіям потрібні конверсії. Менше кампаній з більшою кількістю даних працюють краще.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Робота з запитами</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Звіт про пошукові запити</div><p>Регулярно переглядаємо, на які реальні запити показувались оголошення, для Search і Shopping, а в PMax — за доступною аналітикою пошукових тем.</p></div>
+        <div class="field"><div class="fl">Мінус-слова</div><p>Нецільові запити — у мінус-слова: безкоштовно, б/у, запчастини, ремонт, чужі бренди, якщо ми їх не продаємо.</p></div>
+        <div class="field"><div class="fl">Нові ключі</div><p>Запити, які приносять продажі, переносимо у ключові слова з окремими оголошеннями під них.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="feed">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+      <h2>Фід товарів</h2>
+    </div>
+    <p class="sec-desc">Для Shopping і Performance Max фід — це одночасно таргетинг і креатив. Google підбирає запити за тим, що написано у фіді, а людина бачить у видачі назву, фото й ціну саме з нього.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Атрибут</th><th>Що з ним робимо</th></tr></thead>
+        <tbody>
+          <tr><td>Назва (title)</td><td>Головний атрибут. Бренд + тип товару + ключові характеристики (колір, розмір, матеріал, модель) — тими словами, якими люди шукають. Важливе — на початку.</td></tr>
+          <tr><td>Опис (description)</td><td>Повний опис товару з характеристиками і сценаріями використання. Без рекламних гасел і великих літер.</td></tr>
+          <tr><td>Зображення</td><td>Товар на чистому фоні, без тексту, водяних знаків і рамок. Додаткові фото — через додаткові посилання на зображення.</td></tr>
+          <tr><td>Ціна і наявність</td><td>Збігаються із сайтом завжди. Розбіжність — відхилення товару і втрачені покази.</td></tr>
+          <tr><td>Категорія і тип товару</td><td>Категорія Google і власна ієрархія типів товару — для точного підбору запитів і зручного поділу на групи.</td></tr>
+          <tr><td>Ідентифікатори</td><td>GTIN, код виробника, бренд — там, де вони існують. Без них товар гірше зіставляється з запитами.</td></tr>
+          <tr><td>Власні мітки (custom labels)</td><td>Мітки під нашу логіку: хіт / маржинальний / решта за ABC, цінова категорія, сезон. На них будується поділ товарів між кампаніями.</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="model">
+      <div class="model-h"><h4>Гігієна фіду</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Merchant Center</div><p>Щотижня — діагностика: відхилені товари, попередження, розбіжності цін і наявності. Відхилений хіт — це втрачена виручка, а не технічна дрібниця.</p></div>
+        <div class="field"><div class="fl">Додатковий фід</div><p>Коли сайт не дає змінити назви чи мітки — правимо їх через додатковий фід, не чіпаючи основний.</p></div>
+        <div class="field"><div class="fl">Зв'язок із сайтом</div><p>Id товарів у фіді й у подіях сайту однакові — інакше ремаркетинг і звітність по товарах ламаються.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="creative">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg></div>
+      <h2>Креативи під Google</h2>
+    </div>
+    <p class="sec-desc">У Google креатив — це тексти оголошень, ресурси PMax і фід. Люди тут уже шукають, тому меседж відповідає на запит, а не будить проблему.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Пошукові оголошення</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Формат</div><p>Адаптивні пошукові оголошення: набір заголовків і описів, з яких Google збирає комбінації під запит.</p></div>
+        <div class="field"><div class="fl">Що пишемо</div><p>Заголовки різні за змістом: товар і категорія, головна перевага, оффер, доставка й повернення, соціальний доказ. Не п'ять варіантів одного речення.</p></div>
+        <div class="field"><div class="fl">Розширення</div><p>Посилання на категорії, уточнення, ціни, промоакції — займають більше місця у видачі й піднімають CTR.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Ресурси Performance Max</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Що завантажуємо</div><p>Заголовки, довгі заголовки, описи, зображення в горизонтальному, квадратному й вертикальному форматах, логотипи, відео.</p></div>
+        <div class="field"><div class="fl">Відео</div><p>Завантажуємо власні горизонтальні й вертикальні відео. Якщо їх немає, Google генерує відео сам — і зазвичай гірше. Тут знадобляться креативи з Meta і TikTok.</p></div>
+        <div class="field"><div class="fl">Групи ресурсів</div><p>Одна група ресурсів — одна категорія або тема товарів, з меседжами саме під неї, а не одні тексти на весь магазин.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+      <div class="t">Меседж на пошуку відповідає верхнім сходинкам готовності: людина знає рішення або вже знає продукт. Як це розкласти — у <a href="../magic-awareness-ladder/">сходах обізнаності Бена Ханта</a> і <a href="../magic-creative-angles-playbook/">плейбуку кутів</a>. Шпаргалка специфікацій на хабі описує Meta і TikTok, вимоги до ресурсів Google звіряй у довідці Google Ads.</div>
+    </div>
+  </section>
+
+  <section class="section" id="metrics">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+      <h2>Метрики</h2>
+    </div>
+    <p class="sec-desc">Ключові метрики — ті самі, що для всіх каналів. Цільові значення для Google встановлюються окремо під кожен проєкт: вони надто залежать від ніші, AOV і частки брендового трафіку.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Метрика</th><th>Що показує</th><th>Як читати</th></tr></thead>
+        <tbody>
+          <tr><td>ROAS, Revenue, CPA, CR</td><td>Результат каналу</td><td>Окремо для бренду, категорій, Shopping і PMax. Загальна цифра по Google ховає, звідки гроші.</td></tr>
+          <tr><td>Частка показів (Impression Share)</td><td>Яку частину доступних показів ми отримали</td><td>Для брендового пошуку — має бути близькою до повної. Низька частка на бренді — конкуренти забирають наших покупців.</td></tr>
+          <tr><td>Втрачена частка через бюджет / рейтинг</td><td>Чому не показувались</td><td>Через бюджет — кампанії бракує грошей. Через рейтинг — слабкі оголошення, посадка або ставка.</td></tr>
+          <tr><td>CTR</td><td>Чи відповідає оголошення запиту</td><td>Низький CTR на пошуку — оголошення не про те, що шукають, або запити нецільові.</td></tr>
+          <tr><td>Показник якості (Quality Score)</td><td>Оцінку очікуваного CTR, релевантності й посадки</td><td>Дивимось на складові, а не на число: яка з трьох тягне вниз, те й виправляємо.</td></tr>
+          <tr><td>Статус товарів у Merchant Center</td><td>Скільки товарів реально бере участь в аукціоні</td><td>Відхилені й обмежені товари — перше, що перевіряємо при падінні Shopping і PMax.</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Орієнтири CTR, CPC і CR для Search і Shopping зведені на сторінці <a href="../magic-sop-framework-uam/#tools">Magic Framework</a>. Для рішень по конкретному клієнту ціль проєкту важливіша за загальний орієнтир.</div>
+    </div>
+  </section>
+
+  <section class="section" id="mistakes">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+      <h2>Типові помилки</h2>
+    </div>
+    <p class="sec-desc">Що найчастіше коштує грошей у Google Ads в e-commerce.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Помилка</th><th>Чому це погано</th><th>Як правильно</th></tr></thead>
+        <tbody>
+          <tr><td>Бренд і небренд в одній кампанії</td><td>Брендові продажі маскують слабкі категорійні кампанії</td><td>Бренд — окрема кампанія, у PMax — виключення бренду</td></tr>
+          <tr><td>Оцінка PMax за ROAS у кабінеті</td><td>PMax забирає брендовий пошук і ремаркетинг, ROAS завищений</td><td>Виключення бренду, порівняння з брендовим пошуком і загальним результатом системи</td></tr>
+          <tr><td>Не переглядати пошукові запити</td><td>Бюджет іде на нецільові запити</td><td>Регулярний звіт про запити, мінус-слова</td></tr>
+          <tr><td>Кілька основних конверсій</td><td>Подвійний рахунок, стратегія вчиться на мікродіях</td><td>Одна основна — покупка з value, решта — додаткові</td></tr>
+          <tr><td>Цільовий ROAS одразу і завищений</td><td>Кампанія не отримує показів і не вчиться</td><td>Спочатку накопичити конверсії, ціль задавати від фактичних даних</td></tr>
+          <tr><td>Фід «як є» з сайту</td><td>Слабкі назви, відхилені товари, невірні ціни</td><td>Оптимізовані назви, власні мітки за ABC, щотижнева діагностика Merchant Center</td></tr>
+          <tr><td>Трафік на головну сторінку</td><td>Людина шукала конкретний товар і не бачить його</td><td>Посадка відповідає запиту: товар або категорія</td></tr>
+          <tr><td>Рішення по Google окремо від Meta і TikTok</td><td>Скорочення формування попиту через тижні просаджує брендовий пошук</td><td>Оцінювати канали як одну систему</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Інші платні канали: <a href="../paid-meta/">Meta Ads</a> і <a href="../paid-tiktok/">TikTok Ads</a>. Терміни — у <a href="../growth_base/glossary.html">глосарії Growth-маркетолога</a>.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Google Ads · внутрішній документ</p>
+  </div>
+</footer>
+
+<script src="../assets/doc.js" defer></script>
+</body>
+</html>

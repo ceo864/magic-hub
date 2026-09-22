@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Психологія покупки · Magic</title>
+<meta name="description" content="Принципи Чалдіні і когнітивні упередження для e-commerce: що це, як застосовуємо в креативі, офері й на лендингу, і де межа.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none}
+.sec-ico svg{color:#7A45EB}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:720px;line-height:1.55}
+
+.principle{background:var(--grad);border-radius:var(--r-xl);padding:34px 32px;color:#fff;
+  box-shadow:var(--glow-brand);margin-bottom:46px;position:relative;overflow:hidden}
+.principle h3{font-weight:900;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;margin-bottom:10px}
+.principle p{font-size:15.5px;color:rgba(255,255,255,.92);font-weight:300;max-width:700px;line-height:1.6}
+.pflow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.pflow .pstep{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  padding:11px 22px;border-radius:var(--r-pill);font-weight:700;font-size:15px}
+.pflow .parr{color:rgba(255,255,255,.8);font-weight:700;font-size:20px;line-height:1}
+
+.model{background:var(--ink-0);border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;border-left:4px solid var(--blue);
+  transition:box-shadow .18s}
+.model:hover{box-shadow:var(--shadow-md)}
+.model-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.model-h h4{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.srcl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--purple-ink);background:var(--purple-50);padding:4px 11px;border-radius:var(--r-pill)}
+.srcl:hover{filter:brightness(.95)}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.field .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:5px}
+.field p{font-size:13.5px;color:var(--ink-600);font-weight:400;line-height:1.5}
+
+.board{background:var(--ink-0);border-radius:var(--r-xl);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.col{background:var(--ink-50);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:14px 12px;text-align:center}
+.col .cn{font-weight:800;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.col .ct{font-weight:700;font-size:14px;color:var(--ink-900)}
+.col.wip{background:var(--grad-soft);border-color:#CBB0FF}
+.col.wip .ct{color:#3a2a66}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.fchip{display:inline-flex;align-items:center;gap:7px;background:var(--ink-100);color:var(--ink-700);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:var(--r-pill)}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+@media(max-width:900px){ .fields{grid-template-columns:1fr} .cols{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .sec-desc{margin-left:0}
+  .cols{grid-template-columns:1fr}
+  .principle{padding:26px 22px}
+  .board{padding:20px 18px}
+}
+
+/* таблиці і якорі карток */
+.tw{overflow-x:auto;background:var(--ink-0);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);margin-bottom:18px}
+.tw table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+.tw th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);padding:14px 18px;border-bottom:1px solid var(--ink-200);white-space:nowrap}
+.tw td{padding:14px 18px;border-bottom:1px solid var(--ink-100);color:var(--ink-600);
+  vertical-align:top;font-weight:400;line-height:1.5}
+.tw tr:last-child td{border-bottom:0}
+.tw td:first-child{color:var(--ink-900);font-weight:600}
+.tw tbody tr:hover{background:var(--ink-50)}
+.model{scroll-margin-top:84px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#cialdini">Чалдіні</a>
+      <a href="#biases">Упередження</a>
+      <a href="#ladder">По сходинках</a>
+      <a href="#limits">Межа</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Growth Marketer · психологія покупки</span>
+    <h1>Психологія покупки</h1>
+    <p class="sub">Для Growth Marketerів: принципи впливу й упередження, які застосовуємо в креативах, оферах і на лендингах — чесно, без маніпуляцій.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 22.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="principle">
+    <h3>Допомагаємо вирішити, а не змушуємо</h3>
+    <p>Психологія покупки пояснює, як людина ухвалює рішення в стрічці, на сторінці товару і в кошику. Ми використовуємо її, щоб правдива цінність продукту була помітною і зрозумілою. Якщо прийом працює лише тоді, коли покупець не знає всієї правди, — це маніпуляція, і ми його не беремо.</p>
+    <div class="pflow">
+      <span class="pstep">Правдивий факт</span><span class="parr">→</span>
+      <span class="pstep">Зрозуміла подача</span><span class="parr">→</span>
+      <span class="pstep">Рішення покупця</span>
+    </div>
+  </div>
+
+  <!-- 1. ЧАЛДІНІ -->
+  <section class="section" id="cialdini">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h2>Принципи впливу Чалдіні</h2><span class="count">7 принципів</span>
+    </div>
+    <p class="sec-desc">Сім принципів, через які люди погоджуються. Для кожного — як застосовуємо в креативі, офері чи на лендингу, і де закінчується чесна гра.</p>
+
+    <div class="model" id="reciprocity">
+      <div class="model-h"><h4>Взаємність</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Люди відчувають бажання віддячити тому, хто першим дав щось цінне.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Даємо користь до продажу: корисний контент у креативах верхньої воронки, гайд чи підбір товару за підписку, пробник у замовленні, догляд і поради в листі після покупки.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Подарунок без прихованих умов. «Безкоштовне», яке виявляється платним на кроці оплати, — обман.</p></div>
+      </div>
+    </div>
+
+    <div class="model" id="commitment">
+      <div class="model-h"><h4>Зобовʼязання і послідовність</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Зробивши малий крок, людина схильна діяти послідовно і робити наступний.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Починаємо з малого кроку: квіз-підбір, підписка, додавання в обране. Далі ведемо до покупки ланцюжком, який продовжує вже розпочате.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Кожен крок людина робить свідомо. Жодних заздалегідь відмічених галочок на платні допи і підписок, з яких складно вийти.</p></div>
+      </div>
+    </div>
+
+    <div class="model" id="social-proof">
+      <div class="model-h"><h4>Соціальний доказ</h4>
+        <a class="srcl" href="../growth_base/dtc-best-practices.html#pdp">Практики DTC →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Коли людина не впевнена, вона орієнтується на вибір інших, особливо схожих на себе.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>UGC і testimonial у креативах, рейтинг і відгуки з фото на картці товару, мітка «бестселер» на справді найпопулярніших позиціях, кількість покупців на лендингу.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Тільки справжні відгуки й реальні цифри. Вигадані відгуки, накручений рейтинг і «50 000 клієнтів» без підстав — заборонено.</p></div>
+      </div>
+    </div>
+
+    <div class="model" id="authority">
+      <div class="model-h"><h4>Авторитет</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Людям легше довіряти тим, хто має експертизу або визнання.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Експерт у кадрі, засновник, який пояснює технологію, сертифікати й склад на картці товару, згадки в пресі.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Тільки реальні експерти й документи, які можна перевірити. Жодного «рекомендовано лікарями» без конкретного підтвердження.</p></div>
+      </div>
+    </div>
+
+    <div class="model" id="liking">
+      <div class="model-h"><h4>Симпатія</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Ми частіше погоджуємось із тими, хто нам подобається і схожий на нас.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Живі люди, схожі на аудиторію, у креативах. Голос бренду, яким говорив би друг. Історія засновника. Тон листів — від людини, а не від відділу.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Симпатія не підміняє правду про продукт. Блогер, який видає рекламу за особисту рекомендацію, вводить в оману.</p></div>
+      </div>
+    </div>
+
+    <div class="model" id="scarcity">
+      <div class="model-h"><h4>Дефіцит</h4>
+        <a class="srcl" href="../magic-creative-angles-playbook/">Кут FOMO / Urgency →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Те, чого мало або що скоро зникне, здається ціннішим.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Обмежені дропи й сезонні колекції, реальні залишки на картці товару, акція з датою завершення. У креативах — кут FOMO для тих, хто вже готовий купити.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Дефіцит має бути правдою. Таймер, що перезапускається при оновленні сторінки, і вічне «залишилось 3 штуки» — маніпуляція.</p></div>
+      </div>
+    </div>
+
+    <div class="model" id="unity">
+      <div class="model-h"><h4>Єдність</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Людям легше погоджуватись із «своїми» — тими, з ким поділяють ідентичність чи цінності.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Говоримо мовою спільноти бренду, показуємо покупців як частину «своїх», підкреслюємо спільні цінності — наприклад, український виробник чи конкретний спосіб життя.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Цінності мають бути справжніми для бренду. Не граємо на ідентичності, до якої бренд не має стосунку.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. УПЕРЕДЖЕННЯ -->
+  <section class="section" id="biases">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></div>
+      <h2>Когнітивні упередження в e-commerce</h2><span class="count">7 упереджень</span>
+    </div>
+    <p class="sec-desc">Систематичні «зсуви» в оцінці ціни, ризику і вибору. Найчастіше вирішують долю офера, картки товару і кошика.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Ефект якоря</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Перше побачене число стає точкою відліку, з якою порівнюються всі наступні.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Показуємо стару ціну поруч з акційною, ціну набору поруч із ціною окремих товарів, альтернативу для порівняння — «салон проти крему».</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Якір — реальна ціна, за якою товар справді продавався, або реальна вартість альтернативи. Роздута «стара ціна» заради знижки — обман.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Неприйняття втрат</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Втрата відчувається сильніше, ніж рівноцінний виграш. Людина більше боїться помилитись, ніж хоче виграти.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Знімаємо ризик покупки: зрозуміле повернення, гарантія, примірка. У креативі показуємо, що людина втрачає без рішення, — час, гроші, результат.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Не залякуємо і не роздуваємо проблему. Гарантія, яку обіцяємо, має виконуватись без прихованих умов.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Соціальний доказ</h4>
+        <a class="srcl" href="#social-proof">Принцип вище ↑</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Як упередження: вибір більшості здається правильним за замовчуванням, навіть без власної перевірки.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Сортування «популярне» в каталозі, мітка «найчастіше обирають» на одному з варіантів, кількість відгуків поруч із рейтингом.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Мітки ставимо за реальними продажами, а не на товар, який треба розпродати.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Дефіцит</h4>
+        <a class="srcl" href="#scarcity">Принцип вище ↑</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Як упередження: обмежена доступність підвищує сприйману цінність і прискорює рішення.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Працює на останніх кроках воронки: картка товару, кошик, ретаргет для тих, хто вже знає продукт. Для холодної аудиторії не працює — їй ще нема чого втрачати.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Та сама, що й у принципі: тільки реальні терміни й залишки.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Ефект приманки</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Третій, свідомо менш вигідний варіант робить один з інших двох очевидно кращим.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Три варіанти набору або обсягу, де середній чи більший дає найкращу ціну за одиницю. Так піднімаємо середній чек без знижки.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Кожен варіант — реальний, його можна купити і він має сенс для когось. Покупець має легко порівняти ціну за одиницю.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Ефект рамки</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Той самий факт сприймається по-різному залежно від подачі: «95% задоволені» звучить інакше, ніж «5% незадоволені».</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Подаємо ціну через щоденну вартість використання, вигоду — через результат для клієнта, знижку — у форматі, який легше зрозуміти: відсоток на дешевих товарах, гривні на дорогих.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Змінюємо подачу, але не факт. Рамка, яка ховає важливу для рішення умову, — маніпуляція.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Ментальна бухгалтерія</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Люди розкладають гроші по уявних «рахунках»: на подарунок, на себе, бонусні. І витрачають з них по-різному.</p></div>
+        <div class="field"><div class="fl">Як застосовуємо</div><p>Позиціонуємо товар під потрібний «рахунок» — подарунок, інвестиція в здоров'я, щоденна дрібниця. Бонуси й кешбек на наступну покупку сприймаються як «вільні» гроші і повертають клієнта.</p></div>
+        <div class="field"><div class="fl">Межа</div><p>Умови бонусів прозорі: скільки, на що і до якої дати. Бонус, який неможливо використати, руйнує довіру.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. ПО СХОДИНКАХ -->
+  <section class="section" id="ladder">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4v-4h4v-4h4V8h4"/></svg></div>
+      <h2>Що де працює</h2><span class="count">по сходах обізнаності</span>
+    </div>
+    <p class="sec-desc">Принцип не працює однаково на всіх етапах. Дефіцит для людини, яка ще не знає про проблему, — шум. Підбираємо психологію під сходинку.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Сходинка</th><th>Що в голові</th><th>Що працює</th><th>Де застосовуємо</th></tr></thead>
+        <tbody>
+          <tr><td>0–1 · Не усвідомлює / усвідомлює проблему</td><td>«Це не про мене», «може, це вирішується?»</td><td>Взаємність, симпатія, єдність, втрати в подачі проблеми</td><td>Едьютейнмент і pain point у креативах верхньої воронки</td></tr>
+          <tr><td>2 · Шукає рішення</td><td>«Які є варіанти і скільки коштують?»</td><td>Якір, рамка, авторитет</td><td>Порівняння, інфографіка, лендинг з поясненням технології</td></tr>
+          <tr><td>3 · Знає продукт</td><td>«Чи це реально працює?»</td><td>Соціальний доказ, авторитет, неприйняття втрат</td><td>UGC, до/після, картка товару з відгуками і гарантією</td></tr>
+          <tr><td>4 · Готовий купити</td><td>«Є знижка? Коли доставка?»</td><td>Дефіцит, приманка, ментальна бухгалтерія, якір ціни</td><td>Офер, кошик, ретаргет, листи покинутого кошика</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Кути, концепти, хуки і KPI для кожної сходинки — на сторінці <a href="../magic-awareness-ladder/">«Сходи обізнаності Бена Ханта»</a>. Готові формули «кут + концепт + хук» — у <a href="../magic-creative-angles-playbook/">плейбуку креативних кутів</a>.</div>
+    </div>
+  </section>
+
+  <!-- 4. МЕЖА -->
+  <section class="section" id="limits">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <h2>Перевірка на чесність</h2><span class="count">4 питання</span>
+    </div>
+    <p class="sec-desc">Перед запуском креативу, офера чи лендингу з психологічним прийомом проганяємо його через чотири питання. Одне «ні» — прийом переробляємо.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Питання</th><th>Що перевіряємо</th></tr></thead>
+        <tbody>
+          <tr><td>Це правда?</td><td>Цифри, відгуки, залишки, терміни, стара ціна, експерт — усе можна підтвердити.</td></tr>
+          <tr><td>Покупець знає всі умови?</td><td>Доставка, повернення, умови бонусу й підписки видно до оплати, а не після.</td></tr>
+          <tr><td>Нам не соромно, якщо клієнт дізнається, як це працює?</td><td>Прийом допомагає зрозуміти цінність, а не ховає її відсутність.</td></tr>
+          <tr><td>Клієнт повернеться?</td><td>Тиск, після якого людина шкодує про покупку, дає одне замовлення і втрачений LTV.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <div class="t"><b>Маніпуляція невигідна навіть без етики.</b> Фейковий таймер чи вигаданий відгук можуть дати одну покупку, але вбивають повторну — а саме на ній бізнес заробляє. Як retention звʼязаний з окупністю реклами — на сторінці <a href="../retention/">«Retention-маркетинг»</a>.</div>
+    </div>
+  </section>
+
+  <!-- 5. ДАЛІ -->
+  <section class="section" id="more">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+      <h2>Повʼязані документи</h2>
+    </div>
+    <p class="sec-desc">Психологія — одна з рамок, якими Growth Marketer розкладає ситуацію. Решта — поруч.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Пак моделей Growth Marketer</h4>
+        <a class="srcl" href="../growth-models/">Відкрити →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що там</div><p>Моделі маркетингу, менеджменту, брендів і пріоритетів з однаковою структурою.</p></div>
+        <div class="field"><div class="fl">Коли відкривати</div><p>Коли треба вибрати рамку під ситуацію: воронка, база, пріоритет гіпотез.</p></div>
+        <div class="field"><div class="fl">Звʼязок</div><p>Ця сторінка розгортає розділ «Психологія» з паку.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Сходи обізнаності Бена Ханта</h4>
+        <a class="srcl" href="../magic-awareness-ladder/">Відкрити →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що там</div><p>П'ять рівнів готовності аудиторії і тип креативу під кожен.</p></div>
+        <div class="field"><div class="fl">Коли відкривати</div><p>Коли пишемо бриф на креатив і вирішуємо, з ким він говорить.</p></div>
+        <div class="field"><div class="fl">Звʼязок</div><p>Сходинка визначає, який принцип з цієї сторінки доречний.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Найкращі практики DTC-брендів</h4>
+        <a class="srcl" href="../growth_base/dtc-best-practices.html">Відкрити →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що там</div><p>Як сильні бренди будують головну, картку товару і кошик.</p></div>
+        <div class="field"><div class="fl">Коли відкривати</div><p>Коли даємо рекомендації клієнту по сайту.</p></div>
+        <div class="field"><div class="fl">Звʼязок</div><p>Соціальний доказ, зняття заперечень і показ результату — ці принципи в дії на сайті.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Психологія покупки · внутрішній документ</p>
+  </div>
+</footer>
+
+<script src="../assets/doc.js" defer></script>
+</body>
+</html>

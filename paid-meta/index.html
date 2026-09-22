@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads · Magic</title>
+<meta name="description" content="Meta Ads для Growth Marketer: роль каналу в омніканальній системі Magic, аукціон і сигнали, структура кампаній, креативи, бенчмарки, типові помилки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none}
+.sec-ico svg{color:#7A45EB}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:720px;line-height:1.55}
+
+.principle{background:var(--grad);border-radius:var(--r-xl);padding:34px 32px;color:#fff;
+  box-shadow:var(--glow-brand);margin-bottom:46px;position:relative;overflow:hidden}
+.principle h3{font-weight:900;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;margin-bottom:10px}
+.principle p{font-size:15.5px;color:rgba(255,255,255,.92);font-weight:300;max-width:700px;line-height:1.6}
+.pflow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.pflow .pstep{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  padding:11px 22px;border-radius:var(--r-pill);font-weight:700;font-size:15px}
+.pflow .parr{color:rgba(255,255,255,.8);font-weight:700;font-size:20px;line-height:1}
+
+.model{background:var(--ink-0);border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;border-left:4px solid var(--blue);
+  transition:box-shadow .18s}
+.model:hover{box-shadow:var(--shadow-md)}
+.model-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.model-h h4{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.srcl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--purple-ink);background:var(--purple-50);padding:4px 11px;border-radius:var(--r-pill)}
+.srcl:hover{filter:brightness(.95)}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.field .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:5px}
+.field p{font-size:13.5px;color:var(--ink-600);font-weight:400;line-height:1.5}
+
+.board{background:var(--ink-0);border-radius:var(--r-xl);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.col{background:var(--ink-50);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:14px 12px;text-align:center}
+.col .cn{font-weight:800;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.col .ct{font-weight:700;font-size:14px;color:var(--ink-900)}
+.col.wip{background:var(--grad-soft);border-color:#CBB0FF}
+.col.wip .ct{color:#3a2a66}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.fchip{display:inline-flex;align-items:center;gap:7px;background:var(--ink-100);color:var(--ink-700);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:var(--r-pill)}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+@media(max-width:900px){ .fields{grid-template-columns:1fr} .cols{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .sec-desc{margin-left:0}
+  .cols{grid-template-columns:1fr}
+  .principle{padding:26px 22px}
+  .board{padding:20px 18px}
+}
+/* ── Таблиці (як на growth-development) ── */
+.tw{overflow-x:auto;background:var(--ink-0);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);margin-bottom:18px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);padding:14px 18px;border-bottom:1px solid var(--ink-200);white-space:nowrap}
+td{padding:14px 18px;border-bottom:1px solid var(--ink-100);color:var(--ink-600);
+  vertical-align:top;font-weight:400;line-height:1.5}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink-900);font-weight:600}
+tbody tr:hover{background:var(--ink-50)}
+td a{color:var(--purple-ink);font-weight:600}
+td.good{color:#1F8A60;font-weight:600}
+.fields.f3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){ .fields.f3{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#platform">Платформа</a>
+      <a href="#structure">Структура</a>
+      <a href="#creative">Креативи</a>
+      <a href="#metrics">Метрики</a>
+      <a href="#mistakes">Помилки</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Growth Marketer · платні канали</span>
+    <h1>Meta Ads</h1>
+    <p class="sub">Для Growth Marketer, який веде Meta в e-commerce проєкті: як канал працює в системі Magic, на що ти реально впливаєш і за якими правилами будуєш кампанії та креативи.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 22.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="principle">
+    <h3>Meta формує попит і доводить його до покупки</h3>
+    <p>У Magic Framework Meta Ads разом із TikTok Ads — основні канали масштабування. Вони працюють і з холодним трафіком (перший контакт, знайомство з брендом), і з теплим (ретаргетинг, конверсії). Попит, який вони створюють, далі закриває Google. Тому Meta не оцінюємо в ізоляції: скорочення бюджету тут б'є по всій системі.</p>
+    <div class="pflow">
+      <span class="pstep">Meta + TikTok формують попит</span><span class="parr">→</span>
+      <span class="pstep">Google закриває попит</span><span class="parr">→</span>
+      <span class="pstep">ROAS · Revenue · CPA · CR</span>
+    </div>
+  </div>
+
+  <section class="section" id="role">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <h2>Роль каналу в системі</h2>
+    </div>
+    <p class="sec-desc">Що саме Meta робить в омніканальній системі Magic і за якими метриками ми її судимо.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Місце Meta в омніканальній системі</h4>
+        <a class="srcl" href="../magic-sop-framework-uam/#framework">Magic Framework →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Роль</div><p>Основний канал формування попиту в Meta Ads Manager (Facebook + Instagram). Перший контакт із брендом, побудова пам'яті, а далі — ретаргетинг і конверсії.</p></div>
+        <div class="field"><div class="fl">Взаємопідсилення</div><p>Канали не конкурують за бюджет. Зростання бюджету на Meta і TikTok збільшує branded search у Google. Зменшення одного каналу впливає на всю систему.</p></div>
+        <div class="field"><div class="fl">Як оцінюємо</div><p>Ключові метрики єдині для всіх каналів: ROAS, Revenue, CPA, CR. Креативні метрики (Hook Rate, CTR, ATC Rate) — для діагностики, а не для звіту клієнту.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Три правила Growth Marketer на Meta</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Дані, не інтуїція</div><p>Кожне рішення — скейл, стоп, зміна бюджету — має числову основу. «Мені здається» не аргумент.</p></div>
+        <div class="field"><div class="fl">Система, не хаос</div><p>Кампанії заводяться за єдиною структурою. Нейминг, бюджетування, оптимізація — все за протоколом.</p></div>
+        <div class="field"><div class="fl">Канали = одна система</div><p>Meta — не окремий кабінет, а частина єдиної воронки. Рішення по Meta звіряємо з тим, що відбувається в Google і TikTok.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="platform">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></div>
+      <h2>Як влаштована платформа</h2>
+    </div>
+    <p class="sec-desc">Meta — це аукціон і алгоритм, який вчиться на твоїх подіях. Growth Marketer не керує показами вручну. Він дає системі правильну ціль, чистий сигнал і сильні креативи.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Аукціон</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Як працює</div><p>Кожен показ — аукціон. Перемагає не найвища ставка, а найвища загальна цінність: ставка × прогноз, що людина виконає цільову дію × якість оголошення.</p></div>
+        <div class="field"><div class="fl">Що з цього випливає</div><p>Сильний креатив і релевантна посадка прямо здешевлюють покази і конверсії. Слабкий креатив не компенсується бюджетом.</p></div>
+        <div class="field"><div class="fl">Що робить Growth Marketer</div><p>Вибирає ціль оптимізації (завжди Purchase), тримає в групі 3–5+ сильних креативів різних форматів, не змінює кілька речей одночасно.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Алгоритм і фаза навчання</h4>
+        <a class="srcl" href="../magic-decision-tree-campaign-structure/">Незмінні правила →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Як працює</div><p>Після запуску або суттєвої зміни група проходить фазу навчання: система шукає, кому показувати, щоб отримати покупки. Орієнтир Magic — 50 конверсій за 7 днів.</p></div>
+        <div class="field"><div class="fl">Що з цього випливає</div><p>Зміни посеред навчання (бюджет, креативи, структура) скидають його. Бюджет має витягувати 50 конверсій за тиждень, інакше групу не розбиваємо.</p></div>
+        <div class="field"><div class="fl">Що робить Growth Marketer</div><p>Не чіпає групу до завершення навчання. Мінімальний бюджет — 3× CPA на групу на день. Скейл — +20%, не частіше ніж раз на 48 годин.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Сигнали: Pixel і Conversions API</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Як працює</div><p>Алгоритм оптимізується на події з сайту: ViewContent, AddToCart, InitiateCheckout, Purchase. Pixel передає їх із браузера, Conversions API — із сервера, і втрачає менше подій.</p></div>
+        <div class="field"><div class="fl">Що з цього випливає</div><p>Брудний сигнал — оптимізація наосліп. Без CAPI, із дублем Purchase або без value система вчиться не на тих людях і не бачить реальний ROAS.</p></div>
+        <div class="field"><div class="fl">Що робить Growth Marketer</div><p>Перевіряє: Purchase передає value і currency, Pixel і CAPI дедуплікуються за event_id, передаються дані для відповідності (email, телефон у хешованому вигляді).</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Що контролює спеціаліст, а що — система</h4>
+        <a class="srcl" href="../magic-sop-framework-uam/#framework">Принципи заведення →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Growth Marketer (10%)</div><p>Структура кампаній, креативи, нейминг, бюджетний розподіл, вибір цілей оптимізації, виключення аудиторій, гео.</p></div>
+        <div class="field"><div class="fl">Система (90%)</div><p>Аукціонні ставки, детальний таргетинг (Advantage+), плейсменти, розподіл бюджету між адсетами, частота показів.</p></div>
+        <div class="field"><div class="fl">Принцип</div><p>Кампанії заводяться так, щоб на 90% довірити оптимізацію алгоритму. Широкий таргетинг і автоматичні плейсменти — стандарт, вузькі інтереси — виняток.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Технічна перевірка пікселів, GA4, GTM і передачі подій — перший напрям аудиту Growth Blueprint і перший тиждень Setup Month. Як це виглядає на практиці — у <a href="../growth_base/pre-launch-flow.html">повному flow Pre-Launch System</a>.</div>
+    </div>
+  </section>
+
+  <section class="section" id="structure">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+      <h2>Структура кампаній</h2>
+    </div>
+    <p class="sec-desc">Структура змінюється з етапом проєкту: від пошуку товарів-переможців до креативної стратегії. Рішення приймаємо за деревом рішень, а не за звичкою.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Етап проєкту</th><th>Що на рівні кампанії</th><th>Що на рівні групи</th><th>Що на рівні оголошення</th></tr></thead>
+        <tbody>
+          <tr><td>1. Пошук товарів-переможців</td><td>Одна кампанія</td><td>Одна група, товари однакової цінової категорії</td><td>Різні товари, однаковий кут і концепт</td></tr>
+          <tr><td>2. Товари визначені (1–3 хіти)</td><td>Кожен товар — окрема кампанія</td><td>Одна група</td><td>3–5 креативів</td></tr>
+          <tr><td>2. Товари визначені (4+ хітів)</td><td>Одна кампанія на категорію</td><td>Кожен товар — окрема група</td><td>3–5 креативів</td></tr>
+          <tr><td>3. Креативна стратегія</td><td>Товар</td><td>Одна група або кут на групу — залежить від бюджету</td><td>Різні кути або варіації кута</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="model">
+      <div class="model-h"><h4>Правила, які не обговорюються</h4>
+        <a class="srcl" href="../magic-decision-tree-campaign-structure/">Дерево рішень →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Ціль і бюджет</div><p>Оптимізація — завжди Purchase, ніколи ATC, ViewContent чи трафік. Мінімум 3× CPA на групу на день.</p></div>
+        <div class="field"><div class="fl">Креативи в групі</div><p>Кожна група має 3–5 креативів обов'язково. Для тестування — до 10 паралельно, мінімум 5 різних форматів.</p></div>
+        <div class="field"><div class="fl">Масштабування</div><p>Вертикально: +20% бюджету, нові товари, ринки, канали. Не дублюємо кампанії з тими самими креативами — це auction overlap, ти конкуруєш сам із собою.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Ретаргетинг і каталог</h4></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Коли</div><p>Коли в магазині широкий асортимент і є трафік, що переглядав товари та додавав у кошик, але не купив.</p></div>
+        <div class="field"><div class="fl">Як</div><p>Каталог товарів у Commerce Manager, підключений до пікселя, і динамічні оголошення з товарами, які людина переглядала. Покупців виключаємо з акаунтних кампаній на холодну аудиторію, де це потрібно.</p></div>
+        <div class="field"><div class="fl">Що перевіряти</div><p>Ціни й наявність у каталозі збігаються із сайтом, id товарів у каталозі й у подіях пікселя однакові — інакше динамічні оголошення показують не те.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="creative">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg></div>
+      <h2>Креативи під Meta</h2>
+    </div>
+    <p class="sec-desc">Креатив — головний важіль, який лишається в руках Growth Marketer, коли таргетинг і ставки віддані системі. Нижче — що специфічне саме для Meta. Повні правила — на окремих сторінках.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Формат і розміщення</h4>
+        <a class="srcl" href="../magic-platform-specs-cheatsheet/">Специфікації платформ →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Стрічка</div><p>4:5 (1080 × 1350) — рекомендовано, займає найбільше місця. Нижні 10% можуть перекриватися кнопкою CTA.</p></div>
+        <div class="field"><div class="fl">Stories і Reels</div><p>9:16 (1080 × 1920). Ключовий контент і текст — у центральних 68% екрана: верх ~250 px і низ ~340 px зайняті інтерфейсом.</p></div>
+        <div class="field"><div class="fl">Текст і звук</div><p>Субтитри обов'язкові: 85% дивляться без звуку. Головний меседж — у перших двох рядках Primary Text (до 125 символів до обрізки). Логотип — не на початку.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Тестування</h4>
+        <a class="srcl" href="../magic-sop-creative-testing/">SOP тестування →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Creative battle</div><p>Усі креативи — в одній групі, система розподіляє бюджет сама. Кути на рівні оголошення — до ~$50K на місяць, на рівні групи — від ~$50K.</p></div>
+        <div class="field"><div class="fl">Коли рішення</div><p>Мінімум $100–150 відкруту на креатив перед висновком. Вимикаємо, якщо після цього CPA > 1,5× target.</p></div>
+        <div class="field"><div class="fl">Ритм</div><p>Щотижня мінімум 2 нових креативи. Одна змінна за раз: змінюєш креативи — не чіпаєш бюджет.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Втома креативів</h4>
+        <a class="srcl" href="../magic-decision-matrix-creative-fatigue/">Матриця втоми →</a></div>
+      <div class="fields f3">
+        <div class="field"><div class="fl">Сигнали</div><p>Frequency > 3, Hook Rate −20% за 3 дні, CPM +25% за 5 днів. Між першим сигналом і падінням ROAS — вікно 3–7 днів.</p></div>
+        <div class="field"><div class="fl">Що вигоріло</div><p>Один креатив — новий хук або кут. Усі креативи по товару — оффер. Усе в акаунті — зовнішній фактор, перечекати.</p></div>
+        <div class="field"><div class="fl">Головне правило</div><p>Не реагувати на одноденні коливання. Метрика падає 3 дні поспіль — сигнал, один поганий день — шум.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+      <div class="t">Звідки брати меседж: <a href="../magic-awareness-ladder/">сходи обізнаності Бена Ханта</a> задають, що комунікуємо, <a href="../magic-creative-angles-playbook/">плейбук кутів і концептів</a> — як. Продакшн — за <a href="../magic-creative-production-sop/">SOP продакшну креативів</a>.</div>
+    </div>
+  </section>
+
+  <section class="section" id="metrics">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+      <h2>Метрики і бенчмарки</h2>
+    </div>
+    <p class="sec-desc">Орієнтири e-commerce з бази агенції. Оновлюються щоквартально й адаптуються під нішу: у нішах із високим AOV (понад 2000₴) CPA вищий, але й ROAS вищий, із низьким (до 500₴) — навпаки.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Метрика</th><th>Погано</th><th>Норма</th><th>Добре</th><th>Що показує</th></tr></thead>
+        <tbody>
+          <tr><td>CTR</td><td>&lt;0.8%</td><td>0.8–1.5%</td><td class="good">>1.5%</td><td>Чи чіпляє меседж настільки, щоб клікнути</td></tr>
+          <tr><td>CPC</td><td>>15₴</td><td>8–15₴</td><td class="good">&lt;8₴</td><td>Ціна кліку: CPM і CTR разом</td></tr>
+          <tr><td>CPM</td><td>>250₴</td><td>120–250₴</td><td class="good">&lt;120₴</td><td>Ціна аукціону і того, як легко системі знайти аудиторію</td></tr>
+          <tr><td>ATC Rate</td><td>&lt;3%</td><td>3–6%</td><td class="good">>6%</td><td>Чи відповідає посадка обіцянці креативу</td></tr>
+          <tr><td>CR</td><td>&lt;1%</td><td>1–2.5%</td><td class="good">>2.5%</td><td>Чи доходять до покупки: checkout, доставка, оплата</td></tr>
+          <tr><td>CPA</td><td>>800₴</td><td>300–800₴</td><td class="good">&lt;300₴</td><td>Вартість одного замовлення</td></tr>
+          <tr><td>ROAS</td><td>&lt;2x</td><td>2–4x</td><td class="good">>4x</td><td>Дохід на гривню реклами</td></tr>
+          <tr><td>Hook Rate (3s)</td><td>&lt;15%</td><td>15–30%</td><td class="good">>30%</td><td>Чи тримають перші 3 секунди</td></tr>
+          <tr><td>Hold Rate</td><td>&lt;25%</td><td>25–45%</td><td class="good">>45%</td><td>Чи досматривають відео</td></tr>
+          <tr><td>Thumb Stop</td><td>&lt;20%</td><td>20–35%</td><td class="good">>35%</td><td>Чи зупиняються на креативі в стрічці</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="tw"><table>
+        <thead><tr><th>Сигнал</th><th>Що це значить</th><th>Куди дивитись</th></tr></thead>
+        <tbody>
+          <tr><td>CTR впав, ATC і CR стабільні</td><td>Люди перестали клікати: втома або кут не резонує</td><td>Креатив — рефреш або новий кут</td></tr>
+          <tr><td>CTR ок, ATC впав</td><td>Клікають, але не додають у кошик</td><td>Не креатив — посадка не відповідає офферу</td></tr>
+          <tr><td>CTR і ATC ок, CR впав</td><td>Додають, але не купують</td><td>Не креатив — checkout, доставка, оплата</td></tr>
+          <tr><td>CPM різко виріс, решта стабільна</td><td>Аукціон подорожчав: конкуренція, сезон</td><td>Не креатив — ринкова ситуація</td></tr>
+          <tr><td>Нулі, розриви, аномалії в даних</td><td>Зламалась атрибуція</td><td>Не креатив — Pixel, CAPI, GTM</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <div class="t">На сторінці <a href="../magic-sop-framework-uam/#tools">Magic Framework</a> ті самі відносні метрики, а CPC — у доларах, бо кабінети ведуться в доларах. CPA, CPM і ROAS там задаються окремо під кожен проєкт: для рішень по конкретному клієнту ціль проєкту важливіша за загальний орієнтир.</div>
+    </div>
+  </section>
+
+  <section class="section" id="mistakes">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+      <h2>Типові помилки</h2>
+    </div>
+    <p class="sec-desc">Помилки, які найчастіше коштують проєкту грошей на Meta.</p>
+
+    <div class="tw"><table>
+        <thead><tr><th>Помилка</th><th>Чому це погано</th><th>Як правильно</th></tr></thead>
+        <tbody>
+          <tr><td>Оптимізація на ATC або трафік</td><td>Система приводить тих, хто додає в кошик, але не купує</td><td>Завжди Purchase</td></tr>
+          <tr><td>Зміни посеред фази навчання</td><td>Навчання скидається, CPA стрибає</td><td>Чекати 50 конверсій за 7 днів, одна зміна за раз</td></tr>
+          <tr><td>Дублювання кампанії для скейлу</td><td>Auction overlap: конкуруєш сам із собою, CPA росте</td><td>+20% бюджету не частіше ніж раз на 48 год</td></tr>
+          <tr><td>Товари різної ціни в одній групі</td><td>Бюджет іде на найдешевший, тест спотворений</td><td>Одна група — одна цінова категорія</td></tr>
+          <tr><td>Вимкнути все, крім одного креативу</td><td>Він швидко втомиться, резерву немає</td><td>Лишати інші увімкненими навіть без бюджету</td></tr>
+          <tr><td>Вузькі інтереси й ручні плейсменти за замовчуванням</td><td>Система не має простору для оптимізації</td><td>Широкий таргетинг, Advantage+, автоплейсменти</td></tr>
+          <tr><td>Pixel без CAPI, дубль Purchase, немає value</td><td>Оптимізація на брудному сигналі, ROAS у кабінеті не збігається з реальністю</td><td>CAPI з дедуплікацією за event_id, value і currency в Purchase</td></tr>
+          <tr><td>Оптимізація на вихідних</td><td>Рішення без повних даних і без контролю</td><td>На вихідних — тільки моніторинг: стоп при CPA > 2× target, скейл +20% при сильному ROAS</td></tr>
+          <tr><td>«Креативи не працюють» без цифр</td><td>Неможливо знайти причину</td><td>Гіпотеза + дані: «CTR впав з X до Y, Frequency Z»</td></tr>
+        </tbody>
+    </table></div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Інші платні канали: <a href="../paid-tiktok/">TikTok Ads</a> і <a href="../paid-google/">Google Ads</a>. Терміни й метрики — у <a href="../growth_base/glossary.html">глосарії Growth-маркетолога</a>.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Meta Ads · внутрішній документ</p>
+  </div>
+</footer>
+
+<script src="../assets/doc.js" defer></script>
+</body>
+</html>

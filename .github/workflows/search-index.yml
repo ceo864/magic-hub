@@ -1,0 +1,29 @@
+name: Search index
+
+# Після кожної правки документів перезбирає індекс пошуку, щоб пошук на хабі бачив свіжий текст.
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'assets/catalog.js', 'scripts/build-search-index.js']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/build-search-index.js
+      - name: Commit index if changed
+        run: |
+          if git diff --quiet -- assets/search-index.json; then echo "індекс не змінився"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add assets/search-index.json
+          git commit -m "Оновлено індекс пошуку"
+          git push

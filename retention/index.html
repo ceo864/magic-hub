@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retention-маркетинг для e-commerce · Magic</title>
+<meta name="description" content="Навіщо retention, канали, базові автоматичні ланцюжки, сегментація, метрики і звʼязок з Paid Ads.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none}
+.sec-ico svg{color:#7A45EB}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:720px;line-height:1.55}
+
+.principle{background:var(--grad);border-radius:var(--r-xl);padding:34px 32px;color:#fff;
+  box-shadow:var(--glow-brand);margin-bottom:46px;position:relative;overflow:hidden}
+.principle h3{font-weight:900;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;margin-bottom:10px}
+.principle p{font-size:15.5px;color:rgba(255,255,255,.92);font-weight:300;max-width:700px;line-height:1.6}
+.pflow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.pflow .pstep{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  padding:11px 22px;border-radius:var(--r-pill);font-weight:700;font-size:15px}
+.pflow .parr{color:rgba(255,255,255,.8);font-weight:700;font-size:20px;line-height:1}
+
+.model{background:var(--ink-0);border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;border-left:4px solid var(--blue);
+  transition:box-shadow .18s}
+.model:hover{box-shadow:var(--shadow-md)}
+.model-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.model-h h4{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.srcl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--purple-ink);background:var(--purple-50);padding:4px 11px;border-radius:var(--r-pill)}
+.srcl:hover{filter:brightness(.95)}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.field .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:5px}
+.field p{font-size:13.5px;color:var(--ink-600);font-weight:400;line-height:1.5}
+
+.board{background:var(--ink-0);border-radius:var(--r-xl);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.col{background:var(--ink-50);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:14px 12px;text-align:center}
+.col .cn{font-weight:800;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.col .ct{font-weight:700;font-size:14px;color:var(--ink-900)}
+.col.wip{background:var(--grad-soft);border-color:#CBB0FF}
+.col.wip .ct{color:#3a2a66}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.fchip{display:inline-flex;align-items:center;gap:7px;background:var(--ink-100);color:var(--ink-700);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:var(--r-pill)}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+@media(max-width:900px){ .fields{grid-template-columns:1fr} .cols{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .sec-desc{margin-left:0}
+  .cols{grid-template-columns:1fr}
+  .principle{padding:26px 22px}
+  .board{padding:20px 18px}
+}
+
+/* таблиці і якорі карток */
+.tw{overflow-x:auto;background:var(--ink-0);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);margin-bottom:18px}
+.tw table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+.tw th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);padding:14px 18px;border-bottom:1px solid var(--ink-200);white-space:nowrap}
+.tw td{padding:14px 18px;border-bottom:1px solid var(--ink-100);color:var(--ink-600);
+  vertical-align:top;font-weight:400;line-height:1.5}
+.tw tr:last-child td{border-bottom:0}
+.tw td:first-child{color:var(--ink-900);font-weight:600}
+.tw tbody tr:hover{background:var(--ink-50)}
+.model{scroll-margin-top:84px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#why">Навіщо</a>
+      <a href="#channels">Канали</a>
+      <a href="#flows">Ланцюжки</a>
+      <a href="#metrics">Метрики</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Growth Marketer · retention</span>
+    <h1>Retention-маркетинг для e-commerce</h1>
+    <p class="sub">Для Growth Marketerів: як утримувати клієнтів після першої покупки — щоб реклама окуповувалась на повторах, а не лише на першому замовленні.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 22.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="principle">
+    <h3>Реклама купує першу покупку. Прибуток дає друга</h3>
+    <p>CAC платимо один раз — за першу покупку. Маржу бізнес отримує з кожної наступної. Якщо маржа з першого замовлення не покриває вартість залучення, магазин заробляє тільки тоді, коли клієнт повертається. Тому retention — не «додатковий канал», а умова, за якої масштабування реклами взагалі має сенс.</p>
+    <div class="pflow">
+      <span class="pstep">Перша покупка</span><span class="parr">→</span>
+      <span class="pstep">Повторна покупка</span><span class="parr">→</span>
+      <span class="pstep">LTV вище за CAC</span>
+    </div>
+  </div>
+
+  <!-- 1. НАВІЩО -->
+  <section class="section" id="why">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></div>
+      <h2>Навіщо retention</h2>
+    </div>
+    <p class="sec-desc">Три речі, які Growth Marketer тримає в голові, коли дивиться на юніт-економіку проєкту.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>LTV — головний орієнтир</h4>
+        <a class="srcl" href="../growth_base/glossary.html">Глосарій →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що це</div><p>Скільки прибутку приносить клієнт за весь час. Спрощено: середній чек × частота покупок × тривалість утримання.</p></div>
+        <div class="field"><div class="fl">Чому важливо</div><p>Реклама впливає переважно на перший множник. Два інші — частота і тривалість — росте лише через роботу з базою.</p></div>
+        <div class="field"><div class="fl">Що робимо</div><p>Дивимось LTV поруч із CAC, а не окремо. Рішення про масштабування бюджету спирається на те, чи окупається клієнт з урахуванням повторів.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>CAC окупається на повторі</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Принцип</div><p>Перша покупка часто лише повертає гроші, витрачені на залучення. Заробіток починається з другої і наступних покупок того самого клієнта.</p></div>
+        <div class="field"><div class="fl">Що це означає</div><p>Без повторних покупок ріст бюджету на рекламу масштабує не прибуток, а збиток. Чим вищий CAC у ніші, тим критичніше retention.</p></div>
+        <div class="field"><div class="fl">Що робимо</div><p>Рахуємо маржу з першого замовлення і порівнюємо з CAC. Якщо вона нижча — retention стає пріоритетом, а не бонусом.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+      <div class="t">У Magic retention перевіряється ще до старту реклами. У Growth Blueprint два з восьми напрямків аудиту стосуються саме цього: <b>юніт-економіка</b> (CAC, LTV, маржинальність, точка беззбитковості) і <b>воронка та шлях клієнта</b> — від першого дотику до повторної покупки, upsell і cross-sell. Як це виглядає на прикладі — у <a href="../growth_base/pre-launch-flow.html">повному flow Pre-Launch System</a>.</div>
+    </div>
+  </section>
+
+  <!-- 2. КАНАЛИ -->
+  <section class="section" id="channels">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+      <h2>Канали</h2><span class="count">4 канали</span>
+    </div>
+    <p class="sec-desc">Кожен канал має свою роль. Не дублюємо одне повідомлення всюди — розподіляємо за терміновістю і вартістю контакту.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Канал</th><th>Роль</th><th>Коли брати</th><th>На що зважати</th></tr></thead>
+        <tbody>
+          <tr><td>Email</td><td>Основа retention: автоматичні ланцюжки і регулярні розсилки на всю базу. Один із каналів Magic поряд з Meta, Google і TikTok.</td><td>Завжди. Це перший канал, який закладаємо.</td><td>Доставлюваність: неактивних прибираємо з регулярних розсилок, інакше страждає вся база.</td></tr>
+          <tr><td>SMS / Viber</td><td>Короткі термінові повідомлення: покинутий кошик, статус замовлення, обмежена в часі пропозиція.</td><td>Коли важлива швидкість реакції і лист може загубитись.</td><td>Кожне повідомлення коштує грошей. Шлемо рідко і тільки тим, хто дав згоду.</td></tr>
+          <tr><td>Месенджери</td><td>Діалогові сценарії: бот із підбором товару, підтримка, сповіщення для тих, хто підписався.</td><td>Коли аудиторія бренду живе в месенджерах і готова до діалогу.</td><td>Не перетворюємо на другу email-розсилку. Цінність — у швидкій відповіді.</td></tr>
+          <tr><td>Ремаркетинг на базу</td><td>Показ реклами наявним клієнтам у Meta, Google і TikTok: новинки, допродаж, повернення тих, хто не відкриває листи.</td><td>Коли база достатньо велика, а частина клієнтів недосяжна через email.</td><td>Платимо за показ людям, яких можна дістати безкоштовно. Спершу власні канали, потім реклама.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. ЛАНЦЮЖКИ -->
+  <section class="section" id="flows">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/><path d="m13 12 3 3-3 3"/></svg></div>
+      <h2>Базові автоматичні ланцюжки</h2><span class="count">5 ланцюжків</span>
+    </div>
+    <p class="sec-desc">Ланцюжок (flow) запускається подією, а не календарем. Його налаштовують один раз, і він працює на кожного нового клієнта. Це п'ять, з яких починаємо.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Welcome — вітальний</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Тригер</div><p>Підписка на розсилку або перша реєстрація.</p></div>
+        <div class="field"><div class="fl">Мета</div><p>Довести нового підписника до першої покупки.</p></div>
+        <div class="field"><div class="fl">Що всередині</div><p>Хто ми і чим відрізняємось, бестселери, умови доставки й повернення, відгуки. Якщо за підписку обіцяли бонус — він у першому листі.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Покинутий кошик</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Тригер</div><p>Товар додано в кошик, оплати немає.</p></div>
+        <div class="field"><div class="fl">Мета</div><p>Повернути людину, яка вже майже купила.</p></div>
+        <div class="field"><div class="fl">Що всередині</div><p>Нагадування з товаром, зняття заперечень (доставка, повернення, гарантія), відгуки. Знижку — не в першому повідомленні, щоб не привчати кидати кошик заради промокоду. М'якша версія для тих, хто лише дивився товар, — browse abandonment.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Після покупки</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Тригер</div><p>Оформлене замовлення.</p></div>
+        <div class="field"><div class="fl">Мета</div><p>Щоб перший досвід був хорошим і клієнт захотів повернутись.</p></div>
+        <div class="field"><div class="fl">Що всередині</div><p>Підтвердження і статус, інструкція з використання чи догляду, турбота після отримання, прохання про відгук. Відгуки далі йдуть на сайт і в креативи.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Повторна покупка</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Тригер</div><p>Минув типовий для товару час між покупками, або купили товар, до якого є логічне доповнення.</p></div>
+        <div class="field"><div class="fl">Мета</div><p>Підняти частоту покупок і середній чек.</p></div>
+        <div class="field"><div class="fl">Що всередині</div><p>Для витратних товарів — нагадування поповнити запас. Для решти — cross-sell і бандли на основі купленого. Інтервал рахуємо з даних магазину, а не беремо «місяць» навмання.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Реактивація (winback)</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Тригер</div><p>Клієнт давно не купував — довше, ніж зазвичай для цього магазину.</p></div>
+        <div class="field"><div class="fl">Мета</div><p>Повернути клієнта, поки він не пішов остаточно.</p></div>
+        <div class="field"><div class="fl">Що всередині</div><p>«Ми скучили», новинки, нагадування про переваги, інколи стимул. Якщо мовчить 180+ днів після кількох спроб — прибираємо з регулярних розсилок (sunset).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. СЕГМЕНТАЦІЯ -->
+  <section class="section" id="segments">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+      <h2>Сегментація</h2>
+    </div>
+    <p class="sec-desc">Ланцюжки реагують на подію. Регулярні розсилки і ремаркетинг — на сегмент. Один лист на всю базу — найдорожча помилка retention.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Сегмент RFM</th><th>Що з ним робимо</th><th>Чого не робимо</th></tr></thead>
+        <tbody>
+          <tr><td>Чемпіони</td><td>Ранній доступ до новинок, привілеї, прохання про відгук і рекомендацію.</td><td>Не даємо знижок — вони й так купують.</td></tr>
+          <tr><td>Лояльні і перспективні</td><td>Допродаж, бандли, рекомендації на основі купленого.</td><td>Не шлемо те саме, що новачкам.</td></tr>
+          <tr><td>Новачки</td><td>Welcome і ланцюжок після покупки, м'який стимул до другого замовлення.</td><td>Не тиснемо продажем одразу після першої покупки.</td></tr>
+          <tr><td>У зоні ризику</td><td>Winback з персональним повідомленням. Цінність і турбота разом зі стимулом.</td><td>Не даємо знижку кожному — інакше клієнти вчаться зникати заради промокоду.</td></tr>
+          <tr><td>Втрачені</td><td>Остання спроба winback, далі sunset.</td><td>Не розсилаємо їм без кінця — це б'є по доставлюваності всієї бази.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Як рахувати бали R, F, M, як скласти сегменти в таблиці і якими сервісами їх оновлювати автоматично — у <a href="../growth_base/rfm-guide.html#segments">гайді з RFM-аналізу</a>. Тут лише звʼязок сегментів з ланцюжками.</div>
+    </div>
+  </section>
+
+  <!-- 5. МЕТРИКИ -->
+  <section class="section" id="metrics">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+      <h2>Метрики retention</h2><span class="count">5 метрик</span>
+    </div>
+    <p class="sec-desc">Норму для кожної метрики задає ніша і сам магазин. Порівнюємо проєкт із його ж минулим періодом, а не з чужими цифрами.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Метрика</th><th>Як рахується</th><th>Що показує</th></tr></thead>
+        <tbody>
+          <tr><td>Repeat rate</td><td>Частка клієнтів, які купили два і більше разів, від усіх клієнтів за період.</td><td>Чи повертаються люди взагалі. Головний сигнал, що retention працює.</td></tr>
+          <tr><td>Частота покупок</td><td>Кількість замовлень ÷ кількість унікальних клієнтів за період.</td><td>Як часто повертаються. Росте через ланцюжок повторної покупки.</td></tr>
+          <tr><td>LTV</td><td>Середній чек × частота покупок × тривалість утримання.</td><td>Скільки приносить клієнт за весь час. Порівнюємо з CAC.</td></tr>
+          <tr><td>LTV : CAC</td><td>LTV ÷ вартість залучення одного нового клієнта.</td><td>Чи окупається залучення з урахуванням повторів. Якщо близько до одиниці — масштабувати рекламу рано.</td></tr>
+          <tr><td>Відписки</td><td>Частка отримувачів, які відписались після розсилки.</td><td>Чи не надто часто і не надто нерелевантно пишемо. Ріст відписок — сигнал переглянути частоту і сегментацію.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. PAID ADS -->
+  <section class="section" id="paid">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+      <h2>Звʼязок з Paid Ads</h2>
+    </div>
+    <p class="sec-desc">Омніканальність у Magic Framework — це коли канали підсилюють один одного. База клієнтів — місце, де retention і реклама зустрічаються.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Виключення покупців</h4>
+        <a class="srcl" href="../magic-sop-framework-uam/">Magic Framework →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Навіщо</div><p>Кампанія на нових клієнтів не має витрачати бюджет на тих, хто щойно купив і вже отримує листи.</p></div>
+        <div class="field"><div class="fl">Як робимо</div><p>Виключення аудиторій — один із важелів, які в Magic Framework контролює спеціаліст, а не алгоритм. Недавніх покупців виключаємо з кампаній, мета яких — залучення.</p></div>
+        <div class="field"><div class="fl">Результат</div><p>CAC у звіті рахує саме нових клієнтів, а не повторні покупки, які прийшли б і так.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>База як сигнал для алгоритму</h4>
+        <a class="srcl" href="../magic-awareness-ladder/">Сходи обізнаності →</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Навіщо</div><p>Список покупців підказує платформі, хто для бренду цінний, і дає змогу відрізняти нових клієнтів від наявних.</p></div>
+        <div class="field"><div class="fl">Як робимо</div><p>У налаштуваннях Magic працює з широкими аудиторіями: сходинку визначає креатив, а не аудиторія. Тому lookalike і Custom Audiences як таргетинг не використовуємо. База потрібна для виключень і розмітки нових та наявних клієнтів.</p></div>
+        <div class="field"><div class="fl">Якщо lookalike все ж є</div><p>Будуємо його лише на покупцях, а краще — на найцінніших сегментах RFM. Lookalike на всіх відвідувачах сайту — типова знахідка аудиту, а не рішення.</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Одна комунікація в усіх каналах</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Навіщо</div><p>Клієнт бачить бренд у стрічці, у пошті й у месенджері. Суперечливі офери в різних каналах руйнують довіру і маржу.</p></div>
+        <div class="field"><div class="fl">Як робимо</div><p>Узгоджуємо календар: коли в рекламі акція, розсилка її підтримує, а не пропонує іншу знижку. Ремаркетинг і ланцюжок покинутого кошика не дублюють одне одного знижками.</p></div>
+        <div class="field"><div class="fl">Результат</div><p>Реклама приводить нових клієнтів, retention робить їх постійними, а постійні — дають відгуки й UGC для наступних креативів.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Retention-маркетинг · внутрішній документ</p>
+  </div>
+</footer>
+
+<script src="../assets/doc.js" defer></script>
+</body>
+</html>

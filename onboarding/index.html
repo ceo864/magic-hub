@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Онбординг · Magic Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/hub.css">
+</head>
+<body data-page="course" data-root="../">
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../"><span class="logo">magic</span><span class="tag">база знань</span></a>
+    <div class="nav-links">
+      <a href="../about/" data-cat="about">Про агенцію</a>
+      <a href="../growth/" data-cat="growth">Growth Marketer</a>
+      <a href="../skills/" data-cat="skills">Навички</a>
+      <a href="../hr/" data-cat="hr">HR</a>
+      <a href="../files/" data-cat="files">Файли</a>
+      <a class="nav-cta" href="../onboarding/">Онбординг</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Для всієї команди · 4 тижні</span>
+    <h1>Онбординг Magic</h1>
+    <p class="sub">Один шлях для новачків і для тих, хто вже в команді: вісім модулів у правильному порядку. Відкривай документ, читай, позначай пройденим — і переходь далі.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="start-card" style="margin-top:-78px;position:relative;z-index:5;margin-bottom:26px">
+    <div class="kicker">Мій прогрес</div>
+    <div class="bar"><i id="cBar"></i></div>
+    <div class="bar-l"><span><b id="cNum">0</b> з <span id="cTot">0</span> документів</span><span id="cPct">0%</span></div>
+  </div>
+
+  <div id="course"></div>
+
+  <div class="finish">
+    <div class="t">
+      <h3>Звіт для CEO</h3>
+      <p>Коли пройдеш модуль або весь курс — скопіюй звіт і надішли CEO. Прогрес зберігається лише в цьому браузері.</p>
+      <input id="who" placeholder="Твоє ім'я" style="margin-top:12px;height:44px;border:1.5px solid #CBB0FF;border-radius:999px;padding:0 18px;font:inherit;font-size:14.5px;width:100%;max-width:280px;outline:none;background:#fff">
+    </div>
+    <button class="btn" id="report" style="margin-top:0">Скопіювати звіт</button>
+    <button class="btn ghost" id="reset" style="margin-top:0">Скинути прогрес</button>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div><span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p></div>
+    <p>Внутрішня база знань · оновлюється командою</p>
+  </div>
+</footer>
+
+<script src="../assets/catalog.js"></script>
+<script src="../assets/hub.js"></script>
+</body>
+</html>

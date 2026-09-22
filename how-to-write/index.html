@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Як писати повідомлення · Magic</title>
+<meta name="description" content="Правила письмової комунікації Magic з клієнтом і всередині команди: головне першим рядком, цифри замість оцінок, чіткий запит і формула статус-апдейту.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Magic Hub · канонічні стилі сторінки (як на головній) ───────── */
+:root{
+  --blue:#38A0FF; --purple:#AA7AFF;
+  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
+  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
+  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
+  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
+  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
+  --amber:#FFB020; --amber-bg:#FFF8EC; --amber-ink:#8A5A00; --amber-line:#FFD08A;
+  --purple-ink:#5E30C4; --purple-50:#F2EBFF;
+  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
+  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
+  --glow-brand:0 16px 40px rgba(120,140,255,.30);
+  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
+  --font:'Onest',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-weight:300;color:var(--ink-900);background:var(--ink-50);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:none}
+.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
+  font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
+.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
+
+.hero{position:relative;overflow:hidden;background:var(--grad);
+  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
+  padding:72px 0 64px;margin-bottom:56px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(8px)}
+.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
+.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
+.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:18px;padding:6px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);transition:.15s}
+.backlink:hover{background:rgba(255,255,255,.28);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  font-size:clamp(32px,5.2vw,56px);margin-bottom:18px}
+.hero p.sub{font-weight:300;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.92);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.meta .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;
+  color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:var(--r-pill)}
+.meta .chip.draft{background:rgba(255,255,255,.30);font-weight:700}
+
+.section{margin-bottom:52px;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
+  background:var(--grad-soft);flex:none}
+.sec-ico svg{color:#7A45EB}
+.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
+.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
+  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
+.sec-desc{font-size:15px;color:var(--ink-500);margin:0 0 22px 58px;max-width:720px;line-height:1.55}
+
+.principle{background:var(--grad);border-radius:var(--r-xl);padding:34px 32px;color:#fff;
+  box-shadow:var(--glow-brand);margin-bottom:46px;position:relative;overflow:hidden}
+.principle h3{font-weight:900;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;margin-bottom:10px}
+.principle p{font-size:15.5px;color:rgba(255,255,255,.92);font-weight:300;max-width:700px;line-height:1.6}
+.pflow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.pflow .pstep{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  padding:11px 22px;border-radius:var(--r-pill);font-weight:700;font-size:15px}
+.pflow .parr{color:rgba(255,255,255,.8);font-weight:700;font-size:20px;line-height:1}
+
+.model{background:var(--ink-0);border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;border-left:4px solid var(--blue);
+  transition:box-shadow .18s}
+.model:hover{box-shadow:var(--shadow-md)}
+.model-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.model-h h4{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.srcl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--purple-ink);background:var(--purple-50);padding:4px 11px;border-radius:var(--r-pill)}
+.srcl:hover{filter:brightness(.95)}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.field .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:5px}
+.field p{font-size:13.5px;color:var(--ink-600);font-weight:400;line-height:1.5}
+
+.board{background:var(--ink-0);border-radius:var(--r-xl);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.col{background:var(--ink-50);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:14px 12px;text-align:center}
+.col .cn{font-weight:800;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:6px}
+.col .ct{font-weight:700;font-size:14px;color:var(--ink-900)}
+.col.wip{background:var(--grad-soft);border-color:#CBB0FF}
+.col.wip .ct{color:#3a2a66}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.fchip{display:inline-flex;align-items:center;gap:7px;background:var(--ink-100);color:var(--ink-700);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:var(--r-pill)}
+
+.todo{background:var(--amber-bg);border:2px dashed var(--amber-line);border-radius:var(--r-lg);
+  padding:16px 20px;display:flex;gap:13px;align-items:flex-start;margin:16px 0}
+.todo svg{flex:none;color:var(--amber-ink);margin-top:2px}
+.todo .t{font-size:14px;color:var(--amber-ink);font-weight:700;line-height:1.5}
+.todo .t span{display:block;font-weight:400;color:#9a7430;font-size:13.5px;margin-top:4px}
+.todo-in{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;
+  color:var(--amber-ink);background:var(--amber-bg);border:1px dashed var(--amber-line);
+  border-radius:var(--r-pill);padding:3px 10px;white-space:nowrap}
+
+.note{background:var(--grad-soft);border-radius:var(--r-xl);padding:20px 24px;
+  display:flex;gap:15px;align-items:flex-start;margin:18px 0}
+.note svg{flex:none;color:#5E30C4;margin-top:2px}
+.note .t{font-size:14.5px;color:#3a2a66;line-height:1.6;font-weight:400}
+.note .t b{font-weight:700}
+.note .t a{color:#5E30C4;font-weight:700}
+
+footer{border-top:1px solid var(--ink-200);margin-top:64px;padding:40px 0 56px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
+  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
+
+/* ── доповнення: таблиці, «було → стало», шаблони ─────────────── */
+.tw{background:var(--ink-0);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);overflow-x:auto;margin-bottom:14px}
+.tw table{width:100%;border-collapse:collapse;font-size:14px}
+.tw th{text-align:left;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-400);padding:14px 18px;background:var(--ink-50);border-bottom:1px solid var(--ink-200)}
+.tw td{padding:13px 18px;border-bottom:1px solid var(--ink-100);color:var(--ink-600);font-weight:400;
+  vertical-align:top;line-height:1.5}
+.tw tr:last-child td{border-bottom:none}
+.tw td b{color:var(--ink-900);font-weight:700}
+.tw td a,.field p a{color:var(--purple-ink);font-weight:600}
+.mtxt{font-size:14px;color:var(--ink-600);font-weight:400;line-height:1.55}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ba>div{border-radius:var(--r-md);padding:14px 16px;font-size:14px;line-height:1.55;font-weight:400}
+.ba .was{background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-500)}
+.ba .now{background:var(--purple-50);border:1px solid #CBB0FF;color:var(--ink-800)}
+.ba .fl{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}
+.ba .was .fl{color:var(--ink-400)}
+.ba .now .fl{color:var(--purple-ink)}
+.why{font-size:13.5px;color:var(--ink-500);font-weight:400;margin-top:12px;line-height:1.5}
+.tpl{background:var(--ink-0);border:1px dashed var(--ink-300);border-radius:var(--r-md);padding:16px 18px;
+  font-size:14px;color:var(--ink-700);font-weight:400;line-height:1.75;margin-bottom:14px}
+.tpl b{font-weight:700;color:var(--ink-900)}
+@media(max-width:480px){ .sec-head .count{display:none} }
+
+@media(max-width:900px){ .fields{grid-template-columns:1fr} .cols{grid-template-columns:1fr 1fr} .ba{grid-template-columns:1fr} }
+@media(max-width:640px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding:56px 0 52px;margin-bottom:40px}
+  .sec-desc{margin-left:0}
+  .cols{grid-template-columns:1fr}
+  .principle{padding:26px 22px}
+  .board{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../">
+      <span class="logo">magic</span>
+      <span class="tag">база знань</span>
+    </a>
+    <div class="nav-links">
+      <a href="#principles">Правила</a>
+      <a href="#examples">Приклади</a>
+      <a href="#status">Статус</a>
+      <a class="nav-cta" href="../">Усі документи</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-in">
+    <a class="backlink" href="../"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Magic Hub</a>
+    <span class="eyebrow">Комунікації · для команди Magic</span>
+    <h1>Як писати повідомлення</h1>
+    <p class="sub">Для Growth Marketer і всієї команди: правила, за якими ми пишемо клієнту й одне одному, щоб повідомлення читали один раз і одразу діяли.</p>
+    <div class="meta">
+      <span class="chip">Власник: CEO</span>
+      <span class="chip">Оновлено: 22.09.2026</span>
+      <span class="chip draft">Статус: чернетка</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="principle">
+    <h3>Суть — у першому рядку</h3>
+    <p>Клієнт і колега читають повідомлення між іншими задачами. Тому спершу висновок або прохання, далі цифри, що його підтверджують, наприкінці — що саме потрібно і до коли. Усе, що не змінює дію читача, прибираємо.</p>
+    <div class="pflow">
+      <span class="pstep">Головне</span><span class="parr">→</span>
+      <span class="pstep">Цифри</span><span class="parr">→</span>
+      <span class="pstep">Що потрібно і до коли</span>
+    </div>
+  </div>
+
+  <!-- 1. ТОН -->
+  <section class="section" id="tone">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+      <h2>Тон Magic</h2>
+    </div>
+    <p class="sec-desc">Як звучить Magic у будь-якому каналі: у чаті з клієнтом, у листі, у звіті, у робочому чаті команди.</p>
+
+    <div class="tw">
+      <table>
+        <tr><th>Правило</th><th>Як це виглядає</th></tr>
+        <tr><td><b>«Ми» про агенцію, «ви» до клієнта</b></td><td>«Ми зупинили кампанію», «вам потрібно погодити бюджет». До клієнта — формально, на «ви».</td></tr>
+        <tr><td><b>Короткі речення, числові результати</b></td><td>Одне речення — одна думка. Результат подаємо цифрою, а не прикметником.</td></tr>
+        <tr><td><b>Без emoji і знаків оклику</b></td><td>Вагу повідомленню дає факт, а не пунктуація.</td></tr>
+        <tr><td><b>Без води і загальних фраз</b></td><td>Речення, яке можна вставити в повідомлення будь-якому клієнту, видаляємо.</td></tr>
+        <tr><td><b>Без корпоративного жаргону</b></td><td>Не «проводимо роботу з оптимізації», а «зупинили 3 адсети з CPA вище цілі».</td></tr>
+        <tr><td><b>Англійські терміни для метрик і продуктів</b></td><td>ROAS, CPA, CTR, Growth Blueprint, Magic Framework — без перекладу.</td></tr>
+        <tr><td><b>Впевнено і системно</b></td><td>Пишемо, що робимо і коли, а не що «спробуємо» чи «можливо, варто».</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2. ПРАВИЛА -->
+  <section class="section" id="principles">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <h2>П'ять правил повідомлення</h2><span class="count">5 правил</span>
+    </div>
+    <p class="sec-desc">Діють для клієнта і для команди однаково. Перед відправкою проганяємо повідомлення через колонку «Перевірка».</p>
+
+    <div class="model">
+      <div class="model-h"><h4>01 · Головне першим рядком</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що робимо</div><p>Перший рядок — висновок, рішення або прохання. Контекст і деталі — нижче. Без вступів на кшталт «хотів уточнити одну річ».</p></div>
+        <div class="field"><div class="fl">Навіщо</div><p>У сповіщенні видно лише початок повідомлення. За ним читач вирішує, відкривати зараз чи пізніше.</p></div>
+        <div class="field"><div class="fl">Перевірка</div><p>Якщо прочитати тільки перший рядок — зрозуміло, про що мова і чи треба щось робити?</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>02 · Одна думка — одне повідомлення</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що робимо</div><p>Одна тема, одне питання, одне прохання. Три незалежні теми — три повідомлення або нумерований список, де кожен пункт має окрему відповідь.</p></div>
+        <div class="field"><div class="fl">Навіщо</div><p>На змішане повідомлення відповідають на перший пункт, решта губиться.</p></div>
+        <div class="field"><div class="fl">Перевірка</div><p>Чи можна відповісти на повідомлення одним рішенням?</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>03 · Цифри замість оцінок</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що робимо</div><p>«Добре», «погано», «нормально» замінюємо метрикою і базою порівняння: план, попередній період або бенчмарк.</p></div>
+        <div class="field"><div class="fl">Навіщо</div><p>Оцінку кожен читає по-своєму, цифру — однаково. У регламенті ролі це правило «факти, не оцінки».</p></div>
+        <div class="field"><div class="fl">Перевірка</div><p>У повідомленні є число і з чим його порівняли?</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>04 · Що потрібно від вас і до коли</h4></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що робимо</div><p>Якщо від читача потрібна дія — окремим рядком: хто, що саме і дата. «Коли буде час» — не дедлайн. Якщо затримка щось зсуває, пишемо, що саме.</p></div>
+        <div class="field"><div class="fl">Навіщо</div><p>Прохання без дати не має пріоритету і відкладається.</p></div>
+        <div class="field"><div class="fl">Перевірка</div><p>Читач може виконати прохання, не перепитуючи?</p></div>
+      </div>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>05 · Статус за формулою</h4>
+        <a class="srcl" href="#status">Формула нижче ↓</a></div>
+      <div class="fields">
+        <div class="field"><div class="fl">Що робимо</div><p>Апдейт завжди в одному порядку: що зроблено, що далі, де блокер. Навіть якщо блокера немає — пишемо про це.</p></div>
+        <div class="field"><div class="fl">Навіщо</div><p>Однакова форма для всіх проєктів: читач одразу знаходить потрібний блок.</p></div>
+        <div class="field"><div class="fl">Перевірка</div><p>З апдейту видно, де потрібна допомога і від кого?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. БУЛО → СТАЛО -->
+  <section class="section" id="examples">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      <h2>Було → стало</h2><span class="count">4 приклади</span>
+    </div>
+    <p class="sec-desc">Ті самі повідомлення до і після правил. Цифри в прикладах умовні — важлива форма.</p>
+
+    <div class="model">
+      <div class="model-h"><h4>Клієнту: результат тижня</h4></div>
+      <div class="ba">
+        <div class="was"><div class="fl">Було</div>Добрий день. Тиждень пройшов непогано, реклама працює стабільно, продовжуємо оптимізацію.</div>
+        <div class="now"><div class="fl">Стало</div>ROAS за тиждень 3,4 при плані 3,0 — виконання 113%. Основний внесок дав Google Shopping: 58% покупок. Далі переносимо 15% бюджету з Meta на Shopping, результат покажемо в наступному апдейті.</div>
+      </div>
+      <p class="why">Прибрали оцінку «непогано» і фразу, яку можна надіслати будь-якому клієнту. Додали цифру, план для порівняння і наступний крок.</p>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Клієнту: прохання</h4></div>
+      <div class="ba">
+        <div class="was"><div class="fl">Було</div>Коли буде можливість, гляньте, будь ласка, нові креативи, і ще нагадую про доступи до GA4, і треба якось обговорити акцію на наступний місяць.</div>
+        <div class="now"><div class="fl">Стало</div>Потрібне ваше погодження 4 нових креативів до п'ятниці, 25.09, 14:00 — інакше запуск зсувається на понеділок. Посилання на креативи нижче. Доступи до GA4 і акцію на жовтень пишемо окремими повідомленнями.</div>
+      </div>
+      <p class="why">Одне прохання замість трьох, з датою і наслідком затримки. Решта тем — окремими повідомленнями.</p>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Команді: проблема на проєкті</h4></div>
+      <div class="ba">
+        <div class="was"><div class="fl">Було</div>Там щось з кампаніями на проєкті, CPA якийсь дивний, подивіться хтось.</div>
+        <div class="now"><div class="fl">Стало</div>Проєкт X: CPA у Meta вчора 1 240 ₴ при цілі 600 ₴ — вдвічі вище. Зупинили адсет, що дав 70% витрат. Причину шукаємо в трекінгу: покупки в кабінеті не збігаються з CRM. Допомога поки не потрібна, апдейт до 16:00.</div>
+      </div>
+      <p class="why">Проєкт, що сталося, що вже зроблено, чи потрібна допомога — у такому порядку.</p>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Команді: пропозиція</h4></div>
+      <div class="ba">
+        <div class="was"><div class="fl">Було</div>Креатив з відгуком добре зайшов, варто робити більше таких.</div>
+        <div class="now"><div class="fl">Стало</div>UGC-відео з відгуком: CTR 1,9% проти 1,1% у середньому по акаунту, 14 з 31 покупки тижня. Пропоную 3 нові варіації до 30.09 — потрібне погодження бюджету на продакшн.</div>
+      </div>
+      <p class="why">«Добре зайшов» замінили цифрами з порівнянням. Пропозиція має обсяг, дату і конкретний запит.</p>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+      <div class="t">Для висновків у місячному звіті є окрема формула — факт із цифрою, причина, дія — і тест на воду. Дивіться <a href="../magic-vysnovky-u-zvitakh/">«Як писати висновки у звітах»</a>.</div>
+    </div>
+  </section>
+
+  <!-- 4. СТАТУС-АПДЕЙТ -->
+  <section class="section" id="status">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h2>Статус-апдейт</h2>
+    </div>
+    <p class="sec-desc">Одна формула для апдейту клієнту і команді. Кожен блок — 1–3 пункти з цифрами.</p>
+
+    <div class="tpl">
+      <b>Проєкт · період</b><br>
+      <b>Зроблено:</b> що змінилось і яким результатом, у цифрах.<br>
+      <b>Далі:</b> що робимо до наступного апдейту і до якої дати.<br>
+      <b>Блокер:</b> що заважає і від кого потрібна дія. Якщо блокера немає — «Блокерів немає».
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Приклад</h4></div>
+      <p class="mtxt"><b>Проєкт X · 15–21.09</b><br>
+      <b>Зроблено:</b> запустили 6 нових креативів, 2 з них мають CTR вище 1,5%. CPA знизився з 720 до 640 ₴.<br>
+      <b>Далі:</b> до 26.09 масштабуємо 2 найкращі креативи на +20% бюджету і готуємо 3 нові варіації.<br>
+      <b>Блокер:</b> немає доступу до GA4 — потрібен від клієнта до 24.09, без нього не перевіримо передачу значення покупки.</p>
+    </div>
+
+    <div class="note">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <div class="t">Для термінового сигналу між апдейтами — формат з регламенту Growth Sync: <b>клієнт, що трапилось, що зроблено, чи потрібна допомога</b>. Критичну зміну пишемо в чат одразу, не чекаючи зустрічі. Деталі — у розділі <a href="../magic-agenda_growth/#dailies">«Ситуативні дейліки»</a>.</div>
+    </div>
+  </section>
+
+  <!-- 5. КЛІЄНТУ: ПРАВИЛА РОЛІ -->
+  <section class="section" id="client">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h2>Комунікація з клієнтом</h2>
+    </div>
+    <p class="sec-desc">Коротко про правила з регламенту Growth Marketer. Повний текст — у розділі 1.4 регламенту.</p>
+
+    <div class="tw">
+      <table>
+        <tr><th>Правило</th><th>Що це означає на практиці</th></tr>
+        <tr><td><b>Ми пишемо першими</b></td><td>Нагадування клієнта про нашу задачу — це наш факап.</td></tr>
+        <tr><td><b>Швидкість відповіді</b></td><td>10:00–18:00 — одразу, окрім зумів. Ввечері — якщо термінове. На нічні повідомлення — до 10:00.</td></tr>
+        <tr><td><b>Проактивне інформування</b></td><td>Про факапи, зміни бюджетів, запуск і зупинку кампаній клієнт дізнається від нас.</td></tr>
+        <tr><td><b>Резюме після зустрічі</b></td><td>Протягом 10–20 хв після кожної зустрічі, клієнт підтверджує реакцією. Як його писати — на сторінці <a href="../how-to-meet/#followup">«Як проводити зустрічі»</a>.</td></tr>
+        <tr><td><b>Факти, не оцінки</b></td><td>«Результат гірше в 2 рази проти минулого періоду», а не «погано».</td></tr>
+      </table>
+    </div>
+
+    <div class="model">
+      <div class="model-h"><h4>Регламент ролі Growth Marketer</h4>
+        <a class="srcl" href="../growth-marketer/#role">Розділ 1.4 на хабі →</a></div>
+      <p class="mtxt">Там же — хто з ким взаємодіє в команді і як Growth Marketer веде клієнта від цілей до звітності.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <span class="logo">magic</span>
+      <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
+    </div>
+    <p>Як писати повідомлення · внутрішній документ</p>
+  </div>
+</footer>
+
+</body>
+</html>

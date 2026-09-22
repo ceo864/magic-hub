@@ -3,165 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>magic — база знань агенції</title>
-<meta name="description" content="Єдиний вхід до всіх документів, SOP, плейбуків і процесів агенції Magic.">
+<title>Magic Hub — база знань агенції</title>
+<meta name="description" content="База знань команди Magic: онбординг, роль Growth Marketer, навички, HR, шаблони.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --blue:#38A0FF; --purple:#AA7AFF;
-  --grad:linear-gradient(135deg,#38A0FF 0%,#AA7AFF 100%);
-  --grad-h:linear-gradient(90deg,#38A0FF 0%,#AA7AFF 100%);
-  --grad-soft:linear-gradient(135deg,#D9EBFF 0%,#E8DDFF 100%);
-  --ink-0:#fff; --ink-50:#F7F8FB; --ink-100:#EEF1F6; --ink-200:#DDE2EB;
-  --ink-300:#C3CAD6; --ink-400:#9AA2B2; --ink-500:#6E7687; --ink-600:#4B5160;
-  --ink-700:#2F3441; --ink-800:#1A1D26; --ink-900:#0C0E14;
-  --shadow-sm:0 2px 6px rgba(20,30,60,.06),0 1px 2px rgba(20,30,60,.04);
-  --shadow-md:0 8px 20px rgba(20,30,60,.08),0 2px 4px rgba(20,30,60,.04);
-  --shadow-lg:0 18px 40px rgba(20,30,60,.10),0 4px 8px rgba(20,30,60,.04);
-  --glow-brand:0 16px 40px rgba(120,140,255,.30);
-  --r-md:14px; --r-lg:20px; --r-xl:28px; --r-2xl:36px; --r-pill:999px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Onest',system-ui,sans-serif; font-weight:300;
-  color:var(--ink-900); background:var(--ink-50);
-  -webkit-font-smoothing:antialiased; line-height:1.55;
-}
-a{text-decoration:none;color:inherit}
-.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-
-/* NAV */
-.nav{position:sticky;top:0;z-index:50;background:rgba(247,248,251,.75);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-200)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
-.brand{display:flex;align-items:baseline;gap:10px}
-.brand .logo{font-weight:900;font-size:26px;letter-spacing:-.03em;
-  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent}
-.brand .tag{font-size:12px;color:var(--ink-500);font-weight:400;letter-spacing:.02em}
-.nav-links{display:flex;gap:8px;align-items:center}
-.nav-links a{font-size:14px;color:var(--ink-600);padding:8px 14px;border-radius:var(--r-pill);
-  font-weight:500;transition:background .15s,color .15s}
-.nav-links a:hover{background:var(--ink-100);color:var(--ink-900)}
-.nav-cta{background:var(--grad);color:#fff !important;box-shadow:var(--shadow-sm)}
-.nav-cta:hover{filter:brightness(1.07);background:var(--grad) !important}
-
-/* HERO */
-.hero{position:relative;overflow:hidden;background:var(--grad);
-  border-radius:0 0 var(--r-2xl) var(--r-2xl);color:#fff;
-  padding:96px 0 88px;margin-bottom:64px}
-.hero .blob{position:absolute;border-radius:50%;filter:blur(8px);opacity:.35}
-.hero .b1{width:420px;height:420px;background:#fff;top:-160px;right:-80px;opacity:.12}
-.hero .b2{width:300px;height:300px;background:#7ABCFF;bottom:-140px;left:-60px;opacity:.35}
-.hero .b3{width:180px;height:180px;background:#CBB0FF;top:40px;left:40%;opacity:.30}
-.hero-in{position:relative;z-index:2;text-align:center;max-width:760px;margin:0 auto}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:var(--r-pill);
-  font-size:13px;font-weight:500;letter-spacing:.02em;margin-bottom:24px}
-.hero h1{font-weight:900;letter-spacing:-.03em;line-height:1.03;
-  font-size:clamp(38px,6vw,68px);margin-bottom:20px}
-.hero p{font-weight:300;font-size:clamp(16px,2.2vw,20px);color:rgba(255,255,255,.92);
-  max-width:560px;margin:0 auto 36px}
-.search{position:relative;max-width:520px;margin:0 auto}
-.search svg{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:var(--ink-400)}
-.search input{width:100%;height:58px;border:none;border-radius:var(--r-pill);
-  padding:0 24px 0 54px;font-family:inherit;font-size:16px;font-weight:400;color:var(--ink-900);
-  box-shadow:var(--shadow-lg);outline:none}
-.search input::placeholder{color:var(--ink-400)}
-.search input:focus{box-shadow:var(--shadow-lg),0 0 0 4px rgba(255,255,255,.45)}
-.stats{display:flex;gap:36px;justify-content:center;margin-top:40px;flex-wrap:wrap}
-.stat .n{font-weight:800;font-size:30px;letter-spacing:-.02em}
-.stat .l{font-size:13px;color:rgba(255,255,255,.8);font-weight:400}
-
-/* SECTIONS */
-.section{margin-bottom:56px}
-.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
-.sec-ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;
-  background:var(--grad-soft);color:var(--blue)}
-.sec-ico svg{color:#7A45EB}
-.sec-head h2{font-weight:800;font-size:24px;letter-spacing:-.02em}
-.sec-head .count{font-size:13px;color:var(--ink-500);font-weight:400;
-  background:var(--ink-100);padding:3px 10px;border-radius:var(--r-pill)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.card{display:flex;align-items:flex-start;gap:14px;background:var(--ink-0);
-  border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);
-  transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s;position:relative}
-.card:hover{transform:translateY(-4px);box-shadow:var(--glow-brand)}
-.card .tile{flex:0 0 auto;width:42px;height:42px;border-radius:var(--r-md);
-  display:grid;place-items:center;background:var(--ink-100);color:var(--ink-600);transition:.18s}
-.card:hover .tile{background:var(--grad);color:#fff}
-.card .body h3{font-weight:600;font-size:16px;letter-spacing:-.01em;margin-bottom:3px;color:var(--ink-900)}
-.card .body p{font-size:13px;color:var(--ink-500);font-weight:400;line-height:1.45}
-.card .arrow{position:absolute;top:20px;right:18px;color:var(--ink-300);opacity:0;
-  transform:translateX(-4px);transition:.18s}
-.card:hover .arrow{opacity:1;transform:translateX(0);color:var(--blue)}
-.empty{display:none;text-align:center;color:var(--ink-500);padding:60px 0;font-size:16px}
-.card.flagship{background:var(--grad);box-shadow:var(--glow-brand)}
-.card.flagship .tile{background:rgba(255,255,255,.2);color:#fff}
-.card.flagship .body h3,.card.flagship .arrow{color:#fff}
-.card.flagship .body p{color:rgba(255,255,255,.85)}
-.card.flagship:hover .tile{background:rgba(255,255,255,.3);color:#fff}
-.card.archived{opacity:.55}
-.card.archived:hover{opacity:.85}
-.badge-archive{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;
-  text-transform:uppercase;padding:2px 8px;border-radius:var(--r-pill);
-  background:var(--ink-100);color:var(--ink-500);margin-left:7px;vertical-align:1px}
-
-/* FOOTER */
-footer{border-top:1px solid var(--ink-200);margin-top:72px;padding:40px 0 56px}
-.foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.foot-in .logo{font-weight:900;font-size:22px;letter-spacing:-.03em;
-  background:var(--grad-h);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.foot-in p{font-size:13px;color:var(--ink-500);font-weight:400}
-@media(max-width:640px){
-  .nav-links a:not(.nav-cta){display:none}
-  .hero{padding:72px 0 64px}
-  .stats{gap:24px}
-}
-</style>
+<link rel="stylesheet" href="assets/hub.css">
 </head>
-<body>
+<body data-page="home" data-root="">
 
 <nav class="nav">
   <div class="wrap nav-in">
-    <div class="brand">
-      <span class="logo">magic</span>
-      <span class="tag">база знань</span>
-    </div>
+    <a class="brand" href="./"><span class="logo">magic</span><span class="tag">база знань</span></a>
     <div class="nav-links">
-      <a href="#growth-development">Розвиток Growth</a>
-      <a href="#growth-marketer">Growth Marketer</a>
-      <a href="#meetings">Зустрічі</a>
-      <a href="#reports">Звіти</a>
-      <a class="nav-cta" href="https://github.com/ceo864" target="_blank" rel="noopener">GitHub</a>
+      <a href="about/">Про агенцію</a>
+      <a href="growth/">Growth Marketer</a>
+      <a href="skills/">Навички</a>
+      <a href="hr/">HR</a>
+      <a href="files/">Файли</a>
+      <a class="nav-cta" href="onboarding/">Онбординг</a>
     </div>
   </div>
 </nav>
 
-<header class="hero">
-  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+<header class="hero center">
+  <div class="hero-bg"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
   <div class="wrap hero-in">
-    <span class="eyebrow"><i data-lucide="sparkles" style="width:15px;height:15px"></i> Magic Framework</span>
-    <h1>База знань агенції</h1>
-    <p>Єдиний вхід до всіх документів, SOP, плейбуків і процесів команди. Знайди потрібне за секунди.</p>
+    <span class="eyebrow">Magic Framework · внутрішня база знань</span>
+    <h1>Усе, що треба знати, щоб працювати в Magic</h1>
+    <p class="sub">Як ми працюємо, за що відповідає кожна роль і як робити роботу добре — в одному місці.</p>
     <div class="search">
-      <i data-lucide="search" style="width:20px;height:20px"></i>
-      <input id="q" type="text" placeholder="Пошук документа: онбординг, SOP, звіт..." autocomplete="off">
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="n" id="totalCount">23</div><div class="l">документи</div></div>
-      <div class="stat"><div class="n">5</div><div class="l">напрямів</div></div>
-      <div class="stat"><div class="n">1</div><div class="l">точка входу</div></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Пошук по всіх документах: ROAS, відпустка, креатив…" autocomplete="off" aria-label="Пошук">
+      <div class="results" id="results"></div>
     </div>
   </div>
 </header>
 
-<main class="wrap" id="content"></main>
+<main class="wrap">
+  <div class="start" id="start"></div>
 
-<div class="wrap"><p class="empty" id="empty">Нічого не знайдено. Спробуй інший запит.</p></div>
+  <section class="section" id="categories">
+    <div class="sec-head">
+      <div class="sec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></div>
+      <h2>Розділи</h2>
+      <span class="count"><span id="docCount">—</span> документів</span>
+    </div>
+    <div class="cats" id="cats"></div>
+  </section>
+</main>
 
 <footer>
   <div class="wrap foot-in">
@@ -169,89 +59,11 @@ footer{border-top:1px solid var(--ink-200);margin-top:72px;padding:40px 0 56px}
       <span class="logo">magic</span>
       <p>Агенція, що масштабує інтернет-магазини авторською методологією Magic Framework.</p>
     </div>
-    <p>Внутрішня база знань · оновлюється командою</p>
+    <p>Внутрішня база знань · оновлюється командою · натисни «/» для пошуку</p>
   </div>
 </footer>
 
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-const DATA = [
-  {cat:"growth-development", ico:"trending-up", title:"Розвиток Growth", repos:[
-    {t:"Розвиток Growth Marketer", d:"Карта розвитку ролі: пак моделей, карта знань, кар'єрні сходи, план навчання", r:"growth-development", i:"route", flagship:true},
-  ]},
-  {cat:"growth-marketer", ico:"compass", title:"Growth Marketer: адаптація й інструменти", repos:[
-    {t:"Growth Marketer — регламент ролі (v3)", d:"Посадова інструкція, взаємодія, звітність 5F3T", r:"growth-marketer", i:"sparkles", flagship:true},
-    {t:"SOP: продакшн креативів", d:"Стандарт виробництва креативів", r:"magic-creative-production-sop", i:"clapperboard"},
-    {t:"SOP: тестування креативів", d:"Як тестуємо гіпотези", r:"magic-sop-creative-testing", i:"flask-conical"},
-    {t:"SOP: фреймворк UAM", d:"Процеси User Acquisition", r:"magic-sop-framework-uam", i:"target"},
-    {t:"Плейбук: креативні кути", d:"Бібліотека кутів для креативів", r:"magic-creative-angles-playbook", i:"drafting-compass"},
-    {t:"Плейбук: пошук інсайтів", d:"Джерела натхнення й ідей", r:"magic-sop-inspiration-playbook-", i:"lightbulb"},
-    {t:"Сходинки усвідомленості", d:"Awareness ladder аудиторії", r:"magic-awareness-ladder", i:"trending-up"},
-    {t:"Дерево рішень: структура кампаній", d:"Як будувати структуру", r:"magic-decision-tree-campaign-structure", i:"git-branch"},
-    {t:"Матриця: втома креативів", d:"Коли й що міняти", r:"magic-decision-matrix-creative-fatigue", i:"grid-3x3"},
-    {t:"Специфікації платформ", d:"Розміри й формати", r:"magic-platform-specs-cheatsheet", i:"ruler"},
-    {t:"Чеклісти креативів", d:"Контроль якості", r:"magic-creative-checklists", i:"clipboard-check"},
-    {t:"Growth-матриця компетенцій", d:"10 напрямків × 3 рівні володіння (PDF, Drive)", ext:"https://drive.google.com/file/d/1KpJs2HwMiD959-yVUXJp5OPhChuLFg0q/view", i:"grid-2x2"},
-  ]},
-  {cat:"meetings", ico:"calendar", title:"Зустрічі та агенди", repos:[
-    {t:"Агенда: Growth", d:"Growth-синки", r:"magic-agenda_growth", i:"rocket"},
-    {t:"Growth Report", d:"Звітна зустріч Growth Marketers із CEO (5F3T)", r:"growth-report", i:"presentation"},
-  ]},
-  {cat:"reports", ico:"bar-chart-3", title:"Звіти, аналітика, прогнози", repos:[
-    {t:"Висновки у звітах", d:"Як писати висновки", r:"magic-vysnovky-u-zvitakh", i:"pen-line"},
-    {t:"Growth Base", d:"База зростання", r:"growth_base", i:"database"},
-    {t:"Growth Dashboard — повний довідник", d:"Як влаштований борд клієнтів: метрики, формули, навчальне відео", r:"growth-dashboard", i:"layout-dashboard"},
-  ]},
-];
-
-const content = document.getElementById('content');
-let total = 0;
-DATA.forEach(sec=>{
-  total += sec.repos.length;
-  const s = document.createElement('section');
-  s.className='section'; s.id=sec.cat; s.dataset.cat=sec.cat;
-  s.innerHTML = `
-    <div class="sec-head">
-      <div class="sec-ico"><i data-lucide="${sec.ico}" style="width:22px;height:22px"></i></div>
-      <h2>${sec.title}</h2>
-      <span class="count">${sec.repos.length}</span>
-    </div>
-    <div class="grid">
-      ${sec.repos.map(c=>{
-        const cls = ['card', c.flagship && 'flagship', c.archived && 'archived'].filter(Boolean).join(' ');
-        const href = c.ext ? c.ext : `${c.r}/`;
-        const target = c.ext ? ' target="_blank" rel="noopener"' : '';
-        const badge = c.archived ? '<span class="badge-archive">Архів</span>' : '';
-        return `
-        <a class="${cls}" href="${href}"${target} data-name="${(c.t+' '+c.d).toLowerCase()}">
-          <div class="tile"><i data-lucide="${c.i}" style="width:20px;height:20px"></i></div>
-          <div class="body"><h3>${c.t}${badge}</h3><p>${c.d}</p></div>
-          <i class="arrow" data-lucide="arrow-up-right" style="width:18px;height:18px"></i>
-        </a>`;}).join('')}
-    </div>`;
-  content.appendChild(s);
-});
-document.getElementById('totalCount').textContent = total;
-
-const q = document.getElementById('q');
-const empty = document.getElementById('empty');
-q.addEventListener('input', ()=>{
-  const term = q.value.trim().toLowerCase();
-  let anyVisible = false;
-  document.querySelectorAll('section.section').forEach(sec=>{
-    let secVisible = false;
-    sec.querySelectorAll('.card').forEach(card=>{
-      const match = card.dataset.name.includes(term);
-      card.style.display = match ? '' : 'none';
-      if(match) secVisible = true;
-    });
-    sec.style.display = secVisible ? '' : 'none';
-    if(secVisible) anyVisible = true;
-  });
-  empty.style.display = anyVisible ? 'none' : 'block';
-});
-
-lucide.createIcons();
-</script>
+<script src="assets/catalog.js"></script>
+<script src="assets/hub.js"></script>
 </body>
 </html>
