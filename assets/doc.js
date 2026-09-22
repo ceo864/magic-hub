@@ -9,17 +9,19 @@
   s.onload = init;
   document.head.appendChild(s);
 
-  function myKey() {
-    var parts = location.pathname.split('/').filter(Boolean);
+  function myKey(H) {
+    var parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
     var last = parts[parts.length - 1] || '';
-    if (/\.html$/.test(last) && last !== 'index.html') return decodeURIComponent(parts.slice(-2).join('/'));
+    if (/\.html$/.test(last) && last !== 'index.html') return parts.slice(-2).join('/');
+    // Cloudflare Pages прибирає .html з адреси: /growth_base/rfm-guide → growth_base/rfm-guide.html
+    if (!location.pathname.endsWith('/') && parts.length >= 2 && H.DOCS[parts.slice(-2).join('/') + '.html']) return parts.slice(-2).join('/') + '.html';
     var dir = last === 'index.html' ? parts[parts.length - 2] : last;
-    return decodeURIComponent(dir) + '/';
+    return dir + '/';
   }
 
   function init() {
     var H = window.HUB; if (!H) return;
-    var key = myKey();
+    var key = myKey(H);
     if (!H.DOCS[key]) return;
     var KEY = 'magichub:done', done;
     try { done = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { done = {}; }
