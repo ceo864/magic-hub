@@ -7,8 +7,22 @@
    тільки змінені блоки назад у вихідний HTML, решта файлу лишається як була. */
 (function () {
   var REPO = 'ceo864/magic-hub', BRANCH = 'main', TK = 'magichub:gh';
-  var SEL = 'h1,h2,h3,h4,h5,h6,p,li,td,th,dt,dd,blockquote,figcaption,.chip';
-  var BLOCKERS = 'input,select,textarea,button,canvas,iframe,video,script';
+  // Блокові елементи: якщо такий є всередині — це контейнер, а не текстовий блок
+  var BLOCKY = 'p,div,section,article,aside,header,footer,nav,main,ul,ol,li,table,thead,tbody,tfoot,tr,td,th,' +
+    'dl,dt,dd,h1,h2,h3,h4,h5,h6,blockquote,figure,figcaption,form,input,select,textarea,button,canvas,iframe,video,pre,hr';
+  var SKIP = '.mhd,.mh-top,.mh-modal,[data-mh-skip],script,style,title,option,svg';
+
+  // Чи має елемент власний текст (а не лише текст усередині дітей)
+  function ownText(el) {
+    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) return true;
+    return false;
+  }
+  // Усі непорожні текстові вузли всередині елемента, по порядку
+  function textNodes(doc, root) {
+    var w = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), a = [], n;
+    while ((n = w.nextNode())) if (n.nodeValue.trim()) a.push(n);
+    return a;
+  }
 
   function norm(s) { return s.replace(/\s+/g, ' ').trim(); }
   function b64dec(s) {
@@ -175,20 +189,22 @@
   // Спільна частина: зіставляємо живу сторінку з вихідним HTML і вмикаємо редагування
   function prepare(opt, src, sha, commit) {
     var pdoc = new DOMParser().parseFromString(src, 'text/html');
-    var items = [];
-    [].forEach.call(document.body.querySelectorAll(SEL), function (el) {
-      if (el.closest('.mhd,.mh-top,.mh-modal,[data-mh-skip]')) return;
-      if (el.querySelector(SEL) || el.querySelector(BLOCKERS)) return;
-      if (!norm(el.textContent)) return;
+    var items = [], skipped = 0;
+    [].forEach.call(document.body.querySelectorAll('*'), function (el) {
+      if (!ownText(el)) return;
+      if (el.closest(SKIP)) return;
+      if (el.querySelector(BLOCKY)) return;
       var pel = at(pdoc.body, pathOf(el, document.body));
-      if (!pel || pel.tagName !== el.tagName || norm(pel.innerHTML) !== norm(el.innerHTML)) return;
+      if (!pel || pel.tagName !== el.tagName) { skipped++; return; }
+      // Текст має збігатися з вихідним — тоді ми впевнені, що блок не намальовано скриптом
+      if (norm(pel.textContent) !== norm(el.textContent)) { skipped++; return; }
       items.push({ el: el, pel: pel, orig: el.innerHTML, hadStyle: /style=/.test(pel.innerHTML) });
     });
     if (!items.length) return toast('На цій сторінці немає тексту, який можна безпечно правити тут.', 5000);
-    enter(items, pdoc, sha, opt, commit);
+    enter(items, pdoc, sha, opt, commit, skipped);
   }
 
-  function enter(items, pdoc, sha, opt, commit) {
+  function enter(items, pdoc, sha, opt, commit, skipped) {
     document.body.classList.add('mh-editing');
     var bar = document.createElement('div'); bar.className = 'mh-top';
     bar.innerHTML = '<span class="mh-t"><b>Режим редагування.</b> Клацніть на текст у рамці й правте. Shift+Enter — новий рядок, Cmd/Ctrl+B — жирний.</span>' +
@@ -244,7 +260,18 @@
     save.onclick = function () {
       var ch = changed(); if (!ch.length) return;
       save.disabled = true; save.textContent = 'Зберігаю…';
-      ch.forEach(function (i) { i.pel.innerHTML = clean(i.el.innerHTML, i.hadStyle); });
+      var failed = 0;
+      ch.forEach(function (i) {
+        var live = textNodes(document, i.el), pris = textNodes(pdoc, i.pel);
+        if (live.length === pris.length) {                    // звичайний випадок: міняємо лише текст
+          for (var k = 0; k < live.length; k++) pris[k].nodeValue = live[k].nodeValue;
+        } else if (!/<svg|data-lucide/i.test(i.pel.innerHTML) && !/<svg|data-lucide/i.test(i.el.innerHTML)) {
+          i.pel.innerHTML = clean(i.el.innerHTML, i.hadStyle); // змінилось форматування, іконок немає
+        } else {
+          failed++;                                           // іконки + змінена структура — не чіпаємо
+        }
+      });
+      if (failed) toast(failed + ' блок(и) з іконками не збереглись: приберіть зміну форматування всередині них.', 7000);
       [].forEach.call(pdoc.querySelectorAll('.chip'), function (c) {
         if (/^\s*Оновлено/.test(c.textContent) && !c.querySelector('*')) c.textContent = 'Оновлено: ' + today();
       });
@@ -264,7 +291,8 @@
         });
     };
     refresh();
-    toast('Можна редагувати ' + items.length + ' текстових блоків.', 2500);
+    toast('Можна редагувати ' + items.length + ' текстових блоків' +
+      (skipped ? '. Ще ' + skipped + ' малює скрипт — їх правлю не тут' : '') + '.', 3000);
   }
 
   window.MHEditor = { start: start };
