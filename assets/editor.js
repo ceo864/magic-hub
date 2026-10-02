@@ -71,7 +71,7 @@
       '<li>Repository access → <b>Only select repositories</b> → <code>magic-hub</code>.</li>' +
       '<li>Permissions → Repository → <b>Contents: Read and write</b>. Більше нічого не вмикайте.</li>' +
       '<li>Generate token → скопіюйте і вставте сюди.</li></ol>' +
-      '<input type="password" placeholder="github_pat_…" autocomplete="off">' +
+      '<input type="text" inputmode="text" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" name="mh-token-' + Date.now() + '" placeholder="github_pat_…">' +
       '<div class="mh-err"></div>' +
       '<div class="mh-note">Токен зберігається лише в цьому браузері і дає доступ тільки до репозиторію бази знань.</div>' +
       '<div class="mh-row"><button class="mh-b mh-x">Скасувати</button><button class="mh-b mh-save">Підключити</button></div></div>';
@@ -81,10 +81,18 @@
     m.querySelector('.mh-x').onclick = function () { m.remove(); };
     function go() {
       var t = inp.value.trim(); if (!t) return;
+      if (t.length < 40) {
+        err.textContent = 'Це не схоже на ключ: усього ' + t.length + ' символів, а має бути близько 90. Скопіюйте ключ кнопкою копіювання на сторінці GitHub і вставте сюди.';
+        return;
+      }
+      if (!/^(github_pat_|ghp_)/.test(t)) {
+        err.textContent = 'Ключ має починатися з github_pat_ — схоже, вставилось щось інше.';
+        return;
+      }
       err.textContent = 'Перевіряю…';
       fetch(api + '?ref=' + BRANCH, { headers: { Authorization: 'Bearer ' + t, Accept: 'application/vnd.github+json' }, cache: 'no-store' })
         .then(function (r) {
-          if (r.status === 401) throw 'Токен не приймається. Перевірте, що скопіювали його повністю.';
+          if (r.status === 401) throw 'GitHub не прийняв ключ. Найчастіше це означає, що скопіювалась не вся його довжина або ключ уже видалено.';
           if (r.status === 404) throw 'Токен не бачить репозиторій magic-hub. Перевірте крок 3.';
           if (!r.ok) throw 'GitHub відповів помилкою ' + r.status + '.';
           setToken(t); m.remove(); done(t);
