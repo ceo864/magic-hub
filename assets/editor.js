@@ -20,7 +20,7 @@
   // Усі непорожні текстові вузли всередині елемента, по порядку
   function textNodes(doc, root) {
     var w = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), a = [], n;
-    while ((n = w.nextNode())) if (n.nodeValue.trim()) a.push(n);
+    while ((n = w.nextNode())) if (n.nodeValue.trim() && !(n.parentElement && n.parentElement.closest('[data-mh-ui]'))) a.push(n);
     return a;
   }
 
@@ -67,7 +67,11 @@
     '.mh-card .mh-b{color:#0C0E14;background:#EEF1F6} .mh-card .mh-b.mh-save{color:#fff;background:linear-gradient(135deg,#38A0FF,#AA7AFF)}' +
     '.mh-err{color:#C0323B;font-size:13.5px;margin-top:8px;min-height:1em} .mh-note{font-size:12.5px;color:#6E7687;margin-top:10px}' +
     '.mh-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:10003;background:#0C0E14;color:#fff;padding:12px 20px;border-radius:999px;font:500 14px Onest,system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:calc(100vw - 32px);text-align:center}' +
-    '@media print{.mh-top,.mh-toast{display:none}}';
+    '.mh-tools{position:absolute;z-index:10001;display:none;gap:4px;background:#0C0E14;padding:4px;border-radius:999px;box-shadow:0 6px 18px rgba(12,14,20,.3)}' +
+    '.mh-tools.on{display:flex}' +
+    '.mh-tb{all:unset;cursor:pointer;width:26px;height:26px;border-radius:50%;color:#fff;display:grid;place-items:center;font:700 15px/1 Onest,system-ui,sans-serif}' +
+    '.mh-tb:hover{background:rgba(255,255,255,.18)}' +
+    '@media print{.mh-top,.mh-toast,.mh-tools{display:none}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
   function toast(t, ms) {
@@ -187,60 +191,142 @@
   }
 
   // Спільна частина: зіставляємо живу сторінку з вихідним HTML і вмикаємо редагування
-  function prepare(opt, src, sha, commit) {
-    var pdoc = new DOMParser().parseFromString(src, 'text/html');
-    var items = [], skipped = 0;
+  var origMap = new WeakMap();   // початковий текст блоку
+  var pairMap = new WeakMap();   // блок у сторінці → відповідний блок у вихідному файлі
+
+  function scan(pdoc, counters) {
+    var cand = [];
     [].forEach.call(document.body.querySelectorAll('*'), function (el) {
       if (!ownText(el)) return;
       if (el.closest(SKIP)) return;
       if (el.querySelector(BLOCKY)) return;
-      var pel = at(pdoc.body, pathOf(el, document.body));
-      if (!pel || pel.tagName !== el.tagName) { skipped++; return; }
-      // Текст має збігатися з вихідним — тоді ми впевнені, що блок не намальовано скриптом
-      if (norm(pel.textContent) !== norm(el.textContent)) { skipped++; return; }
-      items.push({ el: el, pel: pel, orig: el.innerHTML, hadStyle: /style=/.test(pel.innerHTML) });
+      cand.push(el);
     });
-    if (!items.length) return toast('На цій сторінці немає тексту, який можна безпечно правити тут.', 5000);
-    enter(items, pdoc, sha, opt, commit, skipped);
+    // лишаємо тільки зовнішній блок: <b> усередині абзацу правиться разом з абзацом
+    var set = new Set(cand);
+    var outer = cand.filter(function (el) {
+      for (var p = el.parentElement; p; p = p.parentElement) if (set.has(p)) return false;
+      return true;
+    });
+    var items = [];
+    outer.forEach(function (el) {
+      var pel = pairMap.get(el);   // вже зіставляли — не звіряємо вдруге, бо текст міг змінитись
+      if (!pel) {
+        pel = at(pdoc.body, pathOf(el, document.body));
+        if (!pel || pel.tagName !== el.tagName) { if (counters) counters.skipped++; return; }
+        // Текст має збігатися з вихідним — тоді ми впевнені, що блок не намальовано скриптом
+        if (norm(pel.textContent) !== norm(el.textContent)) { if (counters) counters.skipped++; return; }
+        pairMap.set(el, pel);
+      }
+      if (!origMap.has(el)) origMap.set(el, el.innerHTML);
+      items.push({ el: el, pel: pel, hadStyle: /style=/.test(pel.innerHTML) });
+    });
+    return items;
   }
 
-  function enter(items, pdoc, sha, opt, commit, skipped) {
+  function prepare(opt, src, sha, commit) {
+    var pdoc = new DOMParser().parseFromString(src, 'text/html');
+    var c = { skipped: 0 };
+    var items = scan(pdoc, c);
+    if (!items.length) return toast('На цій сторінці немає тексту, який можна безпечно правити тут.', 5000);
+    enter(pdoc, sha, opt, commit, c.skipped);
+  }
+
+  function enter(pdoc, sha, opt, commit, skipped) {
     document.body.classList.add('mh-editing');
-    var bar = document.createElement('div'); bar.className = 'mh-top';
-    bar.innerHTML = '<span class="mh-t"><b>Режим редагування.</b> Клацніть на текст у рамці й правте. Shift+Enter — новий рядок, Cmd/Ctrl+B — жирний.</span>' +
+    var items = [], dirty = 0;
+
+    var bar = document.createElement('div'); bar.className = 'mh-top'; bar.setAttribute('data-mh-ui', '');
+    bar.innerHTML = '<span class="mh-t"><b>Режим редагування.</b> Клацніть на текст у рамці й правте. ' +
+      'Біля пунктів списку наведіть мишу — зʼявляться кнопки «＋» і «×».</span>' +
       '<span class="mh-n">0 змін</span><button class="mh-b mh-save" disabled>Зберегти</button>' +
-      '<button class="mh-b mh-cancel">Скасувати</button><button class="mh-b mh-out" title="Забути токен у цьому браузері">Вийти</button>';
+      '<button class="mh-b mh-cancel">Скасувати</button><button class="mh-b mh-out" title="Вийти з режиму редактора">Вийти</button>';
     document.body.appendChild(bar);
     var nEl = bar.querySelector('.mh-n'), save = bar.querySelector('.mh-save');
 
-    function changed() { return items.filter(function (i) { return i.el.innerHTML !== i.orig; }); }
+    // кнопки «додати / видалити пункт» — плавають біля того пункту, на який навели мишу
+    var tools = document.createElement('div'); tools.className = 'mh-tools'; tools.setAttribute('data-mh-ui', '');
+    tools.innerHTML = '<button class="mh-tb" data-act="add" title="Додати пункт нижче">＋</button>' +
+      '<button class="mh-tb" data-act="del" title="Видалити цей пункт">×</button>';
+    document.body.appendChild(tools);
+    var curLi = null;
+
+    function changed() { return items.filter(function (i) { return i.el.innerHTML !== origMap.get(i.el); }); }
     function refresh() {
       var n = changed().length;
-      nEl.textContent = n + (n === 1 ? ' зміна' : n > 1 && n < 5 ? ' зміни' : ' змін');
-      save.disabled = !n;
-      items.forEach(function (i) { i.el.classList.toggle('mh-ch', i.el.innerHTML !== i.orig); });
+      nEl.textContent = dirty || n
+        ? (n ? n + (n === 1 ? ' зміна' : n > 1 && n < 5 ? ' зміни' : ' змін') : '') + (dirty ? (n ? ' + ' : '') + dirty + ' у списках' : '')
+        : '0 змін';
+      save.disabled = !n && !dirty;
+      items.forEach(function (i) { i.el.classList.toggle('mh-ch', i.el.innerHTML !== origMap.get(i.el)); });
     }
-    items.forEach(function (i) {
-      i.el.setAttribute('contenteditable', 'true'); i.el.classList.add('mh-ed');
-      i.el.addEventListener('input', refresh);
-      i.el.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); i.el.blur(); } });
-      i.el.addEventListener('paste', function (e) {
-        e.preventDefault();
-        var t = (e.clipboardData || window.clipboardData).getData('text/plain');
-        document.execCommand('insertText', false, t);
-      });
+    function remap() {
+      items = scan(pdoc);
+      items.forEach(function (i) { i.el.setAttribute('contenteditable', 'true'); i.el.classList.add('mh-ed'); });
+      refresh();
+    }
+    remap();
+
+    // один набір слухачів на документ — щоб нові пункти працювали без переприсвоєння
+    function inEd(e) { return e.target && e.target.closest ? e.target.closest('.mh-ed') : null; }
+    document.addEventListener('input', function (e) { if (inEd(e)) refresh(); }, true);
+    document.addEventListener('keydown', function (e) {
+      var el = inEd(e); if (!el) return;
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); }
+    }, true);
+    document.addEventListener('paste', function (e) {
+      if (!inEd(e)) return;
+      e.preventDefault();
+      var t = (e.clipboardData || window.clipboardData).getData('text/plain');
+      document.execCommand('insertText', false, t);
+    }, true);
+    document.addEventListener('mouseover', function (e) {
+      if (!e.target.closest) return;
+      if (e.target.closest('.mh-tools')) return;
+      var li = e.target.closest('li.mh-ed');
+      if (!li) { tools.classList.remove('on'); return; }
+      curLi = li;
+      var r = li.getBoundingClientRect();
+      tools.style.top = (r.top + window.scrollY - 3) + 'px';
+      tools.style.left = (r.right + window.scrollX + 10) + 'px';
+      tools.classList.add('on');
     });
-    function blockLinks(e) { if (e.target.closest('a') && !e.target.closest('.mh-top,.mh-modal,.mhd')) e.preventDefault(); }
+
+    tools.addEventListener('click', function (e) {
+      var b = e.target.closest('.mh-tb'); if (!b || !curLi) return;
+      var i = items.filter(function (x) { return x.el === curLi; })[0];
+      if (!i) return toast('Цей пункт не зіставився з файлом — оновіть сторінку.', 4000);
+
+      if (b.getAttribute('data-act') === 'add') {
+        var nl = document.createElement(curLi.tagName); nl.textContent = 'Новий пункт';
+        var np = pdoc.createElement(i.pel.tagName); np.textContent = 'Новий пункт';
+        curLi.insertAdjacentElement('afterend', nl);
+        i.pel.insertAdjacentElement('afterend', np);
+        pairMap.set(nl, np);
+        dirty++; remap();
+        nl.focus();
+        var rg = document.createRange(); rg.selectNodeContents(nl);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(rg);
+      } else {
+        if (curLi.parentNode.children.length < 2) return toast('Це єдиний пункт списку — краще виправте його текст.', 4000);
+        if (!confirm('Видалити пункт «' + curLi.textContent.trim().slice(0, 60) + '»?')) return;
+        i.pel.remove(); curLi.remove();
+        dirty++; remap();
+      }
+      tools.classList.remove('on');
+    });
+
+    function blockLinks(e) { if (e.target.closest('a') && !e.target.closest('[data-mh-ui],.mhd')) e.preventDefault(); }
     document.addEventListener('click', blockLinks, true);
-    function leaveGuard(e) { if (changed().length) { e.preventDefault(); e.returnValue = ''; } }
+    function leaveGuard(e) { if (changed().length || dirty) { e.preventDefault(); e.returnValue = ''; } }
     window.addEventListener('beforeunload', leaveGuard);
 
     bar.querySelector('.mh-cancel').onclick = function () {
-      if (changed().length && !confirm('Скасувати всі незбережені правки?')) return;
+      if ((changed().length || dirty) && !confirm('Скасувати всі незбережені правки?')) return;
       window.removeEventListener('beforeunload', leaveGuard); location.reload();
     };
     bar.querySelector('.mh-out').onclick = function () {
-      if (changed().length && !confirm('Є незбережені правки. Вийти без збереження?')) return;
+      if ((changed().length || dirty) && !confirm('Є незбережені правки. Вийти без збереження?')) return;
       setToken(null); window.removeEventListener('beforeunload', leaveGuard);
       location.href = '/api/logout?returnTo=' + encodeURIComponent(location.pathname);
     };
@@ -253,12 +339,13 @@
         [].forEach.call(t.content.querySelectorAll('font,span:not([class])'), function (e) { e.replaceWith.apply(e, [].slice.call(e.childNodes)); });
         [].forEach.call(t.content.querySelectorAll('[style]'), function (e) { e.removeAttribute('style'); });
       }
-      [].forEach.call(t.content.querySelectorAll('div'), function (e) { e.replaceWith(document.createElement('br'), ...e.childNodes); });
+      [].forEach.call(t.content.querySelectorAll('div'), function (e) { e.replaceWith.apply(e, [document.createElement('br')].concat([].slice.call(e.childNodes))); });
       return t.innerHTML.replace(/(<br>)+$/, '');
     }
 
     save.onclick = function () {
-      var ch = changed(); if (!ch.length) return;
+      var ch = changed();
+      if (!ch.length && !dirty) return;
       save.disabled = true; save.textContent = 'Зберігаю…';
       var failed = 0;
       ch.forEach(function (i) {
@@ -278,12 +365,13 @@
       if (!pdoc.querySelector('meta[charset]')) { var mc = pdoc.createElement('meta'); mc.setAttribute('charset', 'UTF-8'); pdoc.head.insertBefore(mc, pdoc.head.firstChild); }
       var out = '<!DOCTYPE html>\n' + pdoc.documentElement.outerHTML + '\n';
       var title = (window.HUB && window.HUB.DOCS[opt.key] && window.HUB.DOCS[opt.key].t) || document.title;
-      commit(out, sha, 'Правка документа «' + title + '» через редактор хабу (' + ch.length + ' блок.)')
+      var what = (ch.length ? ch.length + ' блок.' : '') + (dirty ? (ch.length ? ', ' : '') + dirty + ' у списках' : '');
+      commit(out, sha, 'Правка документа «' + title + '» через редактор хабу (' + what + ')')
         .then(function (newSha) {
           if (newSha) sha = newSha;
-          ch.forEach(function (i) { i.orig = i.el.innerHTML; });
-          refresh(); save.textContent = 'Зберегти';
-          toast('Збережено. На сайті з\'явиться приблизно за хвилину.', 5000);
+          items.forEach(function (i) { origMap.set(i.el, i.el.innerHTML); });
+          dirty = 0; refresh(); save.textContent = 'Зберегти';
+          toast('Збережено. На сайті зʼявиться приблизно за хвилину.', 5000);
         })
         .catch(function (e) {
           save.textContent = 'Зберегти'; refresh();
