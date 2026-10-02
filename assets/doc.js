@@ -69,7 +69,7 @@
 
     // Редагування: кнопка з'являється в того, хто хоч раз підключив токен, або за адресою з ?edit
     var editor = false;
-    try { editor = !!localStorage.getItem('magichub:gh'); } catch (e) {}
+    try { editor = !!localStorage.getItem('magichub:gh') || localStorage.getItem('magichub:editor') === '1'; } catch (e) {}
     var wantEdit = /[?&]edit\b/.test(location.search);
     if (editor || wantEdit) {
       var eb = document.createElement('button'); eb.className = 'mhd-edit';

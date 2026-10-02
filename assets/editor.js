@@ -102,38 +102,93 @@
     inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
   }
 
+  /* ── вікно входу ───────────────────────────────────── */
+  function askLogin() {
+    var m = document.createElement('div'); m.className = 'mh-modal';
+    m.innerHTML = '<div class="mh-card"><h3>Вхід для редагування</h3>' +
+      '<p style="margin:0 0 16px;color:#4B5160;font-size:14px">Увійдіть своїм акаунтом GitHub — правки зберігатимуться від вашого імені. ' +
+      'Вставляти ключі більше не потрібно.</p>' +
+      '<div class="mh-row"><button class="mh-b mh-x">Скасувати</button>' +
+      '<a class="mh-b mh-save" href="/api/login?returnTo=' + encodeURIComponent(location.pathname + location.search) + '">Увійти через GitHub</a></div></div>';
+    document.body.appendChild(m);
+    m.querySelector('.mh-x').onclick = function () { m.remove(); };
+  }
+
   /* ── основне ─────────────────────────────────────────── */
   function start(opt) {
     if (document.body.classList.contains('mh-editing')) return;
     var file = opt.key.slice(-1) === '/' ? opt.key + 'index.html' : opt.key;
+
+    fetch('/api/me', { cache: 'no-store', credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; }, function () { return null; })
+      .then(function (me) {
+        if (me && me.configured && me.auth && me.canWrite) return viaServer(opt, file, me);
+        if (me && me.configured && me.auth && !me.canWrite) { try { localStorage.removeItem('magichub:editor'); } catch (e) {} return toast('Акаунт ' + me.login + ' не має права змінювати базу знань.', 6000); }
+        if (me && me.configured) return askLogin();
+        viaToken(opt, file); // вхід ще не налаштовано — старий спосіб з ключем
+      });
+  }
+
+  // Режим із входом: усе через наш сервер, ключ у браузер не потрапляє
+  function viaServer(opt, file, me) {
+    try { localStorage.setItem('magichub:editor', '1'); } catch (e) {}
+    toast('Відкриваю документ, ' + (me.name || me.login) + '…', 1500);
+    fetch('/api/doc?path=' + encodeURIComponent(file), { cache: 'no-store', credentials: 'same-origin' })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j.error || 'Помилка ' + r.status; return j; }); })
+      .then(function (j) {
+        prepare(opt, b64dec(j.content), j.sha, function (out, sha, msg) {
+          return fetch('/api/doc', {
+            method: 'PUT', credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path: file, content: b64enc(out), sha: sha, message: msg })
+          }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j.error || 'Помилка ' + r.status; return j.sha; }); });
+        });
+      })
+      .catch(function (e) { toast(typeof e === 'string' ? e : 'Немає зв\'язку з сервером.', 6000); });
+  }
+
+  // Запасний режим: особистий ключ GitHub у цьому браузері
+  function viaToken(opt, file) {
     var api = 'https://api.github.com/repos/' + REPO + '/contents/' + file.split('/').map(encodeURIComponent).join('/');
     var token = getToken();
-    if (!token) return askToken(api, function () { start(opt); });
-
+    if (!token) return askToken(api, function () { viaToken(opt, file); });
     var H = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' };
     toast('Відкриваю документ для редагування…', 1500);
     fetch(api + '?ref=' + BRANCH, { headers: H, cache: 'no-store' }).then(function (r) {
-      if (r.status === 401) { setToken(null); throw 'Токен більше не діє — підключіть новий.'; }
+      if (r.status === 401) { setToken(null); throw 'Ключ більше не діє — підключіть новий.'; }
       if (!r.ok) throw 'Не вдалося завантажити документ з GitHub (' + r.status + ').';
       return r.json();
     }).then(function (j) {
-      var src = b64dec(j.content), sha = j.sha;
-      var pdoc = new DOMParser().parseFromString(src, 'text/html');
-      var items = [];
-      [].forEach.call(document.body.querySelectorAll(SEL), function (el) {
-        if (el.closest('.mhd,.mh-top,.mh-modal,[data-mh-skip]')) return;
-        if (el.querySelector(SEL) || el.querySelector(BLOCKERS)) return;
-        if (!norm(el.textContent)) return;
-        var pel = at(pdoc.body, pathOf(el, document.body));
-        if (!pel || pel.tagName !== el.tagName || norm(pel.innerHTML) !== norm(el.innerHTML)) return;
-        items.push({ el: el, pel: pel, orig: el.innerHTML, hadStyle: /style=/.test(pel.innerHTML) });
+      prepare(opt, b64dec(j.content), j.sha, function (out, sha, msg) {
+        return fetch(api, { method: 'PUT', headers: H, body: JSON.stringify({ message: msg, content: b64enc(out), sha: sha, branch: BRANCH }) })
+          .then(function (r) {
+            if (r.status === 409 || r.status === 422) throw 'Документ щойно змінив хтось інший. Оновіть сторінку і внесіть правку ще раз.';
+            if (r.status === 401) { setToken(null); throw 'Ключ більше не діє — підключіть новий.'; }
+            if (r.status === 403 || r.status === 404) throw 'У ключа немає права запису.';
+            if (!r.ok) throw 'GitHub не прийняв збереження (' + r.status + ').';
+            return r.json().then(function (j) { return j.content.sha; });
+          });
       });
-      if (!items.length) throw 'На цій сторінці немає тексту, який можна безпечно правити тут.';
-      enter(items, pdoc, sha, api, H, opt);
     }).catch(function (e) { toast(typeof e === 'string' ? e : 'Немає зв\'язку з GitHub.', 5000); });
   }
 
-  function enter(items, pdoc, sha, api, H, opt) {
+  // Спільна частина: зіставляємо живу сторінку з вихідним HTML і вмикаємо редагування
+  function prepare(opt, src, sha, commit) {
+    var pdoc = new DOMParser().parseFromString(src, 'text/html');
+    var items = [];
+    [].forEach.call(document.body.querySelectorAll(SEL), function (el) {
+      if (el.closest('.mhd,.mh-top,.mh-modal,[data-mh-skip]')) return;
+      if (el.querySelector(SEL) || el.querySelector(BLOCKERS)) return;
+      if (!norm(el.textContent)) return;
+      var pel = at(pdoc.body, pathOf(el, document.body));
+      if (!pel || pel.tagName !== el.tagName || norm(pel.innerHTML) !== norm(el.innerHTML)) return;
+      items.push({ el: el, pel: pel, orig: el.innerHTML, hadStyle: /style=/.test(pel.innerHTML) });
+    });
+    if (!items.length) return toast('На цій сторінці немає тексту, який можна безпечно правити тут.', 5000);
+    enter(items, pdoc, sha, opt, commit);
+  }
+
+  function enter(items, pdoc, sha, opt, commit) {
     document.body.classList.add('mh-editing');
     var bar = document.createElement('div'); bar.className = 'mh-top';
     bar.innerHTML = '<span class="mh-t"><b>Режим редагування.</b> Клацніть на текст у рамці й правте. Shift+Enter — новий рядок, Cmd/Ctrl+B — жирний.</span>' +
@@ -170,7 +225,8 @@
     };
     bar.querySelector('.mh-out').onclick = function () {
       if (changed().length && !confirm('Є незбережені правки. Вийти без збереження?')) return;
-      setToken(null); window.removeEventListener('beforeunload', leaveGuard); location.reload();
+      setToken(null); window.removeEventListener('beforeunload', leaveGuard);
+      location.href = '/api/logout?returnTo=' + encodeURIComponent(location.pathname);
     };
 
     function clean(html, hadStyle) {
@@ -195,24 +251,17 @@
       if (!pdoc.querySelector('meta[charset]')) { var mc = pdoc.createElement('meta'); mc.setAttribute('charset', 'UTF-8'); pdoc.head.insertBefore(mc, pdoc.head.firstChild); }
       var out = '<!DOCTYPE html>\n' + pdoc.documentElement.outerHTML + '\n';
       var title = (window.HUB && window.HUB.DOCS[opt.key] && window.HUB.DOCS[opt.key].t) || document.title;
-      fetch(api, {
-        method: 'PUT', headers: H,
-        body: JSON.stringify({ message: 'Правка документа «' + title + '» через редактор хабу (' + ch.length + ' блок.)', content: b64enc(out), sha: sha, branch: BRANCH })
-      }).then(function (r) {
-        if (r.status === 409 || r.status === 422) throw 'Документ щойно змінив хтось інший. Скопіюйте свої правки, оновіть сторінку і внесіть їх знову.';
-        if (r.status === 401) { setToken(null); throw 'Токен більше не діє — підключіть новий і збережіть знову.'; }
-        if (r.status === 403 || r.status === 404) throw 'У токена немає права запису. Потрібно Contents: Read and write.';
-        if (!r.ok) throw 'GitHub не прийняв збереження (' + r.status + ').';
-        return r.json();
-      }).then(function (j) {
-        sha = j.content.sha;
-        ch.forEach(function (i) { i.orig = i.el.innerHTML; });
-        refresh(); save.textContent = 'Зберегти';
-        toast('Збережено. На сайті з\'явиться приблизно за хвилину.', 5000);
-      }).catch(function (e) {
-        save.textContent = 'Зберегти'; refresh();
-        toast(typeof e === 'string' ? e : 'Немає зв\'язку з GitHub — правки не збережено.', 7000);
-      });
+      commit(out, sha, 'Правка документа «' + title + '» через редактор хабу (' + ch.length + ' блок.)')
+        .then(function (newSha) {
+          if (newSha) sha = newSha;
+          ch.forEach(function (i) { i.orig = i.el.innerHTML; });
+          refresh(); save.textContent = 'Зберегти';
+          toast('Збережено. На сайті з\'явиться приблизно за хвилину.', 5000);
+        })
+        .catch(function (e) {
+          save.textContent = 'Зберегти'; refresh();
+          toast(typeof e === 'string' ? e : 'Збереження не вдалося.', 7000);
+        });
     };
     refresh();
     toast('Можна редагувати ' + items.length + ' текстових блоків.', 2500);
