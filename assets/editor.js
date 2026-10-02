@@ -67,7 +67,7 @@
     '.mh-card .mh-b{color:#0C0E14;background:#EEF1F6} .mh-card .mh-b.mh-save{color:#fff;background:linear-gradient(135deg,#38A0FF,#AA7AFF)}' +
     '.mh-err{color:#C0323B;font-size:13.5px;margin-top:8px;min-height:1em} .mh-note{font-size:12.5px;color:#6E7687;margin-top:10px}' +
     '.mh-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:10003;background:#0C0E14;color:#fff;padding:12px 20px;border-radius:999px;font:500 14px Onest,system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:calc(100vw - 32px);text-align:center}' +
-    '.mh-tools{position:absolute;z-index:10001;display:none;gap:4px;background:#0C0E14;padding:4px;border-radius:999px;box-shadow:0 6px 18px rgba(12,14,20,.3)}' +
+    '.mh-tools{position:absolute;z-index:10001;display:none;gap:4px;background:#0C0E14;padding:4px;border-radius:999px;box-shadow:0 6px 18px rgba(12,14,20,.3);border-left:10px solid transparent;background-clip:padding-box}' +
     '.mh-tools.on{display:flex}' +
     '.mh-tb{all:unset;cursor:pointer;width:26px;height:26px;border-radius:50%;color:#fff;display:grid;place-items:center;font:700 15px/1 Onest,system-ui,sans-serif}' +
     '.mh-tb:hover{background:rgba(255,255,255,.18)}' +
@@ -159,7 +159,11 @@
             method: 'PUT', credentials: 'same-origin',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ path: file, content: b64enc(out), sha: sha, message: msg })
-          }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j.error || 'Помилка ' + r.status; return j.sha; }); });
+          }).then(function (r) { return r.json().then(function (j) {
+            if (!r.ok) throw j.error || 'Помилка ' + r.status;
+            if (j.retried) toast('Документ встиг змінитись, поки ви правили — ваші зміни записано поверх.', 7000);
+            return j.sha;
+          }); });
         });
       })
       .catch(function (e) { toast(typeof e === 'string' ? e : 'Немає зв\'язку з сервером.', 6000); });
@@ -280,17 +284,29 @@
       var t = (e.clipboardData || window.clipboardData).getData('text/plain');
       document.execCommand('insertText', false, t);
     }, true);
-    document.addEventListener('mouseover', function (e) {
-      if (!e.target.closest) return;
-      if (e.target.closest('.mh-tools')) return;
-      var li = e.target.closest('li.mh-ed');
-      if (!li) { tools.classList.remove('on'); return; }
+    var hideTimer = null;
+    function showTools(li) {
+      clearTimeout(hideTimer);
       curLi = li;
       var r = li.getBoundingClientRect();
-      tools.style.top = (r.top + window.scrollY - 3) + 'px';
-      tools.style.left = (r.right + window.scrollX + 10) + 'px';
+      // тримаємось впритул до пункту й не вилазимо за край екрана
+      var left = Math.min(r.right + window.scrollX, window.scrollX + document.documentElement.clientWidth - 78);
+      tools.style.top = (r.top + window.scrollY - 4) + 'px';
+      tools.style.left = left + 'px';
       tools.classList.add('on');
+    }
+    function hideTools() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () { tools.classList.remove('on'); }, 400);
+    }
+    document.addEventListener('mouseover', function (e) {
+      if (!e.target.closest) return;
+      if (e.target.closest('.mh-tools')) { clearTimeout(hideTimer); return; }
+      var li = e.target.closest('li.mh-ed');
+      if (li) showTools(li); else hideTools();
     });
+    tools.addEventListener('mouseenter', function () { clearTimeout(hideTimer); });
+    tools.addEventListener('mouseleave', hideTools);
 
     tools.addEventListener('click', function (e) {
       var b = e.target.closest('.mh-tb'); if (!b || !curLi) return;
@@ -312,8 +328,8 @@
         if (!confirm('Видалити пункт «' + curLi.textContent.trim().slice(0, 60) + '»?')) return;
         i.pel.remove(); curLi.remove();
         dirty++; remap();
+        tools.classList.remove('on');
       }
-      tools.classList.remove('on');
     });
 
     function blockLinks(e) { if (e.target.closest('a') && !e.target.closest('[data-mh-ui],.mhd')) e.preventDefault(); }

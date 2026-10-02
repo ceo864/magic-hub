@@ -129,16 +129,27 @@ export async function onRequest(context) {
     if (request.method === 'PUT') {
       const body = await request.json().catch(() => ({}));
       if (!safePath(body.path) || !body.content || !body.sha) return json({ error: 'Неповні дані для збереження.' }, 400);
-      const r = await gh(`https://api.github.com/repos/${repo}/contents/${body.path}`, token, {
+      const put = (sha) => gh(`https://api.github.com/repos/${repo}/contents/${body.path}`, token, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: String(body.message || 'Правка через редактор хабу').slice(0, 200), content: body.content, sha: body.sha, branch })
+        body: JSON.stringify({ message: String(body.message || 'Правка через редактор хабу').slice(0, 200), content: body.content, sha, branch })
       });
+      let r = await put(body.sha);
+      let retried = false;
+      // Поки редактор був відкритий, файл міг змінити бот індексу або інша правка.
+      // Беремо свіжий sha і записуємо ще раз, щоб праця не пропала.
+      if (r.status === 409 || r.status === 422) {
+        const cur = await gh(`https://api.github.com/repos/${repo}/contents/${body.path}?ref=${branch}`, token);
+        if (cur.ok) {
+          const c = await cur.json();
+          if (c.sha && c.sha !== body.sha) { r = await put(c.sha); retried = true; }
+        }
+      }
       const d = await r.json().catch(() => ({}));
       if (r.status === 409 || r.status === 422) return json({ error: 'Документ щойно змінив хтось інший. Оновіть сторінку і внесіть правку ще раз.' }, 409);
       if (r.status === 403 || r.status === 404) return json({ error: 'У вашого акаунта немає права змінювати цей репозиторій.' }, 403);
       if (!r.ok) return json({ error: 'GitHub не прийняв збереження (' + r.status + ').' }, 502);
-      return json({ sha: d.content && d.content.sha });
+      return json({ sha: d.content && d.content.sha, retried });
     }
 
     return json({ error: 'Метод не підтримується.' }, 405);
